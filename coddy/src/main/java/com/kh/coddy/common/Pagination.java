@@ -1,4 +1,4 @@
-package com.kh.coddy.common.template;
+package com.kh.coddy.common;
 
 import com.kh.coddy.common.vo.PageInfo;
 

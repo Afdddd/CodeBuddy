@@ -16,7 +16,7 @@
     <style>
         div {box-sizing:border-box;}
         #header {
-            width:90%;
+            width:1200px;
             height:100px;
             padding-top:20px;
             margin:auto;
@@ -46,18 +46,21 @@
         #header a {text-decoration:none; color:black;}
 
         /* 세부페이지마다 공통적으로 유지할 style */
-        .content {
-            background-color:rgb(247, 245, 245);
-            width:80%;
+        .content {          
+            width:1200px;
+            height: 1800px;
             margin:auto;
+            border: 1px solid green;
         }
-        .innerOuter {
-            border:1px solid lightgray;
-            width:80%;
-            margin:auto;
-            padding:5% 10%;
-            background-color:white;
+       
+        .content_title h2{           
+            color: #42495b;
+            font-size: 1.75rem;
+            line-height: 1.5;
+            font-weight: 500;	
         }
+
+        
 
     </style>
 </head>
@@ -72,7 +75,7 @@
             </div>
             <div id="header_1_center">
                 <ul>
-                    <li><a href="">모집</a></li>
+                    <li><a href="list.rec">모집</a></li>
                     <li><a href="">코드리뷰</a></li>
                     <li><a href="">자유</a></li>
                     <li><a href="">소개</a></li>
@@ -109,8 +112,7 @@
                 </c:otherwise>
                </c:choose>
             </div>
-        </div>
-        
+        </div>       
     </div>
 
     <!-- 로그인 클릭 시 뜨는 모달 (기존에는 안보이다가 위의 a 클릭 시 보임) -->

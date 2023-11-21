@@ -12,11 +12,5 @@ public interface MemberService {
 	HashMap<String, Object> getUserInfo(String access_Token);
 	
 	// 로그인
-	Member loginMember(Member m);
-	
-
-	
-	
-	
-
+	Member loginMember(Member m);	
 }

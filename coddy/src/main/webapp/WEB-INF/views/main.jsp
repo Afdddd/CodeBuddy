@@ -12,7 +12,7 @@
     <style>
     /* 이미지 영역 사이즈 조절 */
     .swiper {
-        width: 1200px;
+        width: 100%px;
         height: 500px;
     }
 
@@ -39,11 +39,9 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
-                <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2017/04/11/15/55/animals-2222007__480.jpg"></div>
-                <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2015/12/06/09/15/maple-1079235__480.jpg"></div>
-                <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2016/09/01/19/53/pocket-watch-1637396__480.jpg"></div>
-                <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2016/05/27/08/51/mobile-phone-1419275__480.jpg"></div>
-                <div class="swiper-slide"><img src="https://cdn.pixabay.com/photo/2015/09/01/09/32/alphabet-916673__480.jpg"></div>
+                <div class="swiper-slide"><img src="resources/image/001.png"></div>
+                <div class="swiper-slide"><img src="resources/image/002.png"></div>
+                <div class="swiper-slide"><img src="resources/image/003.png"></div>
             </div>
         
             <!-- If we need pagination -->

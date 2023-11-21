@@ -10,13 +10,9 @@ public class PageInfo {
 	private int maxPage;   //마지막 페이지
 	private int startPage; // 페이징바의 시작수
 	private int endPage;   // 페이징바의 끝수
-	
-	
-	
+			
 	public PageInfo() {}
-	
-	
-	
+			
 	public PageInfo(int listCount, int currentPage, int pageLimit, int boardLimit, int maxPage, int startPage,
 			int endPage) {
 		super();
@@ -28,10 +24,6 @@ public class PageInfo {
 		this.startPage = startPage;
 		this.endPage = endPage;
 	}
-
-
-
-
 
 	public int getListCount() {
 		return listCount;
