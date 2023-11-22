@@ -1,7 +1,7 @@
 <%@page import="org.springframework.core.io.ClassPathResource"%>
 <%@page import="org.springframework.core.io.Resource"%>
 <%@page import="com.kh.coddy.common.Keys"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% 
 	Resource resource = new ClassPathResource("keys/kakaoLogin.json");
@@ -48,13 +48,9 @@
         #header_1_center>ul>li a {text-decoration:none; color:black; font-size:18px; font-weight:900;}
         #header a {text-decoration:none; color:black;}
 
-<<<<<<< HEAD
-        /* 세부페이지마다 공통적으로 유지할 style */ 
-        .content {          
-=======
+
         /* 세부페이지마다 공통적으로 유지할 style */
         .content {
->>>>>>> aa8af8f556255da5f8449bfdc2cb1ca66a82e9cb
             width:1200px;
             height: 1800px;
             margin:auto;
@@ -63,7 +59,6 @@
             color: #42495B;
             font-size: 1.75rem;
             line-height: 1.5;
-<<<<<<< HEAD
             font-weight: 500;	
             margin-bottom: 40px;
             margin-top: 20px;
@@ -78,30 +73,13 @@
              }
         
 
-=======
-            font-weight: 500;
-            margin-bottom: 40px;
-            margin-top: 20px;
-        }
-        #header_1_left>img{
-            width:150px;
-            height:100px;
-            float: left;
-            position:absolute;
-            top: 0px;
-        }
->>>>>>> aa8af8f556255da5f8449bfdc2cb1ca66a82e9cb
     </style>
 </head>
 <body>
     <div id="header">
         <div id="header_1">
             <div id="header_1_left">
-<<<<<<< HEAD
-                <img src="resources/image/logo.png">
-=======
-                <img src="resources/image/logo.png" onclick="location.href='/'">
->>>>>>> aa8af8f556255da5f8449bfdc2cb1ca66a82e9cb
+                <img src="resources/image/logo.png" onclick="location.href='/coddy/'">
             </div>
             <div id="header_1_center">
                 <ul>

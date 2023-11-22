@@ -57,6 +57,13 @@ public class MemberController {
 			
 	}
 	
+	@RequestMapping("myPage.me")
+	public String myPage() {
+		
+		return "member/myPage";
+	}
+	
+	
 	
 
 }

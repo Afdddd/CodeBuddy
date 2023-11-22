@@ -8,6 +8,6 @@ public class recruitmentController {
 
 	@GetMapping("list.rec")
 	public String recruitmentList() {
-		return "recruitment/recruitmentList";
+		return "board/recruitment/recruitmentListView";
 	}
 }
