@@ -13,6 +13,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!-- swiper.js 라이브러리추가 (cdn) -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <style>
         div {box-sizing:border-box;}
         #header {
@@ -29,12 +32,10 @@
             height:100%;
             float:left;
         }
-        #header_1_left {width:10%; position:relative;}
-        #header_1_center {width:60%;}
+        #header_1_left {width:15%; }
+        #header_1_center {width:55%;}
         #header_1_right {width:30%;}
-
-        #header_1_left>img {height:80%; position:absolute; margin:auto; top:0px; bottom:0px; right:0px; left:0px;}
-        #header_1_right {text-align:center; line-height:35px; font-size:12px; text-indent:35px;}
+        #header_1_right {text-align:center; line-height:35px; font-size:12px; text-indent:35px; text-align: right;}
         #header_1_right>a {margin:5px;}
         #header_1_right>a:hover {cursor:pointer;}
 
@@ -45,12 +46,11 @@
 
         #header a {text-decoration:none; color:black;}
 
-        /* 세부페이지마다 공통적으로 유지할 style */
+        /* 세부페이지마다 공통적으로 유지할 style */ 
         .content {          
             width:1200px;
             height: 1800px;
             margin:auto;
-            border: 1px solid green;
         }
        
         .content_title h2{           
@@ -58,8 +58,17 @@
             font-size: 1.75rem;
             line-height: 1.5;
             font-weight: 500;	
+            margin-bottom: 40px;
+            margin-top: 20px;
         }
-
+        
+        #header_1_left>img{
+            width:150px;
+            height:100px;
+            float: left;
+            position:absolute;
+            top: 0px;
+             }
         
 
     </style>
@@ -71,7 +80,7 @@
     <div id="header">
         <div id="header_1">
             <div id="header_1_left">
-                <img src="resources/image/logo.png" style="width:150px; height:150px; ">
+                <img src="resources/image/logo.png">
             </div>
             <div id="header_1_center">
                 <ul>

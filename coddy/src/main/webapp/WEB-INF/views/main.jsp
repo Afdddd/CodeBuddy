@@ -5,9 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>coddy</title>
-<!-- swiper.js 라이브러리추가 (cdn) -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 
     <style>
     /* 이미지 영역 사이즈 조절 */
