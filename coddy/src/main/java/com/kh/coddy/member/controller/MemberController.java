@@ -25,7 +25,6 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
-	
 	@GetMapping(value="/kakaoLogin.me")
 	public String KakakoLogin(String code, HttpSession session) {
 		String access_Token = memberService.getAccessToken(code);
@@ -40,7 +39,6 @@ public class MemberController {
 		return "redirect:/";				
 	}
 	
-
 	@PostMapping("/login.me")
 	public String loginMember(@ModelAttribute Member m, Model model, HttpSession session) {
 		
