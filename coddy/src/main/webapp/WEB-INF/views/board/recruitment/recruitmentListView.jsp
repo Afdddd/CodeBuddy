@@ -98,8 +98,64 @@
       /* display : none;  */
     }
 
- 
-  
+    /* 카드 css */
+    
+    .card {
+      padding: 20px;
+      width: 330px;
+      min-height: 370px;
+      border-radius: 20px;
+      background: #e8e8e8;
+      box-shadow: 5px 5px 6px #dadada,
+                  -5px -5px 6px #f6f6f6;
+      transition: 0.4s; 
+      display: inline-block;
+      margin: 30px;
+   
+    }
+
+    .card:hover {
+      translate: 0 -10px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2e54a7;
+      margin: 15px 0 0 10px;
+    }
+
+    .card-image {
+      min-height: 170px;
+      background-color: #c9c9c9;
+      border-radius: 15px;
+      box-shadow: inset 8px 8px 10px #c3c3c3,
+                inset -8px -8px 10px #cfcfcf;
+    }
+
+    .card-body {
+      margin: 13px 0 0 10px;
+      color: rgb(31, 31, 31);
+      font-size: 15px;
+    }
+
+    .footer {
+      float: right;
+      margin: 28px 0 0 18px;
+      font-size: 13px;
+      color: #636363;
+    }
+
+    .by-name {
+      font-weight: 700;
+    }
+
+    .card-list{
+      width: 100%;
+      margin-top: 50px;
+      text-align: center;
+      
+    }
 
 </style>
 </head>
@@ -188,30 +244,69 @@
 
         </div>
 
-        <div class="content_2">
-
-            <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-                <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
-                </div>
-                <div class="p-6">
-                  <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
-                   Tailwind card
-                  </h5>
-                  <p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc felis ligula. 
-                  </p>
-                </div>
-                <div class="p-6 pt-0">
-                  <button data-ripple-light="true" type="button" class="select-none rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                    Read More
-                  </button>
-                </div>
-              </div>
-
+        <div>
+          
         </div>
 
+        <div class="content_2">
+          <div class="card-list">
+            <div class="card">
+              <div class="card-image"></div>
+              <p class="card-title">Card title</p>
+              <p class="card-body">
+                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
+              </p>
+              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <p class="card-title">Card title</p>
+              <p class="card-body">
+                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
+              </p>
+              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <p class="card-title">Card title</p>
+              <p class="card-body">
+                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
+              </p>
+              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <p class="card-title">Card title</p>
+              <p class="card-body">
+                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
+              </p>
+              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <p class="card-title">Card title</p>
+              <p class="card-body">
+                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
+              </p>
+              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <p class="card-title">Card title</p>
+              <p class="card-body">
+                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
+              </p>
+              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+            </div>
+          </div>
+          <script>
+            
+            $(function(){
+              $(".card").css("display", "inline-block");
+            });
 
-
+          </script>
+        </div>
     </div>
 
 </body>
