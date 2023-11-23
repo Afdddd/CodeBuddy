@@ -99,63 +99,176 @@
     }
 
     /* 카드 css */
-    
     .card {
-      padding: 20px;
-      width: 330px;
-      min-height: 370px;
-      border-radius: 20px;
-      background: #e8e8e8;
-      box-shadow: 5px 5px 6px #dadada,
-                  -5px -5px 6px #f6f6f6;
-      transition: 0.4s; 
-      display: inline-block;
-      margin: 30px;
-   
-    }
-
-    .card:hover {
-      translate: 0 -10px;
-    }
-
-    .card-title {
-      font-size: 18px;
-      font-weight: 600;
-      color: #2e54a7;
-      margin: 15px 0 0 10px;
+      width: 190px;
+      background: white;
+      padding: .4em;
+      border-radius: 6px;
+      margin: 3px;
+      margin-bottom: 20px;
     }
 
     .card-image {
-      min-height: 170px;
-      background-color: #c9c9c9;
-      border-radius: 15px;
-      box-shadow: inset 8px 8px 10px #c3c3c3,
-                inset -8px -8px 10px #cfcfcf;
+      background-color: rgb(236, 236, 236);
+      width: 100%;
+      height: 130px;
+      border-radius: 6px 6px 0 0;
     }
 
-    .card-body {
-      margin: 13px 0 0 10px;
-      color: rgb(31, 31, 31);
-      font-size: 15px;
+    .card-image:hover {
+      transform: scale(0.98);
     }
 
-    .footer {
-      float: right;
-      margin: 28px 0 0 18px;
-      font-size: 13px;
-      color: #636363;
+    .category {
+      text-transform: uppercase;
+      font-size: 0.7em;
+      font-weight: 600;
+      color: #5271FF;
+      padding: 10px 7px 0;
     }
 
-    .by-name {
-      font-weight: 700;
+    .category:hover {
+      cursor: pointer;
     }
+
+    .heading {
+      font-weight: 600;
+      color: rgb(88, 87, 87);
+      padding: 7px;
+    }
+
+    .heading:hover {
+      cursor: pointer;
+    }
+
+    .author {
+      color: gray;
+      font-weight: 400;
+      font-size: 11px;
+      padding-top: 20px;
+    }
+
+    .name {
+      font-weight: 600;
+    }
+
+    .card:hover {
+      cursor: pointer;
+    }
+    
 
     .card-list{
       width: 100%;
       margin-top: 50px;
-      text-align: center;
-      
+            
     }
+
+    /* 검색바 */
+
+    .search-bar{
+      margin-top: 40px;
+    }
+    .search-input {
+      border: 2px solid transparent;
+      width: 15em;
+      height: 2.5em;
+      padding-left: 0.8em;
+      outline: none;
+      overflow: hidden;
+      background-color: #F3F3F3;
+      border-radius: 10px;
+      transition: all 0.5s;
+      margin-left: 5px;
+    }
+
+    .search-input:hover,
+    .search-input:focus {
+      border: 2px solid #5271FF;
+      box-shadow: 0px 0px 0px 7px rgb(74, 157, 236, 20%);
+      background-color: white;
+    }
+
+    /* 체크박스 */
+    .checkbox-container {
+      display: inline-block;
+      position: relative;
+      padding-left: 35px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      font-size: 16px;
+      user-select: none;
+    }
+
+    .custom-checkbox {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #eee;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+      left: 9px;
+      top: 5px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+    }
+
+    .custom-checkbox:checked ~ .checkmark {
+      background-color: #5271FF;
+      box-shadow: 0 3px 7px rgba(33, 150, 243, 0.3);
+    }
+
+    .custom-checkbox:checked ~ .checkmark:after {
+      display: block;
+    }
+
+    @keyframes checkAnim {
+      0% {
+        height: 0;
+      }
+
+      100% {
+        height: 10px;
+      }
+    }
+
+    .custom-checkbox:checked ~ .checkmark:after {
+      animation: checkAnim 0.2s forwards;
+    }
+
+    .paging-area button:disabled{
+
+    	background-color : #5271FF;
+    	color : white;
+    }
+    .paging-area button{
+      background-color : white;
+      border-radius: 4px;
+      border-width: 1px;
+      margin: 2px;
+    }
+    
+
+
 
 </style>
 </head>
@@ -244,61 +357,150 @@
 
         </div>
 
-        <div>
-          
+        <div class="search-bar">
+
+          <label class="checkbox-container" style="text-align: center;">
+            <span style="vertical-align: auto;">모집중</span>
+            <input class="custom-checkbox" checked="" type="checkbox">
+              <span class="checkmark"></span>
+            <input class="search-input" placeholder="기술스택">
+            <input class="search-input" placeholder="포지션">
+            <input class="search-input" placeholder="프로젝트 이름">    
+        </label>
+        
         </div>
 
         <div class="content_2">
           <div class="card-list">
+
             <div class="card">
               <div class="card-image"></div>
-              <p class="card-title">Card title</p>
-              <p class="card-body">
-                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
-              </p>
-              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <p class="card-title">Card title</p>
-              <p class="card-body">
-                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
-              </p>
-              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <p class="card-title">Card title</p>
-              <p class="card-body">
-                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
-              </p>
-              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <p class="card-title">Card title</p>
-              <p class="card-body">
-                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
-              </p>
-              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <p class="card-title">Card title</p>
-              <p class="card-body">
-                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
-              </p>
-              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <p class="card-title">Card title</p>
-              <p class="card-body">
-                Nullam ac tristique nulla, at convallis quam. Integer consectetur mi nec magna tristique, non lobortis.
-              </p>
-              <p class="footer">Written by <span class="by-name">John Doe</span> on <span class="date">25/05/23</span></p>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
             </div>
-          </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category"> Illustration </div>
+              <div class="heading"> A heading that must span over two lines
+                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
+              </div>
+            </div>
+
+          </div>         
           <script>
             
             $(function(){
@@ -307,6 +509,16 @@
 
           </script>
         </div>
+        <br><br>
+        <div class="paging-area" align="center">
+            <!-- <button onclick="location.href=''">&lt;</button> -->
+            <button onclick="location.href=''" disabled>1</button>
+            <button onclick="location.href=''">2</button>
+            <button onclick="location.href=''">3</button>
+            <button onclick="location.href=''">4</button>   
+            <button onclick="location.href=''" >&gt;</button>
+             
+            </div>
     </div>
 
 </body>
