@@ -100,11 +100,12 @@
 
     /* 카드 css */
     .card {
-      width: 190px;
+      width: 250px;
+      height: 300px;
       background: white;
       padding: .4em;
       border-radius: 6px;
-      margin: 3px;
+      margin: 20px;
       margin-bottom: 20px;
     }
 
@@ -146,6 +147,8 @@
       font-weight: 400;
       font-size: 11px;
       padding-top: 20px;
+      width: 80%;
+      display: inline-block;
     }
 
     .name {
@@ -207,7 +210,7 @@
       width: 0;
     }
 
-    .checkmark {
+    .search-checkmark {
       position: absolute;
       top: 0;
       left: 0;
@@ -216,10 +219,10 @@
       background-color: #eee;
       border-radius: 4px;
       transition: background-color 0.3s;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);  
     }
 
-    .checkmark:after {
+    .search-checkmark:after {
       content: "";
       position: absolute;
       display: none;
@@ -232,12 +235,12 @@
       transform: rotate(45deg);
     }
 
-    .custom-checkbox:checked ~ .checkmark {
+    .custom-checkbox:checked ~ .search-checkmark {
       background-color: #5271FF;
       box-shadow: 0 3px 7px rgba(33, 150, 243, 0.3);
     }
 
-    .custom-checkbox:checked ~ .checkmark:after {
+    .custom-checkbox:checked ~ .search-checkmark:after {
       display: block;
     }
 
@@ -251,10 +254,11 @@
       }
     }
 
-    .custom-checkbox:checked ~ .checkmark:after {
+    .custom-checkbox:checked ~ .search-checkmark:after {
       animation: checkAnim 0.2s forwards;
     }
 
+    /* 페이징바 */
     .paging-area button:disabled{
 
     	background-color : #5271FF;
@@ -265,7 +269,77 @@
       border-radius: 4px;
       border-width: 1px;
       margin: 2px;
+      border-color: rgba(0,0,0,.125);
     }
+
+    /* 좋아요 */
+    .container input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .container {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      font-size: 12px;
+      user-select: none;
+      transition: 100ms;
+      padding-bottom: 10px;
+    }
+
+    .checkmark {
+      top: 0;
+      left: 0;
+      height: 2em;
+      width: 2em;
+      transition: 100ms;
+      animation: dislike_effect 400ms ease;
+    }
+
+    .container input:checked ~ .checkmark path {
+      fill: #FF5353;
+      stroke-width: 0;
+    }
+
+    .container input:checked ~ .checkmark {
+      animation: like_effect 400ms ease;
+    }
+
+    .container:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes like_effect {
+      0% {
+        transform: scale(0);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes dislike_effect {
+      0% {
+        transform: scale(0);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+}
     
 
 
@@ -362,7 +436,7 @@
           <label class="checkbox-container" style="text-align: center;">
             <span style="vertical-align: auto;">모집중</span>
             <input class="custom-checkbox" checked="" type="checkbox">
-              <span class="checkmark"></span>
+              <span class="search-checkmark"></span>
             <input class="search-input" placeholder="기술스택">
             <input class="search-input" placeholder="포지션">
             <input class="search-input" placeholder="프로젝트 이름">    
@@ -375,136 +449,224 @@
 
             <div class="card">
               <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
+            </div>
+
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
+            </div>
+
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
+            </div>
+
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
+            </div>
+
+            <div class="card">
+              <div class="card-image"></div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
             </div>
             <div class="card">
               <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
             </div>
+
             <div class="card">
               <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
             </div>
+
             <div class="card">
               <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
+              <div class="category">커뮤니티</div>
+              <div class="heading"> 
+                <h5>OurNeighborhood</h5>
+                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
+                  <label class="container">
+                    <input checked="checked" type="checkbox">
+                    <div class="checkmark">
+                      <svg viewBox="0 0 256 256">
+                      <rect fill="none" height="512" width="512"></rect>
+                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                    </div>
+                  </label> 
+                </div>                          
             </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category"> Illustration </div>
-              <div class="heading"> A heading that must span over two lines
-                  <div class="author"> By <span class="name">Abi</span> 4 days ago</div>
-              </div>
-            </div>
+
+
+            
 
           </div>         
           <script>
             
             $(function(){
               $(".card").css("display", "inline-block");
+              $(".container").css("width","0%");
             });
 
           </script>
