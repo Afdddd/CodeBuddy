@@ -50,4 +50,10 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
+	<!-- 확장자 관리 -->
+	<!-- .ico 파일 -->
+	<mime-mapping>
+		<extension>ico</extension>
+		<mime-type>image/x-icon</mime-type>
+	</mime-mapping>
 </web-app>

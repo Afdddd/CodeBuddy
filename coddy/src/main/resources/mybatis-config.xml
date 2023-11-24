@@ -9,7 +9,8 @@
      </settings>
      
     <typeAliases>
-     	<typeAlias type="com.kh.coddy.member.model.vo.Member" alias="member"/>   
+     	<typeAlias type="com.kh.coddy.member.model.vo.Member" alias="member"/>  
+     	<typeAlias type="com.kh.coddy.common.auth.model.vo.Auth" alias="auth"/>  
      </typeAliases>
       
      <!-- environments 영역은 제외 
@@ -18,5 +19,6 @@
 
      <mappers>
          <mapper resource="/mappers/member/member-mapper.xml"/>
+         <mapper resource="/mappers/auth/auth-mapper.xml"/>
      </mappers>
   </configuration>
