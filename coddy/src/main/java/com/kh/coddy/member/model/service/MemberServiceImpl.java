@@ -16,24 +16,23 @@ import org.springframework.stereotype.Service;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.member.model.dao.MemberDao;
 import com.kh.coddy.member.model.vo.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService{
-
 	@Autowired
 	private MemberDao memberDao;
 	
 	@Autowired 
-	private SqlSessionTemplate slqSession;
+	private SqlSessionTemplate sqlSession;
 	
 	@Override
 	public String getAccessToken(String code) {
 		String access_Token = "";
 		String refresh_Token = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
-		
 		try {
 			URL url = new URL(reqURL);
             
@@ -78,12 +77,9 @@ public class MemberServiceImpl implements MemberService{
             
 			br.close();
 			bw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		} catch (IOException e) { e.printStackTrace(); }
 		return access_Token;
 	}
-		
 	
 	public HashMap<String, Object> getUserInfo(String access_Token) {
 		
@@ -118,17 +114,18 @@ public class MemberServiceImpl implements MemberService{
 		return userInfo;
 	}
 	
-	
-	
 	@Override
 	public Member loginMember(Member m) {
-	
-		return memberDao.loginMember(slqSession,m);
-
-		
+		return memberDao.loginMember(sqlSession,m);
 	}
 
+	@Override public int memberCheck(String checkId) { return memberDao.memberCheck(sqlSession, checkId); }
 
-	
+	@Override public int insertMember(Member m) { return memberDao.insertMember(sqlSession, m); }
 
+	@Override public int authMake(Auth auth) { return memberDao.authMake(sqlSession, auth); }
+
+	@Override public int authCheck(Auth auth) { return memberDao.authCheck(sqlSession, auth); }
+
+	@Override public String findId(Member findMember) { return memberDao.findId(sqlSession, findMember); }
 }

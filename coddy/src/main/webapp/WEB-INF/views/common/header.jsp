@@ -22,6 +22,14 @@
     <!-- swiper.js 라이브러리추가 (cdn) -->
     <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <!-- JavaScript(Alertify) -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- CSS(Alertify) -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme(Alertify) -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme(Alertify) -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
     <style>
         div {box-sizing:border-box;}
         #header {
@@ -70,12 +78,48 @@
             float: left;
             position:absolute;
             top: 0px;
-             }
+        }
         
-
+        /* 기업전용 로그인 버튼 공간 스타일링 */
+        .loginByCompany {
+            position: relative;
+            width: 200px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            border: 1px solid #34974d;
+            background-color: #3aa856;
+        }
+        .loginByCompany, .loginByCompany__icon, .loginByCompany__text { transition: all 0.3s; }
+        .loginByCompany .loginByCompany__text {
+            transform: translateX(30px);
+            color: #fff;
+            font-weight: 600;
+        }
+        .loginByCompany .loginByCompany__icon {
+            position: absolute;
+            transform: translateX(159px);
+            height: 100%;
+            width: 39px;
+            background-color: #34974d;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .loginByCompany .loginByCompanySvg { width: 30px; stroke: #fff; }
+        .loginByCompany:hover { background: #34974d; }
+        .loginByCompany:hover .loginByCompany__text { color: transparent; }
+        .loginByCompany:hover .loginByCompany__icon { width: 148px; transform: translateX(0); }
+        .loginByCompany:active .loginByCompany__icon { background-color: #2e8644; }
+        .loginByCompany:active { border: 1px solid #2e8644; }
     </style>
 </head>
 <body>
+	<c:if test="${ not empty sessionScope.alertMsg }">
+		<script>alertify.alert("Alert", "${ sessionScope.alertMsg }", function() { alertify.success("okay"); });</script>
+		<c:remove var="alertMsg" scope="session" />
+	</c:if>
     <div id="header">
         <div id="header_1">
             <div id="header_1_left">
@@ -86,14 +130,14 @@
                     <li><a href="list.rec">모집</a></li>
                     <li><a href="">코드리뷰</a></li>
                     <li><a href="">자유</a></li>
-                    <li><a href="">소개</a></li>
+                    <li><a href="introlist.bo">소개</a></li>
                     <li><a href="">채용공고</a></li>
                 </ul>
             </div>
             <div id="header_1_right">
                 <c:choose>
                 <c:when test="${empty sessionScope.loginMember and empty sessionScope.nickname}">
-                    <a href="">회원가입</a>
+                    <a href="signup.me">회원가입</a>
                     <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
                 </c:when>
                	<c:otherwise>
@@ -101,7 +145,7 @@
                         <c:when test="${not empty sessionScope.loginMember}">
                             <label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;
                             <a href="">마이페이지</a>
-                            <a href="">로그아웃</a>
+                            <a href="logout.me">로그아웃</a>
                         </c:when>
                         <c:otherwise>
                             <label>${sessionScope.nickname}님 환영합니다</label> &nbsp;&nbsp;
@@ -132,8 +176,15 @@
                         <input type="password" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name="memberPwd">
                         <div align="center">
                             <button type="submit" class="btn btn-primary">로그인</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-danger" onclick=location.href='findIdForm.me'>로그인이 안돼요</button>
                         </div>
+                        <br>
+                      	<div align="center">
+                      		<button type="button" class="loginByCompany">
+								<span class="loginByCompany__text">기업전용 로그인</span>
+								<span class="loginByCompany__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="loginByCompanySvg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
+							</button>
+                      	</div>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer">

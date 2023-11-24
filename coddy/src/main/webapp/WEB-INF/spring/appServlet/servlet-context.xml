@@ -23,6 +23,8 @@
 	
 	<context:component-scan base-package="com.kh.coddy" />
 	
-	
+	<!-- 파일 확장자 관리 -->
+	<!-- .ico 파일 -->
+	<resources mapping="/resources/**" location="/resources/" />
 	
 </beans:beans>
