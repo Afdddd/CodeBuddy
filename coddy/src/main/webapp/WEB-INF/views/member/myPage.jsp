@@ -38,9 +38,14 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label for="userId">* ID : </label>
+                    <label for="memberId">* ID : </label>
                     <input type="text" class="form-control" id="userId" value="user01" name="" readonly> <br>
 
                     <label for="userName">* Name : </label>
+					<label for="memberEmail"> &nbsp; Email : </label>
+                    <input type="text" class="form-control" id="email" value="user01@kh.or.kr" name="" readonly> <br>
+                    
+                    <label for="memberName">* Name : </label>
                     <input type="text" class="form-control" id="userName" value="홍길동" name="" required> <br>
 
                     <label for="email"> &nbsp; Email : </label>
@@ -54,6 +59,9 @@
                     
                     <label for="address"> &nbsp; Address : </label>
                     <input type="text" class="form-control" id="address" value="서울시 강남구 역삼동" name=""> <br>
+
+                    <label for="memberInfo"> &nbsp; 자기소개 : </label>
+                    <input type="text" class="form-control" id="address" value="" name="" style="height : 300px;"> <br>
                     
                     <label for=""> &nbsp; Gender : </label> &nbsp;&nbsp;
                     <input type="radio" id="Male" value="M" name="">
