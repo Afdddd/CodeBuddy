@@ -8,9 +8,6 @@ import com.kh.coddy.member.model.vo.Member;
 public interface MemberService {
 	
 	// 카카오 로그인
-	String getAccessToken(String code);
-	
-	HashMap<String, Object> getUserInfo(String access_Token);
 	
 	// 로그인
 	Member loginMember(Member m);
@@ -26,4 +23,8 @@ public interface MemberService {
 	int authCheck(Auth auth);
 
 	String findId(Member findMember);
+
+	int findPwd(Member findMember);
+
+	int setNewPassword(Member newMember);
 }

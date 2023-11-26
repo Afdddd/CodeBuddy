@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 	
+	<!-- 외부 properties -->
+	<context:property-placeholder location="/config/config.properties" />
+
+
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	<!-- db등록 -->
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="basicDataSource" destroy-method="close">				
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="CODDY" />
-		<property name="password" value="CODDY" />
+		<property name="driverClassName" value="${spring.datasource.driverClassname}" />
+		<property name="url" value="${spring.datasource.url}" />
+		<property name="username" value="${spring.datasource.username}" />
+		<property name="password" value="${spring.datasource.password}" />
 	</bean>
 	
 	<!--  mybatis 관련 빈 등록 -->
@@ -27,8 +33,8 @@
 	<bean class="org.springframework.mail.javamail.JavaMailSenderImpl" id="mailSender">
 		<property name="host" value="smtp.gmail.com"/>
 		<property name="port" value="25"/>
-		<property name="username" value=""/>
-		<property name="password" value=""/>
+		<property name="username" value="${spring.datasource.email}" />
+		<property name="password" value="${spring.datasource.email.key}" />
 		<!--  이메일 전송시 필요한 SMTP 설정 지정  -->
 		<property name="javaMailProperties">
 			<props>

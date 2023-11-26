@@ -3,4 +3,12 @@
 .git
 .bin
 .factorypath
-
+.settings
+target
+.classPath
+.project
+.springBeans
+bin
+keys
+config
+config.properties
