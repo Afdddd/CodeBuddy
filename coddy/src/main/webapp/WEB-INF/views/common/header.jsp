@@ -30,6 +30,10 @@
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 	<!-- Semantic UI theme(Alertify) -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+    <!-- chat.js -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="${ pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <style>
         div {box-sizing:border-box;}
         #header {
