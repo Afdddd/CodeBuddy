@@ -85,7 +85,6 @@ public class MemberController {
 		return "member/myPage";
 	}
 	
-	
 	@GetMapping(value="signup.me") public String signup(HttpSession session) {
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "로그아웃 후 이용해주세요."); return "redirect:/"; }
 		try { session.setAttribute("googleKey", Keys.read(new ClassPathResource("keys/recaptcha2.json").getURL().getPath(), "key")); } 
@@ -116,8 +115,8 @@ public class MemberController {
 	@RequestMapping(value="logout.me") public String logoutMember(HttpSession session, HttpServletRequest request) { 
 		if(session.getAttribute("loginMember") != null) { 
 			log.info("logoutMember={}, ip={}",session.getAttribute("loginMember"), request.getRemoteAddr()); 
-			session.invalidate(); } else { session.setAttribute("alertMsg", "로그인된 유저만 가능해요!"); 
-		} 
+			session.invalidate(); } 
+		else { session.setAttribute("alertMsg", "로그인된 유저만 가능해요!"); } 
 		return "redirect:/";
 	}
 	

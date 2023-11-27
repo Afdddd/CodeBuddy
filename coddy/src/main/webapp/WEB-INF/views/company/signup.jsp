@@ -12,7 +12,83 @@
 		.signupInner { border-radius: 10px; border: 2px solid wheat; opacity: 0.7; margin-left: 5%; margin-top: 5%; margin-bottom: 5%; margin-right: 5%; width: 90%; text-align: center; text-decoration-color: coral; padding: 3%; }
 		.signupOther { display: flex; }
 		.signupInputs { width: 100%; }
+		.signupOneLine { display: flex; }
+		.signupOneLine a { width: 25%; }
 		.fieldSets { width: 100%; border: 3px solid turquoise; padding: 3%; border-radius: 10px; }
+
+		/* 네온 사인 관련 스타일 */
+		@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+		* { margin: 0; padding: 0; box-sizing: border-box; }
+		a { text-decoration: none; }
+		/*
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			background: #050801;
+			font-family: 'Raleway', sans-serif;
+			font-weight: bold;
+		}
+		*/
+		.signupOneLine>a {
+			position: relative;
+			display: inline-block;
+			color: #03e9f4;
+			text-decoration: none;
+			text-transform: uppercase;
+			transition: 0.5s;
+			letter-spacing: 4px;
+			overflow: hidden;
+		}
+		.signupOneLine>a:hover {
+			background: #03e9f4;
+			color: #050801;
+			box-shadow: 0 0 5px #03e9f4, 0 0 25px #03e9f4, 0 0 50px #03e9f4, 0 0 200px #03e9f4;
+			-webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+		}
+		.signupOneLine>a:nth-child(1) { filter: hue-rotate(270deg); }
+		.signupOneLine>a:nth-child(2) { filter: hue-rotate(110deg); }
+		.signupOneLine>a>span { position: absolute; display: block; }
+		.signupOneLine>a>span:nth-child(1) {
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 2px;
+			background: linear-gradient(90deg,transparent,#03e9f4);
+			animation: animate1 1s linear infinite;
+		}
+		@keyframes animate1 { 0% { left: -100%; } 50%, 100% { left: 100%; } }
+		.signupOneLine>a>span:nth-child(2) {
+			top: -100%;
+			right: 0;
+			width: 2px;
+			height: 100%;
+			background: linear-gradient(180deg,transparent,#03e9f4);
+			animation: animate2 1s linear infinite;
+			animation-delay: 0.25s;
+		}
+		@keyframes animate2 { 0% { top: -100%; } 50%, 100% { top: 100%; } }
+		.signupOneLine>a>span:nth-child(3) {
+			bottom: 0;
+			right: 0;
+			width: 100%;
+			height: 2px;
+			background: linear-gradient(270deg,transparent,#03e9f4);
+			animation: animate3 1s linear infinite;
+			animation-delay: 0.50s;
+		}
+		@keyframes animate3 { 0% { right: -100%; } 50%, 100% { right: 100%; } }
+		.signupOneLine>a>span:nth-child(4) {
+			bottom: -100%;
+			left: 0;
+			width: 2px;
+			height: 100%;
+			background: linear-gradient(360deg,transparent,#03e9f4);
+			animation: animate4 1s linear infinite;
+			animation-delay: 0.75s;
+		}
+		@keyframes animate4 { 0% { bottom: -100%; } 50%, 100% { bottom: 100%; } }
 	</style>
 	<!-- .signupOther { background-image: url("${ pageContext.request.contextPath }/resources/image/company/signup-bg.jpg"); background-repeat: no-repeat; background-size : contain; }  -->
 	</head>
@@ -27,7 +103,10 @@
 							<legend style="width: 30%; text-decoration-color: lemonchiffon; font-size: 30px;">계정 정보 입력</legend>
 							<div>
 								<label for="companyId">ID</label>
-								<input type="text" name="comapnyId" id="companyId" class="signupInputs form-control" placeholder="ID 입력" required>
+								<div class="signupOneLine">
+									<input type="text" name="comapnyId" id="companyId" class="signupInputs form-control" placeholder="ID 입력" required>
+									<a onclick="onId();" id="onId"><span></span><span></span><span></span><span></span>ID 중복 체크</a>
+								</div>
 							</div>
 							<div>
 								<label for="companyPwd">Password</label>
@@ -62,11 +141,14 @@
 							</div>
 							<div>
 								<label for="companyEmail">Email</label>
-								<input type="text" name="comapnyEmail" id="companyEmail" class="signupInputs form-control" placeholder="Email 입력 @포함" required>
+								<input type="email" name="comapnyEmail" id="companyEmail" class="signupInputs form-control" placeholder="Email 입력 @포함" required>
 							</div>
 							<div>
 								<label for="companyBno">사업자 등록번호</label>
-								<input type="number" name="comapnyBno" id="companyBno" class="signupInputs form-control" placeholder="사업자 등록번호 입력" required>
+								<div class="signupOneLine">
+									<input type="number" name="comapnyBno" id="companyBno" class="signupInputs form-control" placeholder="사업자 등록번호 입력" required>
+									<a onclick="onBno();" id="onBno"><span></span><span></span><span></span><span></span>사업자 번호 확인</a>
+								</div>
 							</div>
 						</fieldset><br>
 						<div class="signupOther">
@@ -81,6 +163,9 @@
 			</div>
 		</div>
 		<script>
+			$(function() {
+				$("html").animate({scrollTop : $(".signupOuter").offset().top}, 800);
+			})
 			let checkId = false;
 			let checkGoogle = false;
 			let checkEmail = false;
@@ -103,7 +188,20 @@
     			if (grecaptcha.getResponse().length == 0) { return false; }
 				else { return true; }
             }
-			function onId() {}
+			function onId() {
+				if($("#companyId").val().length < 6) { alert("ID는 최소 6글자 이상으로 맞춰주세요."); }
+				else {
+					$.ajax({
+						url: "companyCheck.co",
+	    				type: "get",
+	    				data: {id: $("#companyId").val()},
+	    				success: function(result) { 
+							if(result=="NNNNN") { alert("사용 불가능한 아이디입니다."); } 
+							else { if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?") != true) {  } else { $("#companyId").attr("disabled", true); $("#onId").removeAttr("onclick"); checkId = true; } } },
+	    				error: function() { console.log("아이디 중복 체크 실패"); }
+					});
+				}
+			}
 			function onBno() {}
 			function onEmail() {}
 			function backToLogin() { if(confirm("정말로 로그인 페이지로 돌아갑니까?") == true) { location.href = "/coddy/loginPage.co"; } }

@@ -138,7 +138,8 @@
 			font-size: 14px;
 			text-align: center;
 		}
-		.reference .fa { color: #7f5feb;; }
+		.reference .fa { color: #7f5feb; }
+		.animated a { text-decoration: none; }
 	</style>
 	</head>
 	<body>
