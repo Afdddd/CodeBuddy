@@ -7,6 +7,8 @@
 	<title>기업 회원가입</title>
 	<!-- 구글 recaptcha2 -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
+	<!-- bnoKey -->
+	<script src="${ pageContext.request.contextPath }/resources/js/bnoKey.js"></script>
 	<style>
 		.signupOuter { width: 100%; height: 60%; }
 		.signupInner { border-radius: 10px; border: 2px solid wheat; opacity: 0.7; margin-left: 5%; margin-top: 5%; margin-bottom: 5%; margin-right: 5%; width: 90%; text-align: center; text-decoration-color: coral; padding: 3%; }
@@ -146,7 +148,7 @@
 							<div>
 								<label for="companyBno">사업자 등록번호</label>
 								<div class="signupOneLine">
-									<input type="number" name="comapnyBno" id="companyBno" class="signupInputs form-control" placeholder="사업자 등록번호 입력" required>
+									<input type="number" name="comapnyBno" id="companyBno" class="signupInputs form-control" placeholder="사업자 등록번호 입력 -없이 입력" max="9999999999" min="0000000000" required>
 									<a onclick="onBno();" id="onBno"><span></span><span></span><span></span><span></span>사업자 번호 확인</a>
 								</div>
 							</div>
@@ -165,7 +167,7 @@
 		<script>
 			$(function() {
 				$("html").animate({scrollTop : $(".signupOuter").offset().top}, 800);
-			})
+			});
 			let checkId = false;
 			let checkGoogle = false;
 			let checkEmail = false;
@@ -179,15 +181,15 @@
 				else if(checkPwd != true) { alert("비밀번호가 서로 다름"); $("#companyPwd").focus; return false; }
 				else if(checkId != true) { alert("아이디 중복 체크 필요"); $("#companyId").focus; return false; }
 				else { return true; }
-			}
+			};
 			function onPassword() { 
 				if($("#companyPwd") == $("#companyPwd2")) { checkPwd = true }
 				else { checkPwd = false }
-			}
+			};
 			function onGoogle() {
     			if (grecaptcha.getResponse().length == 0) { return false; }
 				else { return true; }
-            }
+            };
 			function onId() {
 				if($("#companyId").val().length < 6) { alert("ID는 최소 6글자 이상으로 맞춰주세요."); }
 				else {
@@ -201,10 +203,36 @@
 	    				error: function() { console.log("아이디 중복 체크 실패"); }
 					});
 				}
-			}
-			function onBno() {}
+			};
+			function onBno() {
+				if($("#companyBno").val().length != 10) { alert("사업자 등록번호는 10자리 숫자입니다."); }
+				else {
+					$.ajax({
+						url: "companyBnoCheck.co",
+	    				type: "post",
+						data: {companyBno: $("#companyBno").val()},
+						success: function(result) { if(result == "not a number") { alert("사업자 등록번호가 숫자가 아닙니다."); } else if(result == "not a valid") { alert("유효하지않은 사업자 등록번호입니다."); } else { apiBno($("#companyBno").val()); } },
+						error: function() { console.log("사업자 유효성 체크 실패"); }
+					});
+				}
+			};
 			function onEmail() {}
 			function backToLogin() { if(confirm("정말로 로그인 페이지로 돌아갑니까?") == true) { location.href = "/coddy/loginPage.co"; } }
+			function apiBno(number) { 
+				let apiKey = BNO_KEY;
+				var data = { b_no: [number] };
+
+				$.ajax({
+					url: "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=" + apiKey,
+					type: "POST",
+					data: JSON.stringify(data),
+					dataType: "JSON",
+					contentType: "application/json",
+					accept: "application/json",
+					success: function (result) { console.log("결과: ", result); },
+					error: function (error) { console.log("에러: ", error); },
+				});
+			};
 		</script>
 	</body>
 </html>

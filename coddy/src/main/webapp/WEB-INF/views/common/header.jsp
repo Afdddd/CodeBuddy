@@ -44,6 +44,8 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- Popper JS -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <!-- TWAK 키값 -->
+    <script src="${ pageContext.request.contextPath }/resources/js/twak.js"></script>
     <style>
         div {box-sizing:border-box;}
         #header {
@@ -215,11 +217,12 @@
     <br clear="both">
     <!--Start of Tawk.to Script-->
     <script type="text/javascript">
+        /* import { TWAK_KEY } from '${ pageContext.request.contextPath }/resources/js/twak.js'; */
         var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
         (function(){
             var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
             s1.async=true;
-            s1.src='https://embed.tawk.to/6564316e1db16644c554f85e/1hg7m2673';
+            s1.src='https://embed.tawk.to/' + TWAK_KEY;
             s1.charset='UTF-8';
             s1.setAttribute('crossorigin','*');
             s0.parentNode.insertBefore(s1,s0);
