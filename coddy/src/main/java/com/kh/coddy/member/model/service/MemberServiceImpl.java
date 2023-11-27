@@ -1,21 +1,9 @@
 package com.kh.coddy.member.model.service;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.HashMap;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.member.model.dao.MemberDao;
 import com.kh.coddy.member.model.vo.Member;
@@ -36,4 +24,5 @@ public class MemberServiceImpl implements MemberService{
 	@Override public String findId(Member findMember) { return memberDao.findId(sqlSession, findMember); }
 	@Override public int findPwd(Member findMember) { return memberDao.findPwd(sqlSession, findMember); }
 	@Override public int setNewPassword(Member newMember) { return memberDao.setNewPassword(sqlSession, newMember); }
+	@Override public String findEmail(Member findMember) { return memberDao.findEmail(sqlSession, findMember); }
 }

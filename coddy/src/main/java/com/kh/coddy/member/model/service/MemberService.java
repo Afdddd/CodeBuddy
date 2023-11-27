@@ -27,4 +27,6 @@ public interface MemberService {
 	int findPwd(Member findMember);
 
 	int setNewPassword(Member newMember);
+
+	String findEmail(Member findMember);
 }

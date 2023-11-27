@@ -98,7 +98,7 @@
 		.button--nina:hover > span:nth-child(10) { -webkit-transition-delay: 0.45s; transition-delay: 0.45s; }
 
 		/* 회원가입 스타일 */
-		.innerOuter { border-radius: 30px; border: 1px solid #e5ddff; padding: 7%; }
+		.innerOuter { border-radius: 30px; border: 1px solid #e5ddff; padding: 3%; }
 	</style>
 	</head>
 	<body>
@@ -136,6 +136,9 @@
 								</div>
 							</div>
 						</div>
+						<br>
+						<label for="memberName"> &nbsp Infomation : </label>
+	                    <textarea class="form-control" id="memberInfo" placeholder="간단 자기소개" name="memberInfo"></textarea> <br>
 						<br>
 						<div align="center" style="display:flex;">
 							<button type="button" class="button button--nina button--border-thin button--round-s" data-text="이용약관" onclick="" style="margin:auto; display:block;"><span>이</span><span>용</span><span>약</span><span>관</span></button>

@@ -184,7 +184,7 @@
                         </div>
                         <br>
                       	<div align="center">
-                      		<button type="button" class="loginByCompany">
+                      		<button type="button" class="loginByCompany" onclick="location.href='loginPage.co'">
 								<span class="loginByCompany__text">기업전용 로그인</span>
 								<span class="loginByCompany__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="loginByCompanySvg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
 							</button>

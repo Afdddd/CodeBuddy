@@ -154,7 +154,8 @@ public class MemberController {
 		Member findMember = new Member(); findMember.setMemberEmail(memberEmail); findMember.setMemberName(memberName); int result = memberService.findPwd(findMember);
 		if(result > 0) { sr.setSeed(System.currentTimeMillis()); StringBuffer sb = new StringBuffer();
 			for(int i=0; i<10; i++) { sb.append(chars.charAt(sr.nextInt(chars.length()))); }
-			SimpleMailMessage message = new SimpleMailMessage(); message.setTo(memberEmail);
+			String to = memberService.findEmail(findMember);
+			SimpleMailMessage message = new SimpleMailMessage(); message.setTo(to);
 			message.setCc("coddy@coddy.com"); message.setSubject("Coddy 사이트 새 비밀번호 입니다."); message.setText("새 비밀번호는 " + sb.toString() + "입니다."); mailSender.send(message);
 			Member newMember = new Member(); newMember.setMemberEmail(memberEmail); newMember.setMemberPwd(pbkdf2.encode(sb.toString()));
 			int answer = memberService.setNewPassword(newMember);
