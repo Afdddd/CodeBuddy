@@ -152,20 +152,18 @@
             </div>
             <div id="header_1_right">
                 <c:choose>
-                <c:when test="${empty sessionScope.loginMember and empty sessionScope.nickname}">
+                <c:when test="${empty sessionScope.loginMember}">
                     <a href="signup.me">회원가입</a>
                     <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
                 </c:when>
                	<c:otherwise>
+               		<label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;
+               		<a href="myPage.me">마이페이지</a>
                     <c:choose>
-                        <c:when test="${not empty sessionScope.loginMember}">
-                            <label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;
-                            <a href="myPage.me">마이페이지</a>
+                        <c:when test="${empty sessionScope.isKakao}">
                             <a href="logout.me">로그아웃</a>
                         </c:when>
                         <c:otherwise>
-                            <label>${sessionScope.nickname}님 환영합니다</label> &nbsp;&nbsp;
-                            <a href="">마이페이지</a>
                             <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= kakaoLoginKey %>&logout_redirect_uri=http://localhost:8082/coddy/kakaoLogout.me">로그아웃</a>
                         </c:otherwise>
                     </c:choose>

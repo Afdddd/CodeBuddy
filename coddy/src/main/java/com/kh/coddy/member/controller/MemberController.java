@@ -66,11 +66,12 @@ public class MemberController {
 		if(checkMember == null) {
 			kakaoMember.setMemberPwd(pbkdf2.encode("000000"));
 			int result = memberService.insertMember(kakaoMember);
-			if(result > 0) { session.setAttribute("alertMsg", kakaoMember.getMemberName() + "님 환영합니다! 최초 비밀번호는 000000입니다. 변경해주세요!"); return "redirect:/"; }
+			if(result > 0) { session.setAttribute("loginMember", memberService.loginMember(kakaoMember)); session.setAttribute("isKakao", "true"); session.setAttribute("alertMsg", kakaoMember.getMemberName() + "님 환영합니다! 최초 비밀번호는 000000입니다. 변경해주세요!"); return "redirect:/"; }
 			else { session.setAttribute("errorMsg", "카카오 로그인 실패"); return "common/errorPage"; }
 		}
 		else {
 			session.setAttribute("loginMember", checkMember);
+			session.setAttribute("isKakao", "true");
 			session.setAttribute("alertMsg", checkMember.getMemberName() + "님 환영합니다!");
 			return "redirect:/";
 		}
