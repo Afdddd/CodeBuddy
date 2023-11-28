@@ -153,8 +153,17 @@
             <div id="header_1_right">
                 <c:choose>
                 <c:when test="${empty sessionScope.loginMember}">
-                    <a href="signup.me">회원가입</a>
-                    <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
+                    <c:choose>
+                    <c:when test="${empty sessionScope.loginCompany}">
+                        <a href="signup.me">회원가입</a>
+                        <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
+                    </c:when>
+                    <c:otherwise>
+                        <label>${sessionScope.loginCompany.companyName} 기업 로그인중</label> &nbsp;&nbsp;
+                        <a href="myPage.co">마이페이지</a>
+                        <a href="logout.co">로그아웃</a>
+                    </c:otherwise>
+                    </c:choose>
                 </c:when>
                	<c:otherwise>
                		<label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;

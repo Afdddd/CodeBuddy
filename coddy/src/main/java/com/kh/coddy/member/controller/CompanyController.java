@@ -2,6 +2,7 @@ package com.kh.coddy.member.controller;
 
 import java.io.IOException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.parser.ParseException;
@@ -36,9 +37,9 @@ public class CompanyController {
 	@Autowired private JavaMailSender mailSender;
 	private final int[] AUTH_KEY = { 1, 3, 7, 1, 3, 7, 1, 3, 5 };
 	
-	@GetMapping(value="loginPage.co") public String loginPageCompany(HttpSession session) { if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } else { return "company/login"; } }
+	@GetMapping(value="loginPage.co") public String loginPageCompany(HttpSession session) { if(session.getAttribute("loginMember") != null && session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } else { return "company/login"; } }
 	@GetMapping(value="signupPage.co") public String signupPageCompany(HttpSession session) { 
-		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
+		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
 		else { 
 			String gKey = "";
 			try { gKey = Keys.read(new ClassPathResource("keys/recaptcha2.json").getURL().getPath(), "key"); }
@@ -70,9 +71,28 @@ public class CompanyController {
 		else { return "failed"; }
 	}
 	@PostMapping(value="signup.co") public String signup(Company c, HttpSession session, Model model) {
-		System.out.println(c);
-		c.setCompanyPwd(pbkdf2.encode(c.getCompanyPwd()));
-		int result = companyService.insertCompany(c); 
-		if(result > 0) { log.info("insertCompanyId={}", c.getCompanyId()); session.setAttribute("alertMsg", "성공적으로 회원가입이 완료되었습니다. 로그인을 진행해주세요."); return "redirect:/loginPage.co"; } 
-		else { model.addAttribute("errorMsg", "회원가입 실패"); return "common/errorPage"; } }
+		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
+		else { c.setCompanyPwd(pbkdf2.encode(c.getCompanyPwd()));
+			int result = companyService.insertCompany(c); 
+			if(result > 0) { log.info("insertCompanyId={}", c.getCompanyId()); session.setAttribute("alertMsg", "성공적으로 회원가입이 완료되었습니다. 로그인을 진행해주세요."); return "redirect:/loginPage.co"; } 
+			else { model.addAttribute("errorMsg", "회원가입 실패"); return "common/errorPage"; } } }
+	@PostMapping(value="login.co") public String login(Company c, HttpSession session, Model model, HttpServletRequest request) {
+		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
+		else {
+			Company loginCompany = companyService.login(c);
+			if((loginCompany==null) || !(pbkdf2.matches(c.getCompanyPwd(), loginCompany.getCompanyPwd()))) { model.addAttribute("errorMsg","로그인 실패!"); return "common/errorPage"; }
+			else {
+				session.setAttribute("loginCompany", loginCompany);
+				session.setAttribute("alertMsg", "기업 로그인 성공");
+				log.info("loginCompany={}, ip={}",loginCompany, request.getRemoteAddr());
+				return "redirect:/";
+			}
+		}
+	}
+	@GetMapping(value="logout.co") public String logout(HttpSession session) { 
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "이미 로그인된 회원이 있습니다."); }
+		else if(session.getAttribute("loginCompany") != null) { session.removeAttribute("loginCompany"); session.setAttribute("alertMsg", "로그아웃됨"); }
+		else { session.setAttribute("alertMsg", "잘못된 요청입니다."); }
+		return "redirect:/";
+	}
 }

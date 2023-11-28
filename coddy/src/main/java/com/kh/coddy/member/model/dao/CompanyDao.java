@@ -9,4 +9,5 @@ import com.kh.coddy.member.model.vo.Company;
 public class CompanyDao {
 	public int companyCheck(SqlSessionTemplate sqlSession, String id) { return sqlSession.selectOne("companyMapper.companyCheck", id); }
 	public int insertCompany(SqlSessionTemplate sqlSession, Company c) { return sqlSession.insert("companyMapper.insertCompany", c); }
+	public Company login(SqlSessionTemplate sqlSession, Company c) { return sqlSession.selectOne("companyMapper.loginCompany", c); }
 }

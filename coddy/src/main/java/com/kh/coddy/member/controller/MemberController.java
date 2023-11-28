@@ -56,6 +56,7 @@ public class MemberController {
 	
 	@GetMapping(value="/kakaoLogin.me")
 	public String KakakoLogin(String code, HttpSession session) {
+		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; }
 		String kakaoClientKey = "";
 		try { kakaoClientKey = Keys.read(new ClassPathResource("keys/kakaoLogin.json").getURL().getPath(), "key.kakaoLogin"); }
 		catch (IOException | ParseException e) { e.printStackTrace(); }
@@ -78,6 +79,8 @@ public class MemberController {
 	
 	@GetMapping(value="kakaoLogout.me")
 	public String kakaoLogout(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인후 이용해주세요."); return "redirect:/"; }
+		if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "기업 로그아웃후 이용해주세요."); return "redirect:/"; }
 		session.invalidate();
 		return "redirect:/";				
 	}
@@ -215,12 +218,13 @@ public class MemberController {
 	}
 	
 	@GetMapping(value="signup.me") public String signup(HttpSession session) {
-		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "로그아웃 후 이용해주세요."); return "redirect:/"; }
+		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; }
 		try { session.setAttribute("googleKey", Keys.read(new ClassPathResource("keys/recaptcha2.json").getURL().getPath(), "key")); } 
 		catch (IOException | ParseException e) { e.printStackTrace(); } 
 		return "member/signupPage"; }
 
-	@PostMapping(value="insert.me") public String insertMember(Member m, Model model, HttpSession session) { 
+	@PostMapping(value="insert.me") public String insertMember(Member m, Model model, HttpSession session) {
+		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; }
 		m.setMemberPwd(pbkdf2.encode(m.getMemberPwd()));
 		int result = memberService.insertMember(m); 
 		if(result > 0) { log.info("insertMemberId={}", m.getMemberId()); session.setAttribute("alertMsg", "성공적으로 회원가입이 완료되었습니다. 로그인을 진행해주세요."); return "redirect:/"; } 
@@ -230,6 +234,7 @@ public class MemberController {
 	
 	@PostMapping(value="/login.me")
 	public String loginMember(@ModelAttribute Member m, Model model, HttpSession session, HttpServletRequest request) {
+		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; }
 		Member loginMember = memberService.loginMember(m);
 		
 		if((loginMember==null) || !(pbkdf2.matches(m.getMemberPwd(), loginMember.getMemberPwd()))) { model.addAttribute("errorMsg","로그인 실패!"); return "common/errorPage"; }
@@ -270,7 +275,7 @@ public class MemberController {
 	}
 	
 	@GetMapping(value="findIdForm.me") public String findIdForm(HttpSession session) { 
-		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "이미 로그인 되어있습니다."); return "redirect:/"; }
+		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "이미 로그인 되어있습니다."); return "redirect:/"; }
 		else { return "member/findIdForm"; }
 	}
 	

@@ -14,4 +14,5 @@ public class CompanyServiceImpl implements CompanyService {
 	
 	@Override public int companyCheck(String id) { return companyDao.companyCheck(sqlSession, id); }
 	@Override public int insertCompany(Company c) { return companyDao.insertCompany(sqlSession, c); }
+	@Override public Company login(Company c) { return companyDao.login(sqlSession, c); }
 }
