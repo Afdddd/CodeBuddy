@@ -22,7 +22,29 @@ public class MemberServiceImpl implements MemberService{
 	@Override public int authMake(Auth auth) { return memberDao.authMake(sqlSession, auth); }
 	@Override public int authCheck(Auth auth) { return memberDao.authCheck(sqlSession, auth); }
 	@Override public String findId(Member findMember) { return memberDao.findId(sqlSession, findMember); }
+
+
+/*
+	@Override
+	public int updateMember(Member m, String webPath, String folderPath) {
+		return memberDao.updateMember(sqlSession, m, webPath, folderPath);
+	}
+*/
+	@Override
+	public int deleteMember(String memberId) {
+		
+		return memberDao.deleteMember(sqlSession, memberId);
+	}
+
+	@Override
+	public int PwdChangeForm(Member m) {
+		return memberDao.PwdChangeForm(sqlSession, m);
+	}
+
+
+
 	@Override public int findPwd(Member findMember) { return memberDao.findPwd(sqlSession, findMember); }
 	@Override public int setNewPassword(Member newMember) { return memberDao.setNewPassword(sqlSession, newMember); }
 	@Override public String findEmail(Member findMember) { return memberDao.findEmail(sqlSession, findMember); }
+
 }

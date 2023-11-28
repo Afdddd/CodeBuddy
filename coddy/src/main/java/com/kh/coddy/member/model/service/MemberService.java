@@ -25,6 +25,13 @@ public interface MemberService {
 	// id 찾기
 	String findId(Member findMember);
 
+	/*
+	int updateMember(Member m, String webPath, String folderPath);
+*/
+	int deleteMember(String memberId);
+
+	int PwdChangeForm(Member m);
+
 	// 실제 있는 계정정보인지 찾음
 	int findPwd(Member findMember);
 
