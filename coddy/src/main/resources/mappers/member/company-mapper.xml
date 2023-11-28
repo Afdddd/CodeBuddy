@@ -17,4 +17,5 @@
 		<result column="COMPANY_SALARY" property="companySalary"/>
 	</resultMap>
 	<select id="companyCheck" parameterType="string" resultType="_int">SELECT COUNT(*) FROM COMPANY WHERE COMPANY_ID=#{id}</select>
+	<insert id="insertCompany" parameterType="company">INSERT INTO COMPANY(COMPANY_NO, COMPANY_NAME, COMPANY_OWNER, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_BNO, COMPANY_INFO, COMPANY_WORKER, COMPANY_SALARY) VALUES(SEQ_COMPANY.NEXTVAL, #{companyName}, #{companyOwner}, #{companyId}, #{companyPwd}, #{companyEmail}, #{companyBno}, #{companyInfo}, #{companyWorker}, #{companySalary})</insert>
 </mapper>

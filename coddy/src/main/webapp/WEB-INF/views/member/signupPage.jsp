@@ -194,6 +194,7 @@
 						emailAuth = $("#memberEmail").val();
 						$("#signupAuthCheckButton").attr("disabled", false);
 						$("#signupEmailAuthSpan").css("display: contents;");
+						$("#memberEmail").attr("readonly", true);
 						window.alert("인증번호 발급됨");
 					},
 					error: function() { console.log("이메일 인증 요청 실패"); }

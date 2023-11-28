@@ -1,17 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
 	<meta charset="UTF-8">
 	<title>기업 로그인</title>
+	<!-- JavaScript(Alertify) -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- CSS(Alertify) -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme(Alertify) -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme(Alertify) -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
 	<style>
 		@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400');
-
 		body, html { font-family: 'Source Sans Pro', sans-serif; background-color: #1d243d; padding: 0; margin: 0; }
-
 		#particles-js { position: absolute; width: 100%; height: 100%; }
-
 		.container{
 			margin: 0;
 			top: 50px;
@@ -143,6 +149,10 @@
 	</style>
 	</head>
 	<body>
+		<c:if test="${ not empty sessionScope.alertMsg }">
+			<script>alertify.alert("Alert", "${ sessionScope.alertMsg }", function() { alertify.success("okay"); });</script>
+			<c:remove var="alertMsg" scope="session" />
+		</c:if>
 			<div id="articles-js">
 				<div class="animated bounceInDown">
 					<div class="container">
