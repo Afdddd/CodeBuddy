@@ -52,7 +52,7 @@
 						<br><br>
 						<div style="width: 100%;">
 							<span>이름</span>
-							<input type="text" name="memberName" id="memberName" placeholder="id" class="form-control">
+							<input type="text" name="memberName" id="memberName" placeholder="name" class="form-control">
 						</div>
 						<br> <br> <br> <br>
 						<div style="width: 100%;">
@@ -65,7 +65,7 @@
 				<br><br><br><br>
 				<div align="center" class="buttonLine">
 					<button type="button" class="btn-donate" onclick="findId();">확인하기</button>&nbsp;&nbsp;
-					<button type="button" class="btn-donate" onclick="">비밀번호 찾기</button>
+					<button type="button" class="btn-donate" onclick="findPwd();">비밀번호 찾기</button>
 				</div>
 			</div>
 		</div>
@@ -74,13 +74,26 @@
 				$("html").animate({scrollTop : $("#idFinder").offset().top}, 800);
 			})
 			function findId() {
-				$.ajax({
-					url: "findId.me",
-	    			type: "post",
-	    			data: {memberName: $("#memberName").val(), memberEmail: $("#memberEmail").val()},
-	    			success: function(id) { if(id != "") { window.alert("고객님의 아이디는 " + id + "입니다."); } else { window.alert("해당하는 아이디가 없습니다."); } },
-	    			error: function() { console.log("아이디 중복 체크 실패"); }
-				})
+				if(($("#memberName").val() != "") && ($("#memberEmail").val() != "")) {
+					$.ajax({
+						url: "findId.me",
+						type: "post",
+						data: {memberName: $("#memberName").val(), memberEmail: $("#memberEmail").val()},
+						success: function(id) { if(id != "") { window.alert("고객님의 아이디는 " + id + "입니다."); } else { window.alert("해당하는 아이디가 없습니다."); } },
+						error: function() { console.log("아이디 찾기 실패"); }
+					})
+				} else { window.alert("필수 입력사항입니다."); }
+			}
+			function findPwd() {
+				if(($("#memberName").val() != "") && ($("#memberEmail").val() != "")) {
+					$.ajax({
+						url: "findPwd.me",
+						type: "post",
+						data: {memberName: $("#memberName").val(), memberEmail: $("#memberEmail").val()},
+						success: function(result) { if(result == "N") { window.alert("해당하는 계정이 없거나 잘못된 요청입니다."); } else { window.alert("새 비밀번호가 이메일로 전송되었습니다."); location.href="/coddy/" } },
+						error: function() { console.log("비밀번호 찾기 실패"); }
+					})
+				} else { window.alert("필수 입력사항입니다."); }
 			}
 		</script>
 	</body>
