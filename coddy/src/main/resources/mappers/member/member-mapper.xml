@@ -17,9 +17,6 @@
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet"> SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId} AND MEMBER_DELETE IS NULL </select>
 	<select id="memberCheck" parameterType="string" resultType="_int">SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID=#{checkId}</select>
 
-	<insert id="insertMember" parameterType="member">INSERT INTO MEMBER(MEMBER_NO, MEMBER_ID, MEMBER_PWD, MEMBER_EMAIL, MEMBER_NAME) VALUES(SEQ_MEMBER.NEXTVAL, #{memberId}, #{memberPwd}, #{memberEmail}, #{memberName})</insert>
-	<select id="findId" parameterType="member" resultType="string">SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail} AND MEMBER_NAME=#{memberName}</select>
-
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER
 			SET MEMBER_NAME = #{memberName}
@@ -41,7 +38,6 @@
 		 WHERE MEMBER_ID = #{memberId}
 		   AND MEMBER_DELETE IS NULL
 	</update>
-</mapper>
 
 
 	<insert id="insertMember" parameterType="member">INSERT INTO MEMBER(MEMBER_NO, MEMBER_ID, MEMBER_PWD, MEMBER_EMAIL, MEMBER_NAME, MEMBER_INFO) VALUES(SEQ_MEMBER.NEXTVAL, #{memberId}, #{memberPwd}, #{memberEmail}, #{memberName}, #{memberInfo})</insert>
