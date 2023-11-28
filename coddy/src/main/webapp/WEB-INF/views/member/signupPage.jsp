@@ -141,7 +141,9 @@
 	                    <textarea class="form-control" id="memberInfo" placeholder="간단 자기소개" name="memberInfo"></textarea> <br>
 						<br>
 						<div align="center" style="display:flex;">
+							<label class="form-check-label"><input type="checkbox" id="check1" class="form-check-input" name="" value="">동의합니다</label>
 							<button type="button" class="button button--nina button--border-thin button--round-s" data-text="이용약관" onclick="" style="margin:auto; display:block;"><span>이</span><span>용</span><span>약</span><span>관</span></button>
+							<label class="form-check-label"><input type="checkbox" id="check2" class="form-check-input" name="" value="">동의합니다</label>
 							<button type="button" class="button button--nina button--border-thin button--round-s" data-text="제3자 정보제공 동의약관" onclick="" style="margin:auto; display:block;"><span>제</span><span>3</span><span>자</span><span> </span><span>정</span><span>보</span><span>제</span><span>공</span><span>약</span><span>관</span></button>
 						</div><br>
 						<div align="center"><div class="g-recaptcha" data-sitekey="${ sessionScope.googleKey }"></div></div>
@@ -179,6 +181,7 @@
 			function onGoogle() {
     			if (grecaptcha.getResponse().length == 0) { alert('reCAPTCHA를 확인해 주세요.'); return false; }
 				if ($("#memberPwd").val() != $("#checkPwd").val()) { alert('비밀번호가 서로 달라요.'); return false; }
+				if ((!($("#check1").is(':checked'))) || (!($("#check2").is(':checked')))) { alert('필수 약관에 동의해주세요.'); return false; }
                 return true;
             }
 			function authMake() {

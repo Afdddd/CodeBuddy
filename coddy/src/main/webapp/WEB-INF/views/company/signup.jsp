@@ -12,7 +12,7 @@
 	<style>
 		.signupOuter { width: 100%; height: 60%; }
 		.signupInner { border-radius: 10px; border: 2px solid wheat; opacity: 0.7; margin-left: 5%; margin-top: 5%; margin-bottom: 5%; margin-right: 5%; width: 90%; text-align: center; text-decoration-color: coral; padding: 3%; }
-		.signupOther { display: flex; }
+		.signupOther { align: center }
 		.signupInputs { width: 100%; }
 		.signupOneLine { display: flex; }
 		.signupOneLine a { width: 25%; }
@@ -148,7 +148,7 @@
 							<div>
 								<label for="companyBno">사업자 등록번호</label>
 								<div class="signupOneLine">
-									<input type="number" name="comapnyBno" id="companyBno" class="signupInputs form-control" placeholder="사업자 등록번호 입력 -없이 입력" max="9999999999" min="0000000000" required>
+									<input type="number" name="companyBno" id="companyBno" class="signupInputs form-control" placeholder="사업자 등록번호 입력 -없이 입력" max="9999999999" min="0000000000" required>
 									<a onclick="onBno();" id="onBno"><span></span><span></span><span></span><span></span>사업자 번호 확인</a>
 								</div>
 							</div>
@@ -156,9 +156,10 @@
 						<div class="signupOther">
 							<div align="center"><div class="g-recaptcha" data-sitekey="${ sessionScope.gKey }"></div></div>
 						</div>
+						<br>
 						<div class="signupButtonArea">
-							<button type="submit">가입하기</button>
-							<button type="button" onclick="backToLogin();">로그인 페이지로 돌아가기</button>
+							<button type="submit" class="btn btn-primary"><span class="spinner-grow spinner-grow-sm"></span>&nbsp;가입하기</button>
+							<button type="button" class="btn btn-primary" onclick="backToLogin();">로그인 페이지로 돌아가기</button>
 						</div>
 					</form>
 				</div>
@@ -173,6 +174,7 @@
 			let checkEmail = false;
 			let checkPwd = false;
 			let checkBno = false;
+			let bnoStatus = "-1";
 			function onSubmit() {
 				checkGoogle = onGoogle();
 				if(checkEmail != true) { alert("Email 인증 필요"); $("#companyEmail").focus; return false; }
@@ -229,7 +231,15 @@
 					dataType: "JSON",
 					contentType: "application/json",
 					accept: "application/json",
-					success: function (result) { console.log("결과: ", result); },
+					success: function (result) {
+						console.log(result.data[0]);
+						bnoStatus = result.data[0].b_stt_cd;
+						if(bnoStatus == "") { alert("미등록 사업자입니다."); checkBno = false; }
+						else if(bnoStatus == "02") { alert("휴업자입니다."); checkBno = false; }
+						else if(bnoStatus == "03") { alert("폐업자입니다."); checkBno = false; }
+						else if(bnoStatus == "01") { alert("확인이 완료되었습니다."); $("#companyBno").attr("readonly", true); $("#onBno").removeAttr("onclick"); checkBno = true; }
+						else { alert("알수없는 사업자 번호."); checkBno = false; }
+					},
 					error: function (error) { console.log("에러: ", error); },
 				});
 			};
