@@ -26,4 +26,12 @@ public interface MemberService {
 	int authCheck(Auth auth);
 
 	String findId(Member findMember);
+	
+
+	/*
+	int updateMember(Member m, String webPath, String folderPath);
+*/
+	int deleteMember(String memberId);
+
+	int PwdChangeForm(Member m);
 }
