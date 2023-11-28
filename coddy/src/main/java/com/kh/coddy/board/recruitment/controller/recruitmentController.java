@@ -10,4 +10,9 @@ public class recruitmentController {
 	public String recruitmentList() {
 		return "board/recruitment/recruitmentListView";
 	}
+	
+	@GetMapping("detail.rec")
+	public String recruitmentDetail() {
+		return "board/recruitment/recruitmentDetailView";
+	}
 }

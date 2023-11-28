@@ -1,16 +1,11 @@
 package com.kh.coddy.member.model.service;
 
-import java.util.HashMap;
-
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.member.model.vo.Member;
 
 public interface MemberService {
 	
 	// 카카오 로그인
-	String getAccessToken(String code);
-	
-	HashMap<String, Object> getUserInfo(String access_Token);
 	
 	// 로그인
 	Member loginMember(Member m);
@@ -21,12 +16,14 @@ public interface MemberService {
 	// 가입하는중
 	int insertMember(Member m);
 
+	// 가입간 인증번호 생성
 	int authMake(Auth auth);
 
+	// 이메일로 넘어간 애랑 비교하기위해 db에서 찾아옴
 	int authCheck(Auth auth);
 
+	// id 찾기
 	String findId(Member findMember);
-	
 
 	/*
 	int updateMember(Member m, String webPath, String folderPath);
@@ -34,4 +31,13 @@ public interface MemberService {
 	int deleteMember(String memberId);
 
 	int PwdChangeForm(Member m);
+
+	// 실제 있는 계정정보인지 찾음
+	int findPwd(Member findMember);
+
+	// 새 비밀번호 설정해줌
+	int setNewPassword(Member newMember);
+
+	// 이제 db에 등록된 이메일로 보내주기 위해 가져옴
+	String findEmail(Member findMember);
 }

@@ -30,6 +30,22 @@
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 	<!-- Semantic UI theme(Alertify) -->
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
+    <!-- chat.js -->
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="${ pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <!-- datepicker range -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <!-- 데이터피커쪽 관련-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <!-- TWAK 키값 -->
+    <script src="${ pageContext.request.contextPath }/resources/js/twak.js"></script>
     <style>
         div {box-sizing:border-box;}
         #header {
@@ -180,7 +196,7 @@
                         </div>
                         <br>
                       	<div align="center">
-                      		<button type="button" class="loginByCompany">
+                      		<button type="button" class="loginByCompany" onclick="location.href='loginPage.co'">
 								<span class="loginByCompany__text">기업전용 로그인</span>
 								<span class="loginByCompany__icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" viewBox="0 0 24 24" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" height="24" fill="none" class="loginByCompanySvg"><line y2="19" y1="5" x2="12" x1="12"></line><line y2="12" y1="12" x2="19" x1="5"></line></svg></span>
 							</button>
@@ -199,5 +215,19 @@
         </div>
     </div>
     <br clear="both">
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        /* import { TWAK_KEY } from '${ pageContext.request.contextPath }/resources/js/twak.js'; */
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+            s1.async=true;
+            s1.src='https://embed.tawk.to/' + TWAK_KEY;
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
 </body>
 </html>

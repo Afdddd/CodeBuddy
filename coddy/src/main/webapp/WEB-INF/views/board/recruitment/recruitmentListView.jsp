@@ -80,7 +80,7 @@
     margin-right: 20px;
   }
 
-  /* 이미지 영역 사이즈 조절 */
+  /* swiper 이미지 영역 사이즈 조절 */
   .swiper {
       width: 80%;
       height: 200px;
@@ -163,6 +163,7 @@
     .card-list{
       width: 100%;
       margin-top: 50px;
+      border-top: 1px solid lightgray;
             
     }
 
@@ -191,7 +192,7 @@
       background-color: white;
     }
 
-    /* 체크박스 */
+    /* 모집 체크박스 */
     .checkbox-container {
       display: inline-block;
       position: relative;
@@ -209,7 +210,7 @@
       height: 0;
       width: 0;
     }
-
+  
     .search-checkmark {
       position: absolute;
       top: 0;
@@ -339,9 +340,21 @@
       100% {
         transform: scale(1);
       }
-}
-    
+    }
 
+    .write_button {
+      font-family: monospace;
+      background-color: #5271FF;
+      color: #f3f7fe;
+      border: none;
+      border-radius: 8px;
+      width: 80px;
+      height: 35px;
+      transition: .3s;
+      float: right;
+      margin-right: 35px;
+      font-size: 12px;
+    }
 
 
 </style>
@@ -433,17 +446,20 @@
 
         <div class="search-bar">
 
-          <label class="checkbox-container" style="text-align: center;">
-            <span style="vertical-align: auto;">모집중</span>
-            <input class="custom-checkbox" checked="" type="checkbox">
-              <span class="search-checkmark"></span>
+            
             <input class="search-input" placeholder="기술스택">
             <input class="search-input" placeholder="포지션">
             <input class="search-input" placeholder="프로젝트 이름">    
-        </label>
-        
-        </div>
 
+            <label class="checkbox-container" style="text-align: center;">
+              <span style="vertical-align: auto;">모집중</span>
+               <input class="custom-checkbox" checked="" type="checkbox">
+              <span class="search-checkmark"></span>
+            </label>            
+        </div>
+        <div class="">
+          <button class="write_button" onclick="location.href='detail.rec'">게시글 작성</button>
+        </div>
         <div class="content_2">
           <div class="card-list">
 
