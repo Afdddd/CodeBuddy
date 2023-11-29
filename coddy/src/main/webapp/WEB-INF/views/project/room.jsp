@@ -28,7 +28,7 @@
       background-color: #5271FF;
     }
     .outer{
-      width: 80%;
+      width: 70%;
       height: 80%;
       margin: auto;
     }
@@ -118,11 +118,11 @@
       height: 100%;
     }    
 
-   
+  
     /* 카드 */
     .card {
-      width: 190px;
-      height: 220px;
+      width: 170px;
+      height: 200px;
       background-image: linear-gradient(144deg,#8608b4, #492fed 60%,#bd6fda);
       border: none;
       border-radius: 10px;
@@ -147,8 +147,8 @@
       color: white;
       display: block;
       text-align: center;
-      padding-top: 5px;
       font-size: 1em;
+      margin-bottom: 0px;
     }
     .card .img {
       width: 70px;
@@ -156,7 +156,6 @@
       background: #e8e8e8;
       border-radius: 100%;
       margin: auto;
-      margin-top: 10px;
     }
     .card button {
       padding: 8px 25px;
@@ -236,29 +235,39 @@
 </style>
 
 <script>
-  // FullCalendar
-  document.addEventListener('DOMContentLoaded', function() {
+  
+  function open_fc() {
   var calendarEl = document.getElementById('calendar');
 
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    headerToolbar: {
-      left: 'prev,next today',
-      center: 'title',
-      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-    },
-    locale: 'ko', // 한국어 설정
-    timeZone: 'Asia/Seoul',
-    selectable: true,
-    droppable : true,
-    editable : true,
-    dateClick:function(info){
-      console.log(info.dateStr);
-      console.dir(info);
-    }
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      headerToolbar: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+      },
+      locale: 'ko', // 한국어 설정
+      timeZone: 'Asia/Seoul',
+      selectable: true,
+      droppable : true,
+      editable : true,
+      dateClick:function(info){
+        console.log(info.dateStr);
+        console.dir(info);
+      }
 
-  });
+    });
 
   calendar.render();
+};
+
+$(function(){
+  $('#calendar_modal').click(function(){
+    $("#myModal").modal();
+    open_fc()
+  });
+
+  console.log($(".card").children('.job').text());
+  
 });
   </script>
 </head>	
@@ -271,12 +280,7 @@
       <br>
       <div id="content_1">
 
-
-          <div class="swiper">
-            <!-- Additional required wrapper -->
-            <div class="swiper-wrapper">
-                <!-- Slides -->
-                
+        <div id="cards">
             
 
 
@@ -344,72 +348,10 @@
             <p class="job"> Back-End</p>
             <button> 프로필
             </button>
-          </div>
-          <div class="card">
-            <div class="card-border-top">
-            </div>
-            <div class="img">
-            </div>
-            <span> 김인엽</span>
-            <p class="job"> Back-End</p>
-            <button> 프로필
-            </button>
-          </div>
-          <div class="card">
-            <div class="card-border-top">
-            </div>
-            <div class="img">
-            </div>
-            <span> 김인엽</span>
-            <p class="job"> Back-End</p>
-            <button> 프로필
-            </button>
-          </div>
-          
-
-          <div class="card">
-            <div class="card-border-top">
-            </div>
-            <div class="img">
-            </div>
-            <span> 김인엽</span>
-            <p class="job"> Back-End</p>
-            <button> 프로필
-            </button>
           </div> 
         </div>
-        
-        <!-- If we need pagination -->
-        <div class="swiper-pagination"></div>
-    
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-    
-        <!-- If we need scrollbar -->
-        <div class="swiper-scrollbar"></div>
-        <script>
-          // 슬라이더 동작 정의
-          const swiper = new Swiper('.swiper', {
-              autoplay : {
-                  delay : 3000 // 3초마다 이미지 변경
-              },
-              loop : true, //반복 재생 여부
-              slidesPerView : 1, // 이전, 이후 사진 미리보기 갯수
-              pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
-                  el: '.swiper-pagination',
-                  clickable: true
-              },
-              navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
-                  prevEl: '.swiper-button-prev',
-                  nextEl: '.swiper-button-next'
-              }
-          }); 
-      </script>
-    </div>
-        
-
-      </div> 
+      </div>
+   
       <div id="content_2">
         <div id="chat_area">         
           <div class="chat_card">
@@ -428,7 +370,7 @@
           <div id="content_4">
             <div id="countdown">D-12</div>
             <div id="calendar_area" align="center">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+              <button type="button" id="calendar_modal">
                 일정관리
               </button>
               
@@ -447,7 +389,7 @@
         </div>
       </div> 
       <div class="modal" id="myModal">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
       
             <!-- Modal Header -->
@@ -470,7 +412,7 @@
         </div>
       </div>
     </div>
-    
+   
     
 
   </body>
