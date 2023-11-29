@@ -46,6 +46,8 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <!-- TWAK 키값 -->
     <script src="${ pageContext.request.contextPath }/resources/js/twak.js"></script>
+    <!-- icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <style>
         div {box-sizing:border-box;}
         #header {
@@ -248,32 +250,32 @@
             </div>
             <div id="header_1_right">
                 <c:choose>
-                <c:when test="${empty sessionScope.loginMember}">
-                    <c:choose>
-                    <c:when test="${empty sessionScope.loginCompany}">
-                        <a href="signup.me">회원가입</a>
-                        <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
+                    <c:when test="${empty sessionScope.loginMember}">
+                        <c:choose>
+                            <c:when test="${empty sessionScope.loginCompany}">
+                                <a href="signup.me">회원가입</a>
+                                <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
+                            </c:when>
+                            <c:otherwise>
+                                <label>${sessionScope.loginCompany.companyName} 기업 로그인중</label> &nbsp;&nbsp;
+                                <a href="myPage.co">마이페이지</a>
+                                <a href="logout.co">로그아웃</a>
+                            </c:otherwise>
+                        </c:choose>
                     </c:when>
-                    <c:otherwise>
-                        <label>${sessionScope.loginCompany.companyName} 기업 로그인중</label> &nbsp;&nbsp;
-                        <a href="myPage.co">마이페이지</a>
-                        <a href="logout.co">로그아웃</a>
+               	    <c:otherwise>
+                        <label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;
+                        <a href="myPage.me">마이페이지</a>
+                        <c:choose>
+                            <c:when test="${empty sessionScope.isKakao}">
+                                <a href="logout.me">로그아웃</a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= kakaoLoginKey %>&logout_redirect_uri=http://localhost:8082/coddy/kakaoLogout.me">로그아웃</a>
+                            </c:otherwise>
+                        </c:choose>
                     </c:otherwise>
-                    </c:choose>
-                </c:when>
-               	<c:otherwise>
-               		<label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;
-               		<a href="myPage.me">마이페이지</a>
-                    <c:choose>
-                        <c:when test="${empty sessionScope.isKakao}">
-                            <a href="logout.me">로그아웃</a>
-                        </c:when>
-                        <c:otherwise>
-                            <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= kakaoLoginKey %>&logout_redirect_uri=http://localhost:8082/coddy/kakaoLogout.me">로그아웃</a>
-                        </c:otherwise>
-                    </c:choose>
-                </c:otherwise>
-               </c:choose>
+                </c:choose>
             </div>
         </div>       
     </div>

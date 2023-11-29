@@ -112,4 +112,5 @@ public class CompanyController {
 		session.setAttribute("alertMsg", "요청 성공");
 		return "redirect:/loginPage.co";
 	}
+	@GetMapping(value="myPage.co") public String myPage(HttpSession session) { if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업전용 메뉴입니다."); return "redirect:/"; } if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "비로그인 상태입니다."); return "redirect:/"; } return "company/myPage"; }
 }
