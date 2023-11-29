@@ -21,15 +21,15 @@
             <p class="subtitle">무엇이든 작성해 보아요.</p>
             <br>
 
-            <form id="freeEnrollForm" method="post" action="insert.bo" enctype="multipart/form-data">
+            <form id="freeEnrollForm" method="post" action="freeInsert.bo" enctype="multipart/form-data">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" name="boardTitle" required></td>
+                        <td><input type="text" id="title" class="form-control" name="fBoardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginUser.userId }" name="boardWriter" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginUser.userId }" name="fBoardWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>

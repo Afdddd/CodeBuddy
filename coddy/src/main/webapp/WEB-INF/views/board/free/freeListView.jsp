@@ -62,7 +62,7 @@
             			
             			let bno = $(this).children(".bno").text();
             			
-            			location.href = "FreeDetail.bo?bno=" + bno;
+            			location.href = "freeDetail.bo?bno=" + bno;
             		});
             	});
             </script>
