@@ -168,6 +168,7 @@
 				</div>
 			</div>
 		</div>
+		<jsp:include page="../common/footer.jsp" />
 		<script>
 			$(function() {
 				$("html").animate({scrollTop : $(".signupOuter").offset().top}, 800);

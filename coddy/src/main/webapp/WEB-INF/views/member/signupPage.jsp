@@ -155,6 +155,7 @@
 	            </form>
 	        </div><br><br><hr>
 	    </div>
+		<jsp:include page="../common/footer.jsp" />
 	    <script>
 			let checkId = false;
 			let checkAuth = false;

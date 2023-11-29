@@ -98,7 +98,6 @@ public class CompanyController {
 	}
 	@GetMapping(value="findPassword.co") public String findPasswordPage(HttpSession session) { if(session.getAttribute("loginMember") != null || session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } else { return "company/findPasswordPage"; } }
 	@PostMapping(value="findIdAccess.co") public String findIdAccess(Company c, HttpSession session, HttpServletRequest req) {
-		Company readCompany = null;
 		String companyId = companyService.findIdAccess(c);
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setSubject("Coddy 사이트 요청하신 결과입니다.");
@@ -109,8 +108,8 @@ public class CompanyController {
 			int answer = companyService.setNewPassword(newCompany);
 			if(answer <= 0) { session.setAttribute("alertMsg", "요청 실패"); return "redirect:/loginPage.co"; } }
 		else { message.setText("아이디는 " + companyId + "입니다"); }
-		message.setTo(readCompany.getCompanyEmail()); mailSender.send(message);
+		message.setTo(c.getCompanyEmail()); mailSender.send(message);
 		session.setAttribute("alertMsg", "요청 성공");
-		return "redirect:/";
+		return "redirect:/loginPage.co";
 	}
 }

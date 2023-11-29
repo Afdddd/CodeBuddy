@@ -52,6 +52,7 @@
             <div class="swiper-scrollbar"></div>
         </div>
     </div>
+    <jsp:include page="common/footer.jsp" />
 
     <script>
         // 슬라이더 동작 정의

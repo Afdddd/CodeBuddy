@@ -69,6 +69,7 @@
 				</div>
 			</div>
 		</div>
+		<jsp:include page="../common/footer.jsp" />
 		<script>
 			$(function() {
 				$("html").animate({scrollTop : $("#idFinder").offset().top}, 800);
