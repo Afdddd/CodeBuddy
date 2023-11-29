@@ -25,12 +25,12 @@
             <div class="outerForm">
                 <div class="searchForm">
                     <div class="searchForm1">
-                        <div style="width: 100%; height: 60%;">
-                            <div></div>
-                            <div></div>
+                        <div style="width: 100%; height: 60%; margin: auto; display: flex;">
+                            <div style="width: 50%; height: 100%;"></div>
+                            <div style="width: 50%; height: 100%;"></div>
                         </div>
                         <div style="width: 100%; height: 40%;"></div>
-                    </div>
+                    </div><br>
                     <div class="searchForm2"></div>
                 </div>
                 <div class="hboardMain">

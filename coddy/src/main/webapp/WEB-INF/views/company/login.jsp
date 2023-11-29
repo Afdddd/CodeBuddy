@@ -171,7 +171,7 @@
 							</label>
 							-->
 							<a href="/coddy/">홈으로</a>
-							<a href="#" class="forgetpass">비밀번호 찾으러 가기</a>
+							<a href="findPassword.co" class="forgetpass">비밀번호 찾으러 가기</a>
 							<input type="submit" value="Sign in" class="btn1">
 						</form>
 						<a href="signupPage.co" class="dnthave">기업전용 회원 가입하러 가기</a>

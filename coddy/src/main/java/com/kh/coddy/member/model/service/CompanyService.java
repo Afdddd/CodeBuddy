@@ -6,4 +6,6 @@ public interface CompanyService {
 	int companyCheck(String id);
 	int insertCompany(Company c);
 	Company login(Company c);
+	String findIdAccess(Company c);
+	int setNewPassword(Company c);
 }

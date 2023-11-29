@@ -1,6 +1,7 @@
 package com.kh.coddy.member.controller;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,8 +33,8 @@ public class CompanyController {
 	@Autowired private CompanyService companyService;
 	@Autowired private MemberService memberService;
 	@Autowired private PasswordEncoder pbkdf2;
-	// private SecureRandom sr = new SecureRandom();
-	// private final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	private SecureRandom sr = new SecureRandom();
+	private final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 	@Autowired private JavaMailSender mailSender;
 	private final int[] AUTH_KEY = { 1, 3, 7, 1, 3, 7, 1, 3, 5 };
 	
@@ -93,6 +94,23 @@ public class CompanyController {
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "이미 로그인된 회원이 있습니다."); }
 		else if(session.getAttribute("loginCompany") != null) { session.removeAttribute("loginCompany"); session.setAttribute("alertMsg", "로그아웃됨"); }
 		else { session.setAttribute("alertMsg", "잘못된 요청입니다."); }
+		return "redirect:/";
+	}
+	@GetMapping(value="findPassword.co") public String findPasswordPage(HttpSession session) { if(session.getAttribute("loginMember") != null || session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } else { return "company/findPasswordPage"; } }
+	@PostMapping(value="findIdAccess.co") public String findIdAccess(Company c, HttpSession session, HttpServletRequest req) {
+		Company readCompany = null;
+		String companyId = companyService.findIdAccess(c);
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setSubject("Coddy 사이트 요청하신 결과입니다.");
+		if(req.getParameter("plusId").equals("true")) { sr.setSeed(System.currentTimeMillis()); StringBuffer sb = new StringBuffer();
+			for(int i=0; i<10; i++) { sb.append(chars.charAt(sr.nextInt(chars.length()))); } 
+			message.setText("아이디는 " + companyId + "이며, 새비밀번호는 " + sb.toString() + "입니다."); 
+			Company newCompany = new Company(); newCompany.setCompanyPwd(pbkdf2.encode(sb.toString())); newCompany.setCompanyEmail(c.getCompanyEmail()); newCompany.setCompanyBno(c.getCompanyBno());
+			int answer = companyService.setNewPassword(newCompany);
+			if(answer <= 0) { session.setAttribute("alertMsg", "요청 실패"); return "redirect:/loginPage.co"; } }
+		else { message.setText("아이디는 " + companyId + "입니다"); }
+		message.setTo(readCompany.getCompanyEmail()); mailSender.send(message);
+		session.setAttribute("alertMsg", "요청 성공");
 		return "redirect:/";
 	}
 }
