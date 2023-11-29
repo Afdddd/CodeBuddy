@@ -21,10 +21,11 @@
 	<!--  mybatis 관련 빈 등록 -->
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
 			<property name="configLocation" value="classpath:mybatis-config.xml" />
-			<!-- classpath:src/main/resources/ 폴더로부터 시작하는 경로를 지정 -->			
+			<!-- classpath:src/main/resources/ 폴더로부터 시작하는 경로를 지정 -->
+			
 			<property name="dataSource" ref="basicDataSource" />
-			<!--  ref: 객체타입을 초기화 할때 사용  -->									
-	</bean>	
+			<!--  ref: 객체타입을 초기화 할때 사용  -->								
+	</bean>
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
 			<constructor-arg ref="sqlSessionFactory"/>		
 	</bean>			

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-config.dtd">
@@ -18,9 +18,11 @@
     => 등록은 서버연동과 동시에 스프링이 제일 먼저 알아야하는 정보이기 때문에 
     root-config.xml에 기술 -->
 
+
     <mappers>
       <mapper resource="/mappers/member/member-mapper.xml"/>
       <mapper resource="/mappers/member/company-mapper.xml"/>
       <mapper resource="/mappers/auth/auth-mapper.xml"/>
     </mappers>
   </configuration>
+
