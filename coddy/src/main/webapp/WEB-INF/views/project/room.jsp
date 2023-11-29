@@ -9,72 +9,469 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bPopup/0.11.0/jquery.bpopup.min.js"></script>
 <link href='${ pageContext.request.contextPath }/resources/css/main.min.css' rel='stylesheet' />
 <script src='${ pageContext.request.contextPath }/resources/js/main.min.js'></script>
+<!-- jQuery 라이브러리 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<!-- 부트스트랩에서 제공하고 있는 스타일 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <style>
-    body {
-    margin: 40px 10px;
-    padding: 0;
-    font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
-    font-size: 14px;
-  }
+    html, body{
+      height: 100%;
+      margin: 0;
+    }
+    header{
+      width: 100%;
+      height: 5%;
+      background-color: #5271FF;
+    }
+    .outer{
+      width: 80%;
+      height: 80%;
+      margin: auto;
+    }
+    #content_1{
+      margin-top: 20px;
+      width: 100%;
+      height: 300px;
+      border: 1px solid lightgray;
+      border-radius: 10px;
+      box-sizing: border-box;
+      
+    }
 
-</style>
-</head>	
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
+    #content_2{
+      width: 100%;
+      height: 500px;
+    }
 
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      headerToolbar: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-      },
-      locale: 'ko', // 한국어 설정
-      timeZone: 'Asia/Seoul',
-      selectable: true,
-      droppable : true,
-	  editable : true,
-      dateClick:function(info){
-        console.log(info.dateStr);
-        console.dir(info);
-      }
+    #card-scroll{
+      margin: auto;
+      width: 98%;
+      height: 250px;
+      margin: auto;
+      line-height: 100%;
+    }
 
-    });
+    #chat_area{
+      float: left;
+      width: 55%;
+      height: 100%;
+    }
 
-    calendar.render();
-  });
-    </script>
-  </head>
-  <body>
-    <jsp:include page="../common/header.jsp" />	
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-      Open Calendar
-    </button>
+    #content_3{
+      width: 44%;
+      height: 100%;
+      float: right;
+    }
+
+    #countdown{
+      text-align: center;
+      line-height: 200px;
+      width: 30%;
+      height: 200px;
+      display: inline-block;
+    }
+    #calendar_area{
+      width: 68%;
+      display: inline-block;
+      height: 200px;
+    }
+    #calendar_area>button{
+      width: 100%;
+      height: 100%;
+    }
+    #map_area{
+      height: 80px;
+      width: 100%;
+      text-align: center;
+      line-height: 80px;
+    }
+    #map{
+      height: 60px;
+      width: 100%;
+    }
+    #map>button{
+      height: 100%;
+      width: 100%;
+    }
+    #content_6{
+      height: 100px;
+      margin: 0px;
+    }
+    #exit{
+      width: 15%;
+      height: 100%;
+    }
+    #team_info{
+      width: 20%;
+      height: 100%;
+    }
+    #project_info{
+      width: 20%;
+      height: 100%;
+    }
+    #start{
+      width: 40%;
+      height: 100%;
+    }    
 
    
+    /* 카드 */
+    .card {
+      width: 190px;
+      height: 220px;
+      background-image: linear-gradient(144deg,#8608b4, #492fed 60%,#bd6fda);
+      border: none;
+      border-radius: 10px;
+      padding-top: 10px;
+      position: relative;
+      margin: auto;
+      font-family: inherit;
+      float: left;
+      margin: 10px;
+    }
+    .card span {
+      font-weight: 600;
+      color: white;
+      text-align: center;
+      display: block;
+      padding-top: 10px;
+      font-size: 1.3em;
+    }
 
-    <div class="modal" id="myModal">
-      <div class="modal-dialog modal-xl">
-        <div class="modal-content">
+    .card .job {
+      font-weight: 400;
+      color: white;
+      display: block;
+      text-align: center;
+      padding-top: 5px;
+      font-size: 1em;
+    }
+    .card .img {
+      width: 70px;
+      height: 70px;
+      background: #e8e8e8;
+      border-radius: 100%;
+      margin: auto;
+      margin-top: 10px;
+    }
+    .card button {
+      padding: 8px 25px;
+      display: block;
+      margin: auto;
+      border-radius: 8px;
+      border: none;
+      background: #e8e8e8;
+      color: #111111;
+      font-weight: 600;
+    }
+    .card button:hover {
+      background: #212121;
+      color: #ffffff;
+    }
+
+    /* 채팅 */
+    .chat_card {
+      width: 100%;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      font-size: 18px;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+    }
+
+    .chat-window {
+      height: 380px;
+      overflow-y: scroll;
+    }
+
+    .message-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .chat-input {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-top: 1px solid #ccc;
+    }
+
+    .message-input {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 5px;
+      font-size: 14px;
+    }
+
+    .send-button {
+      border: none;
+      outline: none;
+      background-color: #333;
+      color: #fff;
+      font-size: 14px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+
+    .send-button:hover {
+      background-color: rgb(255, 255, 255);
+      color: rgb(0, 0, 0);
+      box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+    }
     
-          <!-- Modal Header -->
-          <div class="modal-header">
-            <h4 class="modal-title">Modal Heading</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
+</style>
+
+<script>
+  // FullCalendar
+  document.addEventListener('DOMContentLoaded', function() {
+  var calendarEl = document.getElementById('calendar');
+
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    },
+    locale: 'ko', // 한국어 설정
+    timeZone: 'Asia/Seoul',
+    selectable: true,
+    droppable : true,
+    editable : true,
+    dateClick:function(info){
+      console.log(info.dateStr);
+      console.dir(info);
+    }
+
+  });
+
+  calendar.render();
+});
+  </script>
+</head>	
+  </head>
+  <body>
+    <header>
+    </header>
+
+    <div class="outer">
+      <br>
+      <div id="content_1">
+
+
+          <div class="swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                
+            
+
+
+          <div class="card">
+            <div class="card-border-top">
+            </div>
+            <div class="img">
+            </div>
+            <span> 김인엽</span>
+            <p class="job"> Back-End</p>
+            <button> 프로필
+            </button>
           </div>
-    
-          <!-- Modal body -->
-          <div class="modal-body">
-            <div id='calendar'></div>
+
+          <div class="card">
+            <div class="card-border-top">
+            </div>
+            <div class="img">
+            </div>
+            <span> 김인엽</span>
+            <p class="job"> Back-End</p>
+            <button> 프로필
+            </button>
           </div>
-    
-          <!-- Modal footer -->
-          <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+          <div class="card">
+            <div class="card-border-top">
+            </div>
+            <div class="img">
+            </div>
+            <span> 김인엽</span>
+            <p class="job"> Back-End</p>
+            <button> 프로필
+            </button>
           </div>
+
+          <div class="card">
+            <div class="card-border-top">
+            </div>
+            <div class="img">
+            </div>
+            <span> 김인엽</span>
+            <p class="job"> Back-End</p>
+            <button> 프로필
+            </button>
+          </div>
+          
+          <div class="card">
+            <div class="card-border-top">
+            </div>
+            <div class="img">
+            </div>
+            <span> 김인엽</span>
+            <p class="job"> Back-End</p>
+            <button> 프로필
+            </button>
+          </div>
+
+          <div class="card">
+            <div class="card-border-top">
+            </div>
+            <div class="img">
+            </div>
+            <span> 김인엽</span>
+            <p class="job"> Back-End</p>
+            <button> 프로필
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-border-top">
+            </div>
+            <div class="img">
+            </div>
+            <span> 김인엽</span>
+            <p class="job"> Back-End</p>
+            <button> 프로필
+            </button>
+          </div>
+          <div class="card">
+            <div class="card-border-top">
+            </div>
+            <div class="img">
+            </div>
+            <span> 김인엽</span>
+            <p class="job"> Back-End</p>
+            <button> 프로필
+            </button>
+          </div>
+          
+
+          <div class="card">
+            <div class="card-border-top">
+            </div>
+            <div class="img">
+            </div>
+            <span> 김인엽</span>
+            <p class="job"> Back-End</p>
+            <button> 프로필
+            </button>
+          </div> 
+        </div>
+        
+        <!-- If we need pagination -->
+        <div class="swiper-pagination"></div>
     
+        <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    
+        <!-- If we need scrollbar -->
+        <div class="swiper-scrollbar"></div>
+        <script>
+          // 슬라이더 동작 정의
+          const swiper = new Swiper('.swiper', {
+              autoplay : {
+                  delay : 3000 // 3초마다 이미지 변경
+              },
+              loop : true, //반복 재생 여부
+              slidesPerView : 1, // 이전, 이후 사진 미리보기 갯수
+              pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
+                  el: '.swiper-pagination',
+                  clickable: true
+              },
+              navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
+                  prevEl: '.swiper-button-prev',
+                  nextEl: '.swiper-button-next'
+              }
+          }); 
+      </script>
+    </div>
+        
+
+      </div> 
+      <div id="content_2">
+        <div id="chat_area">         
+          <div class="chat_card">
+            <div class="chat-header">Chat</div>
+              <div class="chat-window">
+                <ul class="message-list"></ul>
+              
+              </div>
+              <div class="chat-input">
+                  <input type="text" class="message-input" placeholder="Type your message here">
+                  <button class="send-button">Send</button>
+              </div>
+            </div>
+          </div>
+        <div id="content_3">
+          <div id="content_4">
+            <div id="countdown">D-12</div>
+            <div id="calendar_area" align="center">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                일정관리
+              </button>
+              
+            </div>
+          </div>
+          <div id="content_5">
+            <div id="map_area">인천광역시 계양구 계양2동 6-2 투썸플레이스</div>
+            <div id="map"><button>카카오맵</button></div>
+          </div>
+          <div id="content_6">
+            <button id="start">시작하기</button>            
+            <button id="team_info">팀원 정보</button>
+            <button id="project_info">프로젝트 소개</button>
+            <button id="exit">나가기</button>
+          </div>
+        </div>
+      </div> 
+      <div class="modal" id="myModal">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Modal Heading</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div id='calendar'></div>
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+      
+          </div>
         </div>
       </div>
     </div>
+    
+    
+
   </body>
 </html>
