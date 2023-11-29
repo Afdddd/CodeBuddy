@@ -72,7 +72,6 @@
         #header_1_center>ul>li a {text-decoration:none; color:black; font-size:18px; font-weight:900;}
         #header a {text-decoration:none; color:black;}
 
-
         /* 세부페이지마다 공통적으로 유지할 style */
         .content {
             width:1200px;
@@ -87,7 +86,6 @@
             margin-bottom: 40px;
             margin-top: 20px;
         }
-        
         #header_1_left>img{
             width:150px;
             height:100px;
@@ -108,11 +106,7 @@
             background-color: #3aa856;
         }
         .loginByCompany, .loginByCompany__icon, .loginByCompany__text { transition: all 0.3s; }
-        .loginByCompany .loginByCompany__text {
-            transform: translateX(30px);
-            color: #fff;
-            font-weight: 600;
-        }
+        .loginByCompany .loginByCompany__text { transform: translateX(30px); color: #fff; font-weight: 600; }
         .loginByCompany .loginByCompany__icon {
             position: absolute;
             transform: translateX(159px);
@@ -129,6 +123,108 @@
         .loginByCompany:hover .loginByCompany__icon { width: 148px; transform: translateX(0); }
         .loginByCompany:active .loginByCompany__icon { background-color: #2e8644; }
         .loginByCompany:active { border: 1px solid #2e8644; }
+
+        /* 로그인 모달 */
+        .login-box {
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            width: 400px;
+            padding: 40px;
+            transform: translate(0%, 0%);
+            background: rgba(0,0,0,.5);
+            box-sizing: border-box;
+            box-shadow: 0 15px 25px rgba(0,0,0,.6);
+            border-radius: 10px;
+        }
+        .login-box h2 { margin: 0 0 30px; padding: 0; color: #fff; text-align: center; }
+        .login-box .user-box { position: relative; }
+        .login-box .user-box input {
+            width: 100%;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 30px;
+            border: none;
+            border-bottom: 1px solid #fff;
+            outline: none;
+            background: transparent;
+        }
+        .login-box .user-box label {
+            position: absolute;
+            top:0;
+            left: 0;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: .5s;
+        }
+        .login-box .user-box input:focus ~ label,
+        .login-box .user-box input:valid ~ label { top: -20px; left: 0; color: #03e9f4; font-size: 12px; }
+        .login-box form a {
+            position: relative;
+            display: inline-block;
+            padding: 10px 20px;
+            color: #03e9f4;
+            font-size: 16px;
+            text-decoration: none;
+            text-transform: uppercase;
+            overflow: hidden;
+            transition: .5s;
+            margin-top: 40px;
+            letter-spacing: 4px;
+        }
+        .login-box a:hover {
+            background: #03e9f4;
+            color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px #03e9f4,
+                        0 0 25px #03e9f4,
+                        0 0 50px #03e9f4,
+                        0 0 100px #03e9f4;
+        }
+        .login-box a span { position: absolute; display: block; }
+        .login-box a span:nth-child(1) {
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #03e9f4);
+            animation: btn-anim1 1s linear infinite;
+        }
+        @keyframes btn-anim1 { 0% { left: -100%; } 50%, 100% { left: 100%; } }
+        .login-box a span:nth-child(2) {
+            top: -100%;
+            right: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, #03e9f4);
+            animation: btn-anim2 1s linear infinite;
+            animation-delay: .25s;
+        }
+        @keyframes btn-anim2 { 0% { top: -100%; } 50%, 100% { top: 100%; } }
+        .login-box a span:nth-child(3) {
+            bottom: 0;
+            right: -100%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(270deg, transparent, #03e9f4);
+            animation: btn-anim3 1s linear infinite;
+            animation-delay: .5s;
+        }
+        @keyframes btn-anim3 { 0% { right: -100%; } 50%, 100% { right: 100%; } }
+        .login-box a span:nth-child(4) {
+            bottom: -100%;
+            left: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(360deg, transparent, #03e9f4);
+            animation: btn-anim4 1s linear infinite;
+            animation-delay: .75s;
+        }
+        @keyframes btn-anim4 { 0% { bottom: -100%; } 50%, 100% { bottom: 100%; } }
+        .logBody { margin:0; padding:0; font-family: sans-serif; background: linear-gradient(#141e30, #243b55); }
     </style>
 </head>
 <body>
@@ -147,25 +243,32 @@
                     <li><a href="">코드리뷰</a></li>
                     <li><a href="">자유</a></li>
                     <li><a href="introlist.bo">소개</a></li>
-                    <li><a href="">채용공고</a></li>
+                    <li><a href="listView.hb">채용공고</a></li>
                 </ul>
             </div>
             <div id="header_1_right">
                 <c:choose>
-                <c:when test="${empty sessionScope.loginMember and empty sessionScope.nickname}">
-                    <a href="signup.me">회원가입</a>
-                    <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
+                <c:when test="${empty sessionScope.loginMember}">
+                    <c:choose>
+                    <c:when test="${empty sessionScope.loginCompany}">
+                        <a href="signup.me">회원가입</a>
+                        <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
+                    </c:when>
+                    <c:otherwise>
+                        <label>${sessionScope.loginCompany.companyName} 기업 로그인중</label> &nbsp;&nbsp;
+                        <a href="myPage.co">마이페이지</a>
+                        <a href="logout.co">로그아웃</a>
+                    </c:otherwise>
+                    </c:choose>
                 </c:when>
                	<c:otherwise>
+               		<label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;
+               		<a href="myPage.me">마이페이지</a>
                     <c:choose>
-                        <c:when test="${not empty sessionScope.loginMember}">
-                            <label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;
-                            <a href="myPage.me">마이페이지</a>
+                        <c:when test="${empty sessionScope.isKakao}">
                             <a href="logout.me">로그아웃</a>
                         </c:when>
                         <c:otherwise>
-                            <label>${sessionScope.nickname}님 환영합니다</label> &nbsp;&nbsp;
-                            <a href="">마이페이지</a>
                             <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= kakaoLoginKey %>&logout_redirect_uri=http://localhost:8082/coddy/kakaoLogout.me">로그아웃</a>
                         </c:otherwise>
                     </c:choose>
@@ -179,12 +282,15 @@
         <div class="modal-dialog modal-sm">
             <div class="modal-content">
                 <!-- Modal Header -->
+                <!-- 
                 <div class="modal-header">
                     <h4 class="modal-title">Login</h4>
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <form action="login.me" method="post">
+                -->
                     <!-- Modal body -->
+                <!-- 
                     <div class="modal-body">
                         <label for="userId" class="mr-sm-2">ID : </label>
                         <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter ID" id="userId" name="memberId"> <br>
@@ -202,7 +308,9 @@
 							</button>
                       	</div>
                     </div>
+                -->
                     <!-- Modal footer -->
+                <!-- 
                     <div class="modal-footer">
                         <div align="center" style="margin:auto;">                          
                             <a href="https://kauth.kakao.com/oauth/authorize?client_id=<%= kakaoLoginKey %>&redirect_uri=http://localhost:8082/coddy/kakaoLogin.me&response_type=code">
@@ -211,6 +319,31 @@
                         </div>
                     </div>
                 </form>
+                -->
+                <div class="logBody">
+                    <div class="login-box">
+                        <h2>로그인 페이지</h2>
+                        <form action="login.me" method="post" id="loginForm">
+                            <div class="user-box">
+                                <input type="text" id="userId" name="memberId" required>
+                                <label for="userId">ID</label>
+                            </div>
+                            <div class="user-box">
+                                <input type="password" id="userPwd" name="memberPwd" required>
+                                <label for="userPwd">Password</label>
+                            </div>
+                            <div align="center">
+                                <a href="#" onclick="$('#loginForm').submit();"><span></span><span></span><span></span><span></span>로그인</a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="findIdForm.me"><span></span><span></span><span></span><span></span>계정 찾기</a>
+                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=<%= kakaoLoginKey %>&redirect_uri=http://localhost:8082/coddy/kakaoLogin.me&response_type=code">
+                                    <img src="resources/image/login/kakao_login.png" style="width: 100%; height: 100%;">
+                                </a>
+                                <a href='loginPage.co'>기업전용 로그인<span></span><span></span><span></span><span></span></a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

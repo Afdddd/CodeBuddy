@@ -15,5 +15,6 @@
 	        <h1 style="font-weight:bold;">${requestScope.errorMsg}</h1>
 	    </div>
 	    <br>
+	    <%@ include file="footer.jsp" %>
 	</body>
 </html>

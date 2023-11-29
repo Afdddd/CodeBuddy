@@ -17,7 +17,6 @@
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet"> SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId} AND MEMBER_DELETE IS NULL </select>
 	<select id="memberCheck" parameterType="string" resultType="_int">SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID=#{checkId}</select>
 
-
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER
 			SET MEMBER_NAME = #{memberName}

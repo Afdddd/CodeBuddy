@@ -106,36 +106,36 @@
 							<div>
 								<label for="companyId">ID</label>
 								<div class="signupOneLine">
-									<input type="text" name="comapnyId" id="companyId" class="signupInputs form-control" placeholder="ID 입력" required>
+									<input type="text" name="companyId" id="companyId" class="signupInputs form-control" placeholder="ID 입력" required>
 									<a onclick="onId();" id="onId"><span></span><span></span><span></span><span></span>ID 중복 체크</a>
 								</div>
 							</div>
 							<div>
 								<label for="companyPwd">Password</label>
-								<input type="password" name="comapnyPwd" id="companyPwd" class="signupInputs form-control" placeholder="PWD 입력" onkeyup="onPassword();" required>
+								<input type="password" name="companyPwd" id="companyPwd" class="signupInputs form-control" placeholder="PWD 입력" onkeyup="onPassword();" required>
 							</div>
 							<div>
 								<label for="companyPwd2">Password 재입력</label>
-								<input type="password" name="comapnyPwd2" id="companyPwd2" class="signupInputs form-control" placeholder="PWD 확인" onkeyup="onPassword();" required>
+								<input type="password" name="companyPwd2" id="companyPwd2" class="signupInputs form-control" placeholder="PWD 확인" onkeyup="onPassword();" required>
 							</div>
 						</fieldset><br>
 						<fieldset class="fieldSets">
 							<legend style="width: 30%; text-decoration-color: lemonchiffon; font-size: 30px;">회사 정보 입력</legend>
 							<div>
 								<label for="companyName">회사명</label>
-								<input type="text" name="comapnyName" id="companyName" class="signupInputs form-control" placeholder="회사명 입력" required>
+								<input type="text" name="companyName" id="companyName" class="signupInputs form-control" placeholder="회사명 입력" required>
 							</div>
 							<div>
 								<label for="companyOwner">사업주명</label>
-								<input type="text" name="comapnyOwner" id="companyOwner" class="signupInputs form-control" placeholder="사업주명 입력" required>
+								<input type="text" name="companyOwner" id="companyOwner" class="signupInputs form-control" placeholder="사업주명 입력" required>
 							</div>
 							<div>
 								<label for="companyWorker">직원수</label>
-								<input type="number" name="comapnyWorker" id="companyWorker" class="signupInputs form-control" placeholder="직원수 입력" value="1" required>
+								<input type="number" name="companyWorker" id="companyWorker" class="signupInputs form-control" placeholder="직원수 입력" value="1" required>
 							</div>
 							<div>
 								<label for="companySalary">평균연봉 정보</label>
-								<input type="number" name="comapnySalary" id="companySalary" class="signupInputs form-control" placeholder="평균연봉 입력" value="14000000" required>
+								<input type="number" name="companySalary" id="companySalary" class="signupInputs form-control" placeholder="평균연봉 입력" value="14000000" required>
 							</div>
 							<div>
 								<label for="companyInfo">회사소개</label>
@@ -143,7 +143,10 @@
 							</div>
 							<div>
 								<label for="companyEmail">Email</label>
-								<input type="email" name="comapnyEmail" id="companyEmail" class="signupInputs form-control" placeholder="Email 입력 @포함" required>
+								<div class="signupOneLine">
+									<input type="email" name="companyEmail" id="companyEmail" class="signupInputs form-control" placeholder="Email 입력 @포함" required>
+									<a onclick="onEmail();" id="onEmail"><span></span><span></span><span></span><span></span>이메일 인증하기</a>
+								</div>
 							</div>
 							<div>
 								<label for="companyBno">사업자 등록번호</label>
@@ -165,6 +168,7 @@
 				</div>
 			</div>
 		</div>
+		<jsp:include page="../common/footer.jsp" />
 		<script>
 			$(function() {
 				$("html").animate({scrollTop : $(".signupOuter").offset().top}, 800);
@@ -177,15 +181,17 @@
 			let bnoStatus = "-1";
 			function onSubmit() {
 				checkGoogle = onGoogle();
-				if(checkEmail != true) { alert("Email 인증 필요"); $("#companyEmail").focus; return false; }
-				else if(checkBno != true) { alert("사업자 인증 필요"); $("#companyBno").focus; return false; }
-				else if(checkGoogle != true) { alert("recaptchav2 인증 필요"); $(".g-recaptcha").focus; return false; }
-				else if(checkPwd != true) { alert("비밀번호가 서로 다름"); $("#companyPwd").focus; return false; }
-				else if(checkId != true) { alert("아이디 중복 체크 필요"); $("#companyId").focus; return false; }
+				if(checkEmail != true) { alert("Email 인증 필요"); $("#companyEmail").focus(); return false; }
+				else if(checkBno != true) { alert("사업자 인증 필요"); $("#companyBno").focus(); return false; }
+				else if(checkGoogle != true) { alert("recaptchav2 인증 필요"); $(".g-recaptcha").focus(); return false; }
+				else if(checkPwd != true) { alert("비밀번호가 서로 다름"); $("#companyPwd").focus(); return false; }
+				else if(checkId != true) { alert("아이디 중복 체크 필요"); $("#companyId").focus(); return false; }
+				else if($("#comapnyWorker").val() <= 0) { alert("직원수는 1명 이상입니다."); $("#companyWorker").focus(); return false; }
+				else if($("#comapnySalary").val() <= 0) { alert("평균연봉 정보는 음수일 수 없습니다."); $("#companySalary").focus(); return false; }
 				else { return true; }
 			};
 			function onPassword() { 
-				if($("#companyPwd") == $("#companyPwd2")) { checkPwd = true }
+				if($("#companyPwd").val() == $("#companyPwd2").val()) { checkPwd = true }
 				else { checkPwd = false }
 			};
 			function onGoogle() {
@@ -201,7 +207,7 @@
 	    				data: {id: $("#companyId").val()},
 	    				success: function(result) { 
 							if(result=="NNNNN") { alert("사용 불가능한 아이디입니다."); } 
-							else { if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?") != true) {  } else { $("#companyId").attr("disabled", true); $("#onId").removeAttr("onclick"); checkId = true; } } },
+							else { if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?") != true) {  } else { $("#companyId").attr("readonly", true); $("#onId").removeAttr("onclick"); checkId = true;  } } },
 	    				error: function() { console.log("아이디 중복 체크 실패"); }
 					});
 				}
@@ -218,7 +224,15 @@
 					});
 				}
 			};
-			function onEmail() {}
+			function onEmail() {
+				$.ajax({
+						url: "companyEmailCheck.co",
+	    				type: "post",
+						data: {companyEmail: $("#companyEmail").val()},
+						success: function(result) { if(result == "failed") { alert("인증번호 생성 실패. 관리자에게 문의해주세요!"); checkEmail = false; } else { if(prompt("인증번호 입력") != result) { alert("인증 실패"); checkEmail = false; } else { alert("인증성공"); checkEmail = true; $("#companyEmail").attr("readonly", true); $("#onEmail").removeAttr("onclick"); } } },
+						error: function() { console.log("이메일 인증 실패"); }
+					});
+			}
 			function backToLogin() { if(confirm("정말로 로그인 페이지로 돌아갑니까?") == true) { location.href = "/coddy/loginPage.co"; } }
 			function apiBno(number) { 
 				let apiKey = BNO_KEY;
