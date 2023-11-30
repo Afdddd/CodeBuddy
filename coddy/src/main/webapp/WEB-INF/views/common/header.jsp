@@ -5,7 +5,13 @@
     pageEncoding="UTF-8"%>
 <% 
 	Resource resource = new ClassPathResource("keys/kakaoLogin.json");
-	String kakaoLoginKey = Keys.read(resource.getURL().getPath(), "key.kakaoLogin"); 
+	String kakaoLoginKey = Keys.read(resource.getURL().getPath(), "key.kakaoLogin");  
+
+    response.setHeader("Cache-Control","no-store");  
+    response.setHeader("Pragma","no-cache");  
+    response.setDateHeader("Expires",0);  
+    if (request.getProtocol().equals("HTTP/1.1"))        
+        response.setHeader("Cache-Control", "no-cache"); 
 %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -40,7 +46,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <!-- 데이터피커쪽 관련-->
+    <!-- 데이트피커쪽 관련-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <!-- Popper JS -->
@@ -262,14 +268,14 @@
                                 <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
                             </c:when>
                             <c:otherwise>
-                                <label>${sessionScope.loginCompany.companyName} 기업 로그인중</label> &nbsp;&nbsp;
+                                <label><b style="color: #34974d; font-size: 13px;">${sessionScope.loginCompany.companyName}</b> 기업 로그인중</label> &nbsp;&nbsp;
                                 <a href="myPage.co">마이페이지</a>
                                 <a href="logout.co">로그아웃</a>
                             </c:otherwise>
                         </c:choose>
                     </c:when>
                	    <c:otherwise>
-                        <label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;
+                        <label><b style="color: #34974d; font-size: 16px;">${sessionScope.loginMember.memberName}</b>님 환영합니다</label> &nbsp;&nbsp;
                         <a href="myPage.me">마이페이지</a>
                         <c:choose>
                             <c:when test="${empty sessionScope.isKakao}">
@@ -279,6 +285,12 @@
                                 <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= kakaoLoginKey %>&logout_redirect_uri=http://localhost:8082/coddy/kakaoLogout.me">로그아웃</a>
                             </c:otherwise>
                         </c:choose>
+                        <br>
+                        <c:choose>
+	                        <c:when test="${sessionScope.loginMember.memberId eq 'admin'}">
+	                        	<a href="adminMain.main">관리 페이지</a>
+	                        </c:when>
+	                    </c:choose>
                     </c:otherwise>
                 </c:choose>
             </div>

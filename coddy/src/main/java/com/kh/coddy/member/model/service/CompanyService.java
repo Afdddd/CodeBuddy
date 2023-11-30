@@ -9,4 +9,8 @@ public interface CompanyService {
 	String findIdAccess(Company c);
 	int setNewPassword(Company c);
 	int uploadFile(int companyNo);
+	int countWritten(int companyNo);
+	String getPassword(String companyId);
+	int updateCompany(Company c);
+	int deleteCompany(int companyNo);
 }

@@ -18,4 +18,8 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override public String findIdAccess(Company c) { return companyDao.findIdAccess(sqlSession, c); }
 	@Override public int setNewPassword(Company c) { return companyDao.setNewPassword(sqlSession, c); }
 	@Override public int uploadFile(int companyNo) { return companyDao.uploadFile(sqlSession, companyNo); }
+	@Override public int countWritten(int companyNo) { return companyDao.countWritten(sqlSession, companyNo); }
+	@Override public String getPassword(String companyId) { return companyDao.getPassword(sqlSession, companyId); }
+	@Override public int updateCompany(Company c) { return companyDao.updateCompany(sqlSession, c); }
+	@Override public int deleteCompany(int companyNo) { return companyDao.deleteCompany(sqlSession, companyNo); }
 }

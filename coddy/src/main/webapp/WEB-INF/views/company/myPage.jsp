@@ -16,8 +16,8 @@
 			width: 400px;
 			margin: 0 auto;
 			background-color: #fff;
-			border: 1px solid #ddd;
-			border-radius: 4px;
+			border: 1px solid #00BCD4;
+			border-radius: 14px;
 			text-align: center;
 			color: #00BCD4;
 		}
@@ -66,65 +66,11 @@
 	<body>
 		<jsp:include page="../common/header.jsp" />
 		<div class="content">
-			<div class="profile-widget">
-				<h2 class="widget-heading">About Business...</h2>
-				<div class="cover-img">        
-					<img src="resources/image/company/myPage-bg.jpg" alt="User profile cover photo">
-				</div>
-				<div class="user-details">
-					<div class="user-img">
-						<form method="post" enctype="multipart/form-data">
-							<label for="chooseFile">
-								<div id="canvas">
-									<c:choose>
-										<c:when test="${sessionScope.loginCompany.companyPhotoExtend eq jpg}">
-											<img src="resources/image/company/uploadFile.jpg" id="uploadFiles">
-										</c:when>
-										<c:otherwise>
-											<img src="resources/file_upload/company/<fmt:formatNumber value='${sessionScope.loginCompany.companyNo}' pattern ='00000000' />.${sessionScope.loginCompany.companyPhotoExtend}" alt="User photo2" id="uploadFiles">
-										</c:otherwise>
-									</c:choose>
-								</div>
-							</label>
-							<input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this);" style="visibility: hidden;">
-						</form>
-					</div>
-					<div id="fileName"></div>
-					<h3>대표자 : ${sessionScope.loginCompany.companyOwner}</h3>
-					<p>${sessionScope.loginCompany.companyInfo}</p>
-					<div class="followers">
-						<h3>${sessionScope.loginCompany.companyWorker}<br><span>직원수</span></h3>
-						<h3>899<br><span>Following</span></h3>
-					</div>
-					<button class="follow-btn">Follow Me</button>
-				</div>
-				Image by <a href="https://www.freepik.com/free-photo/empty-room-with-chairs-desks_15501155.htm#query=office&position=4&from_view=search&track=sph&uuid=bc5b64e6-870d-4c59-a1d8-d8ba1d700a20">Freepik</a>
-				<c:choose>
-					<c:when test="${sessionScope.loginCompany.companyPhotoExtend}">
-						<a href="https://www.freepik.com/free-vector/illustration-uploading-icon_2609994.htm#page=3&query=upload%20file&position=34&from_view=search&track=ais&uuid=9266a4ed-f875-4e8e-a066-016287752433">Image by rawpixel.com</a> on Freepik
-					</c:when>	
-				</c:choose>
+			<div style="display: flex;">
+				<jsp:include page="./companyMenuBar.jsp" />
+				<jsp:include page="./companyProfileCard.jsp" />
 			</div>
 		</div>
-		<script>
-			function loadFile(input) {
-				var files = input.files;
-				$("#uploadFiles").attr("src", URL.createObjectURL(files[0]));
-
-				var formData = new FormData();
-				formData.append("uploadFiles", files[0])
-
-				$.ajax({
-					type : "POST",
-					url : "uploadFile.co",
-					processData: false,
-					contentType: false,
-					data : formData,
-					success : function(result) { alert(result); },
-					error : function(xhr, status, error) { alert(error); }
-				});
-			};
-		</script>
 		<jsp:include page="../common/footer.jsp" />
 	</body>
 </html>

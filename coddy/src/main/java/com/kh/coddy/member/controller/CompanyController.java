@@ -129,4 +129,33 @@ public class CompanyController {
 		}
 		catch (IllegalStateException | IOException e) { e.printStackTrace(); return "이미지 업로드 실패"; }
 	}
+	@GetMapping(value="updateForm.co") public String updateForm(HttpSession session) { 
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
+		else { int result = companyService.countWritten(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()); session.setAttribute("howManyWritten", result); return "company/companyUpdateForm"; } }
+	@GetMapping(value="myPageInfo.co") public String myPageInfo(HttpSession session) { 
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
+		else { int result = companyService.countWritten(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()); session.setAttribute("howManyWritten", result); return "company/companyInfoPage"; } }
+	@PostMapping(value="update.co") public String updateCompany(HttpSession session, Model model, Company c, String companyNewPwd) { 
+		if(pbkdf2.matches(c.getCompanyPwd(), companyService.getPassword(c.getCompanyId()))) { 
+			if(!companyNewPwd.equals("")) { c.setCompanyPwd(pbkdf2.encode(companyNewPwd)); }
+			else { c.setCompanyPwd(((Company)(session.getAttribute("loginCompany"))).getCompanyPwd()); }
+			int result = companyService.updateCompany(c); 
+			if(result > 0) { session.setAttribute("alertMsg", "성공적으로 변경에 성공함. 다시 로그인 해주세요."); session.removeAttribute("loginCompany"); return "redirect:/loginPage.co"; } 
+			else { session.setAttribute("alertMsg", "변경 실패."); return "redirect:/updateForm.co"; } }
+		else { model.addAttribute("errorMsg","인증 실패"); return "common/errorPage"; } }
+	@GetMapping(value="deleteForm.co") public String deleteForm(HttpSession session) { 
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; }
+		else { return "company/companyDeleteForm"; }
+	}
+	@PostMapping(value="delete.co") public String deleteCompany(HttpSession session, Model model, String companyPwd) { 
+		if(pbkdf2.matches(companyPwd, companyService.getPassword(((Company)(session.getAttribute("loginCompany"))).getCompanyId()))) {
+			int result = companyService.deleteCompany(((Company)(session.getAttribute("loginCompany"))).getCompanyNo());
+			if(result > 0) { session.setAttribute("alertMsg", "탈퇴가 완료되었습니다. 재가입시 1:1 문의해주세요."); session.removeAttribute("loginCompany"); return "redirect:/"; }
+			else { model.addAttribute("errorMsg", "DB 연동 실패"); return "common/errorPage"; }
+		}
+		else { model.addAttribute("errorMsg", "인증 실패"); return "common/errorPage"; }
+	}
 }
