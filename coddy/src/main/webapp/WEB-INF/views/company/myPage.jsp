@@ -10,10 +10,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   	<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap" rel="stylesheet">
 	<style>
-		body {
-			font-family: 'Roboto', sans-serif;
-			background: #fbfbfb;
-		}
+		body { font-family: 'Roboto', sans-serif; background: #fbfbfb; }
 		.profile-widget {
 			width: 400px;
 			margin: 0 auto;
@@ -23,24 +20,10 @@
 			text-align: center;
 			color: #00BCD4;
 		}
-		.cover-img {
-			max-height: 200px;
-			overflow: hidden;
-			width: 100%;
-		}
-		.user-details{
-			padding: 0px 20px 30px;
-		}
-		.profile-widget h3 {
-			color: #00BCD4;
-			margin: 20px 0px 10px;
-		}
-		.profile-widget img {
-			width: 100%;
-			max-width: 100%;
-			height: auto;
-			display: block;
-		}
+		.cover-img { max-height: 200px; overflow: hidden; width: 100%; }
+		.user-details{ padding: 0px 20px 30px; }
+		.profile-widget h3 { color: #00BCD4; margin: 20px 0px 10px; }
+		.profile-widget img { width: 100%; max-width: 100%; height: auto; display: block; }
 		.user-img {
 			width: 100px;
 			height: 100px;
@@ -61,13 +44,8 @@
 			border-radius: 144px;
 			font-size: 18px;
 		}
-		.followers h3:last-child{
-			float: right;
-		}
-		.followers h3 span {
-			font-weight: normal;
-			font-size: 16px;
-		}
+		.followers h3:last-child{ float: right; }
+		.followers h3 span { font-weight: normal; font-size: 16px; }
 		button.follow-btn {
 			font-size: 19px;
 			background: #00BCD4;
@@ -78,19 +56,9 @@
 			width: 100%;
 			cursor: pointer;
 		}
-		button.follow-btn:hover{
-			opacity: 0.8;
-		}
-		h2.widget-heading {
-			font-size: 25px;
-			font-weight: normal;
-			margin: 20px 0px 10px;
-			padding: 0px 0px 10px;
-		}
-		@media (max-width: 767px){
-		.profile-widget {
-			width: 90%;
-		}
+		button.follow-btn:hover{ opacity: 0.8; }
+		h2.widget-heading { font-size: 25px; font-weight: normal; margin: 20px 0px 10px; padding: 0px 0px 10px; }
+		@media (max-width: 767px){ .profile-widget { width: 90%; }
 	}
 	</style>
 	</head>
@@ -104,16 +72,24 @@
 				</div>
 				<div class="user-details">
 					<div class="user-img">
-						<c:choose>
-                            <c:when test="${empty sessionScope.loginCompany.companyPhotoExtend}">
-								<img src="/images/user-image.jpg" alt="User photo1">
-                            </c:when>
-                            <c:otherwise>
-								<img src="/images/user-image.jpg" alt="User photo2">
-                            </c:otherwise>
-                        </c:choose>
+						<form method="post" enctype="multipart/form-data">
+							<label for="chooseFile">
+								<div id="canvas">
+									<c:choose>
+										<c:when test="${empty sessionScope.loginCompany.companyPhotoExtend}">
+											<img src="resources/image/company/uploadFile.jpg" id="uploadFiles">
+										</c:when>
+										<c:otherwise>
+											<img src="resources/file_upload/company/${sessionScope.loginCompany.companyNo}.${sessionScope.loginCompany.companyPhotoExtend}" alt="User photo2" id="uploadFiles">
+										</c:otherwise>
+									</c:choose>
+								</div>
+							</label>
+							<input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this);" style="visibility: hidden;">
+						</form>
 					</div>
-					<h3>${sessionScope.loginCompany.companyOwner}</h3>
+					<div id="fileName"></div>
+					<h3>대표자 : ${sessionScope.loginCompany.companyOwner}</h3>
 					<p>${sessionScope.loginCompany.companyInfo}</p>
 					<div class="followers">
 						<h3>${sessionScope.loginCompany.companyWorker}<br><span>직원수</span></h3>
@@ -125,10 +101,29 @@
 				<c:choose>
 					<c:when test="${sessionScope.loginCompany.companyPhotoExtend}">
 						<a href="https://www.freepik.com/free-vector/illustration-uploading-icon_2609994.htm#page=3&query=upload%20file&position=34&from_view=search&track=ais&uuid=9266a4ed-f875-4e8e-a066-016287752433">Image by rawpixel.com</a> on Freepik
-					</c:when>
+					</c:when>	
 				</c:choose>
 			</div>
 		</div>
+		<script>
+			function loadFile(input) {
+				var files = input.files;
+				$("#uploadFiles").attr("src", URL.createObjectURL(files[0]));
+
+				var formData = new FormData();
+				formData.append("uploadFiles", files[0])
+
+				$.ajax({
+					type : "POST",
+					url : "uploadFile.co",
+					processData: false,
+					contentType: false,
+					data : formData,
+					success : function(result) { alert(result); },
+					error : function(xhr, status, error) { alert(error); }
+				});
+			};
+		</script>
 		<jsp:include page="../common/footer.jsp" />
 	</body>
 </html>

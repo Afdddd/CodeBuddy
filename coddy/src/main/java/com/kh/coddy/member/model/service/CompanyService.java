@@ -8,4 +8,5 @@ public interface CompanyService {
 	Company login(Company c);
 	String findIdAccess(Company c);
 	int setNewPassword(Company c);
+	int uploadFile(int companyNo);
 }

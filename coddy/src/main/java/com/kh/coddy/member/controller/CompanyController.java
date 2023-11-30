@@ -1,5 +1,6 @@
 package com.kh.coddy.member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.auth.model.vo.Auth;
@@ -85,7 +87,7 @@ public class CompanyController {
 			else {
 				session.setAttribute("loginCompany", loginCompany);
 				session.setAttribute("alertMsg", "기업 로그인 성공");
-				log.info("loginCompany={}, ip={}",loginCompany, request.getRemoteAddr());
+				log.info("loginCompany={}, ip={}", loginCompany, request.getRemoteAddr());
 				return "redirect:/";
 			}
 		}
@@ -113,4 +115,22 @@ public class CompanyController {
 		return "redirect:/loginPage.co";
 	}
 	@GetMapping(value="myPage.co") public String myPage(HttpSession session) { if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업전용 메뉴입니다."); return "redirect:/"; } if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "비로그인 상태입니다."); return "redirect:/"; } return "company/myPage"; }
+	/* 
+	@RequestMapping(value="uploadFile.co", method=RequestMethod.POST, produces = "application/text; charset=utf8") @ResponseBody public int uploadFile(HttpSession session, HttpServletRequest req) throws IOException { 
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest)req;
+		MultipartFile file = multipartHttpServletRequest.getFile("image");
+		FileOutputStream fos = new FileOutputStream("resources/file_upload/company" + ((Company)(session.getAttribute("loginCompany"))).getCompanyNo());
+		fos.write(file.getBytes()); fos.close(); return 1;
+	}
+	*/
+	@PostMapping(value="uploadFile.co", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFile(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
+		String path = req.getRealPath("resources\\file_upload\\company\\");
+		File file = new File(path, String.format("%08d", ((Company)(session.getAttribute("loginCompany"))).getCompanyNo()) + ".jpg");
+		try { 
+			uploadFiles.transferTo(file); 
+			if(companyService.uploadFile(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()) > 0) { return "이미지 업로드 성공"; }
+			else { return "이미지 업로드 실패"; }
+		}
+		catch (IllegalStateException | IOException e) { e.printStackTrace(); return "이미지 업로드 실패"; }
+	}
 }

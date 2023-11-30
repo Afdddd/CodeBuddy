@@ -21,4 +21,5 @@
 	<select id="loginCompany" parameterType="company" resultMap="companyResultSet">SELECT * FROM COMPANY WHERE COMPANY_ID=#{companyId} AND COMPANY_DELETE IS NULL</select>
 	<select id="findIdAccess" parameterType="company" resultType="string">SELECT COMPANY_ID FROM COMPANY WHERE COMPANY_EMAIL=#{companyEmail} AND COMPANY_BNO=#{companyBno} AND COMPANY_DELETE IS NULL</select>
 	<update id="setNewPassword" parameterType="company">UPDATE COMPANY SET COMPANY_PWD=#{companyPwd} WHERE COMPANY_EMAIL=#{companyEmail} AND COMPANY_BNO=#{companyBno} AND COMPANY_DELETE IS NULL</update>
+	<update id="uploadFile" parameterType="_int">UPDATE COMPANY SET COMPANY_PHOTO_EXTEND='jpg' WHERE COMPANY_NO=#{companyNo} AND COMPANY_DELETE IS NULL</update>
 </mapper>
