@@ -9,6 +9,13 @@
 <style>
     #freeEnrollForm>table {width:100%;}
     #freeEnrollForm>table * {margin:5px;}
+    .innerOuter {
+        border:1px solid lightgray;
+        width:80%;
+        margin:auto;
+        padding:5% 10%;
+        background-color:white;
+    }
 </style>
 <body>
 
