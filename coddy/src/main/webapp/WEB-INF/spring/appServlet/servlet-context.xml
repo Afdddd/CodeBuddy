@@ -4,7 +4,9 @@
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket 
+		http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
@@ -27,5 +29,13 @@
 	<!-- 파일 확장자 관리 -->
 	<!-- .ico 파일 -->
 	<resources mapping="/resources/**" location="/resources/" />
+	
+	<!-- 웹소캣 빈 등록 -->
+	<beans:bean class="com.kh.coddy.common.chat.controller.ChatingHandler" id="chatHandler"/>
+	
+	<websocket:handlers>
+		<websocket:mapping path="chat.do" handler="chatHandler" />
+		<!--  HttpSession의 정보를 WebSocketSession으로 가져오기 위한 빈 등록 --> 
+	</websocket:handlers>
 	
 </beans:beans>

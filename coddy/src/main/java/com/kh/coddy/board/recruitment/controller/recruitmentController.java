@@ -15,8 +15,12 @@ public class recruitmentController {
 	public String recruitmentDetail() {
 		return "board/recruitment/recruitmentDetailView";
 	}
-	@GetMapping("room.rec")
-	public String roomEnter(){
-		return "project/room";
+	@GetMapping("room.rec1")
+	public String roomEnter1(){
+		return "project/room1";
+	}
+	@GetMapping("room.rec2")
+	public String roomEnter2(){
+		return "project/room2";
 	}
 }

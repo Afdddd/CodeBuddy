@@ -15,6 +15,10 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- 스와이프 -->
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/css/swiper.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.1/js/swiper.min.js"></script> -->
+
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 <style>
@@ -35,24 +39,22 @@
     #content_1{
       margin-top: 20px;
       width: 100%;
-      height: 300px;
-      border: 1px solid lightgray;
+      height: 35%;
+      /* border: 1px solid lightgray; */
       border-radius: 10px;
       box-sizing: border-box;
-      
+      margin-bottom: 20px;
+      float: left;
     }
 
     #content_2{
       width: 100%;
-      height: 500px;
+      height: 60%;
     }
 
-    #card-scroll{
-      margin: auto;
-      width: 98%;
-      height: 250px;
-      margin: auto;
-      line-height: 100%;
+    #cards{
+      width: 100%;
+      height: 100%;
     }
 
     #chat_area{
@@ -102,7 +104,7 @@
       margin: 0px;
     }
     #exit{
-      width: 15%;
+      width: 20%;
       height: 100%;
     }
     #team_info{
@@ -117,6 +119,9 @@
       width: 40%;
       height: 100%;
     }    
+    #content_6 button{
+      float: left;
+    }
 
   
     /* 카드 */
@@ -132,6 +137,7 @@
       font-family: inherit;
       float: left;
       margin: 10px;
+      margin-top: 30px;
     }
     .card span {
       font-weight: 600;
@@ -175,6 +181,7 @@
     /* 채팅 */
     .chat_card {
       width: 100%;
+      height: 100%;
       background-color: #fff;
       border: 1px solid #ccc;
       border-radius: 5px;
@@ -191,7 +198,7 @@
     }
 
     .chat-window {
-      height: 380px;
+      height: 78%;
       overflow-y: scroll;
     }
 
@@ -231,7 +238,15 @@
       color: rgb(0, 0, 0);
       box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
     }
+
     
+    .swiper{
+      width: 100%;
+    }
+    .swiper-wrapper{
+      float: left;
+    }
+   
 </style>
 
 <script>
@@ -263,13 +278,16 @@
 $(function(){
   $('#calendar_modal').click(function(){
     $("#myModal").modal();
-    open_fc()
+    open_fc();
   });
 
   console.log($(".card").children('.job').text());
+
   
+ 
 });
-  </script>
+
+</script>
 </head>	
   </head>
   <body>
@@ -278,80 +296,144 @@ $(function(){
 
     <div class="outer">
       <br>
-      <div id="content_1">
+      <div id="content_1">  
+       
+        <div class="swiper">
+          <!-- 보여지는 영역 -->
+          <div class="swiper-wrapper">
 
-        <div id="cards">
-            
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
 
-
-          <div class="card">
-            <div class="card-border-top">
-            </div>
-            <div class="img">
-            </div>
-            <span> 김인엽</span>
-            <p class="job"> Back-End</p>
-            <button> 프로필
-            </button>
           </div>
-
-          <div class="card">
-            <div class="card-border-top">
-            </div>
-            <div class="img">
-            </div>
-            <span> 김인엽</span>
-            <p class="job"> Back-End</p>
-            <button> 프로필
-            </button>
-          </div>
-
-          <div class="card">
-            <div class="card-border-top">
-            </div>
-            <div class="img">
-            </div>
-            <span> 김인엽</span>
-            <p class="job"> Back-End</p>
-            <button> 프로필
-            </button>
-          </div>
-
-          <div class="card">
-            <div class="card-border-top">
-            </div>
-            <div class="img">
-            </div>
-            <span> 김인엽</span>
-            <p class="job"> Back-End</p>
-            <button> 프로필
-            </button>
-          </div>
-          
-          <div class="card">
-            <div class="card-border-top">
-            </div>
-            <div class="img">
-            </div>
-            <span> 김인엽</span>
-            <p class="job"> Back-End</p>
-            <button> 프로필
-            </button>
-          </div>
-
-          <div class="card">
-            <div class="card-border-top">
-            </div>
-            <div class="img">
-            </div>
-            <span> 김인엽</span>
-            <p class="job"> Back-End</p>
-            <button> 프로필
-            </button>
-          </div> 
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
         </div>
       </div>
-   
+          <script>
+            const swiper = new Swiper('.swiper', {
+                //기본 셋팅
+                //방향 셋팅 vertical 수직, horizontal 수평 설정이 없으면 수평
+                direction: 'horizontal',
+                //한번에 보여지는 페이지 숫자
+                slidesPerView: 7,
+                //페이지와 페이지 사이의 간격
+                spaceBetween: 10,
+                //드레그 기능 true 사용가능 false 사용불가
+                debugger: true,
+                //마우스 휠기능 true 사용가능 false 사용불가
+                mousewheel: true,                
+                // 마지막 여백
+                slidesOffsetAfter: 120,
+                //방향표
+                navigation: {
+                  //다음페이지 설정
+                  nextEl: '.swiper-button-next',
+                  //이전페이지 설정
+                  prevEl: '.swiper-button-prev',
+                },
+            });
+          </script>
+      
+      
       <div id="content_2">
         <div id="chat_area">         
           <div class="chat_card">
@@ -370,7 +452,7 @@ $(function(){
           <div id="content_4">
             <div id="countdown">D-12</div>
             <div id="calendar_area" align="center">
-              <button type="button" id="calendar_modal">
+              <button type="button" id="calendar_modal" class="button">
                 일정관리
               </button>
               
@@ -381,8 +463,8 @@ $(function(){
             <div id="map"><button>카카오맵</button></div>
           </div>
           <div id="content_6">
-            <button id="start">시작하기</button>            
-            <button id="team_info">팀원 정보</button>
+            <button id="start" >시작하기</button>            
+            <button id="team_info" >팀원 정보</button>
             <button id="project_info">프로젝트 소개</button>
             <button id="exit">나가기</button>
           </div>
