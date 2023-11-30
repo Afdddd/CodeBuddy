@@ -14,3 +14,4 @@ config
 config.properties
 bnoKey.js
 twak.js
+coddy/src/main/webapp/resources/file_upload/company/*

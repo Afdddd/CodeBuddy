@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -76,11 +77,11 @@
 							<label for="chooseFile">
 								<div id="canvas">
 									<c:choose>
-										<c:when test="${empty sessionScope.loginCompany.companyPhotoExtend}">
+										<c:when test="${sessionScope.loginCompany.companyPhotoExtend eq jpg}">
 											<img src="resources/image/company/uploadFile.jpg" id="uploadFiles">
 										</c:when>
 										<c:otherwise>
-											<img src="resources/file_upload/company/${sessionScope.loginCompany.companyNo}.${sessionScope.loginCompany.companyPhotoExtend}" alt="User photo2" id="uploadFiles">
+											<img src="resources/file_upload/company/<fmt:formatNumber value='${sessionScope.loginCompany.companyNo}' pattern ='00000000' />.${sessionScope.loginCompany.companyPhotoExtend}" alt="User photo2" id="uploadFiles">
 										</c:otherwise>
 									</c:choose>
 								</div>
