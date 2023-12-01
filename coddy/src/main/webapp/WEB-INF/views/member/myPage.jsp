@@ -1,10 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Insert title here</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap" rel="stylesheet">
     <style>
         .innerOuter {
             width:80%;
@@ -40,18 +45,16 @@
             background-color: #5271FF;
             color: white;
         }
+        
         ul {
             list-style:none;
         }
-        
+ 
     </style>
 </head>
 <body>
-
 	<jsp:include page="../common/header.jsp" />	
 
-    <div class="content">
-        <br><br>
         <div class="innerOuter">
             <h2>마이페이지</h2>
             <br>
@@ -59,9 +62,9 @@
             <br>
             <div style="display: flex;">
 					
-                <ul class="menu" style="padding-left:0px;">
+                <ul class="menu" style="padding-left:0px; width : 230px;">
                     <br>
-                    <li><a href="myPage.me">마이페이지</a>
+                    <li><a href="myPage.se">마이페이지</a>
                         <ul style="width : 210px;">
                         	<li><a href="pwdChange.me">- 비밀번호 변경</a></li>
                         	<li><a href="delete.me">- 회원 탈퇴</a></li>
@@ -78,47 +81,80 @@
                     <li><a href="#">작성한 댓글</a></li>
                 </ul>
                     
-                    
-                    
-                    
-                <form action="" method="post"  enctype="multipart/form-data">
-                    <div class="form-group" style="display:flex">
-                        <div class="content1" style="width:60%; padding-left : 60px;">
-                            <img src="https://avatars.githubusercontent.com/u/109032883?v=4" alt="" width="150px"height="150px" id="preview"> <br> <br>
-                        
-                            <input type="file" name="" class="btn btn-secondary btn-sm" value="업로드" onchange="" style="width : 230px;">
-                            <input type="hidden" name="memberImg" value="">
-                            
-                            <br><br>
-                        
-                                            
-                            <label for="memberId">* ID : </label>
-                            <input type="text" class="form-control" id="memberId" value="${sessionScope.loginMember.memberId}" name="memberId" readonly> <br>
-
-                            <label for="memberEmail"> * Email : </label>
-                            <input type="text" class="form-control" id="memberEmail" value="${sessionScope.loginMember.memberEmail}" name="memberEmail" readonly> <br>
-                        
-                        </div>
-
-                        <div class="content2" style="width:40%; padding-left : 50px;">
-                        
-                            <label for="memberName">Name : </label>
-                            <input type="text" class="form-control" id="memberName" value="${sessionScope.loginMember.memberName}" name="memberName"> <br>
-                            
-                            <label for="memberInfo"> &nbsp; 자기소개 : </label>
-                            <!-- <input type="text" class="form-control" id="memberInfo" value="${sessionScope.loginMember.memberInfo}" name="memberInfo" style="height : 280px;"> -->
-                            <textarea name="memberInfo" id="memberInfo">${sessionScope.loginMember.memberInfo}</textarea><br>
-                        </div>
-                     
-                    </div> 
-                    <br><br><br><br>	
-                    <div class="btns" align="center" style="padding-right : 150px;">
-                        <button type="submit" class="btn btn-primary">수정하기</button>
-                    </div>
+                <form action="update.me" method="post" enctype="multipart/form-data">
+                	<input type="hidden" name="memberNo" value="${sessionScope.loginMember.memberNo}">
+	                    <div class="form-group" style="display:flex">
+	                        <div class="content1" style="width:60%; padding-left : 80px;">
+	                        <c:choose>
+	                        	<c:when test="${sessionScope.loginMember.memberPhotoExtend eq 'jpg'}">
+	                            	<img src="resources/image/profile/<fmt:formatNumber value='${sessionScope.loginMember.memberNo}' pattern='00000000' />.${sessionScope.loginMember.memberPhotoExtend}" width="300px"height="300px" id="preview">
+	                         	</c:when>
+	                         	<c:otherwise>
+	                         	<img src="https://vlee.kr/wp-content/uploads/2020/03/windows10.jpg" width="300px"height="300px" id="preview"  alt="User photo">
+	                         	</c:otherwise>
+	                         </c:choose>
+	                         <br> <br>
+	                         <!-- 
+	                         <script>
+	                         function loadFile(input) {
+	             				var files = input.files;
+	                            console.log(files);
+	             				$("#preview").attr("src", URL.createObjectURL(files[0]));
+	
+	             				var formData = new FormData();
+	             				formData.append("uploadFiles", files[0])
+	                         };
+	             			function loadFile(input) {
+	             				var files = input.files;
+	             				$("#preview1").attr("src", URL.createObjectURL(files[1]));
+	             				
+	             				var formData = new FormData();
+	             				formData.append("uploadFiles1", files[0])
+	             				}
+	                            /*
+	             				$.ajax({
+	             					type : "POST",
+	             					url : "uploadFile.co",
+	             					processData: false,
+	             					contentType: false,
+	             					data : formData,
+	             					success : function(result) { alert(result); },
+	             					error : function(xhr, status, error) { alert(error); }
+	             				});
+	                            */
+	             			};
+	                         </script>
+	                          -->                
+	                         <label for="memberId">* ID : </label>
+	                         <input type="text" class="form-control" id="memberId" value="${sessionScope.loginMember.memberId}" style="width : 300px;" name="memberId" readonly> <br>
+	
+	                         <label for="memberEmail"> * Email : </label>
+	                         <input type="text" class="form-control" id="memberEmail" value="${sessionScope.loginMember.memberEmail}" style="width : 300px;" name="memberEmail" readonly> <br>
+	                        
+	                        </div>
+	
+	                        <div class="content2" style="width:40%; padding-left : 50px;">
+	                        
+	                            <label for="memberName">Name : </label>
+	                            <input type="text" class="form-control" id="memberName" value="${sessionScope.loginMember.memberName}" name="memberName" style="width : 300px;"> <br>
+	                            
+	                            <label for="memberInfo"> &nbsp; 자기소개 : </label>
+	                            <!-- <input type="text" class="form-control" id="memberInfo" value="${sessionScope.loginMember.memberInfo}" name="memberInfo" style="height : 280px;"> -->
+	                            <textarea name="memberInfo" id="memberInfo" style="width : 300px; height : 430px;">${sessionScope.loginMember.memberInfo}</textarea><br>
+	                        </div>
+	                     
+	                    </div> 
+	                    <br><br><br><br>	
+	                    <div class="btns" align="center" style="padding-right : 150px;">
+	                        <button type="submit" id="uploadBtn" class="btn btn-primary">수정하기</button>
+	                    </div>
+                  
                 </form>
             </div>
             <br><br>
         </div>
+        
     </div>
+    
 </body>
 </html>

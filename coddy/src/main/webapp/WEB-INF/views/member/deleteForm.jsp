@@ -55,14 +55,13 @@
   <body>
     <jsp:include page="../common/header.jsp" />	
 
-    <div class="content">
-    <br><br>
+
       <div class="innerOuter">
         <h2>회원 탈퇴</h2>
         <br><hr><br>
         <div style="display: flex;">
-          <ul class="menu" style="padding-left:0px; width : 300px;"><br>
-            <li><a href="myPage.me">마이페이지</a>
+          <ul class="menu" style="padding-left:0px; width : 230px;"><br>
+            <li><a href="myPage.se">마이페이지</a>
               <ul style="width : 210px;">
                 <li><a href="pwdChange.me">- 비밀번호 변경</a></li>
                 <li><a href="delete.me">- 회원 탈퇴</a></li>
@@ -95,12 +94,12 @@
               <br><br><br><br><br><br>	
               <table>
                 <tr>
-                  <td>비밀번호</td>
+                  <td style="text-align : right">비밀번호</td>
                   <td><input type="password" id="memberPwd" name="memberPwd" required></td>
                 </tr>
               </table>
               <br><br><br>
-              <div style="width : 400px; text-align : center">
+              <div style="width : 700px; text-align : center">
                 <button type="submit" class="btn btn-danger">회원탈퇴</button>
               </div>
             </form>

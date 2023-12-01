@@ -26,9 +26,15 @@ public class MemberDao {
 	public int PwdChangeForm(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.update("memberMapper.PwdChangeForm", m);	
 	}
+	
 
 	public int findPwd(SqlSessionTemplate sqlSession, Member findMember) { return sqlSession.selectOne("memberMapper.findPwd", findMember); }
 	public int setNewPassword(SqlSessionTemplate sqlSession, Member newMember) { return sqlSession.update("memberMapper.setNewPassword", newMember); }
 	public String findEmail(SqlSessionTemplate sqlSession, Member findMember) { return sqlSession.selectOne("memberMapper.findEmail", findMember); }
+	public static int uploadFile(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.update("memberMapper.uploadFile", memberNo);
+	}
+	
 
 }

@@ -50,7 +50,15 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<!-- 확장자 관리 -->
+	<!-- 업로드 관련 설정 -->
+		<multipart-config>		
+			<max-file-size>20971520</max-file-size>					<!-- 1MB * 20 -->
+			<max-request-size>41943040</max-request-size>			<!-- 40MB -->
+			<file-size-threshold>20971520</file-size-threshold>		<!-- 20MB -->
+		</multipart-config>
+		
+		
+
 	<!-- .ico 파일 -->
 	<mime-mapping>
 		<extension>ico</extension>

@@ -9,13 +9,15 @@ public class IntroController {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@GetMapping("introlist.bo")
-	public String selectList() {
+	public void selectList() {
+		
+		int listCount = boardService.
 		
 		
 		
-		return "board/intro/introListView";
-	
-		
+
 	}
+	
+
 	
 }

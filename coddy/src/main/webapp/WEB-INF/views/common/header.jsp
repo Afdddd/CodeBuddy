@@ -256,14 +256,14 @@
                     </c:when>
                     <c:otherwise>
                         <label>${sessionScope.loginCompany.companyName} 기업 로그인중</label> &nbsp;&nbsp;
-                        <a href="myPage.co">마이페이지</a>
+                        <a href="myPage.se">마이페이지</a>
                         <a href="logout.co">로그아웃</a>
                     </c:otherwise>
                     </c:choose>
                 </c:when>
                	<c:otherwise>
                		<label>${sessionScope.loginMember.memberName}님 환영합니다</label> &nbsp;&nbsp;
-               		<a href="myPage.me">마이페이지</a>
+               		<a href="myPage.se">마이페이지</a>
                     <c:choose>
                         <c:when test="${empty sessionScope.isKakao}">
                             <a href="logout.me">로그아웃</a>
