@@ -136,10 +136,10 @@
     	$(function() {
     		
     		// 댓글리스트 조회용 선언적 함수 호출
-    		selectFreeReplyList();
+    		selectNoticeReplyList();
     		
     		// 만약, 댓글이 실시간으로 달리는걸 보고싶다면?
-    		setInterval(selectFreeReplyList, 1000);
+    		setInterval(selectNoticeReplyList, 1000);
     		
     	});
     	
@@ -154,7 +154,7 @@
     		if($("#content").val().trim().length != 0) {
     			
     			$.ajax({
-    				url : "freeInsert.bo",
+    				url : "noticeInsert.bo",
     				type : "get",
     				data : { // Ajax 요청 또한 Spring 에서 커맨드 객체 방식 사용 가능
     					refBoardNo : ${ requestScope.c.cboardNo }, 
