@@ -9,8 +9,7 @@ public class recruitmentController {
 	@GetMapping("list.rec")
 	public String recruitmentList() {
 		return "board/recruitment/recruitmentListView";
-	}
-	
+	}	
 	@GetMapping("detail.rec")
 	public String recruitmentDetail() {
 		return "board/recruitment/recruitmentDetailView";
@@ -22,5 +21,9 @@ public class recruitmentController {
 	@GetMapping("room.rec2")
 	public String roomEnter2(){
 		return "project/room2";
+	}
+	@GetMapping("enrollForm.rec")
+	public String enrollForm(){
+		return "board/recruitment/recruitmentEnrollForm";
 	}
 }

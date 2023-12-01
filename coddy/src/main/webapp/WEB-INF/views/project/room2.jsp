@@ -64,8 +64,6 @@
     }
 
 
-
-
     /* 카드1 */
     .card {
     width: 95%;
@@ -292,12 +290,6 @@
     }
         
    
-
-
-
-
-
-
 </style>
 <script>
   
@@ -331,8 +323,7 @@
       open_fc();
     });
   
-    console.log($(".card").children('.job').text());
-  
+    
     
    
   });
@@ -400,21 +391,19 @@
 
     <div class="chat_area">
         <div class="chat-card">
-            <div class="chat-body">
-              <div class="message incoming">
+            <div class="chat-body" id="chat_body">
+              <!-- <div class="message incoming">
                 <p>Hello, how can I assist you today?</p>
               </div>
               <div class="message outgoing">
                 <p>I have a question about your services.</p>
-              </div>
-              <div class="message incoming">
-                <p>Sure, I'm here to help. What would you like to know?</p>
-              </div>
+              </div> -->
+              
               
             </div>
             <div class="chat-footer">
-              <input placeholder="Type your message" type="text">
-              <button>Send</button>
+              <input placeholder="Type your message" type="text" id="chat_input">
+              <button onclick="send();">Send</button>
             </div>
           </div>        
     </div>
@@ -434,14 +423,7 @@
 
     </div>
 
-
-
-
-
-
-
-
-
+    <!-- 달력 모달 -->
 
     <div class="modal" id="myModal">
         <div class="modal-dialog modal-lg">
@@ -466,5 +448,39 @@
           </div>
         </div>
       </div>
+
+      <script>
+        window.onload = function(){
+          connect();
+        
+        }
+        let socket;
+        function connect(){
+
+          let url = "ws://localhost:8082/coddy/chat.do";
+          socket = new WebSocket(url);
+
+          socket.onopen = function(){
+            console.log("연결");      
+          };
+          
+          socket.onmessage = function(e){
+            console.log(e.data);
+
+            // let obj = JSON.parse(e.data);
+
+            let div = $("<div>"+e.data+"</div>");
+            $("#chat_body").append(div);
+          }
+        }
+
+        function send(){
+          let text = $("#chat_input").val();
+          if(text.trim()!==""){ 
+            socket.send(text);
+            $("#chat_input").val("");
+          }
+        }
+      </script>
 </body>
 </html>

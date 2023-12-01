@@ -36,6 +36,9 @@
 	<websocket:handlers>
 		<websocket:mapping path="chat.do" handler="chatHandler" />
 		<!--  HttpSession의 정보를 WebSocketSession으로 가져오기 위한 빈 등록 --> 
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor" />
+		</websocket:handshake-interceptors>
 	</websocket:handlers>
 	
 </beans:beans>

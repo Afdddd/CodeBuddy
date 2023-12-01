@@ -247,43 +247,11 @@
                 <span class="like_count">223</span>
             </div>
         </div>
-        <script>
-            $(function(){
-                    $(".container").css("width","10px");
-
-                    
-            });
-        </script>
-
         <div class="content_1">
         <div class="content_left">
             <h2>모집 현황</h2>
             <a href="room.rec1">입장하기</a> 
-            <a href="room.rec2" onclick="connect();">입장하기</a> 
-            <script>
-              let socket;
-
-              function connect(){
-
-                let url = "ws://localhost:8082/coddy/chat.do";
-                socket = new WebSocket(url);
-                
-                socket.onopen() = function(){
-                  console.log("연결");
-                }
-                socket.onclose() = function(){
-                  console.log("연결종료");
-                }
-                socket.onerror = function(){
-                  console.log("오류 발생");
-                };
-                socket.onmessage = function(){
-                  console.log("메세지 도착");
-                };
-
-              }
-
-            </script>
+            <a href="room.rec2">입장하기</a> 
             <table class="position_status">
                 <tbody>
                     <tr>
@@ -382,5 +350,11 @@
       </div>
     
     </div>
+
+    <script>
+      $(function(){
+              $(".container").css("width","10px");      
+      });
+  </script>
 </body>
 
