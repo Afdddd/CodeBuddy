@@ -25,9 +25,10 @@ public interface MemberService {
 	// id 찾기
 	String findId(Member findMember);
 
-	/*
+	int updateMember(Member m);
+	
 	int updateMember(Member m, String webPath, String folderPath);
-*/
+
 	int deleteMember(String memberId);
 
 	int PwdChangeForm(Member m);
@@ -40,4 +41,6 @@ public interface MemberService {
 
 	// 이제 db에 등록된 이메일로 보내주기 위해 가져옴
 	String findEmail(Member findMember);
+
+	
 }

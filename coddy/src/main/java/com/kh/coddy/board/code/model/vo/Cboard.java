@@ -14,7 +14,7 @@ public class Cboard {
 	private int cboardNo;			//	CBOARD_NO   NUMBER
 	private String cboardTitle;		//	CBOARD_TITLE    VARCHAR2(400)
 	private String cboardContent;	//	CBOARD_CONTENT  VARCHAR2(4000)
-	private int cboardWriter;		//	CBOARD_WRITER   NUMBER
+	private String cboardWriter;		//	CBOARD_WRITER   NUMBER
 	private String cboardInsert;	//	CBOARD_INSERT   DATE
 	private String cboardUpdate;	//	CBOARD_UPDATE   DATE
 	private String cboardDelte;		//	CBOARD_DELETE   DATE
