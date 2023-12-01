@@ -450,27 +450,52 @@
       </div>
 
       <script>
-        window.onload = function(){
-          connect();
-        
+      
+     	let load = 0;
+      
+        window.onload = function(){         
+          if(load==0){
+        	  connect();  
+          }
+          load++;
+          console.log(load);
         }
         let socket;
         function connect(){
-
+        	
           let url = "ws://localhost:8082/coddy/chat.do";
           socket = new WebSocket(url);
-
+		  
+		  
           socket.onopen = function(){
             console.log("연결");      
           };
           
           socket.onmessage = function(e){
-            console.log(e.data);
-
-            // let obj = JSON.parse(e.data);
-
-            let div = $("<div>"+e.data+"</div>");
-            $("#chat_body").append(div);
+            let obj = JSON.parse(e.data);
+            console.log(obj);
+            let div;
+            
+            console.log(${loginMember.memberNo});
+           
+            console.log(obj.memberNo);
+            
+            if(${loginMember.memberNo} != obj.memberNo){           		            
+            	 div = $("<div class='message incoming'>"
+            			 + "<div>"+ obj.memberName + "</div>"
+	                   	 +"<p>"+ obj.msg +"</p>"+obj.sendTime
+	                    +"</div>");
+            }else{
+            	div = $("<div class='message outgoing'>"
+             			 + "<div>"+ obj.memberName + "</div>"
+                        	 +"<p>"+ obj.msg +"</p>"+obj.sendTime
+                         +"</div>");
+            	
+            }
+            
+           
+            
+			$("#chat_body").append(div);
           }
         }
 
