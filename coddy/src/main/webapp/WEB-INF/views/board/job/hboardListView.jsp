@@ -8,7 +8,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>취업 공고 게시판</title>
         <style>
-            div { border: 1px solid black; }
             .outerForm { width: 100%; height: 100%; padding-top: 3%; padding-bottom: 3%; }
             .searchForm { width: 100%; height: 15%; padding: 3%; }
             .searchForm1 { width: 100%; height: 80%; border-radius: 20px; }
@@ -31,7 +30,10 @@
                         </div>
                         <div style="width: 100%; height: 40%;"></div>
                     </div><br>
-                    <div class="searchForm2"></div>
+                    <div class="searchForm2">
+                        <jsp:include page="../../common/tagTech.jsp" />
+                        <jsp:include page="../../common/tagCareer.jsp" />
+                    </div>
                 </div>
                 <div class="hboardMain">
                     <div style="width: 100%; height: 10%;">

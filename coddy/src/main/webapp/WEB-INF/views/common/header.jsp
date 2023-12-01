@@ -60,6 +60,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <!-- Tagify -->
+    <script src="https://unpkg.com/@yaireo/tagify"></script>
+    <!-- Tagify (구버젼 브라우저 지원) -->
+    <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+    <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <style>
         div {box-sizing:border-box;}
         #header {
@@ -255,6 +260,7 @@
                 <ul>
                     <li><a href="list.rec">모집</a></li>
                     <li><a href="">코드리뷰</a></li>
+                    <li><a href="">공지</a></li>
                     <li><a href="">자유</a></li>
                     <li><a href="introlist.bo">소개</a></li>
                     <li><a href="listView.hb">채용공고</a></li>
