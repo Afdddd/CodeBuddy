@@ -3,45 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
- <!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <!-- 부트스트랩에서 제공하고 있는 스타일 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!-- swiper.js 라이브러리추가 (cdn) -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-    <!-- JavaScript(Alertify) -->
-	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-	<!-- CSS(Alertify) -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
-	<!-- Default theme(Alertify) -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
-	<!-- Semantic UI theme(Alertify) -->
-	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
-    <!-- chat.js -->
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="${ pageContext.request.contextPath }/resources/dist/sockjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
-    <!-- datepicker range -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
-    <!-- 데이터피커쪽 관련-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <!-- Popper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <!-- TWAK 키값 -->
-    <script src="${ pageContext.request.contextPath }/resources/js/twak.js"></script>
-    <!-- 구글 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
     <style>
       /* div{border:1px solid red;} */
         #footer {
@@ -52,17 +15,16 @@
             display : flex;
         }
         #footer-1 {
-        	
             width:65%;
             height:100%;
             border-top:1px solid lightgray;
             border-bottom : 1px solid lightgray;
         }
         #footer-2 {
-        width:35%; 
-        height:100%;
-        border-top:1px solid lightgray;
-        border-bottom : 1px solid lightgray;
+            width:35%; 
+            height:100%;
+            border-top:1px solid lightgray;
+            border-bottom : 1px solid lightgray;
         }
         #footer-1, #footer-2 {padding-left:50px;}
         #footer-1>a {
@@ -91,12 +53,12 @@
         .td1 {
         	padding-right : 15px;
         	font-family: 'Noto Sans KR', sans-serif;
-font-family: 'Noto Serif KR', serif;
+            font-family: 'Noto Serif KR', serif;
         	
         }
         .td2 {
-       font-family: 'Noto Sans KR', sans-serif;
-font-family: 'Noto Serif KR', serif;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Noto Serif KR', serif;
         }
      
         

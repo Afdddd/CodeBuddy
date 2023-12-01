@@ -12,4 +12,9 @@ public class CompanyDao {
 	public Company login(SqlSessionTemplate sqlSession, Company c) { return sqlSession.selectOne("companyMapper.loginCompany", c); }
 	public String findIdAccess(SqlSessionTemplate sqlSession, Company c) { return sqlSession.selectOne("companyMapper.findIdAccess", c); }
 	public int setNewPassword(SqlSessionTemplate sqlSession, Company c) { return sqlSession.update("companyMapper.setNewPassword", c); }
+	public int uploadFile(SqlSessionTemplate sqlSession, int companyNo) { return sqlSession.update("companyMapper.uploadFile", companyNo); }
+	public int countWritten(SqlSessionTemplate sqlSession, int companyNo) { return sqlSession.selectOne("companyMapper.countWritten", companyNo); }
+	public String getPassword(SqlSessionTemplate sqlSession, String companyId) { return sqlSession.selectOne("companyMapper.getPassword", companyId); }
+	public int updateCompany(SqlSessionTemplate sqlSession, Company c) { return sqlSession.update("companyMapper.updateCompany", c); }
+	public int deleteCompany(SqlSessionTemplate sqlSession, int companyNo) { return sqlSession.update("companyMapper.deleteCompany", companyNo); }
 }

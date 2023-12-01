@@ -458,17 +458,17 @@
             </label>            
         </div>
         <div class="">
-          <button class="write_button" onclick="location.href='detail.rec'">게시글 작성</button>
+          <button class="write_button" onclick="location.href='enrollForm.rec'">게시글 작성</button>
         </div>
         <div class="content_2">
           <div class="card-list">
 
-            <div class="card">
-              <div class="card-image"></div>
+            <div class="card" >
+              <div class="card-image" onclick="location.href='detail.rec'"></div>
               <div class="category">커뮤니티</div>
               <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
+                <h5 onclick="location.href='detail.rec'">OurNeighborhood</h5>
+                <div class="explain" onclick="location.href='detail.rec'">아파트 입주민들을 위한 소통 커뮤니티</div>
                   <div class="author"> By <span class="name">김인엽</span> 4일전</div>
                   <label class="container">
                     <input checked="checked" type="checkbox">
