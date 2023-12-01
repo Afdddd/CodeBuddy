@@ -12,6 +12,8 @@ import java.net.URL;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -447,4 +449,34 @@ public class MemberController {
 		} catch (IOException e) { e.printStackTrace(); }
 		return kakaoMember;
 	}
+	
+
+	@RequestMapping("myRank.me")
+	public String myRank() {
+		
+		return "member/myRank";
+	}
+	
+	@RequestMapping("likedRecruit.me")
+	public String likedRecruit() {
+		
+		return "member/likedRecruit";
+		
+	}
+	
+	@RequestMapping("wroteReply.me")
+	public String wroteReply() {
+		
+		return "member/wroteReply";
+		
+	/* 나중에 지워주세요 */
+	@PostMapping(value="insertForce.me", produces="text/html; charset=UTF-8") @ResponseBody public String insertMemberForce(Member m) {
+		m.setMemberPwd(pbkdf2.encode(m.getMemberPwd()));
+		int result = memberService.insertMember(m);
+		if(result > 0) { return "성공"; } else { return "실패"; }
+
+	}
 }
+
+
+

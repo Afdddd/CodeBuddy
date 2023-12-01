@@ -22,4 +22,9 @@ public class CboardController {
 			return "board/code/codeDetailView";
 		}
 	
+		@GetMapping("enrollForm.co")
+		public String enrollForm() {
+			
+			return "board/code/codeEnrollForm";
+		}
 }

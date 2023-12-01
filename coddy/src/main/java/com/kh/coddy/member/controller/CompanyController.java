@@ -1,5 +1,6 @@
 package com.kh.coddy.member.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
 
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.auth.model.vo.Auth;
@@ -85,7 +87,7 @@ public class CompanyController {
 			else {
 				session.setAttribute("loginCompany", loginCompany);
 				session.setAttribute("alertMsg", "기업 로그인 성공");
-				log.info("loginCompany={}, ip={}",loginCompany, request.getRemoteAddr());
+				log.info("loginCompany={}, ip={}", loginCompany, request.getRemoteAddr());
 				return "redirect:/";
 			}
 		}
@@ -111,5 +113,58 @@ public class CompanyController {
 		message.setTo(c.getCompanyEmail()); mailSender.send(message);
 		session.setAttribute("alertMsg", "요청 성공");
 		return "redirect:/loginPage.co";
+	}
+	@GetMapping(value="myPage.co") public String myPage(HttpSession session) { if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업전용 메뉴입니다."); return "redirect:/"; } if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "비로그인 상태입니다."); return "redirect:/"; } return "company/myPage"; }
+	@PostMapping(value="uploadFile.co", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFile(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
+		String path = req.getRealPath("resources\\file_upload\\company\\");
+		File file = new File(path, String.format("%08d", ((Company)(session.getAttribute("loginCompany"))).getCompanyNo()) + ".jpg");
+		try { 
+			uploadFiles.transferTo(file); 
+			if(companyService.uploadFile(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()) > 0) { 
+				Company myCompany = ((Company)(session.getAttribute("loginCompany")));
+				myCompany.setCompanyPhotoExtend("jpg"); session.setAttribute("loginCompany", myCompany);
+				return "이미지 업로드 성공"; 
+			}
+			else { return "이미지 업로드 실패"; }
+		}
+		catch (IllegalStateException | IOException e) { e.printStackTrace(); return "이미지 업로드 실패"; }
+	}
+	@PostMapping(value="uploadFileBg.co", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFileBg(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
+		String path = req.getRealPath("resources\\file_upload\\company_bg\\");
+		File file = new File(path, String.format("%08d", ((Company)(session.getAttribute("loginCompany"))).getCompanyNo()) + ".jpg");
+		try { 
+			uploadFiles.transferTo(file); 
+			return "이미지 업로드 성공"; 
+		}
+		catch (IllegalStateException | IOException e) { e.printStackTrace(); return "이미지 업로드 실패"; }
+	}
+	@GetMapping(value="updateForm.co") public String updateForm(HttpSession session) { 
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
+		else { int result = companyService.countWritten(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()); session.setAttribute("howManyWritten", result); return "company/companyUpdateForm"; } }
+	@GetMapping(value="myPageInfo.co") public String myPageInfo(HttpSession session) { 
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
+		else { int result = companyService.countWritten(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()); session.setAttribute("howManyWritten", result); return "company/companyInfoPage"; } }
+	@PostMapping(value="update.co") public String updateCompany(HttpSession session, Model model, Company c, String companyNewPwd) { 
+		if(pbkdf2.matches(c.getCompanyPwd(), companyService.getPassword(c.getCompanyId()))) { 
+			if(!companyNewPwd.equals("")) { c.setCompanyPwd(pbkdf2.encode(companyNewPwd)); }
+			else { c.setCompanyPwd(((Company)(session.getAttribute("loginCompany"))).getCompanyPwd()); }
+			int result = companyService.updateCompany(c); 
+			if(result > 0) { session.setAttribute("alertMsg", "성공적으로 변경에 성공함. 다시 로그인 해주세요."); session.removeAttribute("loginCompany"); return "redirect:/loginPage.co"; } 
+			else { session.setAttribute("alertMsg", "변경 실패."); return "redirect:/updateForm.co"; } }
+		else { model.addAttribute("errorMsg","인증 실패"); return "common/errorPage"; } }
+	@GetMapping(value="deleteForm.co") public String deleteForm(HttpSession session) { 
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; }
+		else { return "company/companyDeleteForm"; }
+	}
+	@PostMapping(value="delete.co") public String deleteCompany(HttpSession session, Model model, String companyPwd) { 
+		if(pbkdf2.matches(companyPwd, companyService.getPassword(((Company)(session.getAttribute("loginCompany"))).getCompanyId()))) {
+			int result = companyService.deleteCompany(((Company)(session.getAttribute("loginCompany"))).getCompanyNo());
+			if(result > 0) { session.setAttribute("alertMsg", "탈퇴가 완료되었습니다. 재가입시 1:1 문의해주세요."); session.removeAttribute("loginCompany"); return "redirect:/"; }
+			else { model.addAttribute("errorMsg", "DB 연동 실패"); return "common/errorPage"; }
+		}
+		else { model.addAttribute("errorMsg", "인증 실패"); return "common/errorPage"; }
 	}
 }

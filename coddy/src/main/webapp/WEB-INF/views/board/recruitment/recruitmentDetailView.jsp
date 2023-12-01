@@ -247,16 +247,11 @@
                 <span class="like_count">223</span>
             </div>
         </div>
-        <script>
-            $(function(){
-                    $(".container").css("width","10px");
-            });
-        </script>
-
         <div class="content_1">
         <div class="content_left">
             <h2>모집 현황</h2>
-            <a href="room.rec">입장하기</a>      
+            <a href="room.rec1">입장하기</a> 
+            <a href="room.rec2">입장하기</a> 
             <table class="position_status">
                 <tbody>
                     <tr>
@@ -355,5 +350,11 @@
       </div>
     
     </div>
+
+    <script>
+      $(function(){
+              $(".container").css("width","10px");      
+      });
+  </script>
 </body>
 

@@ -25,12 +25,11 @@
         /* display : none; */ /* 아니면 안보이게 숨기기도 가능 */
     }
     </style>
-
 </head>
 
 <body>
-<jsp:include page="common/header.jsp" />	
- <div id="content_1">
+    <jsp:include page="common/header.jsp" />	
+    <div id="content_1">
         <!-- Slider main container -->
         <div class="swiper">
             <!-- Additional required wrapper -->

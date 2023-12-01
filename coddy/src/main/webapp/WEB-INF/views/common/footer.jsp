@@ -3,12 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-    <!-- 구글 폰트 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
     <style>
       /* div{border:1px solid red;} */
         #footer {
@@ -19,7 +15,6 @@
             display : flex;
         }
         #footer-1 {
-        	
             width:65%;
             height:60%;
             border-top:1px solid lightgray;
@@ -29,6 +24,7 @@
         width:35%; 
         height:60%;
         border-top:1px solid lightgray;
+
         }
         #footer-1, #footer-2 {padding-left:50px;}
         #footer-1>a {
@@ -57,12 +53,12 @@
         .td1 {
         	padding-right : 15px;
         	font-family: 'Noto Sans KR', sans-serif;
-font-family: 'Noto Serif KR', serif;
+          font-family: 'Noto Serif KR', serif;
         	font-size: 12px;
         }
         .td2 {
-       font-family: 'Noto Sans KR', sans-serif;
-font-family: 'Noto Serif KR', serif;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-family: 'Noto Serif KR', serif;
         }
         
         p {
