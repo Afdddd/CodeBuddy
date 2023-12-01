@@ -468,7 +468,7 @@ public class MemberController {
 	public String wroteReply() {
 		
 		return "member/wroteReply";
-		
+	}
 	/* 나중에 지워주세요 */
 	@PostMapping(value="insertForce.me", produces="text/html; charset=UTF-8") @ResponseBody public String insertMemberForce(Member m) {
 		m.setMemberPwd(pbkdf2.encode(m.getMemberPwd()));

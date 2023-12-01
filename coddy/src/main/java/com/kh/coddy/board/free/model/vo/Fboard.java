@@ -1,4 +1,4 @@
-package com.kh.coddy.board.code.model.vo;
+package com.kh.coddy.board.free.model.vo;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

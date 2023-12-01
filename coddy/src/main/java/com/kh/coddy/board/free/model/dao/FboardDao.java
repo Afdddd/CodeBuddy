@@ -1,4 +1,4 @@
-package com.kh.coddy.board.code.model.dao;
+package com.kh.coddy.board.free.model.dao;
 
 import java.util.ArrayList;
 
