@@ -62,7 +62,7 @@
             			
             			let bno = $(this).children(".bno").text();
             			
-            			location.href = "detail.bo?bno=" + bno;
+            			location.href = "detail.co?bno=" + bno;
             		});
             	});
             </script>

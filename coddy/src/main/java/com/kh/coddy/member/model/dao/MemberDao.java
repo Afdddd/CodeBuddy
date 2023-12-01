@@ -1,10 +1,18 @@
 package com.kh.coddy.member.model.dao;
 
+import org.apache.ibatis.mapping.FetchType;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Repository;
 
 import com.kh.coddy.common.auth.model.vo.Auth;
+
 import com.kh.coddy.member.model.vo.Member;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Repository
 public class MemberDao {
@@ -31,4 +39,9 @@ public class MemberDao {
 	public int setNewPassword(SqlSessionTemplate sqlSession, Member newMember) { return sqlSession.update("memberMapper.setNewPassword", newMember); }
 	public String findEmail(SqlSessionTemplate sqlSession, Member findMember) { return sqlSession.selectOne("memberMapper.findEmail", findMember); }
 
+	
+	
 }
+
+
+
