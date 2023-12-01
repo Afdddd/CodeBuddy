@@ -11,14 +11,19 @@
 	</style>
 	</head>
 	<body>
-		<input type="text" name="tagCareerName" id="tagCareerName" autofocus>
+		<input type="text" name="tagAllName" id="tagAllName" autofocus>
 		<script>
-			var inputCareer = document.querySelector('input[name=tagCareerName]');
-			let tagCareerArr = ['PM', '기획', '프론트엔드', '백엔드', 'CDN', '디자인', '네트워크/서버', 'IOS 앱 개발', 'AOS 앱 개발', 'AI학습', '게임개발'];
+			var inputAll = document.querySelector('input[name=tagAllName]');
+			let tagAllArr = ['C언어', 'C++', 'C#', 'GO', 'Java', 'JavaScript', 
+				'Spring', 'React', 'Node.js', 'Vue', 'Swift', 'Kotlin', 
+				'Python', 'Django', 'Php', 'Flutter', 'MySql', 'MarianDB',
+				'MongoDB', 'OracleDB', 'Unity', 'AWS', 'Docker', 'Kubernetes',
+				'Git', 'Figma', 'Window', 'Linux', 
+				'PM', '기획', '프론트엔드', '백엔드', 'CDN', '디자인', '네트워크/서버', 'IOS 앱 개발', 'AOS 앱 개발', 'AI학습', '게임개발'];
 
-			var tagifyCareer = new Tagify(inputCareer, {
+			var tagifyAll = new Tagify(inputAll, {
 				enforceWhitelist: true,
-				whitelist : tagCareerArr,
+				whitelist : tagAllArr,
 				blacklist : ["fuck", "shit"],
 				dropdown: {
 					enabled : 0,

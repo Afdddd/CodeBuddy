@@ -23,7 +23,14 @@
 			var tagifyTech = new Tagify(inputTech, {
 				enforceWhitelist: true,
 				whitelist : tagTechArr,
-				blacklist : ["fuck", "shit"]
+				blacklist : ["fuck", "shit"],
+				dropdown: {
+					enabled : 0,
+					maxItems: 40,
+					classname: "tags-look",
+					enabled: 0,
+					closeOnSelect: false
+				}
 			})
 
 			// toggle Tagify on/off
