@@ -66,7 +66,7 @@
 	<body>
         <div class="profile-widget">
             <h2 class="widget-heading">About Business...</h2>
-            <div class="cover-img"><img src="resources/image/company/myPage-bg.jpg" alt="User profile cover photo"></div>
+            <div class="cover-img"><label for="chooseFileBg"><img src="resources/file_upload/company_bg/<fmt:formatNumber value='${sessionScope.loginCompany.companyNo}' pattern='00000000' />.jpg" onerror="this.src='resources/image/company/myPage-bg.jpg'" onclick="" id="uploadFilesBg"></label></div>
             <div class="user-details">
                 <div class="user-img">
                     <form method="post" enctype="multipart/form-data">
@@ -83,6 +83,7 @@
                             </div>
                         </label>
                         <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this);" style="visibility: hidden;">
+						<input type="file" id="chooseFileBg" name="chooseFileBg" accept="image/*" onchange="loadFileBg(this);" style="visibility: hidden;">
                     </form>
                 </div>
                 <div id="fileName"></div>
@@ -112,6 +113,23 @@
 				$.ajax({
 					type : "POST",
 					url : "uploadFile.co",
+					processData: false,
+					contentType: false,
+					data : formData,
+					success : function(result) { alert(result); },
+					error : function(xhr, status, error) { alert(error); }
+				});
+			};
+			function loadFileBg(input) {
+				var files = input.files;
+				$("#uploadFilesBg").attr("src", URL.createObjectURL(files[0]));
+
+				var formData = new FormData();
+				formData.append("uploadFiles", files[0])
+
+				$.ajax({
+					type : "POST",
+					url : "uploadFileBg.co",
 					processData: false,
 					contentType: false,
 					data : formData,

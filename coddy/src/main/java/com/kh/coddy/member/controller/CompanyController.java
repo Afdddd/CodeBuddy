@@ -129,6 +129,15 @@ public class CompanyController {
 		}
 		catch (IllegalStateException | IOException e) { e.printStackTrace(); return "이미지 업로드 실패"; }
 	}
+	@PostMapping(value="uploadFileBg.co", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFileBg(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
+		String path = req.getRealPath("resources\\file_upload\\company_bg\\");
+		File file = new File(path, String.format("%08d", ((Company)(session.getAttribute("loginCompany"))).getCompanyNo()) + ".jpg");
+		try { 
+			uploadFiles.transferTo(file); 
+			return "이미지 업로드 성공"; 
+		}
+		catch (IllegalStateException | IOException e) { e.printStackTrace(); return "이미지 업로드 실패"; }
+	}
 	@GetMapping(value="updateForm.co") public String updateForm(HttpSession session) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 

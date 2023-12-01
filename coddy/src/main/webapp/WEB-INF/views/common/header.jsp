@@ -7,6 +7,7 @@
 	Resource resource = new ClassPathResource("keys/kakaoLogin.json");
 	String kakaoLoginKey = Keys.read(resource.getURL().getPath(), "key.kakaoLogin");  
 
+    /* 캐시 이미지 저장하지 않음 */
     response.setHeader("Cache-Control","no-store");  
     response.setHeader("Pragma","no-cache");  
     response.setDateHeader("Expires",0);  
@@ -265,7 +266,7 @@
                         <c:choose>
                             <c:when test="${empty sessionScope.loginCompany}">
                                 <a href="signup.me">회원가입</a>
-                                <a data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
+                                <a id="loginA" data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
                             </c:when>
                             <c:otherwise>
                                 <label><b style="color: #34974d; font-size: 13px;">${sessionScope.loginCompany.companyName}</b> 기업 로그인중</label> &nbsp;&nbsp;
