@@ -16,15 +16,15 @@
         }
         #footer-1 {
             width:65%;
-            height:100%;
+            height:60%;
             border-top:1px solid lightgray;
-            border-bottom : 1px solid lightgray;
+
         }
         #footer-2 {
-            width:35%; 
-            height:100%;
-            border-top:1px solid lightgray;
-            border-bottom : 1px solid lightgray;
+        width:35%; 
+        height:60%;
+        border-top:1px solid lightgray;
+
         }
         #footer-1, #footer-2 {padding-left:50px;}
         #footer-1>a {
@@ -53,12 +53,17 @@
         .td1 {
         	padding-right : 15px;
         	font-family: 'Noto Sans KR', sans-serif;
-            font-family: 'Noto Serif KR', serif;
-        	
+          font-family: 'Noto Serif KR', serif;
+        	font-size: 12px;
         }
         .td2 {
             font-family: 'Noto Sans KR', sans-serif;
             font-family: 'Noto Serif KR', serif;
+        }
+        
+        p {
+        font-family: 'Noto Sans KR', sans-serif;
+		font-family: 'Noto Serif KR', serif;
         }
      
         
@@ -95,11 +100,9 @@
 				<tr>
 					<td style="padding-right : 30px;"><b>Compete</b></td>
 					<td style="padding-right : 15px;"> |</td>
-					<td><a href="#">Meetgo</a></td>
-					<td>|</td>
-					<td><a href="#">윤석이형네</a></td>
-					<td>|</td>
-					<td><a href="#">원진이네</a></td>
+					<td colspan="2"><a href="#"><img src="resources/image/meetgo_logo.png" style="height : 50px; width : 50px;"></a></td>
+					<td colspan="2"><a href="#"><img src="resources/image/mbtingLoggo2.png" style="height : 50px; width : 50px;"></a></td>
+					<td colspan="2"><a href="#">원진이네</a></td>
 				</tr>
 			</table>
         </div>
@@ -113,13 +116,17 @@
         <div id="footer-2">
             <p id="p1">
             	<br>
+            	 <div style="text-align : center;">
+            <img src="resources/image/logo.png" style="height : 50px; width:100px;"> <br><br>
+           	<div style="text-align : left;">
+            <p style="font-size : 12px;">
             	사업자 : ??? <br>
             	Contact : 010-1516-5162 <br>
                 Address : 서울특별시 영등포구 선유동2로 57 이레빌딩 <br>
             </p>
+            </div>
             <br>
-            <div style="text-align : center;">
-            <img src="resources/image/logo.png" style="height : 50px; width:100px;">
+    
             </div>
         </div>
     </div>

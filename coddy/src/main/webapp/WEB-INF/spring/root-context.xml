@@ -56,4 +56,7 @@
 		<!-- maxUploadSize : 한번에 전체 업로드 되는 파일의 총 용량 -->
 		<property name="maxUploadSize" value="10000000" />
 	</bean>	
+	
+
+	
 </beans>

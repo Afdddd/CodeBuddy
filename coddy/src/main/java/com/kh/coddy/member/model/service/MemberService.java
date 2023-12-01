@@ -25,9 +25,11 @@ public interface MemberService {
 	// id 찾기
 	String findId(Member findMember);
 
+
 	int updateMember(Member m);
 	
 	int updateMember(Member m, String webPath, String folderPath);
+
 
 	int deleteMember(String memberId);
 
@@ -43,4 +45,6 @@ public interface MemberService {
 	String findEmail(Member findMember);
 
 	
+	int uploadFile(int memberNo);
+
 }

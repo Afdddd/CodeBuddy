@@ -19,15 +19,15 @@
 
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER
-			SET MEMBER_NAME = #{memberName}
-				MEMBER_INFO = #{memberInfo}
-				MEMBER_PHOTO_EXTEND = #{memberPhotoExtend}
-					WHERE MEMBER_NO = #{memberId}
-					AND MEMBER_DELETE IS NULL
+			SET MEMBER_NAME = #{memberName},
+				MEMBER_INFO = #{memberInfo},
+		MEMBER_PHOTO_EXTEND = #{memberPhotoExtend}
+			WHERE MEMBER_ID = #{memberId}
+			AND MEMBER_DELETE IS NULL
 	</update>
 
 	<update id="deleteMember" parameterType="string">
-		UPDATE MEMBER
+		 UPDATE MEMBER
 			SET MEMBER_DELETE = SYSDATE
 		  WHERE MEMBER_ID = #{memberId}
 	</update>
@@ -39,7 +39,12 @@
 		   AND MEMBER_DELETE IS NULL
 	</update>
 
-
+	<update id="uploadFile" parameterType="_int">
+		UPDATE MEMBER 
+		   SET MEMBER_PHOTO_EXTEND='jpg' 
+		 WHERE MEMBER_NO = #{memberNo} 
+		   AND MEMBER_DELETE IS NULL
+	</update>
 	<insert id="insertMember" parameterType="member">INSERT INTO MEMBER(MEMBER_NO, MEMBER_ID, MEMBER_PWD, MEMBER_EMAIL, MEMBER_NAME, MEMBER_INFO) VALUES(SEQ_MEMBER.NEXTVAL, #{memberId}, #{memberPwd}, #{memberEmail}, #{memberName}, #{memberInfo})</insert>
 	<select id="findId" parameterType="member" resultType="string">SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail} AND MEMBER_NAME=#{memberName} AND MEMBER_DELETE IS NULL</select>
 	<select id="findPwd" parameterType="member" resultType="_int">SELECT COUNT(*) FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail} AND MEMBER_NAME=#{memberName} AND MEMBER_DELETE IS NULL</select>

@@ -24,12 +24,12 @@ public class MemberServiceImpl implements MemberService{
 	@Override public String findId(Member findMember) { return memberDao.findId(sqlSession, findMember); }
 
 
-/*
+
 	@Override
-	public int updateMember(Member m, String webPath, String folderPath) {
-		return memberDao.updateMember(sqlSession, m, webPath, folderPath);
+	public int updateMember(Member m) {
+		return memberDao.updateMember(sqlSession, m);
 	}
-*/
+
 	@Override
 	public int deleteMember(String memberId) {
 		
@@ -40,12 +40,16 @@ public class MemberServiceImpl implements MemberService{
 	public int PwdChangeForm(Member m) {
 		return memberDao.PwdChangeForm(sqlSession, m);
 	}
-
-
+	
+	@Override 
+	public int uploadFile(int memberNo) { 
+		return MemberDao.uploadFile(sqlSession, memberNo); 
+	}
 
 	@Override public int findPwd(Member findMember) { return memberDao.findPwd(sqlSession, findMember); }
 	@Override public int setNewPassword(Member newMember) { return memberDao.setNewPassword(sqlSession, newMember); }
 	@Override public String findEmail(Member findMember) { return memberDao.findEmail(sqlSession, findMember); }
+
 	@Override
 	public int updateMember(Member m, String webPath, String folderPath) {
 		// TODO Auto-generated method stub
@@ -56,5 +60,6 @@ public class MemberServiceImpl implements MemberService{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }

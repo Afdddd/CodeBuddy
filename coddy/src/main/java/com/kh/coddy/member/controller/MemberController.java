@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -31,7 +32,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -90,67 +90,90 @@ public class MemberController {
 		return "redirect:/";				
 	}
 	
-	@RequestMapping("myPage.me") // 마이페이지 화면 포워딩
+	@RequestMapping("myPage.me") // 마이페이지 수정화면 포워딩
 	public String myPage() {
 		return "member/myPage";
 	}
 	
-	@RequestMapping(value="update.me", method = RequestMethod.POST) // 수정하기
-	public String updateMember(Member m , HttpSession session, Model model, MultipartFile upfile ,HttpServletRequest req) {
+	@RequestMapping("myPage.se") // 마이페이지 화면 포워딩
+	public String myPageSe() {
+		return "member/myPage1";
+	}
+	
+	@PostMapping(value="member.co", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFile(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
+		String path = req.getRealPath("resources\\image\\profile\\");
+		File file = new File(path, String.format("%08d", ((Member)(session.getAttribute("loginMember"))).getMemberNo()) + ".jpg");
+		try { 
+			uploadFiles.transferTo(file); 
+			if(memberService.uploadFile(((Member)(session.getAttribute("loginMember"))).getMemberNo()) > 0) { 
+				Member myMember = ((Member)(session.getAttribute("loginMember")));
+				myMember.setMemberPhotoExtend("jpg"); session.setAttribute("loginMember", myMember);
+				return "이미지 업로드 성공"; 
+			}
+			else { return "이미지 업로드 실패"; }
+		}
+		catch (IllegalStateException | IOException e) { 
+			e.printStackTrace(); return "이미지 업로드 실패";
+		}
+	}
+	@PostMapping(value="member.mo", produces="text/html; charset=UTF-8") 
+	@ResponseBody 
+	public String uploadFileBg(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
+		String path = req.getRealPath("resources\\image\\background\\");
+		File file = new File(path, String.format("%08d", ((Member)(session.getAttribute("loginMember"))).getMemberNo()) + ".jpg");
+		try { 
+			uploadFiles.transferTo(file); 
+			return "이미지 업로드 성공"; 
+		}
+		catch (IllegalStateException | IOException e) { e.printStackTrace(); return "이미지 업로드 실패"; }
+	}
+	
+	@PostMapping("update.me") // 수정하기
+	public String updateMember(Member m, MultipartFile[] upfile, HttpSession session, Model model) {
 		
-		String webPath = "/resources/image/profile/";
-		// String folderPath = req.getSession().getServletContext().getRealPath(webPath);
 		
-		UUID uuid = UUID.randomUUID();
-		String[] uuids = uuid.toString().split("-");
-		
-		String uniqueName = uuids[0];
-		
+		/*
 		// 전달된 파일이 있을 경우
 		// => 파일명을 수정 후 서버로 업로드
-		if(!upfile.getOriginalFilename().equals("")) {
+		for(int i = 0; i < upfile.length; i++) {
+		if(!upfile[i].getOriginalFilename().equals("")) {
 			
 			// 파일명 수정 작업 진행 후 서버로 업로드 시키기
 			// 1. 원본파일명 뽑아오기
-			String originName = upfile.getOriginalFilename();
-			
-			// 2. 시간 형식을 문자열로 뽑아내기
-			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-			
-			// 3. 뒤에 붙을 5자리 랜덤수 뽑기(10000 ~ 99999)
-			int ranNum = (int)(Math.random() * 90000 + 10000);
 			
 			// 4. 원본파일명으로 부터 확장자명을 뽑아오기
 			// ".jpg" / ".png"
-			String ext = originName.substring(originName.lastIndexOf("."));
 			
 			// 5. 모두 이어 붙이기
-			String changeName = currentTime + ranNum + ext;
+			String changeName = String.format("%08d", m.getMemberNo()) + ".jpg";
 			
 			// 6. 업로드 하고자 하는 물리적인 경로 알아내기
 			String savePath = session.getServletContext().getRealPath("/resources/image/profile/");
+			String savePath2 = session.getServletContext().getRealPath("resources/image/background/");
 			
 			// 7. 경로와 수정파일명을 합체 후 파일을 업로드 해주기
+			
 			try{
-				upfile.transferTo(new File(savePath + changeName));
+				upfile[0].transferTo(new File(savePath + changeName));
+				upfile[1].transferTo(new File(savePath2 + changeName));
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}
 			
 			// 8. 원본명, 서버에 업로드된 수정파일명을 Member m에 이어서 담기
-			m.setMemberPhotoExtend(upfile.getOriginalFilename());
+			m.setMemberPhotoExtend("jpg");
 		}
-		
+	}	
 		// 이 시점 기준으로
 		// 넘어온 첨부파일이 있었을 경우(if문을 거쳤기 때문) 
 		// member m 에 내용들이 담김
 		// 넘어온 첨부파일이 없었을 경우(if문을 거치지 않았기 때문)
 		
 		// 현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 역할
+		*/
 		
 		int result = memberService.updateMember(m);
-		System.out.println(m);
-
+		
 		if(result > 0) { // 수정 성공
 		
 			Member updateMem = memberService.loginMember(m);
@@ -161,13 +184,18 @@ public class MemberController {
 			session.setAttribute("alertMsg", "회원정보 변경 성공!");
 			
 			return "redirect:/myPage.me";
+			
 		} else { // 수정 실패
 			
 			model.addAttribute("errorMsg", "회원 정보 변경 실패");
 			
 			return "common/errorPage";
 		}
-	}
+		
+	
+		
+}
+	
 	
 	// 비밀번호 페이지만 보여주는거
 	@RequestMapping("pwdChange.me")
@@ -252,6 +280,13 @@ public class MemberController {
 		
 			return "redirect:/delete.me";
 		}
+	}
+	
+	@RequestMapping("profile.mo")
+	public void ProfileModal(Member m) {
+		
+		
+		
 	}
 	
 	@RequestMapping("written.me")

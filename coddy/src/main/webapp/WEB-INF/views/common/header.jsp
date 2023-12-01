@@ -283,7 +283,7 @@
                     </c:when>
                	    <c:otherwise>
                         <label><b style="color: #34974d; font-size: 16px;">${sessionScope.loginMember.memberName}</b>님 환영합니다</label> &nbsp;&nbsp;
-                        <a href="myPage.me">마이페이지</a>
+                        <a href="myPage.se">마이페이지</a>
                         <c:choose>
                             <c:when test="${empty sessionScope.isKakao}">
                                 <a href="logout.me">로그아웃</a>
