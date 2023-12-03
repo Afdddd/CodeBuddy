@@ -2,6 +2,7 @@ package com.kh.coddy.board.job.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,13 +16,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.coddy.board.job.model.service.HboardService;
 import com.kh.coddy.board.job.model.vo.Hattachment;
 import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.job.model.vo.Hrelation;
+import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.ReadTag;
+import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.vo.Company;
 
 @Controller
@@ -29,7 +33,24 @@ public class HboardController {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired private HboardService hboardService;
 
-	@GetMapping(value="listView.hb") public String listView() { return "board/job/hboardListView"; }
+	@GetMapping(value="listView.hb") public String listView(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) { 
+		int listCount = hboardService.selectListCount();
+		int pageLimit = 5; int boardLimit = 20;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		if(pi.getMaxPage() == 0) { 
+			ArrayList<Hboard> list = hboardService.selectList(pi);
+			
+			model.addAttribute("list", list); model.addAttribute("pi", pi);
+			return "board/job/hboardListView";
+		}
+		else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { model.addAttribute("errorMsg", "잘못된 페이지"); return "common/errorPage"; }
+		else {
+			ArrayList<Hboard> list = hboardService.selectList(pi);
+			
+			model.addAttribute("list", list); model.addAttribute("pi", pi);
+			return "board/job/hboardListView";
+		}
+	}
 	@GetMapping(value="insertForm.hb") public String insertBoardForm(HttpSession session) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
