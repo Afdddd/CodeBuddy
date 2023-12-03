@@ -31,7 +31,7 @@
 		<jsp:include page="../../common/header.jsp" />
 		<div class="content">
 			<div class="formDiv">
-				<form action="insert.hb" method="post">
+				<form action="insert.hb" method="post" enctype="multipart/form-data" onsubmit="return onSubmit();">
 					<table class="inputTable" style="width: 100%;">
 						<h3 align="center">게시글 작성</h3>
 						<thead>
@@ -97,6 +97,7 @@
 									<input type="text" id="roadAddress" placeholder="도로명주소" readonly>
 									<input type="text" id="jibunAddress" placeholder="지번주소" readonly>
 									<script>
+										let exitFlag = false;
 										function execDaumPostcode() {
 											new daum.Postcode({
 												oncomplete: function(data) {									
@@ -108,8 +109,14 @@
 													document.getElementById('postcode').value = data.zonecode;
 													document.getElementById("roadAddress").value = roadAddr;
 													document.getElementById("jibunAddress").value = data.jibunAddress;
+
+													exitFlag = true;
 												}
 											}).open();
+										}
+										function onSubmit() {
+											if(!exitFlag) { alert("도로명 찾기를 해주세요."); }
+											return exitFlag; 
 										}
 									</script>
 								</td>
@@ -137,7 +144,7 @@
 							</tr>
 							<tr>
 								<th>첨부파일 입력</th>
-								<td></td>
+								<td id="attachmentArea"><button type="button" onclick="addAttach();">추가하기</button></td>
 							</tr>
 							<tr>
 								<th colspan="2"><button type="submit" style="margin:auto; display:block;">작성완료</button></th>
@@ -174,6 +181,9 @@
 					$("#hboardEnd").val($(this).val().split(" - ")[1]);
 				})
 			});
+			function addAttach() {
+				$("#attachmentArea").html("<input type='file' name='files' required>" + $("#attachmentArea").html());
+			}
 		</script>
 	</body>
 </html>

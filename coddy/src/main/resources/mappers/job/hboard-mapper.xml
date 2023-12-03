@@ -24,4 +24,5 @@
 	
 	<insert id="insertBoard" parameterType="hboard">INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, #{hboardTitle}, #{hboardContent}, #{companyNo}, #{hboardStart}, #{hboardEnd}, #{hboardSalary}, #{hboardEducation}, #{hboardCareer}, #{hboardLocation})</insert>
 	<insert id="insertTag" parameterType="hrelation">INSERT INTO HRELATION(HBOARD_NO, TAGS_NO) VALUES(SEQ_HBOARD.CURRVAL, (SELECT TAGS_NO FROM TAGS T WHERE T.TAGS_NAME=#{tagsNo}))</insert>
+	<insert id="insertThumb" parameterType="hattachment">INSERT INTO HATTACHMENT(HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_LEVEL) VALUES(SEQ_HATTACHMENT.NEXTVAL, SEQ_HBOARD.CURRVAL, #{hattachmentOrigin}, #{hattachmentChange}, #{hattachmentPath}, #{hattachmentLevel})</insert>
 </mapper>

@@ -14,6 +14,7 @@
      	<typeAlias type="com.kh.coddy.common.auth.model.vo.Auth" alias="auth"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hboard" alias="hboard"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hrelation" alias="hrelation"/>
+     	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hattachment"/>
     </typeAliases>
       
     <!-- environments 영역은 제외 
