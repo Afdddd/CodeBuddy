@@ -11,7 +11,7 @@
 	</style>
 	</head>
 	<body>
-		<input type="text" name="tagTechName" id="tagTechName" autofocus>
+		<input type="text" name="tagTechName" id="tagTechName">
 		<script>
 			var inputTech = document.querySelector('input[name=tagTechName]');
 			let tagTechArr = ['C언어', 'C++', 'C#', 'GO', 'Java', 'JavaScript', 

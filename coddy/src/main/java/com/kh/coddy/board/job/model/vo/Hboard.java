@@ -21,4 +21,5 @@ public class Hboard {
 	private int hboardSalary;
 	private String hboardEducation;
 	private String hboardCareer;
+	private String hboardLocation;
 }

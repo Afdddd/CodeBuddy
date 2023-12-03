@@ -12,6 +12,8 @@
      	<typeAlias type="com.kh.coddy.member.model.vo.Member" alias="member"/>
      	<typeAlias type="com.kh.coddy.member.model.vo.Company" alias="company"/>
      	<typeAlias type="com.kh.coddy.common.auth.model.vo.Auth" alias="auth"/>
+     	<typeAlias type="com.kh.coddy.board.job.model.vo.Hboard" alias="hboard"/>
+     	<typeAlias type="com.kh.coddy.board.job.model.vo.Hrelation" alias="hrelation"/>
     </typeAliases>
       
     <!-- environments 영역은 제외 
@@ -23,6 +25,7 @@
       <mapper resource="/mappers/member/member-mapper.xml"/>
       <mapper resource="/mappers/member/company-mapper.xml"/>
       <mapper resource="/mappers/auth/auth-mapper.xml"/>
+      <mapper resource="/mappers/job/hboard-mapper.xml"/>
     </mappers>
   </configuration>
 
