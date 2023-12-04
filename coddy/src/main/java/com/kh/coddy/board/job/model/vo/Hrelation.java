@@ -9,5 +9,5 @@ import lombok.ToString;
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
 public class Hrelation {
 	private int hboardNo;
-	private int tagsNo;
+	private String tagsNo;
 }

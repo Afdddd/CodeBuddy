@@ -65,6 +65,8 @@
     <!-- Tagify (구버젼 브라우저 지원) -->
     <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
     <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+    <!-- 도로명 주소 카카오 api -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <style>
         div {box-sizing:border-box;}
         #header {
@@ -114,6 +116,7 @@
         }
         
         /* 기업전용 로그인 버튼 공간 스타일링 */
+        /* 12.03 기준 예전 로그인 스타일이라 나중에 뺴도됨 */
         .loginByCompany {
             position: relative;
             width: 200px;

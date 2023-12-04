@@ -11,7 +11,7 @@
 	</style>
 	</head>
 	<body>
-		<input type="text" name="tagCareerName" id="tagCareerName" autofocus>
+		<input type="text" name="tagCareerName" id="tagCareerName">
 		<script>
 			var inputCareer = document.querySelector('input[name=tagCareerName]');
 			let tagCareerArr = ['PM', '기획', '프론트엔드', '백엔드', 'CDN', '디자인', '네트워크/서버', 'IOS 앱 개발', 'AOS 앱 개발', 'AI학습', '게임개발'];

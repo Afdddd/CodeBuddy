@@ -14,5 +14,5 @@ public class Hattachment {
 	private String hattachmentChange;
 	private String hattachmentPath;
 	private String hattachmentInsert;
-	private String hattachmentLevel;
+	private int hattachmentLevel;
 }
