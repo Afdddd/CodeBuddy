@@ -32,7 +32,7 @@
 
             /* 카드 css */
             .card { width: 250px; height: 420px; background: white; padding: .4em; border-radius: 6px; margin: 20px; margin-bottom: 20px; }
-            .card-image { background-color: rgb(236, 236, 236); width: 100%; height: 130px; border-radius: 6px 6px 0 0; }
+            .card-image { background-color: rgb(236, 236, 236); width: 100%; height: 130px; border-radius: 6px 6px 0 0; text-align: center; line-height:130px; }
             .card-image:hover { transform: scale(0.98); }
             .location { text-transform: uppercase; font-size: 0.7em; font-weight: 600; color: #5271FF; padding: 10px 7px 0; }
             .location:hover { cursor: pointer; }
@@ -168,35 +168,54 @@
                                     </div>                         
                                 </div>
                                 -->
-                                <c:forEach var="b" items="${ requestScope.list }">
-                                	<div class="card">
-                                    <div class="card-image"></div>
-                                    <div class="location">${b.hboardLocation}</div>
-                                    <div class="heading">
-                                        <h5>${b.hboardTitle}</h5>
-                                        <div class="company">${b.companyNo}</div>
-                                        <div style="display: flex; width: 100%;">
-                                            <div class="info"><i class="fas fa-eye"></i>조회수&nbsp;${b.hboardViews}</div>
-                                            <label class="container">찜하기
-                                                <input checked="checked" type="checkbox">
-                                                <div class="checkmark">
-                                                    <svg viewBox="0 0 256 256">
-                                                    <rect fill="none" height="512" width="512"></rect>
-                                                    <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                                                </div>
-                                            </label>
+                                <c:forEach var="b" items="${requestScope.list}" varStatus="status">
+                                    <div class="card">
+                                        <div class="card-image">
+                                            <img src="${requestScope.at_list[status.index].hattachmentPath}/${requestScope.at_list[status.index].hattachmentChange}" width="80%" height="80%" style="vertical-align:middle;" onerror="this.src='resources/image/white.jpg'">
                                         </div>
-                                        <div style="display: flex; width: 100%;">
-                                            <div style="width: 45%;">${b.hboardStart}</div>
-                                            <div style="width: 10%;">&nbsp;~&nbsp;</div>
-                                            <div style="width: 45%;">${b.hboardEnd}</div>
-                                        </div>
-                                    </div> 
-                                    <div class="footing">
-                                        <span class="tagList">a</span>
-                                        <span class="tagList">b</span>
-                                    </div>                         
-                                </div>
+                                        <div class="location">${b.hboardLocation}</div>
+                                        <div class="heading">
+                                            <h5>${b.hboardTitle}</h5>
+                                            <div class="company">${b.companyNo}</div>
+                                            <div style="display: flex; width: 100%;">
+                                                <div class="info"><i class="fas fa-eye"></i>조회수&nbsp;${b.hboardViews}</div>
+                                                <c:if test="${not empty sessionScope.loginMember}">
+                                                    <c:choose>
+                                                        <c:when test="${requestScope.ws_list[status.index]}">
+                                                            <label class="container">찜하기
+                                                                <input type="checkbox" checked="checked" name="favorite" onclick="onWish('${b.hboardNo}');">
+                                                                <div class="checkmark">
+                                                                    <svg viewBox="0 0 256 256">
+                                                                    <rect fill="none" height="512" width="512"></rect>
+                                                                    <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                                                                </div>
+                                                            </label>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <label class="container">찜하기
+                                                                <input type="checkbox" name="favorite" onclick="onWish('${b.hboardNo}');">
+                                                                <div class="checkmark">
+                                                                    <svg viewBox="0 0 256 256">
+                                                                    <rect fill="none" height="512" width="512"></rect>
+                                                                    <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                                                                </div>
+                                                            </label>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </c:if>
+                                            </div>
+                                            <div style="display: flex; width: 100%;">
+                                                <div style="width: 45%;">${b.hboardStart}</div>
+                                                <div style="width: 10%;">&nbsp;~&nbsp;</div>
+                                                <div style="width: 45%;">${b.hboardEnd}</div>
+                                            </div>
+                                        </div> 
+                                        <div class="footing">
+                                            <c:forEach var="tg" items="${requestScope.tg_list[status.index]}">
+                                                <span class="tagList">${tg.tagsNo}</span>
+                                            </c:forEach>
+                                        </div>                         
+                                    </div>
                                 </c:forEach>
                             </div>
                         </div>
@@ -210,6 +229,17 @@
                 </div>
             </div>
         </div>
+        <script>
+            function onWish(e) {
+                $.ajax({
+						url: "boardWish.hb",
+	    				type: "get",
+						data: {hboardNo: e},
+						success: function(result) { console.log(result); },
+						error: function() { console.log("찜하기 실패"); }
+					});
+            }
+        </script>
         <jsp:include page="../../common/footer.jsp" />
     </body>
 </html>

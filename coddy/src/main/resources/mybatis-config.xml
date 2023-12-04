@@ -15,6 +15,7 @@
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hboard" alias="hboard"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hrelation" alias="hrelation"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hattachment"/>
+     	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hwishlist"/>
     </typeAliases>
       
     <!-- environments 영역은 제외 

@@ -21,10 +21,29 @@
 		<result column="HBOARD_NO" property="hboardNo"/>
 		<result column="TAGS_NO" property="tagsNo"/>
 	</resultMap>
+	<resultMap id="hwishlistResultSet" type="hwishlist">
+		<result column="HBOARD_NO" property="hboardNo"/>
+		<result column="HWISHLIST_MEMBER" property="hwishlistMember"/>
+	</resultMap>
+	<resultMap id="hattachmentResultSet" type="hattachment">
+		<result column="HATTACHMENT_NO" property="hattachmentNo"/>
+		<result column="HBOARD_NO" property="hboardNo"/>
+		<result column="HATTACHMENT_ORIGIN" property="hattachmentOrigin"/>
+		<result column="HATTACHMENT_CHANGE" property="hattachmentChange"/>
+		<result column="HATTACHMENT_PATH" property="hattachmentPath"/>
+		<result column="HATTACHMENT_INSERT" property="hattachmentInsert"/>
+		<result column="HATTACHMENT_LEVEL" property="hattachmentLevel"/>
+	</resultMap>
 	
 	<insert id="insertBoard" parameterType="hboard">INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, #{hboardTitle}, #{hboardContent}, #{companyNo}, #{hboardStart}, #{hboardEnd}, #{hboardSalary}, #{hboardEducation}, #{hboardCareer}, #{hboardLocation})</insert>
 	<insert id="insertTag" parameterType="hrelation">INSERT INTO HRELATION(HBOARD_NO, TAGS_NO) VALUES(SEQ_HBOARD.CURRVAL, (SELECT TAGS_NO FROM TAGS T WHERE T.TAGS_NAME=#{tagsNo}))</insert>
 	<insert id="insertThumb" parameterType="hattachment">INSERT INTO HATTACHMENT(HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_LEVEL) VALUES(SEQ_HATTACHMENT.NEXTVAL, SEQ_HBOARD.CURRVAL, #{hattachmentOrigin}, #{hattachmentChange}, #{hattachmentPath}, #{hattachmentLevel})</insert>
 	<select id="selectListCount" resultType="_int">SELECT COUNT(*) FROM HBOARD WHERE HBOARD_DELETE IS NULL</select>
 	<select id="selectList" resultMap="hboardResultSet">SELECT HBOARD_NO, HBOARD_TITLE, COMPANY_NAME AS "COMPANY_NO", HBOARD_VIEWS, TO_CHAR(HBOARD_INSERT, 'YYYY-MM-DD') AS "HBOARD_INSERT", HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION FROM HBOARD, COMPANY WHERE HBOARD_DELETE IS NULL ORDER BY HBOARD_NO DESC</select>
+	<select id="getThumbOne" parameterType="hboard" resultMap="hattachmentResultSet">SELECT HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_INSERT, HATTACHMENT_LEVEL FROM HATTACHMENT WHERE HBOARD_NO=#{hboardNo} AND HATTACHMENT_LEVEL=1</select>
+	<select id="getTagInfo" parameterType="hboard" resultMap="hrelationResultSet">SELECT HR.HBOARD_NO, T.TAGS_NAME AS "TAGS_NO" FROM HRELATION HR, TAGS T WHERE HR.TAGS_NO=T.TAGS_NO AND HR.HBOARD_NO=#{hboardNo}</select>
+	<select id="getWishList" parameterType="hboard" resultType="_int">SELECT COUNT(*) FROM HWISHLIST WHERE HBOARD_NO=#{hboardNo} AND HWISHLIST_MEMBER=#{hboardContent}</select>
+	<select id="getWish" parameterType="hwishlist" resultType="_int">SELECT COUNT(*) FROM HWISHLIST WHERE HBOARD_NO=#{hboardNo} AND HWISHLIST_MEMBER=#{hwishlistMember}</select>
+	<delete id="deleteWish" parameterType="hwishlist">DELETE FROM HWISHLIST WHERE HWISHLIST_MEMBER=#{hwishlistMember} AND HBOARD_NO=#{hboardNo}</delete>
+	<insert id="insertWish" parameterType="hwishlist">INSERT INTO HWISHLIST(HWISHLIST_MEMBER, HBOARD_NO) VALUES(#{hwishlistMember}, #{hboardNo})</insert>
 </mapper>
