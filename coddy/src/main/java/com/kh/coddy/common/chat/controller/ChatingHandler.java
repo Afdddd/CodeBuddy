@@ -1,16 +1,20 @@
 package com.kh.coddy.common.chat.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+import org.json.simple.JSONObject;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import com.google.gson.Gson;
 import com.kh.coddy.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -35,15 +39,11 @@ public class ChatingHandler extends TextWebSocketHandler{
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+	
 		
-		TextMessage newMessage = new TextMessage(message.getPayload());
 		
-		log.info("message = {}",message.getPayload());
 		
-		for(WebSocketSession ws : userList) {
-			ws.sendMessage(newMessage);
-			
-		}
+		
 	}
 
 	@Override

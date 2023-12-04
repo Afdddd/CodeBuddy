@@ -9,7 +9,7 @@
 
 .content_title{
     text-align: center;
-    height: 150px;
+    height: 200px;
 }
 .content_1{
     height: 350px;
@@ -17,16 +17,14 @@
     padding-top: 30px;
 }
 .content_left{
-   
-    width: 60%;
+    width: 65%;
     float: left;
-    height: 200px;
+    padding-left: 20px;
 }
 
 .content_right{
     float: right;
-    width: 40%;
-    height: 200px;
+    width: 35%;
 }
 /* 프로젝트 상태(모집) */
 .project_status{
@@ -116,17 +114,13 @@
   }
 }
 
+
+
 /* 프로젝트 사진 스크롤 */
 .photo-scroll {
-  margin-top: 30px;
+  margin-top: 80px;
   overflow-x: scroll;
   white-space: nowrap;
-}
-
-.content_3>h2{
-    margin-left: 10px;
-    margin-top: 50px;
-    text-align: left;
 }
 
 .photo-scroll-image {
@@ -165,65 +159,88 @@
 
   /* 기술태그 */
   .tag_card {
-  width: 80%;
-  height: 250px;
-  margin: 30px;
-  background: #EEF5FF;
-  padding: 10px;
-  display: flex;
-  flex-wrap: wrap;
-  color: #5271FF;
-  border-radius: 15px;
-  box-shadow: -20px 20px 0px -5px #5271FF;
+    width: 80%;
+    height: 250px;
+    margin: 30px;
+    background: #EEF5FF;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    color: #5271FF;
+    border-radius: 15px;
+    box-shadow: -20px 20px 0px -5px #5271FF;
+  }
+  .card__tags {
+    overflow: auto;
+    height: 80%;
+  }
+  .title {
+    font-weight: 900;
+    font-size: 1.7em;
+  }
+
+  .tag__name {
+    display: inline-block;
+    color: #fff;
+    font-size: 1.1em;
+    background-color: #5271FF;
+    padding: 6px 23px 9px;
+    border-radius: 70em;
+    margin: 8px 6px 8px 0;
+    margin-left: 0px;
+    position: relative;
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .tag__name::before,
+  .tag__name::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 40%;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .tag__name::before {
+    left: 7px;
+  }
+
+  .tag__name::after {
+    right: 7px;
+  }
+
+  .tag__name:hover {
+    transform: scale(1.1);
+    background-color: #51572c;
+  }
+
+  .content_4{
+    margin-top: 80px;
+  }
+
+  #project_info{
+    margin-top: 50px;
+  }
+
+
+
+
+/* 멤버 프로필 */
+.content_5{
+  margin-top: 80px;
 }
-.card__tags {
-  overflow: auto;
-  height: 80%;
-}
-.title {
-  font-weight: 900;
-  font-size: 1.7em;
+.swiper{
+      width: 100%;
+    }
+.swiper-wrapper{
+  float: left;
 }
 
-.tag__name {
-  display: inline-block;
-  color: #fff;
-  font-size: 1.1em;
-  background-color: #5271FF;
-  padding: 6px 23px 9px;
-  border-radius: 70em;
-  margin: 8px 6px 8px 0;
-  margin-left: 0px;
-  position: relative;
-  text-transform: lowercase;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.tag__name::before,
-.tag__name::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  top: 40%;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #fff;
-}
-
-.tag__name::before {
-  left: 7px;
-}
-
-.tag__name::after {
-  right: 7px;
-}
-
-.tag__name:hover {
-  transform: scale(1.1);
-  background-color: #51572c;
-}
 
 
 
@@ -231,7 +248,7 @@
 </head>
 <body>
     <jsp:include page="../../common/header.jsp" />	
-    <div class="content">
+    <div class="content" style="height: 2000px;">
         <div class="content_title">
             <h2 style="margin-bottom: 10px;">CodeBuddy<span class="project_status">모집중</span></h2>
             <span>김인엽</span><br>
@@ -250,8 +267,8 @@
         <div class="content_1">
         <div class="content_left">
             <h2>모집 현황</h2>
-            <a href="room.rec1">입장하기</a> 
             <a href="room.rec2">입장하기</a> 
+            
             <table class="position_status">
                 <tbody>
                     <tr>
@@ -334,7 +351,6 @@
      </div>
 
       <div clas="content_3">
-          <h2>이미지</h2>
           <div class="photo-scroll">
               <image class="photo-scroll-image" src="resources/image/001.png"/>
               <image class="photo-scroll-image" src="resources/image/002.png"/>
@@ -345,12 +361,178 @@
       </div>
       <div class="content_4">
         <h2>소개</h2>
-        
+        <hr>
+        <div id="project_info">
+          <h4>● 스터디&네트워킹 목표 및 진행방식</h4>
 
+          <p>[목표] : 사이드 프로젝트 개발을 위한 팀원 모집 사이트 개발</p>
+
+          <p>[진행방식] : 매일 오후 9시에 채팅을 통한 회의 / 매주 토요일 2시에 오프라인으로 만나 회의 및 코드리뷰</p>
+
+          <p>[장소/횟수] : 평일 오후 30분/주말 저녁 30분 (1시간) 주1회 or 평일 1시간 or 주말 1시간 (상의해서 맞춰봐요👩🏻‍💻)</p>
+
+          <p>[기간] : 1.5~2개월 (기간은 프로젝트 완료일에 따라 변경될 수 있습니다.)</p>
+
+          <br>
+          <br>
+
+          <h4>● 참여 조건</h4>
+        
+          <p>[지식수준] : 기초 지식은 필요합니다</p>
+
+          <p>경력많으신 분들도 환영합니다.)</p>
+
+          <p>[참여회비] : 회비는 만나서 결제! 예) 스터디 카페/일반 카페를 가게 된다면 1/n</p>
+
+          <p>[장소] : 서울 송파/강동구/삼성동</p>
+        
+        </div>
       </div>
+
+      <div class="content_5">  
+        <h2>멤버</h2>
+        <hr>
+       
+        <div class="swiper">
+          <!-- 보여지는 영역 -->
+          <div class="swiper-wrapper">
+
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+              <div class="card swiper-slide">
+                <div class="card-border-top">
+                </div>
+                <div class="img">
+                </div>
+                <span> 김인엽</span>
+                <p class="job"> Back-End</p>
+                <button> 프로필
+                </button>
+              </div>      
+
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+        </div>
+      </div>
+          <script>
+            const swiper = new Swiper('.swiper', {
+                //기본 셋팅
+                //방향 셋팅 vertical 수직, horizontal 수평 설정이 없으면 수평
+                direction: 'horizontal',
+                //한번에 보여지는 페이지 숫자
+                slidesPerView: 7,
+                //페이지와 페이지 사이의 간격
+                spaceBetween: 10,
+                //드레그 기능 true 사용가능 false 사용불가
+                debugger: true,
+                //마우스 휠기능 true 사용가능 false 사용불가
+                mousewheel: true,                
+                // 마지막 여백
+                slidesOffsetAfter: 120,
+                //방향표
+                navigation: {
+                  //다음페이지 설정
+                  nextEl: '.swiper-button-next',
+                  //이전페이지 설정
+                  prevEl: '.swiper-button-prev',
+                },
+            });
+          </script>
+
+      
     
     </div>
-
+    <jsp:include page="../../common/footer.jsp" />	
+    
     <script>
       $(function(){
               $(".container").css("width","10px");      

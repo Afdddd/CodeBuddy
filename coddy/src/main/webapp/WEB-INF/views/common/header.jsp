@@ -261,7 +261,7 @@
                     <li><a href="list.rec">모집</a></li>
                     <li><a href="list.co">코드리뷰</a></li>
                     <li><a href="">공지</a></li>
-                    <li><a href="">자유</a></li>
+                    <li><a href="list.fr">자유</a></li>
                     <li><a href="introlist.bo">소개</a></li>
                     <li><a href="listView.hb">채용공고</a></li>
                 </ul>
