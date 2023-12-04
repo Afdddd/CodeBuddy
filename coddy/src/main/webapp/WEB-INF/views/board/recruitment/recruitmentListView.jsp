@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>모집</title>
 <style>
-  
+
   .content_1{
     width: 1200px;
     height: 250px;
