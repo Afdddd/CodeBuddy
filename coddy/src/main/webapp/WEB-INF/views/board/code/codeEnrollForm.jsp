@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://cdn.ckeditor.com/ckeditor5/40.1.0/classic/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/ckeditor5-classic-plus@36.0.1/build/ckeditor.min.js"></script>
 
 <title>Insert title here</title>
 <style>
@@ -32,15 +32,19 @@
 	  border: 1px solid lightgray;
 	  border-radius: 15px;
 	  margin-top:20px;
-	  padding:45px;      	
+	  padding:45px;
+	  padding-top: 10px;      	
       
       }
       
 	.ck.ck-editor {
-    	max-width: 500px;
+    	max-width: 1100px;
+    	margin: 0 auto;
 	}
 	.ck-editor__editable {
-	    min-height: 300px;
+		height: 1200px;
+	    max-height: 1200px;
+	    overflow-y: auto;
 	}	
 	
 </style>
@@ -52,23 +56,23 @@
 
     <div class="content">
     	<hr>
-    	<br>
-        <br><br>
+    	<br><br>
         
-        <h4 style="color : #5271FF;"><b>코드리뷰 글쓰기</b></h4>
+        <h4 style="color : #5271FF;"><b style="padding-left: 50px;">코드리뷰 글쓰기</b></h4>
         <div class="Outer">
         <div class="innerOuter">
         	<form id="enrollForm" method="post" action="insert.bo" enctype="multipart/form-data">
                 <table align="center">
                     <tr>
                         <th><label for="title"></label></th>
-                        <td><input type="text" id="title" class="form-control" name="boardTitle" placeholder="제목을 입력하세요." style="width:1000px;" required></td>
+                        <td><input type="text" id="title" class="form-control" name="boardTitle" placeholder="제목을 입력하세요." style="width:1100px;" required></td>
                     </tr>
                     <tr>
                     	<th><label for="content"></label></th>
-                    	        <div id="editor">
-					        <p>This is some sample content.</p>
-					    </div>
+                    	<td>
+                    	    <div id="editor">
+					        <p>내용을 입력하세요.</p>
+					    	</div>
 					    <script>
 					        ClassicEditor
 					            .create( document.querySelector( '#editor' ))
@@ -76,7 +80,7 @@
 					                console.error( error );
 					            } );
 					    </script>
-                    
+					    </td>
                     </tr>
                     </table>
                    
