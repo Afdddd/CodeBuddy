@@ -15,7 +15,6 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.google.gson.Gson;
-import com.kh.coddy.common.chat.model.vo.Message;
 import com.kh.coddy.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -40,31 +39,8 @@ public class ChatingHandler extends TextWebSocketHandler{
 
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
+	
 		
-		int memberNo =  ((Member)session.getAttributes().get("loginMember")).getMemberNo();
-		String memberName = ((Member)session.getAttributes().get("loginMember")).getMemberName();
-		String msg = message.getPayload();
-		String sendTime = new SimpleDateFormat("yyyy.MM.dd a hh시 mm분").format(new Date());
-		
-		if(memberName != null){
-			JSONObject jobj = new JSONObject();
-			
-			jobj.put("memberNo", memberNo);
-			jobj.put("memberName", memberName);
-			jobj.put("msg", msg);
-			jobj.put("sendTime", sendTime);
-			
-			
-			Message m = new Message(memberNo,memberName, msg, sendTime);
-			String result = new Gson().toJson(m);
-			
-			TextMessage newMessage = new TextMessage(result);
-			
-			for(WebSocketSession ws : userList) {
-				ws.sendMessage(newMessage);
-				
-			}
-		}
 		
 		
 		

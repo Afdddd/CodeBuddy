@@ -491,9 +491,7 @@
                         	 +"<p>"+ obj.msg +"</p>"+obj.sendTime
                          +"</div>");
             	
-            }
-            
-           
+            }       
             
 			$("#chat_body").append(div);
           }

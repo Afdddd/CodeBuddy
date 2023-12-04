@@ -10,6 +10,11 @@
 </head>
 <body>
     <jsp:include page="../../common/header.jsp" />	
-    <button></button>
+    
+    
+   
+
+
+
     <jsp:include page="../../common/footer.jsp" />	
 </body>

@@ -8,8 +8,10 @@ import lombok.ToString;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
 public class Chat {
-	private int chatNo;
-	private int chatMember1;
-	private int chatMember2;
-	private int projectNo;
+	
+	private int chatNo; 
+	private int	masterNo;	 // 본인
+	private int userNo;  	 // 상대방
+	private int projectNo;   // 프로젝트 방
+	private int unReadCount; // 안읽은 메세지 수
 }
