@@ -3,6 +3,7 @@ package com.kh.coddy.member.controller;
 import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -20,20 +21,29 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.coddy.board.job.controller.HboardController;
+import com.kh.coddy.board.job.model.service.HboardService;
+import com.kh.coddy.board.job.model.vo.Hboard;
+import com.kh.coddy.board.job.model.vo.Hrelation;
 import com.kh.coddy.common.Keys;
+import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.auth.model.vo.Auth;
+import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.CompanyService;
 import com.kh.coddy.member.model.service.MemberService;
 import com.kh.coddy.member.model.vo.Company;
+import com.kh.coddy.member.model.vo.Member;
 
 @Controller
 public class CompanyController {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired private CompanyService companyService;
 	@Autowired private MemberService memberService;
+	@Autowired private HboardService hboardService;
 	@Autowired private PasswordEncoder pbkdf2;
 	private SecureRandom sr = new SecureRandom();
 	private final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -166,5 +176,27 @@ public class CompanyController {
 			else { model.addAttribute("errorMsg", "DB 연동 실패"); return "common/errorPage"; }
 		}
 		else { model.addAttribute("errorMsg", "인증 실패"); return "common/errorPage"; }
+	}
+	@GetMapping(value="myPage.hb") public String myBoard(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) { 
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
+		int listCount = hboardService.selectListCount();
+		int pageLimit = 5; int boardLimit = 10;
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { model.addAttribute("errorMsg", "잘못된 페이지"); return "common/errorPage"; }
+		if(pi.getMaxPage() == 0) { model.addAttribute("errorMsg", "아직 작성한 게시판이 없습니다."); return "common/errorPage"; }
+		else {
+			ArrayList<Hboard>list = hboardService.selectList(pi);
+			ArrayList<ArrayList<Hrelation>>tg_list = new ArrayList<ArrayList<Hrelation>>();
+			for(Hboard h:list) { 
+				h.setHboardLocation(new HboardController().getLocationByAddr(Integer.parseInt(h.getHboardLocation())));
+				tg_list.add(hboardService.getTagInfo(h));
+			}
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+			model.addAttribute("tg_list", tg_list);
+			
+			return "company/myBoard";
+		}
 	}
 }

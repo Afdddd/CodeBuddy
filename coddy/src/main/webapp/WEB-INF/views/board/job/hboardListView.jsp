@@ -46,6 +46,9 @@
             .tagList { border: 1px solid grey; border-radius: 8px; margin: 3px; padding: 3px; display: inline-flex; }
             .tagList:before { content: '#'; }
             .tagList:hover { transform: scale(1.24); }
+            .tagListNo { border: 1px solid grey; border-radius: 8px; margin: 3px; padding: 3px; display: inline-flex; }
+            .tagListNo:before { content: '#'; }
+            /* .tagListNo:hover { transform: scale(1.24); } */
 
             /* 좋아요 */
             .container input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
@@ -211,6 +214,9 @@
                                             </div>
                                         </div> 
                                         <div class="footing">
+                                            <c:if test="${ empty requestScope.tg_list[status.index]}">
+                                                <span class="tagListNo">태그없음</span>
+                                            </c:if>
                                             <c:forEach var="tg" items="${requestScope.tg_list[status.index]}">
                                                 <span class="tagList">${tg.tagsNo}</span>
                                             </c:forEach>

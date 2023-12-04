@@ -90,7 +90,7 @@
                     <li><a href="myPageInfo.co">회사 정보</a></li>
                     <li><a href="updateForm.co">정보 수정</a></li>
                     <li><a href="deleteForm.co">회원 탈퇴</a></li>
-                    <li><a href="#">내가 작성한 모집공고</a></li>
+                    <li><a href="myPage.hb">내가 작성한 모집공고</a></li>
                 </ul>
             </nav>
         </div>

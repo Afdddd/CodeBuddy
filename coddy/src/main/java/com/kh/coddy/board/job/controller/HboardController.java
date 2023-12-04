@@ -86,8 +86,8 @@ public class HboardController {
 	@PostMapping(value="insert.hb") public String insertBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb, List<MultipartFile> files) {
 		int result = hboardService.insertBoard(h);
 		if(result > 0) {
-			// String path = request.getRealPath("resources\\file_upload\\hboard\\");
-			String path = "resources\\file_upload\\hboard\\";
+			String path = request.getRealPath("resources\\file_upload\\hboard\\");
+			// String path = "resources\\file_upload\\hboard\\";
 			if(!thumb.isEmpty()) {
 				UUID uuid = UUID.randomUUID();
 				File file = new File(path + "\\" + uuid + "_" + thumb.getOriginalFilename());
@@ -99,7 +99,7 @@ public class HboardController {
 				}
 				Hattachment ha = new Hattachment();
 				ha.setHattachmentOrigin(thumb.getOriginalFilename()); ha.setHattachmentLevel(1);
-				ha.setHattachmentChange(uuid + "_" + thumb.getOriginalFilename()); ha.setHattachmentPath(path);
+				ha.setHattachmentChange(uuid + "_" + thumb.getOriginalFilename()); ha.setHattachmentPath("resources\\file_upload\\hboard\\");
 				int f = hboardService.insertThumb(ha);
 				if(f <= 0) { model.addAttribute("errorMsg", "게시글은 작성하였으나 첨부파일 및 태그설정이 잘못됨"); return "common/errorPage"; }
 			}
@@ -116,7 +116,7 @@ public class HboardController {
 						}
 						Hattachment ha = new Hattachment();
 						ha.setHattachmentOrigin(mf.getOriginalFilename()); ha.setHattachmentLevel(0);
-						ha.setHattachmentChange(uuid + "_" + mf.getOriginalFilename()); ha.setHattachmentPath(path);
+						ha.setHattachmentChange(uuid + "_" + mf.getOriginalFilename()); ha.setHattachmentPath("resources\\file_upload\\hboard\\");
 						int f = hboardService.insertThumb(ha);
 						if(f <= 0) { model.addAttribute("errorMsg", "게시글은 작성하였으나 첨부파일 및 태그설정이 잘못됨"); return "common/errorPage"; }
 					}
