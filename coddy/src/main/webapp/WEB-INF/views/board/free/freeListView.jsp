@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,16 +43,19 @@
 	        </c:if>
             <br>
             <br>
-            <thead>
-            <div class="freeBoardList" align="left">
-                	<a>• 최신순 </a>
-                    <a>• 정확도순 </a>
-                    <a>• 답변많은순 </a>
-                    <a>• 좋아요순 </a>
-             </div>
-             <hr>       
-             </thead>
-             <tbody></tbody>
+			<table id="freeBoardList">
+			   <thead>
+			      <tr>
+			         <th>최신순</th>
+			         <th>정확도순</th>
+			         <th>답변많은순</th>
+			         <th>좋아요순</th>
+			      </tr>
+			   </thead>
+			   <tbody>
+			      <!-- 여기에 테이블 내용 추가 -->
+			   </tbody>
+			</table>
             
             <br>
             
@@ -78,7 +82,7 @@
                     	</c:when>
                     	<c:otherwise>
 	                    	<li class="page-item">
-	                    		<a class="page-link" href="list.bo?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+	                    		<a class="page-link" href="freeList.bo?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
 	                    	</li>
                     	</c:otherwise>
                     </c:choose>
