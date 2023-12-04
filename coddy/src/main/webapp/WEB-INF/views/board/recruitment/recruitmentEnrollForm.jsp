@@ -23,6 +23,10 @@
     margin-top: 80px;
 }
 
+.project_name{
+    margin-top: 50px;
+}
+
 .input-wrapper input {
     width: 100%;
     border: 1px solid rgb(219, 213, 213);
@@ -94,8 +98,22 @@
     outline-color: #5271FF;
 }
 
-/* 모집인원 */
+.img_file{
+    border: 1px solid #cacaca;
+    border-radius: 2px;
+    display: inline-block;
+    text-align: center;
+    margin: auto;
+}
+.img_name{
+    display: inline-block;
+}
 
+
+
+
+
+/* 모집인원 */
 #skills{
     width: 50%;
     border: 1px solid rgb(219, 213, 213);
@@ -131,26 +149,24 @@
 }
 
 .write_btn{
+    margin: 80px;
     text-align: center;
 }
-
-
 
 </style>
 </head>
 <body>
-    <jsp:include page="../../common/header.jsp" />	
-    
-    <div class="content">
+    <jsp:include page="../../common/header.jsp" />	  
+    <div class="content" style="height: 2000px;">
         <div class="content_title">
             <h2>팀원 모집 생성</h2> 
         </div>
         <div class="form_outer">
             <form class="form_area">
-                <div class="question">
+                <div class="project_name">
                     <h3>프로젝트명</h3>
                     <div class="input-wrapper">
-                        <input type="text" placeholder="Type here..." name="text" class="input">
+                        <input type="text" name="text" class="input">
                     </div>
                 </div>
 
@@ -166,10 +182,46 @@
                            </div>
                            <input type="file" id="file">
                         </label>
+                        <div class="img_list">
+                            <!-- 추가된 첨부파일 이름 목록-->
+                        </div>
+                        
+                        <script>    
+                            
+                            $(document).ready(function() {
+                            // 첨부파일 추가
+                            $("#file").on("change", function() {
 
-                    <button id="img_add">추가</button>
-                    <button id="img_remove">삭제</button>
+                                let files = this.files;
+                                for (var i = 0; i < files.length; i++) {
+                                let fileName = files[i].name;
+                                let $imgFile = $("<div class='img_file'>" +
+                                                "<div class='img_name'>" + fileName + "</div>" +
+                                                "<button type='button' class='img_remove'>삭제</button>" +
+                                                "</div>");
+
+                                $(".img_list").append($imgFile);
+                                }
+                                
+                                
+
+                                
+                            });
+
+                            $(document).on("click", ".img_remove", function() {
+                                $(this).parent().remove();
+                               
+                            });
+
+
+                            });
+                           
+                            
+                        </script>
+
+                   
                     <span>없다면 기본 이미지가 채워집니다.</span>
+                    <span>같은사진을 연속으로 배치할 수 없습니다.</span>
                 </div>
 
                 <div class="question">
@@ -214,14 +266,8 @@
                 <div class="write_btn">
                     <button>작성완료</button>
                 </div>
-                
-
             </form>
         </div>
     </div>
-   
-
-
-
-    <jsp:include page="../../common/footer.jsp" />	
+    <jsp:include page="../../common/footer.jsp" />	  
 </body>
