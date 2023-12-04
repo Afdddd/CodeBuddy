@@ -52,9 +52,18 @@
 			         <th>좋아요순</th>
 			      </tr>
 			   </thead>
-			   <tbody>
-			      <!-- 여기에 테이블 내용 추가 -->
-			   </tbody>
+			   
+				<tbody>
+				   <c:forEach var="board" items="${requestScope.fboardList}">
+				      <tr>
+				         <td class="bno">${fboard.bno}</td>
+				         <td>${fboard.title}</td>
+				         <td>${fboard.writer}</td>
+
+				      </tr>
+				   </c:forEach>
+				</tbody>
+
 			</table>
             
             <br>
