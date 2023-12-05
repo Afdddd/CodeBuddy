@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
+import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.tag.ReadTag;
@@ -51,6 +52,7 @@ public class RecruitmentController {
 	@PostMapping("insert.rec")
 	public String insertRecruitment(Recruitment r, ArrayList<MultipartFile> files, HttpServletRequest request, Model model, String tagTechName) {		
 		int result = rService.insertRecruitment(r);
+		log.info("r = {}",r);
 		log.info("tag = {}",tagTechName);
 		log.info("files = {}", files);
 		if(result>0) {
@@ -83,7 +85,8 @@ public class RecruitmentController {
 			}if(!tagTechName.equals("")) {
 				String[] tags = ReadTag.read(tagTechName);
 				for(String tag : tags) {
-					
+					Prelation rel = new Prelation(r.getRecruitmentNo(),tag);
+					rService.insertTag(rel);
 				}
 				
 				

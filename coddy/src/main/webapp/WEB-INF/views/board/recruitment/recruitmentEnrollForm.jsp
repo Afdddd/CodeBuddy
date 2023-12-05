@@ -213,14 +213,8 @@
                     <h3>모집인원</h3>
                         <div class="member_list">
                             <div class="project_member">
-                                <select id="skills" name="skills">
-                                    <option>누구나 참여가능</option>
-                                    <option>PM</option>
-                                    <option>기획</option>
-                                    <option>프론트엔드</option>
-                                    <option>백엔드</option>
-                                    <option>디자이너</option>
-                                    <option>IOS 앱 개발</option>
+                                <select id="skills" name="skills" onclick="skillSelector();">
+                                    <option>누구나 참여가능</option>                              
                                 </select>
                                 <div class="personnel">
                                     <div class="minus">-</div>
@@ -333,6 +327,19 @@
            console.log(i);
         });
 
+        // 포지션 불러오기
+        function skillSelector(){
+            $.ajax({
+                url: "selectTag.rec",
+                type: "get",
+                success : function(){
+
+                },
+                error : function(){
+                    console.log("실패");
+                }
+            })
+        }
 
     });
 </script>

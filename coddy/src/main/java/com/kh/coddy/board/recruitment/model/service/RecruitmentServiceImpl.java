@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.coddy.board.recruitment.model.dao.RecruitmentDao;
+import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 
@@ -24,6 +25,11 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	@Override
 	public int insertImg(Rattachment ra) {
 		return rDao.insertImg(sqlSession,ra);
+	}
+
+	@Override
+	public int insertTag(Prelation rel) {
+		return rDao.insertTag(sqlSession,rel);
 	}
 	
 

@@ -33,6 +33,8 @@
 										  #{rAttachmentPath},
 										  #{rAttachmentLevel})
 	</insert>
+	<insert id="insertTag" prameterType="Prelation">
 	
+	</insert>
  
 </mapper>

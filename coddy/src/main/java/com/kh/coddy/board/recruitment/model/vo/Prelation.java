@@ -7,7 +7,15 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
-public class Rrelation {
+public class Prelation {
 	private int recruitmentNo;
-	private int tagNo;
+	private String tagNo;
+	private int personnel;
+	
+	public Prelation(int recruitmentNo, String tagNo) {
+		this.recruitmentNo = recruitmentNo;
+		this.tagNo = tagNo;
+	}
+
 }
+
