@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.coddy.board.job.model.service.HboardService;
+import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.board.job.model.vo.Hattachment;
 import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.job.model.vo.Hrelation;
@@ -36,12 +37,28 @@ public class HboardController {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired private HboardService hboardService;
 
-	@GetMapping(value="listView.hb") public String listView(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) { 
-		int listCount = hboardService.selectListCount();
-		int pageLimit = 5; int boardLimit = 20;
+	@GetMapping(value="listView.hb") public String listView(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage, 
+			@RequestParam(value="search", defaultValue="") String search, @RequestParam(value="education", defaultValue="none") String education, 
+			@RequestParam(value="career", defaultValue="none") String career, @RequestParam(value="sort", defaultValue="new") String sort, 
+			@RequestParam(value="tag", defaultValue="") String tag, Model model, @RequestParam(value="viewOn", defaultValue="") String active) {
+		String tags = "";
+		if(tag.equals("")) { 
+			tags="C언어,C++,C#,GO,Java,JavaScript,Spring,React,Node.js,Vue,Swift,Kotlin,Python,Django," +
+				"Php,Flutter,MySql,MarianDB,MongoDB,OracleDB,Unity,AWS,Docker,Kubernetes,Git,Figma,Window,Linux," +
+				"PM,기획,프론트엔드,백엔드,CDN,디자인,네트워크/서버,IOS 앱 개발,AOS 앱 개발,AI학습,게임개발"; } 
+		else { tags=tag; }
+		HSearch hs = new HSearch(search, education.split(" "), career.split(" "), null, tags.split(","), 1);
+		if(career.equals("none")) { hs.setCareer(("none,intern,newcomer,junior,middle,senior").split(",")); }
+		if(education.equals("none")) { hs.setEducation(("none,highSchool,juniorCollege,university,master,doctor,professor").split(",")); }
+		if(sort.equals("new") || sort.equals("")) { hs.setSort("HBOARD_INSERT"); }
+		else if(sort.equals("old")) { hs.setSort("HBOARD_END"); }
+		else if(sort.equals("view")) { hs.setSort("HBOARD_VIEWS"); }
+		else { hs.setSort("HBOARD_SALARY"); }
+		int listCount = hboardService.selectListCount(hs);
+		int pageLimit = 5; int boardLimit = 8;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		if(pi.getMaxPage() == 0) { 
-			ArrayList<Hboard>list = hboardService.selectList(pi);
+			ArrayList<Hboard>list = hboardService.selectList(pi, hs);
 			ArrayList<Hattachment>at_list = new ArrayList<Hattachment>();
 			ArrayList<ArrayList<Hrelation>>tg_list = new ArrayList<ArrayList<Hrelation>>();
 			ArrayList<Boolean>ws_list = new ArrayList<Boolean>();
@@ -51,6 +68,7 @@ public class HboardController {
 				tg_list.add(hboardService.getTagInfo(h));
 				if(session.getAttribute("loginMember") != null) { ws_list.add(hboardService.getWishList(h, ((Member)(session.getAttribute("loginMember"))).getMemberNo())); }
 			}
+			model.addAttribute("hs", hs);
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
 			model.addAttribute("at_list", at_list);
@@ -60,7 +78,7 @@ public class HboardController {
 		}
 		else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { model.addAttribute("errorMsg", "잘못된 페이지"); return "common/errorPage"; }
 		else {
-			ArrayList<Hboard>list = hboardService.selectList(pi);
+			ArrayList<Hboard>list = hboardService.selectList(pi, hs);
 			ArrayList<Hattachment>at_list = new ArrayList<Hattachment>();
 			ArrayList<ArrayList<Hrelation>>tg_list = new ArrayList<ArrayList<Hrelation>>();
 			ArrayList<Boolean>ws_list = new ArrayList<Boolean>();
@@ -70,6 +88,7 @@ public class HboardController {
 				tg_list.add(hboardService.getTagInfo(h));
 				if(session.getAttribute("loginMember") != null) { ws_list.add(hboardService.getWishList(h, ((Member)(session.getAttribute("loginMember"))).getMemberNo())); }
 			}
+			model.addAttribute("hs", hs);
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
 			model.addAttribute("at_list", at_list);
@@ -117,8 +136,8 @@ public class HboardController {
 						Hattachment ha = new Hattachment();
 						ha.setHattachmentOrigin(mf.getOriginalFilename()); ha.setHattachmentLevel(0);
 						ha.setHattachmentChange(uuid + "_" + mf.getOriginalFilename()); ha.setHattachmentPath("resources\\file_upload\\hboard\\");
-						int f = hboardService.insertThumb(ha);
-						if(f <= 0) { model.addAttribute("errorMsg", "게시글은 작성하였으나 첨부파일 및 태그설정이 잘못됨"); return "common/errorPage"; }
+						int ha_insert = hboardService.insertThumb(ha);
+						if(ha_insert <= 0) { model.addAttribute("errorMsg", "게시글은 작성하였으나 첨부파일 및 태그설정이 잘못됨"); return "common/errorPage"; }
 					}
 				}
 			}

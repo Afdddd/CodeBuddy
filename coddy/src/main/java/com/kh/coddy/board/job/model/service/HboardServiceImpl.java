@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.coddy.board.job.model.dao.HboardDao;
+import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.board.job.model.vo.Hattachment;
 import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.job.model.vo.Hrelation;
@@ -21,8 +22,8 @@ public class HboardServiceImpl implements HboardService {
 	@Override public int insertBoard(Hboard h) { return hboardDao.insertBoard(sqlSession, h); }
 	@Override public boolean insertTag(Hrelation hr) { return (hboardDao.insertTag(sqlSession, hr) > 0 ? true : false); }
 	@Override public int insertThumb(Hattachment ha) { return hboardDao.insertThumb(sqlSession, ha); }
-	@Override public int selectListCount() { return hboardDao.selectListCount(sqlSession); }
-	@Override public ArrayList<Hboard> selectList(PageInfo pi) { return hboardDao.selectList(sqlSession, pi); }
+	@Override public int selectListCount(HSearch hs) {  return hboardDao.selectListCount(sqlSession, hs); }
+	@Override public ArrayList<Hboard> selectList(PageInfo pi, HSearch hs) { return hboardDao.selectList(sqlSession, pi, hs); }
 	@Override public Hattachment getThumbOne(Hboard h) {
 		Hattachment ha = hboardDao.getThumbOne(sqlSession, h);
 		return ha != null ? ha : new Hattachment(-1, h.getHboardNo(), "white.jpg", "white.jpg", "resources\\image", null, 1);

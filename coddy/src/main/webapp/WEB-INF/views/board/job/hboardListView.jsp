@@ -31,17 +31,17 @@
             .pageForm { width: 100%; height: 15%; }
 
             /* 카드 css */
-            .card { width: 250px; height: 420px; background: white; padding: .4em; border-radius: 6px; margin: 20px; margin-bottom: 20px; }
+            .card { width: 250px; height: 420px; background: white; padding: .4em; border-radius: 6px; margin: 15px; margin-bottom: 20px; }
             .card-image { background-color: rgb(236, 236, 236); width: 100%; height: 130px; border-radius: 6px 6px 0 0; text-align: center; line-height:130px; }
             .card-image:hover { transform: scale(0.98); }
             .location { text-transform: uppercase; font-size: 0.7em; font-weight: 600; color: #5271FF; padding: 10px 7px 0; }
             .location:hover { cursor: pointer; }
             .heading { font-weight: 600; color: rgb(88, 87, 87); padding: 7px; }
             .heading:hover { cursor: pointer; }
-            .info { color: gray; font-weight: 400; font-size: 11px; padding-top: 20px; width: 90%; display: inline-block; }
+            .info { color: gray; font-weight: 400; font-size: 11px; padding-top: 20px; width: 90%; display: flex; }
             .name { font-weight: 600; }
             .card:hover { cursor: pointer; }
-            .card-list{ width: 100%; margin-top: 50px; border-top: 1px solid lightgray; display: flex; }
+            .card-list{ width: 100%; margin-top: 50px; border-top: 1px solid lightgray; display: flex; flex-wrap: wrap; }
             .footing { height: 60px; width: 100%; }
             .tagList { border: 1px solid grey; border-radius: 8px; margin: 3px; padding: 3px; display: inline-flex; }
             .tagList:before { content: '#'; }
@@ -131,9 +131,9 @@
                                 <option value="salary">연봉순</option>
                             </select>
                             &nbsp;
-                            <input type="search" class="form-control form-control-lg">
+                            <input type="search" class="form-control form-control-lg" id="hboardSearch" name="keyword">
                             &nbsp;&nbsp;
-                            <span onclick="" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
+                            <span onclick="onSearch();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
                         </div>
                     </div>
                     <c:choose>
@@ -236,6 +236,13 @@
             </div>
         </div>
         <script>
+            $(document).ready(function() {
+                $("#hboardSearch").val(getParameter("search"));
+                $("#hboardSort").val(getParameter("sort"));
+                $("#hboardCareer").val(getParameter("career"));
+                $("#hboardEducation").val(getParameter("education"));
+                tagifyAll.addTags(getParameter("tag"));
+            })
             function onWish(e) {
                 $.ajax({
 						url: "boardWish.hb",
@@ -245,6 +252,24 @@
 						error: function() { console.log("찜하기 실패"); }
 					});
             }
+            function onSearch() {
+                let cpage = 1;
+                // let cpage = getParameter("cpage");
+                let search = $("#hboardSearch").val();
+                let sort = $("#hboardSort").val();
+                let career = $("#hboardCareer").val();
+                let education = $("#hboardEducation").val();
+                let tag = $("#tagAllName").val();
+                tag = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tag, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+                location.href='listView.hb?cpage='+cpage+'&search='+search+'&sort='+sort+'&career='+career+'&education='+education+'&tag='+tag;
+            }
+            function getParameter(name) {
+                name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+                return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+            function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
+            function addTag(strTag) { $(".tagify").html("<tag title='" + strTag + "' contenteditable='false' spellcheck='false' tabindex='-1' class='tagify__tag ' value='" + strTag + "'><x title='' class='tagify__tag__removeBtn' role='button' aria-label='remove tag'></x><div><span class='tagify__tag-text'>" + strTag + "</span></div></tag>" + $(".tagify").html()); }
         </script>
         <jsp:include page="../../common/footer.jsp" />
     </body>
