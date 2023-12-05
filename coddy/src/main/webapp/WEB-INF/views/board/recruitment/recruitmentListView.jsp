@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -457,9 +458,9 @@
               <span class="search-checkmark"></span>
             </label>            
         </div>
-        <div class="">
-          <button class="write_button" onclick="location.href='enrollForm.rec'">게시글 작성</button>
-        </div>
+        <!-- <c:if test="${not empty sessionScope.loginMember}"> -->
+        <button class="write_button" onclick="location.href='enrollForm.rec'">게시글 작성</button>
+        <!-- </c:if> -->
         <div class="content_2">
           <div class="card-list">
 

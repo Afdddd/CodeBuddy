@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="recruitmentMapper">
+
+	<insert id="insertRecruitment" parameterType="recruitment">
+		INSERT INTO RECRUITMENT(RECRUITMENT_NO, 
+								RECRUITMENT_TITLE,
+								RECRUITMENT_CONTENT, 
+								RECRUITMENT_WRITER,
+								RECRUITMENT_START,
+								RECRUITMENT_END,
+								RECRUITMENT_LOCATION								
+					   ) VALUES(SEQ_RECRUITMENT.NEXTVAL,
+					   			#{recruitmentTitle},					   			
+					   			#{recruitmentContent},
+					   			#{recruitmentWriter},
+					   			#{recruitmentStart},
+					   			#{recruitmentEnd},
+					   			#{recruitmentLocation}
+					   			)
+	</insert>
+	<insert id="insertImg" parameterType="rAttachment">
+		INSERT INTO RECRUITMENT_ATTACHMENT(RECRUITMENT_ATTACHMENT_NO,
+										   RECRUITMENT_NO,
+										   RECRUITMENT_ATTACHMENT_ORIGIN,
+										   RECRUITMENT_ATTACHMENT_CHANGE,
+										   RECRUITMENT_ATTACHMENT_PATH,
+										   RECRUITMENT_ATTACHMENT_LEVEL)
+								   VALUES(SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,
+										  SEQ_RECRUITMENT.CURRVAL,
+										  #{rAttachmentOrigin},
+										  #{rAttachmentChange},
+										  #{rAttachmentPath},
+										  #{rAttachmentLevel})
+	</insert>
+	
+ 
+</mapper>
