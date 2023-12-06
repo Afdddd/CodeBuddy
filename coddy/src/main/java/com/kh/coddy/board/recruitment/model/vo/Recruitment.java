@@ -11,7 +11,7 @@ public class Recruitment {
 	private int recruitmentNo;			//	RECRUITMENT_NO
 	private String recruitmentTitle;	//	RECRUITMENT_TITLE
 	private String recruitmentContent;	//	RECRUITMENT_CONTENT
-	private int recruitmentWriter;		//	RECRUITMENT_WRITER
+	private String recruitmentWriter;	//	RECRUITMENT_WRITER
 	private String recruitmentInsert;	//	RECRUITMENT_INSERT
 	private String recruitmentUpdate;	//	RECRUITMENT_UPDATE
 	private String recruitmentDelete;	//	RECRUITMENT_DELETE

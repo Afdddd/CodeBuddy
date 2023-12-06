@@ -7,8 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
-public class Prelation {
+public class RecruitmentState {
 	private int recruitmentNo;
-	private String tagsNo;
+	private String position;
+	private String maxPersonnel;
 }
-

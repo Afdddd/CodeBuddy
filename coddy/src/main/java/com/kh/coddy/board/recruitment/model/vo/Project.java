@@ -7,8 +7,15 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
-public class Prelation {
+public class Project {
+	private int projectNo;
+	private String projectOwner;
 	private int recruitmentNo;
-	private String tagsNo;
+	private String projectName;
+	private String projectInfo;
+	private String projectInsert;
+	private String projectStart;
+	private String projectEnd;
+	private String projectLocation;
+	private int ready;
 }
-

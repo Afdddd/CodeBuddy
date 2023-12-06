@@ -211,16 +211,23 @@
 
                 <div class="question">                  
                     <h3>모집인원</h3>
+                        <select id="skills" name="position">
+                            <option>누구나 참여가능</option> 
+                            <option>PM</option>                             
+                            <option>기획</option>                             
+                            <option>프론트엔드</option>                             
+                            <option>백엔드</option>                             
+                            <option>CDN</option>                             
+                            <option>디자인</option>                             
+                            <option>네트워크/서버</option>                             
+                            <option>IOS 앱 개발</option>                             
+                            <option>AOS 앱 개발</option>                             
+                            <option>AI학습</option>                             
+                            <option>게임개발</option>                             
+                        </select>
+                    <input type='number' name="personnelMax" required>
                         <div class="member_list">
-                            <div class="project_member">
-                                <select id="skills" name="skills" onclick="skillSelector();">
-                                    <option>누구나 참여가능</option>                              
-                                </select>
-                                <div class="personnel">
-                                    <div class="minus">-</div>
-                                    <div class="countNumber">1</div>
-                                    <div class="plus">+</div>
-                                </div>
+                            <div class="project_member">                               
                             </div>
                         </div>
                     <div class="personnel_btns">
@@ -231,12 +238,12 @@
 
                 <div class="question date">
                     <h3>프로젝트 기간</h3>
-                    <input type="date" id="start_date" name="recruitmentStart"> ~ <input type="date" id="end_date" name="recruitmentEnd">
+                    <input type="date" id="start_date" name="recruitmentStart" required> ~ <input type="date" id="end_date" name="recruitmentEnd" required>
                 </div>
 
                 <div class="question">
                     <h3>지역</h3>
-                    <select id="location" name="recruitmentLocation">
+                    <select  id="location" name="recruitmentLocation">
                         <option>미지정</option>
                         <option>서울특별시</option>
                         <option>경기도</option>
@@ -267,13 +274,13 @@
 <script>    
     // 파일 추가
     function addFile() {
-            var str = "<div class='file-group'><input type='file' name='files'><a href='#this' name='file-delete'>삭제</a></div>";
+            var str = "<div class='file-group'><input type='file' name='files' accept='image/*'><a href='#this' name='file-delete'>삭제</a></div>";
             $(".img_list").append(str);
 
             $("a[name='file-delete']").on("click", function(e) {
                 e.preventDefault();
                 deleteFile($(this));
-            });
+            }); 
         }
     // 파일 삭제
     function deleteFile(obj) {
@@ -290,18 +297,21 @@
         // 모집인원 추가
         $("#personnel_add").on("click",function(){
             let $list = $(  "<div class='project_member'>"+
-                                "<select id='skills' name='skills'>"+
+                                "<select id='skills' name='position'"+
+                                    "<option>누구나 참여 가능</option>"+
                                     "<option>PM</option>"+
                                     "<option>기획</option>"+
                                     "<option>프론트엔드</option>"+
                                     "<option>백엔드</option>"+
-                                    "<option>디자이너</option>"+
+                                    "<option>CDN</option>"+
+                                    "<option>디자인</option>"+
+                                    "<option>네트워크/서버</option>"+
+                                    "<option>IOS 앱 개발</option>"+
+                                    "<option>AOS 앱 개발</option>"+
+                                    "<option>AI학습</option>"+
+                                    "<option>게임개발</option>"+
                                 "</select>"+
-                                "<div class='personnel'>"+
-                                    "<div class='minus'>-</div>"+
-                                    "<div class='countNumber'>1</div>"+
-                                    "<div class='plus'>+</div>"+
-                                "</div>"+
+                                "<input type='number' name='personnelMax'>"+
                             "</div>");           
             $(".member_list").append($list);
         });
@@ -327,19 +337,7 @@
            console.log(i);
         });
 
-        // 포지션 불러오기
-        function skillSelector(){
-            $.ajax({
-                url: "selectTag.rec",
-                type: "get",
-                success : function(){
-
-                },
-                error : function(){
-                    console.log("실패");
-                }
-            })
-        }
+      
 
     });
 </script>
