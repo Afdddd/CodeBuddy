@@ -26,4 +26,7 @@ public class HboardDao {
 	public int getWish(SqlSessionTemplate sqlSession, Hwishlist hw) { return sqlSession.selectOne("hboardMapper.getWish", hw); }
 	public int deleteWish(SqlSessionTemplate sqlSession, Hwishlist hw) { return sqlSession.delete("hboardMapper.deleteWish", hw); }
 	public int insertWish(SqlSessionTemplate sqlSession, Hwishlist hw) { return sqlSession.insert("hboardMapper.insertWish", hw); }
+	public int plusView(SqlSessionTemplate sqlSession, int hno) { return sqlSession.update("hboardMapper.plusView", hno); }
+	public Hboard selectBoard(SqlSessionTemplate sqlSession, int hno) { return sqlSession.selectOne("hboardMapper.selectBoard", hno); }
+	public ArrayList<Hattachment> getAttachmentList(SqlSessionTemplate sqlSession, Hboard h) { return (ArrayList)sqlSession.selectList("hboardMapper.getAttachmentList", h); }
 }

@@ -45,6 +45,8 @@
 		<foreach collection="career" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND H.HBOARD_EDUCATION IN
 		<foreach collection="education" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND (TO_NUMBER(H.HBOARD_LOCATION) BETWEEN #{where_start} AND #{where_end})
+		<if test="active==1">AND (SYSDATE BETWEEN H.HBOARD_START AND H.HBOARD_END)</if>
 		AND (H.HBOARD_TITLE LIKE '%'||#{keyword}||'%' OR H.HBOARD_CONTENT LIKE '%'||#{keyword}||'%') ORDER BY ${sort} DESC</select>
 	<select id="selectList" parameterType="hsearch" resultMap="hboardResultSet">SELECT DISTINCT H.HBOARD_NO AS "HBOARD_NO", H.HBOARD_TITLE AS "HBOARD_TITLE", C.COMPANY_NAME AS "COMPANY_NO", H.HBOARD_VIEWS AS "HBOARD_VIEWS", TO_CHAR(H.HBOARD_INSERT, 'YYYY-MM-DD') AS "HBOARD_INSERT", H.HBOARD_START AS "HBOARD_START", H.HBOARD_END AS "HBOARD_END", H.HBOARD_SALARY AS "HBOARD_SALARY", H.HBOARD_EDUCATION AS "HBOARD_EDUCATION", H.HBOARD_CAREER AS "HBOARD_CAREER", H.HBOARD_LOCATION AS "HBOARD_LOCATION" FROM HBOARD H, COMPANY C, HRELATION HR, TAGS TG 
 		WHERE H.COMPANY_NO=C.COMPANY_NO AND H.HBOARD_NO=HR.HBOARD_NO AND TG.TAGS_NO=HR.TAGS_NO AND TG.TAGS_NAME IN
@@ -53,6 +55,8 @@
 		<foreach collection="career" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND H.HBOARD_EDUCATION IN
 		<foreach collection="education" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND (TO_NUMBER(H.HBOARD_LOCATION) BETWEEN #{where_start} AND #{where_end})
+		<if test="active==1">AND (SYSDATE BETWEEN H.HBOARD_START AND H.HBOARD_END)</if>
 		AND (H.HBOARD_TITLE LIKE '%'||#{keyword}||'%' OR H.HBOARD_CONTENT LIKE '%'||#{keyword}||'%') ORDER BY ${sort} DESC</select>
 	<select id="getThumbOne" parameterType="hboard" resultMap="hattachmentResultSet">SELECT HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_INSERT, HATTACHMENT_LEVEL FROM HATTACHMENT WHERE HBOARD_NO=#{hboardNo} AND HATTACHMENT_LEVEL=1</select>
 	<select id="getTagInfo" parameterType="hboard" resultMap="hrelationResultSet">SELECT HR.HBOARD_NO, T.TAGS_NAME AS "TAGS_NO" FROM HRELATION HR, TAGS T WHERE HR.TAGS_NO=T.TAGS_NO AND HR.HBOARD_NO=#{hboardNo}</select>
@@ -60,4 +64,7 @@
 	<select id="getWish" parameterType="hwishlist" resultType="_int">SELECT COUNT(*) FROM HWISHLIST WHERE HBOARD_NO=#{hboardNo} AND HWISHLIST_MEMBER=#{hwishlistMember}</select>
 	<delete id="deleteWish" parameterType="hwishlist">DELETE FROM HWISHLIST WHERE HWISHLIST_MEMBER=#{hwishlistMember} AND HBOARD_NO=#{hboardNo}</delete>
 	<insert id="insertWish" parameterType="hwishlist">INSERT INTO HWISHLIST(HWISHLIST_MEMBER, HBOARD_NO) VALUES(#{hwishlistMember}, #{hboardNo})</insert>
+	<update id="plusView" parameterType="_int">UPDATE HBOARD SET HBOARD_VIEWS=HBOARD_VIEWS+1 WHERE HBOARD_NO=#{hno} AND HBOARD_DELETE IS NULL</update>
+	<select id="selectBoard" parameterType="_int" resultMap="hboardResultSet">SELECT * FROM HBOARD WHERE HBOARD_NO=#{hno} AND HBOARD_DELETE IS NULL</select>
+	<select id="getAttachmentList" parameterType="hboard" resultMap="hattachmentResultSet">SELECT * FROM HATTACHMENT WHERE HBOARD_NO=#{hboardNo}</select>
 </mapper>

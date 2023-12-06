@@ -28,7 +28,10 @@ import com.kh.coddy.board.job.model.vo.Hrelation;
 import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.ReadTag;
+import com.kh.coddy.common.tag.model.vo.Tags;
+import com.kh.coddy.common.vo.Geo;
 import com.kh.coddy.common.vo.PageInfo;
+import com.kh.coddy.member.model.service.CompanyService;
 import com.kh.coddy.member.model.vo.Company;
 import com.kh.coddy.member.model.vo.Member;
 
@@ -36,18 +39,20 @@ import com.kh.coddy.member.model.vo.Member;
 public class HboardController {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired private HboardService hboardService;
+	@Autowired private CompanyService companyService;
 
 	@GetMapping(value="listView.hb") public String listView(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage, 
 			@RequestParam(value="search", defaultValue="") String search, @RequestParam(value="education", defaultValue="none") String education, 
 			@RequestParam(value="career", defaultValue="none") String career, @RequestParam(value="sort", defaultValue="new") String sort, 
-			@RequestParam(value="tag", defaultValue="") String tag, Model model, @RequestParam(value="viewOn", defaultValue="") String active) {
+			@RequestParam(value="tag", defaultValue="") String tag, @RequestParam(value="viewOn", defaultValue="f") String active,
+			@RequestParam(value="where", defaultValue="all") String where, Model model) {
 		String tags = "";
 		if(tag.equals("")) { 
 			tags="C언어,C++,C#,GO,Java,JavaScript,Spring,React,Node.js,Vue,Swift,Kotlin,Python,Django," +
 				"Php,Flutter,MySql,MarianDB,MongoDB,OracleDB,Unity,AWS,Docker,Kubernetes,Git,Figma,Window,Linux," +
 				"PM,기획,프론트엔드,백엔드,CDN,디자인,네트워크/서버,IOS 앱 개발,AOS 앱 개발,AI학습,게임개발"; } 
 		else { tags=tag; }
-		HSearch hs = new HSearch(search, education.split(" "), career.split(" "), null, tags.split(","), 1);
+		HSearch hs = new HSearch(search, education.split(" "), career.split(" "), null, tags.split(","), (active.equals("t"))?1:0, getAddressRangeByLocation(where).split(",")[0], getAddressRangeByLocation(where).split(",")[1]);
 		if(career.equals("none")) { hs.setCareer(("none,intern,newcomer,junior,middle,senior").split(",")); }
 		if(education.equals("none")) { hs.setEducation(("none,highSchool,juniorCollege,university,master,doctor,professor").split(",")); }
 		if(sort.equals("new") || sort.equals("")) { hs.setSort("HBOARD_INSERT"); }
@@ -156,6 +161,24 @@ public class HboardController {
 		Hwishlist hw = new Hwishlist(((Member)session.getAttribute("loginMember")).getMemberNo(), Integer.parseInt(hboardNo));
 		return (hboardService.getWish(hw) > 0) ? hboardService.deleteWish(hw): hboardService.insertWish(hw);
 	}
+	@GetMapping(value="boardDetail.hb") public String detailView(HttpSession session, @RequestParam(value="hno") String hboardNo, Model model) {
+		if(hboardService.plusView(Integer.parseInt(hboardNo)) < 1) { model.addAttribute("errorMsg", "페이지 찾기에 실패함"); return "common/errorPage"; }
+		Hboard hb = hboardService.selectBoard(Integer.parseInt(hboardNo));
+		String where = getLocationByAddr(Integer.parseInt(hb.getHboardLocation()));
+		String cname = companyService.getCompanyNameByNo(Integer.parseInt(hb.getCompanyNo()));
+		Hattachment ht = hboardService.getThumbOne(hb);
+		ArrayList<Hattachment> ha = hboardService.getAttachmentList(hb);
+		ArrayList<Hrelation> hr = hboardService.getTagInfo(hb);
+		Geo geo = Geo.getGeo(hb.getHboardLocation());
+		session.setAttribute("hb", hb);
+		session.setAttribute("ht", ht);
+		session.setAttribute("ha", ha);
+		session.setAttribute("cname", cname);
+		session.setAttribute("where", where);
+		session.setAttribute("hr", hr);
+		session.setAttribute("geo", geo);
+		return "board/job/hboardDetailView"; 
+	}
 	public String getLocationByAddr(int address) { 
 		if((address >= 1000) && (address <= 8866)) return "서울특별시";
 		if((address >= 10000) && (address <= 18635)) return "경기도";
@@ -175,5 +198,26 @@ public class HboardController {
 		if((address >= 61000) && (address <= 62466)) return "광주광역시";
 		if((address >= 63000) && (address <= 63644)) return "제주도";
 		else { return "알수없음"; }
+	 }
+	 public String getAddressRangeByLocation(String where) {
+		if(where.equals("all")) { return "01000,63644"; }
+		if(where.equals("서울특별시")) { return "01000,08866"; }
+		if(where.equals("경기도")) { return "10000,18635"; }
+		if(where.equals("인천광역시")) { return "21000,23136"; }
+		if(where.equals("강원도")) { return "24000,26509"; }
+		if(where.equals("충청북도")) { return "27000,29167"; }
+		if(where.equals("세종시")) { return "30000,30154"; }
+		if(where.equals("충청남도")) { return "31000,33677"; }
+		if(where.equals("대전광역시")) { return "34000,35428"; }
+		if(where.equals("경상북도")) { return "36000,40240"; }
+		if(where.equals("대구광역시")) { return "41000,43024"; }
+		if(where.equals("울산광역시")) { return "44000,45015"; }
+		if(where.equals("부산광역시")) { return "46000,49527"; }
+		if(where.equals("경상남도")) { return "50000,53337"; }
+		if(where.equals("전라북도")) { return "54000,56469"; }
+		if(where.equals("전라남도")) { return "57000,59792"; }
+		if(where.equals("광주광역시")) { return "61000,62466"; }
+		if(where.equals("제주도")) { return "63000,63644"; }
+		else { return "01000,63644"; }
 	 }
 }

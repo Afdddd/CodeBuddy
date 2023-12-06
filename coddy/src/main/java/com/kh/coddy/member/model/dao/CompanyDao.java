@@ -17,4 +17,5 @@ public class CompanyDao {
 	public String getPassword(SqlSessionTemplate sqlSession, String companyId) { return sqlSession.selectOne("companyMapper.getPassword", companyId); }
 	public int updateCompany(SqlSessionTemplate sqlSession, Company c) { return sqlSession.update("companyMapper.updateCompany", c); }
 	public int deleteCompany(SqlSessionTemplate sqlSession, int companyNo) { return sqlSession.update("companyMapper.deleteCompany", companyNo); }
+	public String getCompanyNameByNo(SqlSessionTemplate sqlSession, int companyNo) { return sqlSession.selectOne("companyMapper.getCompanyNameByNo", companyNo); }
 }

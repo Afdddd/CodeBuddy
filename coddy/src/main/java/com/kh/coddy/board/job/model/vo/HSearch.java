@@ -14,4 +14,6 @@ public class HSearch {
 	private String sort;
 	private String[] tags;
 	private int active;
+	private String where_start;
+	private String where_end;
 }

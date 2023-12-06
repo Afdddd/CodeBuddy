@@ -67,6 +67,8 @@
     <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <!-- 도로명 주소 카카오 api -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- KakaoMap 키값 -->
+    <script src="${ pageContext.request.contextPath }/resources/js/kakaoMap.js"></script>
     <style>
         div {box-sizing:border-box;}
         #header {
@@ -266,7 +268,7 @@
                     <li><a href="">공지</a></li>
                     <li><a href="list.fr">자유</a></li>
                     <li><a href="introlist.bo">소개</a></li>
-                    <li><a href="listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=">채용공고</a></li>
+                    <li><a href="listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=all&viewOn=f">채용공고</a></li>
                 </ul>
             </div>
             <div id="header_1_right">

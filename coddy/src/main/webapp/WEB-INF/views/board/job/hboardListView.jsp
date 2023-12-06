@@ -18,6 +18,7 @@
             #hboardSort { width: 200px; text-align: center; }
             #hboardCareer { width: 100%; height: 50px; text-align: center; border: none; font-size: 20px; background: inherit; color: inherit; }
             #hboardEducation { width: 100%; height: 50px; text-align: center; border: none; font-size: 20px; background: inherit; color: inherit; }
+            #hboardLocation { width: 100%; height: 50px; text-align: center; border: none; font-size: 20px; background: inherit; color: inherit; }
 
             /* 태그 개인 설정 */
             tags { width: 100%; color: darkgoldenrod; }
@@ -31,44 +32,29 @@
             .pageForm { width: 100%; height: 15%; }
 
             /* 카드 css */
-            .card { width: 250px; height: 420px; background: white; padding: .4em; border-radius: 6px; margin: 15px; margin-bottom: 20px; }
+            .card { width: 250px; height: 480px; background: white; padding: .4em; border-radius: 6px; margin: 15px; margin-bottom: 20px; }
             .card-image { background-color: rgb(236, 236, 236); width: 100%; height: 130px; border-radius: 6px 6px 0 0; text-align: center; line-height:130px; }
-            .card-image:hover { transform: scale(0.98); }
-            .location { text-transform: uppercase; font-size: 0.7em; font-weight: 600; color: #5271FF; padding: 10px 7px 0; }
-            .location:hover { cursor: pointer; }
+            .card-image:hover { cursor: pointer; transform: scale(0.98); }
+            .location { text-transform: uppercase; font-size: 0.7em; font-weight: 600; color: #5271FF; padding: 10px 7px 0; width: 50%; }
+            .location:hover { cursor: pointer; transform: scale(1.24); background-color: darkgrey; color: yellow; }
             .heading { font-weight: 600; color: rgb(88, 87, 87); padding: 7px; }
-            .heading:hover { cursor: pointer; }
+            .heading h5:hover { cursor: pointer; }
             .info { color: gray; font-weight: 400; font-size: 11px; padding-top: 20px; width: 90%; display: flex; }
             .name { font-weight: 600; }
-            .card:hover { cursor: pointer; }
+            .card:hover { border: 1px ridge white; box-shadow: 5px 5px 5px 5px #6E9DDC; }
             .card-list{ width: 100%; margin-top: 50px; border-top: 1px solid lightgray; display: flex; flex-wrap: wrap; }
             .footing { height: 60px; width: 100%; }
             .tagList { border: 1px solid grey; border-radius: 8px; margin: 3px; padding: 3px; display: inline-flex; }
             .tagList:before { content: '#'; }
-            .tagList:hover { transform: scale(1.24); }
+            .tagList:hover { cursor: pointer; transform: scale(1.24); background-color: black; color: white; }
             .tagListNo { border: 1px solid grey; border-radius: 8px; margin: 3px; padding: 3px; display: inline-flex; }
             .tagListNo:before { content: '#'; }
             /* .tagListNo:hover { transform: scale(1.24); } */
 
             /* 좋아요 */
             .container input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0; }
-            .container {
-	            display: inline-block;
-	            position: relative;
-	            cursor: pointer;
-	            font-size: 12px;
-	            user-select: none;
-	            transition: 100ms;
-	            padding-bottom: 10px;
-            }
-            .checkmark {
-	            top: 0;
-	            left: 0;
-	            height: 2em;
-	            width: 2em;
-	            transition: 100ms;
-	            animation: dislike_effect 400ms ease;
-            }
+            .container { display: inline-block; position: relative; cursor: pointer; font-size: 12px; user-select: none; transition: 100ms; padding-bottom: 10px; }
+            .checkmark { top: 0; left: 0; height: 2em; width: 2em; transition: 100ms; animation: dislike_effect 400ms ease; }
             .container input:checked ~ .checkmark path { fill: #FF5353; stroke-width: 0; }
             .container input:checked ~ .checkmark { animation: like_effect 400ms ease; }
             .container:hover { transform: scale(1.1); }
@@ -83,9 +69,9 @@
                 <div class="searchForm">
                     <div class="searchForm1">
                         <div style="width: 100%; height: 40%; margin: auto; display: flex; border: 2px solid silver; padding: 1%;">
-                            <div style="width: 50%; height: 100%; display: flex;">
-                                <h5 style="width: 20%; margin: auto;" align="center">경력 구분</h5>
-                                <div style="width: 80%; margin: auto;">
+                            <div style="width: 33%; height: 100%; display: flex;">
+                                <h5 style="width: 40%; margin: auto;" align="center">경력 구분</h5>
+                                <div style="width: 60%; margin: auto;">
                                     <select name="hboardCareer" id="hboardCareer" size="">
                                         <option value="none" selected>경력무관</option>
                                         <option value="intern">인턴</option>
@@ -96,9 +82,9 @@
                                     </select>
                                 </div>
                             </div>
-                            <div style="width: 50%; height: 100%; display: flex;">
-                                <h5 style="width: 20%; margin: auto;" align="center">학력 구분</h5>
-                                <div style="width: 80%; margin: auto;">
+                            <div style="width: 33%; height: 100%; display: flex;">
+                                <h5 style="width: 40%; margin: auto;" align="center">학력 구분</h5>
+                                <div style="width: 60%; margin: auto;">
                                     <select name="hboardEducation" id="hboardEducation" size="">
                                         <option value="none" selected>학력무관</option>
                                         <option value="highSchool">고등학교 졸업</option>
@@ -107,6 +93,31 @@
                                         <option value="master">석사 이상</option>
                                         <option value="doctor">박사 이상</option>
                                         <option value="professor">교수 및 연구원</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="width: 33%; height: 100%; display: flex;">
+                                <h5 style="width: 40%; margin: auto;" align="center">지역 구분</h5>
+                                <div style="width: 60%; margin: auto;">
+                                    <select name="hboardLocation" id="hboardLocation" size="">
+                                        <option value="all" selected>전체지역</option>
+                                        <option value="서울특별시">서울특별시</option>
+                                        <option value="경기도">경기도</option>
+                                        <option value="인천광역시">인천광역시</option>
+                                        <option value="강원도">강원도</option>
+                                        <option value="충청북도">충청북도</option>
+                                        <option value="세종시">세종시</option>
+                                        <option value="충청남도">충청남도</option>
+                                        <option value="대전광역시">대전광역시</option>
+                                        <option value="경상북도">경상북도</option>
+                                        <option value="대구광역시">대구광역시</option>
+                                        <option value="울산광역시">울산광역시</option>
+                                        <option value="부산광역시">부산광역시</option>
+                                        <option value="경상남도">경상남도</option>
+                                        <option value="전라북도">전라북도</option>
+                                        <option value="전라남도">전라남도</option>
+                                        <option value="광주광역시">광주광역시</option>
+                                        <option value="제주도">제주도</option>
                                     </select>
                                 </div>
                             </div>
@@ -141,7 +152,7 @@
                             &nbsp<a href="insertForm.hb" style="text-decoration: none; color: inherit; border: 3px solod sandybrown; float: right;">모집 공고 작성하기</a>
                         </c:when>
                     </c:choose>
-                    <label for="viewOn" class="form-check-label"><input type="checkbox" class="form-check-input" name="viewOn" id="viewOn" checked>&nbsp;모집중인 공고만 보기</label>
+                    <label for="viewOn" class="form-check-label"><input type="checkbox" class="form-check-input" name="viewOn" id="viewOn">&nbsp;모집중인 공고만 보기</label>
 
                     <div style="width: 100%; height: 75%;">
                         <div class="content_2">
@@ -173,15 +184,17 @@
                                 -->
                                 <c:forEach var="b" items="${requestScope.list}" varStatus="status">
                                     <div class="card">
-                                        <div class="card-image">
+                                        <div class="card-image" onclick="location.href='boardDetail.hb?hno=${b.hboardNo}'">
                                             <img src="${requestScope.at_list[status.index].hattachmentPath}/${requestScope.at_list[status.index].hattachmentChange}" width="80%" height="80%" style="vertical-align:middle;" onerror="this.src='resources/image/white.jpg'">
                                         </div>
-                                        <div class="location">${b.hboardLocation}</div>
-                                        <div class="heading">
-                                            <h5>${b.hboardTitle}</h5>
+                                        <div class="location" onclick="location.href='listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=${b.hboardLocation}&viewOn=f'">${b.hboardLocation}</div>
+                                        <div class="heading">   
+                                            <h5 onclick="location.href='boardDetail.hb?hno=${b.hboardNo}'">${b.hboardTitle}</h5>
                                             <div class="company">${b.companyNo}</div>
                                             <div style="display: flex; width: 100%;">
-                                                <div class="info"><i class="fas fa-eye"></i>조회수&nbsp;${b.hboardViews}</div>
+                                                <div class="info">
+                                                    <i class="fas fa-eye" style="line-height: 18px;"></i><p style="color: indianred; font-weight: bold; font-size: 12px;">조회수&nbsp;${b.hboardViews}</p>
+                                                </div>
                                                 <c:if test="${not empty sessionScope.loginMember}">
                                                     <c:choose>
                                                         <c:when test="${requestScope.ws_list[status.index]}">
@@ -208,6 +221,13 @@
                                                 </c:if>
                                             </div>
                                             <div style="display: flex; width: 100%;">
+                                                <p style="color: #6E9DDC; font-weight: bold; font-size: 12px;">
+                                                    <c:if test="${b.hboardEducation eq 'none'}"> 학력무관 </c:if> <c:if test="${b.hboardEducation eq 'highSchool'}"> 고등학교 졸업 </c:if> <c:if test="${b.hboardEducation eq 'juniorCollege'}"> 전문대학 졸업 </c:if> <c:if test="${b.hboardEducation eq 'university'}"> 대학 졸업 </c:if> <c:if test="${b.hboardEducation eq 'master'}"> 석사 이상 </c:if> <c:if test="${b.hboardEducation eq 'doctor'}"> 박사 이상 </c:if> <c:if test="${b.hboardEducation eq 'professor'}"> 교수 및 연구원 </c:if>
+                                                </p><p style="color: gray; font-weight: bold; font-size: 12px;">&nbsp;||&nbsp;</p><p style="color: sandybrown; font-weight: bold; font-size: 12px;">
+                                                    <c:if test="${b.hboardCareer eq 'none'}"> 경력무관 </c:if> <c:if test="${b.hboardCareer eq 'intern'}"> 인턴 </c:if> <c:if test="${b.hboardCareer eq 'newcomer'}"> 신입 </c:if> <c:if test="${b.hboardCareer eq 'junior'}"> 주니어 </c:if> <c:if test="${b.hboardCareer eq 'middle'}"> 미들 </c:if> <c:if test="${b.hboardCareer eq 'senior'}"> 시니어 </c:if>
+                                                </p>
+                                            </div>
+                                            <div style="display: flex; width: 100%;">
                                                 <div style="width: 45%;">${b.hboardStart}</div>
                                                 <div style="width: 10%;">&nbsp;~&nbsp;</div>
                                                 <div style="width: 45%;">${b.hboardEnd}</div>
@@ -218,7 +238,7 @@
                                                 <span class="tagListNo">태그없음</span>
                                             </c:if>
                                             <c:forEach var="tg" items="${requestScope.tg_list[status.index]}">
-                                                <span class="tagList">${tg.tagsNo}</span>
+                                                <span class="tagList" onclick="location.href='listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=${tg.tagsNo}&where=all&viewOn=f'">${tg.tagsNo}</span>
                                             </c:forEach>
                                         </div>                         
                                     </div>
@@ -241,6 +261,8 @@
                 $("#hboardSort").val(getParameter("sort"));
                 $("#hboardCareer").val(getParameter("career"));
                 $("#hboardEducation").val(getParameter("education"));
+                $("#hboardLocation").val(getParameter("where"));
+                if(getParameter("viewOn") == 't') { $("#viewOn").attr("checked", true); }
                 tagifyAll.addTags(getParameter("tag"));
             })
             function onWish(e) {
@@ -260,8 +282,11 @@
                 let career = $("#hboardCareer").val();
                 let education = $("#hboardEducation").val();
                 let tag = $("#tagAllName").val();
+                let where = $("#hboardLocation").val();
+                let viewOn = 'f';
+                if($("#viewOn").is(":checked") == true) { viewOn = 't'; }
                 tag = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tag, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
-                location.href='listView.hb?cpage='+cpage+'&search='+search+'&sort='+sort+'&career='+career+'&education='+education+'&tag='+tag;
+                location.href='listView.hb?cpage='+cpage+'&search='+search+'&sort='+sort+'&career='+career+'&education='+education+'&tag='+tag+'&where='+where+'&viewOn='+viewOn;
             }
             function getParameter(name) {
                 name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");

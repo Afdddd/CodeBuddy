@@ -21,4 +21,7 @@ public interface HboardService {
 	int getWish(Hwishlist hw);
 	String deleteWish(Hwishlist hw);
 	String insertWish(Hwishlist hw);
+	int plusView(int hno);
+	Hboard selectBoard(int hno);
+	ArrayList<Hattachment> getAttachmentList(Hboard hb);
 }

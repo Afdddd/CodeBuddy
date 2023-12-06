@@ -33,4 +33,7 @@ public class HboardServiceImpl implements HboardService {
 	@Override public int getWish(Hwishlist hw) { return hboardDao.getWish(sqlSession, hw); }
 	@Override public String deleteWish(Hwishlist hw) { int result = hboardDao.deleteWish(sqlSession, hw); return (result > 0) ? "찜목록 제거에 성공함": "찜목록 제거에 실패함"; }
 	@Override public String insertWish(Hwishlist hw) { int result = hboardDao.insertWish(sqlSession, hw); return (result > 0) ? "찜목록 추가에 성공함": "찜목록 추가에 실패함"; }
+	@Override public int plusView(int hno) { return hboardDao.plusView(sqlSession, hno); }
+	@Override public Hboard selectBoard(int hno) { return hboardDao.selectBoard(sqlSession, hno); }
+	@Override public ArrayList<Hattachment> getAttachmentList(Hboard h) { return hboardDao.getAttachmentList(sqlSession, h); }
 }

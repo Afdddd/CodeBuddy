@@ -13,4 +13,5 @@ public interface CompanyService {
 	String getPassword(String companyId);
 	int updateCompany(Company c);
 	int deleteCompany(int companyNo);
+	String getCompanyNameByNo(int companyNo);
 }
