@@ -479,8 +479,6 @@
         </div>
 
         <div class="search-bar">
-
-            
             <input class="search-input" placeholder="기술스택">
             <input class="search-input" placeholder="포지션">
             <input class="search-input" placeholder="프로젝트 이름">    
@@ -496,60 +494,64 @@
         </c:if>
         <div class="content_2">
           <div class="card-list">
-          <c:forEach var="r" items="${requestScope.list}" varStatus="status">
-            <div class="card" >
-              <div class="card-image" onclick="location.href='detail.rec'">
-                <img src="${requestScope.at_list[status.index].getRAttachmentPath()}/${requestScope.at_list[status.index].getRAttachmentChange()}" width="100%" height="100%" style="vertical-align:middle;" onerror="this.src='resources/image/003.png'">
-              </div>
-              <div class="category"></div>
-              <div class="heading"> 
-                <h5 onclick="location.href='detail.rec'">${r.recruitmentTitle}</h5>
-                <div class="explain" onclick="location.href='detail.rec'">${r.recruitmentIntro}</div>              
-                  <div class="author"> By <span class="name">${r.recruitmentWriter} </span> ${r.recruitmentInsert}</div>
-                <c:choose>
-                  <c:when test="${requestScope.ws_list[status.index]}">
-                    <label class="container">
-                      <input checked="checked" type="checkbox" name="like" onclick="onWish('${r.recruitmentNo}');">
-                      <div class="checkmark">
-                        <svg viewBox="0 0 256 256">
-                        <rect fill="none" height="512" width="512"></rect>
-                        <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                      </div>
-                    </label>
-                  </c:when>
-                  <c:otherwise>
-                    <label class="container">
-                      <input type="checkbox" name="like" onclick="onWish('${r.recruitmentNo}');">
-                      <div class="checkmark">
-                        <svg viewBox="0 0 256 256">
-                        <rect fill="none" height="512" width="512"></rect>
-                        <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                      </div>
-                    </label>
-                  </c:otherwise>
-                </c:choose> 
+            <c:forEach var="rl" items="${requestScope.list}" varStatus="status">
+              <div class="card" >
+                <div class="card-image" onclick="location.href='detail.rec'">
+                  <img src="${requestScope.at_list[status.index].getRAttachmentPath()}/${requestScope.at_list[status.index].getRAttachmentChange()}" width="100%" height="100%" style="vertical-align:middle;" onerror="this.src='resources/image/003.png'">
+                </div>
+                <div class="category"></div>
+                <div class="heading"> 
+                  <h5 onclick="location.href='detail.rec'">${rl.recruitmentTitle}</h5>
+                  <div class="explain" onclick="location.href='detail.rec'">${rl.recruitmentIntro}</div>              
+                    <div class="author"> By <span class="name">${rl.recruitmentWriter} </span> ${rl.recruitmentInsert}</div>
+                    <c:if test="${not empty sessionScope.loginMember}">
+                      <c:choose>
+                        <c:when test="${requestScope.ws_list[status.index]}">
+                          <label class="container">
+                            <input checked="checked" type="checkbox" name="like" onclick="onWish('${rl.recruitmentNo}');">
+                            <div class="checkmark">
+                              <svg viewBox="0 0 256 256">
+                              <rect fill="none" height="512" width="512"></rect>
+                              <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                            </div>
+                          </label>
+                        </c:when>
+                        <c:otherwise>
+                          <label class="container">
+                            <input type="checkbox" name="like" onclick="onWish('${rl.recruitmentNo}');">
+                            <div class="checkmark">
+                              <svg viewBox="0 0 256 256">
+                              <rect fill="none" height="512" width="512"></rect>
+                              <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                            </div>
+                          </label>
+                        </c:otherwise>
+                    </c:choose> 
+                  </c:if>
 
-                <div class="tooltip-container ">
-                  <span class="text">#기술</span>
-                  <span class="tooltip">
-                    <c:forEach var="r" items="${requestScope.tg_list[status.index]}" varStatus="status2">                    
-                         ${r.getTagsNo()}                     
-                    </c:forEach> 
+                  <div class="tooltip-container ">
+                    <span class="text">#기술</span>
+                    <span class="tooltip">
+                      <c:forEach var="t" items="${requestScope.tg_list[status.index]}" varStatus="tagStatus">                    
+                          ${t.getTagsNo()}                     
+                      </c:forEach> 
+                    </span>
+                  </div>
+                  <div class="tooltip-container">
+                    <span class="text">#포지션</span>                 
+                    <span class="tooltip">              
+                      <c:forEach var="p" items="${requestScope.pos_list[status.index]}" varStatus="poStatus">
+                          ${p.getPosition()}
+                      </c:forEach> 
                   </span>
-                </div>
-                <div class="tooltip-container">
-                  <span class="text">#포지션</span>                 
-                  <span class="tooltip">              
-                    <c:forEach var="p" items="${requestScope.pos_list[status.index]}" varStatus="status3">
-                         ${p.getPosition()}
-                    </c:forEach> 
-                </span>
-                </div>
-
-                
-              </div>                          
-            </div>
-          </c:forEach>
+                  </div>
+                  <div style="float: right;">
+                    <i class="fas fa-eye" style="line-height: 18px; margin-left: 3px;"></i>
+                    <p style="color: lightgray; font-weight: bold; font-size: 12px; display: inline-block;">${rl.recruitmentView}</p>
+                  </div>
+                </div>                          
+              </div>
+            </c:forEach>
           </div>         
         </div>
         <br><br>
@@ -573,7 +575,7 @@
                           end="${ requestScope.pi.endPage }"
                           step="1">
                   <li class="page-item">
-                    <a class="page-link" href="list.bo?rpage=${ p }">${ p }</a>
+                    <a class="page-link" href="list.rec?rpage=${ p }">${ p }</a>
                   </li>
                 </c:forEach>
                 
