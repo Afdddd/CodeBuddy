@@ -36,7 +36,6 @@ import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.CompanyService;
 import com.kh.coddy.member.model.service.MemberService;
 import com.kh.coddy.member.model.vo.Company;
-import com.kh.coddy.member.model.vo.Member;
 
 @Controller
 public class CompanyController {

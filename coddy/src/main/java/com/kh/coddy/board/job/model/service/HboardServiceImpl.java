@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.coddy.board.job.model.dao.HboardDao;
+import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.board.job.model.vo.Hattachment;
 import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.job.model.vo.Hrelation;
@@ -21,8 +22,8 @@ public class HboardServiceImpl implements HboardService {
 	@Override public int insertBoard(Hboard h) { return hboardDao.insertBoard(sqlSession, h); }
 	@Override public boolean insertTag(Hrelation hr) { return (hboardDao.insertTag(sqlSession, hr) > 0 ? true : false); }
 	@Override public int insertThumb(Hattachment ha) { return hboardDao.insertThumb(sqlSession, ha); }
-	@Override public int selectListCount() { return hboardDao.selectListCount(sqlSession); }
-	@Override public ArrayList<Hboard> selectList(PageInfo pi) { return hboardDao.selectList(sqlSession, pi); }
+	@Override public int selectListCount(HSearch hs) {  return hboardDao.selectListCount(sqlSession, hs); }
+	@Override public ArrayList<Hboard> selectList(PageInfo pi, HSearch hs) { return hboardDao.selectList(sqlSession, pi, hs); }
 	@Override public Hattachment getThumbOne(Hboard h) {
 		Hattachment ha = hboardDao.getThumbOne(sqlSession, h);
 		return ha != null ? ha : new Hattachment(-1, h.getHboardNo(), "white.jpg", "white.jpg", "resources\\image", null, 1);
@@ -32,4 +33,9 @@ public class HboardServiceImpl implements HboardService {
 	@Override public int getWish(Hwishlist hw) { return hboardDao.getWish(sqlSession, hw); }
 	@Override public String deleteWish(Hwishlist hw) { int result = hboardDao.deleteWish(sqlSession, hw); return (result > 0) ? "찜목록 제거에 성공함": "찜목록 제거에 실패함"; }
 	@Override public String insertWish(Hwishlist hw) { int result = hboardDao.insertWish(sqlSession, hw); return (result > 0) ? "찜목록 추가에 성공함": "찜목록 추가에 실패함"; }
+	@Override public int plusView(int hno) { return hboardDao.plusView(sqlSession, hno); }
+	@Override public Hboard selectBoard(int hno) { return hboardDao.selectBoard(sqlSession, hno); }
+	@Override public ArrayList<Hattachment> getAttachmentList(Hboard h) { return hboardDao.getAttachmentList(sqlSession, h); }
+	@Override public int addFile(Hattachment ha) { return hboardDao.addFile(sqlSession, ha); }
+	@Override public int minusFile(int ano) { return hboardDao.minusFile(sqlSession, ano); }
 }

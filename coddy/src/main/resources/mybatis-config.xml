@@ -11,11 +11,14 @@
     <typeAliases>
      	<typeAlias type="com.kh.coddy.member.model.vo.Member" alias="member"/>
      	<typeAlias type="com.kh.coddy.member.model.vo.Company" alias="company"/>
+     	
      	<typeAlias type="com.kh.coddy.common.auth.model.vo.Auth" alias="auth"/>
+     	
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hboard" alias="hboard"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hrelation" alias="hrelation"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hattachment"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hwishlist"/>
+     	<typeAlias type="com.kh.coddy.board.job.model.vo.HSearch" alias="hsearch"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Recruitment" alias="recruitment"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Rattachment" alias="rAttachment"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
