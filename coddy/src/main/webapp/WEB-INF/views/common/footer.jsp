@@ -106,7 +106,7 @@
             <img src="resources/image/logo.png" style="height : 50px; width:100px;"> <br><br>
            	<div style="text-align : left;">
             <p style="font-size : 12px;" id="p1">
-            	사업자 : ??? <br>
+            	사업자 : 김인엽 <br>
             	Contact : 010-1516-5162 <br>
                 Address : 서울특별시 영등포구 선유동2로 57 이레빌딩 <br>
             </p>
