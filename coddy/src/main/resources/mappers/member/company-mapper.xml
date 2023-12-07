@@ -26,4 +26,5 @@
 	<select id="getPassword" parameterType="string" resultType="string">SELECT COMPANY_PWD FROM COMPANY WHERE COMPANY_ID=#{companyId} AND COMPANY_DELETE IS NULL</select>
 	<update id="updateCompany" parameterType="company">UPDATE COMPANY SET COMPANY_NAME=#{companyName}, COMPANY_OWNER=#{companyOwner}, COMPANY_WORKER=#{companyWorker}, COMPANY_SALARY=#{companySalary}, COMPANY_INFO=#{companyInfo}, COMPANY_PWD=#{companyPwd} WHERE COMPANY_NO=#{companyNo} AND COMPANY_ID=#{companyId} AND COMPANY_EMAIL=#{companyEmail} AND COMPANY_BNO=#{companyBno} AND COMPANY_DELETE IS NULL</update>
 	<update id="deleteCompany" parameterType="_int">UPDATE COMPANY SET COMPANY_DELETE=SYSDATE WHERE COMPANY_DELETE IS NULL AND COMPANY_NO=#{companyNo}</update>
+	<select id="getCompanyByNo" parameterType="_int" resultMap="companyResultSet">SELECT * FROM COMPANY WHERE COMPANY_NO=#{companyNo}</select>
 </mapper>

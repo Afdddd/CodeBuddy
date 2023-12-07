@@ -11,7 +11,7 @@
 	</style>
 	</head>
 	<body>
-		<input type="text" name="tagAllName" id="tagAllName">
+		<input type="text" name="tagAllName" id="tagAllName" value="">
 		<script>
 			var inputAll = document.querySelector('input[name=tagAllName]');
 			let tagAllArr = ['C언어', 'C++', 'C#', 'GO', 'Java', 'JavaScript', 

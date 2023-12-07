@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="recruitmentMapper">
+	<resultMap id="projectResultSet" type="project">
+		<result column="PROJECT_NO" property="projectNo" />
+		<result column="PROJECT_OWNER" property="projectOwner" />
+		<result column="RECRUITMENT_NO" property="recruitmentNo" />
+		<result column="PROJECT_NAME" property="projectName" />
+		<result column="PROJECT_INFO" property="projectInfo" />
+		<result column="PROJECT_INSERT" property="projectInsert" />
+		<result column="PROJECT_START" property="projectStart" />
+		<result column="PROJECT_END" property="projectEnd" />
+		<result column="PROJECT_LOCATION" property="projectLocation" />
+		<result column="PROJECT_READY" property="projectReady" />
+	</resultMap>
+	<resultMap id="recruitmentResultSet" type="recruitment">
+		<result column="RECRUITMENT_NO" property="recruitmentNo" />
+		<result column="RECRUITMENT_TITLE" property="recruitmentTitle" />
+		<result column="RECRUITMENT_CONTENT" property="recruitmentContent" />
+		<result column="RECRUITMENT_WRITER" property="recruitmentWriter" />
+		<result column="RECRUITMENT_INSERT" property="recruitmentInsert" />
+		<result column="RECRUITMENT_UPDATE" property="recruitmentUpdate" />
+		<result column="RECRUITMENT_DELETE" property="recruitmentDelete" />
+		<result column="RECRUITMENT_VIEWS" property="recruitmentView" />
+		<result column="RECRUITMENT_START" property="recruitmentStart" />
+		<result column="RECRUITMENT_END" property="recruitmentEnd" />
+		<result column="RECRUITMENT_LOCATION" property="recruitmentLocation" />
+		<result column="RECRUITMENT_INTRO" property="recruitmentIntro" />
+	</resultMap>
+	
+	<resultMap id="rAttachmentResultSet" type="rAttachment">
+		<result column="RECRUITMENT_ATTACHMENT_NO" property="rAttachmentNo" />
+		<result column="RECRUITMENT_NO" property="recruitmentNo" />
+		<result column="RECRUITMENT_ATTACHMENT_ORIGIN" property="rAttachmentOrigin" />
+		<result column="RECRUITMENT_ATTACHMENT_CHANGE" property="rAttachmentChange" />
+		<result column="RECRUITMENT_ATTACHMENT_PATH" property="rAttachmentPath"/>
+		<result column="RECRUITMENT_ATTACHMENT_INSERT" property="rAttachmentInsert" />		
+		<result column="RECRUITMENT_ATTACHMENT_LEVEL" property="rAttachmentLevel" />		
+	</resultMap>
+	
+	
+	<resultMap id="pRelationResultSet" type="pRelation">
+		<result column="RECRUITMENT_NO" property="recruitmentNo"/>
+		<result column="TAGS_NO" property="tagsNo"/>
+	</resultMap>
+	
+	<resultMap id="rStateResultSet" type="rState">
+		<result column="RECRUITMENT_NO" property="recruitmentNo" />
+		<result column="ROLE" property="position" />
+		<result column="MAX_PERSONNEL" property="maxPersonnel" />
+		<result column="PERSONNEL" property="personnel" />
+	</resultMap>
+
+
+
+	<insert id="insertRecruitment" parameterType="recruitment">
+		INSERT INTO RECRUITMENT(RECRUITMENT_NO, 
+								RECRUITMENT_TITLE,
+								RECRUITMENT_CONTENT, 
+								RECRUITMENT_WRITER,
+								RECRUITMENT_START,
+								RECRUITMENT_END,
+								RECRUITMENT_LOCATION,
+								RECRUITMENT_INTRO			
+					   ) VALUES(SEQ_RECRUITMENT.NEXTVAL,
+					   			#{recruitmentTitle},					   			
+					   			#{recruitmentContent},
+					   			#{recruitmentWriter},
+					   			#{recruitmentStart},
+					   			#{recruitmentEnd},
+					   			#{recruitmentLocation},
+					   			#{recruitmentIntro}
+					   			)
+	</insert>
+	<insert id="insertImg" parameterType="rAttachment">
+		INSERT INTO RECRUITMENT_ATTACHMENT(RECRUITMENT_ATTACHMENT_NO,
+										   RECRUITMENT_NO,
+										   RECRUITMENT_ATTACHMENT_ORIGIN,
+										   RECRUITMENT_ATTACHMENT_CHANGE,
+										   RECRUITMENT_ATTACHMENT_PATH,
+										   RECRUITMENT_ATTACHMENT_LEVEL)
+								   VALUES(SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,
+										  SEQ_RECRUITMENT.CURRVAL,
+										  #{rAttachmentOrigin},
+										  #{rAttachmentChange},
+										  #{rAttachmentPath},
+										  #{rAttachmentLevel})
+	</insert>
+	<insert id="insertTag" parameterType="pRelation">
+		INSERT INTO PRELATION(RECRUITMENT_NO,
+							  TAGS_NO)
+					   VALUES(SEQ_RECRUITMENT.CURRVAL,
+					   		  (SELECT TAGS_NO
+					   		     FROM TAGS T 
+					   		    WHERE T.TAGS_NAME=#{tagsNo})) 
+	</insert>
+	<insert id="insertState" parameterType="rState">
+		INSERT INTO RECRUITMENT_STATE(RECRUITMENT_NO,
+									  ROLE,
+									  MAX_PERSONNEL)
+							   VALUES(SEQ_RECRUITMENT.CURRVAL,
+							   		  #{position},
+							   		  #{maxPersonnel})	
+	</insert>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM RECRUITMENT 
+		 WHERE RECRUITMENT_DELETE IS NULL
+	</select>
+	
+	<select id="selectList" resultMap="recruitmentResultSet">
+		SELECT RECRUITMENT_NO,
+			   RECRUITMENT_TITLE,
+			   RECRUITMENT_CONTENT,
+			   MEMBER_NAME AS "RECRUITMENT_WRITER",
+			   TO_CHAR(RECRUITMENT_INSERT, 'YYYY-MM-DD') AS "RECRUITMENT_INSERT", 
+			   TO_CHAR(RECRUITMENT_START, 'YYYY-MM-DD') AS "RECRUITMENT_START", 
+			   TO_CHAR(RECRUITMENT_END, 'YYYY-MM-DD') AS "RECRUITMENT_END", 			   
+			   RECRUITMENT_VIEWS,			 
+			   RECRUITMENT_LOCATION,
+			   RECRUITMENT_INTRO
+		FROM RECRUITMENT, MEMBER
+	    WHERE RECRUITMENT_DELETE  IS NULL
+	    AND MEMBER_NO = RECRUITMENT_WRITER
+	    ORDER BY RECRUITMENT_NO DESC
+	</select>
+	
+
+	<select id="getThumbOne" parameterType="recruitment" resultMap="rAttachmentResultSet">
+		SELECT RECRUITMENT_ATTACHMENT_NO, 
+			   RECRUITMENT_NO, 
+			   RECRUITMENT_ATTACHMENT_ORIGIN, 
+			   RECRUITMENT_ATTACHMENT_CHANGE, 
+			   RECRUITMENT_ATTACHMENT_PATH, 
+			   RECRUITMENT_ATTACHMENT_INSERT, 
+			   RECRUITMENT_ATTACHMENT_LEVEL 
+		FROM  RECRUITMENT_ATTACHMENT
+		WHERE RECRUITMENT_NO=#{recruitmentNo} 
+		AND RECRUITMENT_ATTACHMENT_LEVEL = 0
+	</select>
+
+	<select id="getTagInfo" parameterType="recruitment" resultMap="pRelationResultSet">
+		SELECT PR.RECRUITMENT_NO,	
+			   T.TAGS_NAME AS "TAGS_NO"
+		FROM PRELATION PR, TAGS T
+		WHERE PR.TAGS_NO = T.TAGS_NO
+		AND PR.RECRUITMENT_NO=#{recruitmentNo}
+	</select>
+	
+	<select id="getState" parameterType="recruitment" resultMap="rStateResultSet">
+		SELECT * 
+		FROM RECRUITMENT_STATE
+		WHERE RECRUITMENT_NO = #{recruitmentNo}
+	</select>
+	
+	<select id="getWishList" parameterType="map" resultType="_int">
+		SELECT COUNT(*) 
+		FROM  RECRUITMENT_WISHLIST
+		WHERE RECRUITMENT_NO=#{rno} 
+		AND RECRUITMENT_WISHLIST_MEMBER=#{mno}
+	</select>
+	
+	<select id="getWish" parameterType="rWishList" resultType="_int">
+		SELECT COUNT(*) 
+		FROM RECRUITMENT_WISHLIST 
+		WHERE RECRUITMENT_NO=#{recruitmentNo} 
+		AND RECRUITMENT_WISHLIST_MEMBER=#{recruitmentWishNo}
+	</select>
+
+	<delete id="deleteWish" parameterType="rWishList">
+		DELETE FROM RECRUITMENT_WISHLIST  
+		WHERE RECRUITMENT_WISHLIST_MEMBER=#{recruitmentWishNo} 
+		AND RECRUITMENT_NO=#{recruitmentNo}
+	</delete>
+	
+	<insert id="insertWish" parameterType="rWishList">
+		INSERT INTO RECRUITMENT_WISHLIST (RECRUITMENT_WISHLIST_MEMBER, RECRUITMENT_NO) 
+		VALUES(#{recruitmentWishNo}, #{recruitmentNo})
+	</insert>
+	
+	
+	<insert id="createProject" parameterType="project">
+		INSERT INTO PROJECT(PROJECT_NO,
+							PROJECT_OWNER,
+							RECRUITMENT_NO,
+							PROJECT_NAME,
+							PROJECT_INFO,
+							PROJECT_START,
+							PROJECT_END)
+					 VALUES(SEQ_PROJECT.NEXTVAL,
+					 		#{projectOwner},
+					 		SEQ_RECRUITMENT.CURRVAL,
+					 		#{projectName},
+					 		#{projectInfo},
+					 		#{projectStart},
+					 		#{projectEnd})	
+	</insert>
+	
+
+ 
+</mapper>

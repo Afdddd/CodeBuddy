@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/ckeditor5-classic-plus@36.0.1/build/ckeditor.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/ckeditor5-upload-adapter@1.0.3/src/uploadadapter.min.js"></script>
 <title>Insert title here</title>
 <style>
 
@@ -75,7 +75,11 @@
 					    	</div>
 					    <script>
 					        ClassicEditor
-					            .create( document.querySelector( '#editor' ))
+					            .create( document.querySelector( '#editor' ), {
+					            	ckfinder: {
+					            		uploadUrl: '${pageContext.request.contextPath}/resources/file_upload/cboard/upload'
+					            	}
+					            })
 					            .catch( error => {
 					                console.error( error );
 					            } );

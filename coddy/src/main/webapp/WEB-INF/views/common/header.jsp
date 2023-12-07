@@ -96,7 +96,6 @@
         /* 세부페이지마다 공통적으로 유지할 style */
         .content {
             width:1200px;
-            height: 1800px;
             margin:auto;
         }
         .content_title h2{
@@ -266,7 +265,7 @@
                     <li><a href="">공지</a></li>
                     <li><a href="list.fr">자유</a></li>
                     <li><a href="introlist.bo">소개</a></li>
-                    <li><a href="listView.hb">채용공고</a></li>
+                    <li><a href="listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=all&viewOn=f">채용공고</a></li>
                 </ul>
             </div>
             <div id="header_1_right">

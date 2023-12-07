@@ -1,6 +1,7 @@
 package com.kh.coddy.board.code.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Creply;
@@ -39,5 +40,7 @@ public interface CboardService {
 	
 	// 조회수 top5 리스트 조회용 서비스 (ajax)
 	ArrayList<Cboard> selectTopBoardList();
+	
+
 	
 }
