@@ -38,8 +38,8 @@
 	<insert id="insertBoard" parameterType="hboard">INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, #{hboardTitle}, #{hboardContent}, #{companyNo}, #{hboardStart}, #{hboardEnd}, #{hboardSalary}, #{hboardEducation}, #{hboardCareer}, #{hboardLocation})</insert>
 	<insert id="insertTag" parameterType="hrelation">INSERT INTO HRELATION(HBOARD_NO, TAGS_NO) VALUES(SEQ_HBOARD.CURRVAL, (SELECT TAGS_NO FROM TAGS T WHERE T.TAGS_NAME=#{tagsNo}))</insert>
 	<insert id="insertThumb" parameterType="hattachment">INSERT INTO HATTACHMENT(HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_LEVEL) VALUES(SEQ_HATTACHMENT.NEXTVAL, SEQ_HBOARD.CURRVAL, #{hattachmentOrigin}, #{hattachmentChange}, #{hattachmentPath}, #{hattachmentLevel})</insert>
-	<select id="selectListCount" parameterType="hsearch" resultType="_int">SELECT DISTINCT COUNT(*) FROM HBOARD H, HRELATION HR, TAGS TG 
-		WHERE H.HBOARD_NO=HR.HBOARD_NO AND HR.TAGS_NO=TG.TAGS_NO AND TG.TAGS_NAME IN 
+	<select id="selectListCount" parameterType="hsearch" resultType="_int">SELECT DISTINCT COUNT(*) FROM HBOARD H, HRELATION HR, TAGS TG, COMPANY CO
+		WHERE H.HBOARD_NO=HR.HBOARD_NO AND HR.TAGS_NO=TG.TAGS_NO AND H.COMPANY_NO=CO.COMPANY_NO AND TG.TAGS_NAME IN 
 		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND H.HBOARD_DELETE IS NULL AND H.HBOARD_CAREER IN
 		<foreach collection="career" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
@@ -47,9 +47,9 @@
 		<foreach collection="education" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND (TO_NUMBER(H.HBOARD_LOCATION) BETWEEN #{where_start} AND #{where_end})
 		<if test="active==1">AND (SYSDATE BETWEEN H.HBOARD_START AND H.HBOARD_END)</if>
-		AND (H.HBOARD_TITLE LIKE '%'||#{keyword}||'%' OR H.HBOARD_CONTENT LIKE '%'||#{keyword}||'%') ORDER BY ${sort} DESC</select>
-	<select id="selectList" parameterType="hsearch" resultMap="hboardResultSet">SELECT DISTINCT H.HBOARD_NO AS "HBOARD_NO", H.HBOARD_TITLE AS "HBOARD_TITLE", C.COMPANY_NAME AS "COMPANY_NO", H.HBOARD_VIEWS AS "HBOARD_VIEWS", TO_CHAR(H.HBOARD_INSERT, 'YYYY-MM-DD') AS "HBOARD_INSERT", H.HBOARD_START AS "HBOARD_START", H.HBOARD_END AS "HBOARD_END", H.HBOARD_SALARY AS "HBOARD_SALARY", H.HBOARD_EDUCATION AS "HBOARD_EDUCATION", H.HBOARD_CAREER AS "HBOARD_CAREER", H.HBOARD_LOCATION AS "HBOARD_LOCATION" FROM HBOARD H, COMPANY C, HRELATION HR, TAGS TG 
-		WHERE H.COMPANY_NO=C.COMPANY_NO AND H.HBOARD_NO=HR.HBOARD_NO AND TG.TAGS_NO=HR.TAGS_NO AND TG.TAGS_NAME IN
+		AND (H.HBOARD_TITLE LIKE '%'||#{keyword}||'%' OR H.HBOARD_CONTENT LIKE '%'||#{keyword}||'%' OR CO.COMPANY_NAME LIKE '%'||#{keyword}||'%') ORDER BY ${sort} DESC</select>
+	<select id="selectList" parameterType="hsearch" resultMap="hboardResultSet">SELECT DISTINCT H.HBOARD_NO AS "HBOARD_NO", H.HBOARD_TITLE AS "HBOARD_TITLE", C.COMPANY_NAME AS "COMPANY_NO", H.HBOARD_VIEWS AS "HBOARD_VIEWS", TO_CHAR(H.HBOARD_INSERT, 'YYYY-MM-DD') AS "HBOARD_INSERT", H.HBOARD_START AS "HBOARD_START", H.HBOARD_END AS "HBOARD_END", H.HBOARD_SALARY AS "HBOARD_SALARY", H.HBOARD_EDUCATION AS "HBOARD_EDUCATION", H.HBOARD_CAREER AS "HBOARD_CAREER", H.HBOARD_LOCATION AS "HBOARD_LOCATION" FROM HBOARD H, COMPANY C, HRELATION HR, TAGS TG, COMPANY CO 
+		WHERE H.COMPANY_NO=C.COMPANY_NO AND H.HBOARD_NO=HR.HBOARD_NO AND TG.TAGS_NO=HR.TAGS_NO AND H.COMPANY_NO=CO.COMPANY_NO AND TG.TAGS_NAME IN
 		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND H.HBOARD_DELETE IS NULL AND H.HBOARD_CAREER IN
 		<foreach collection="career" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
@@ -57,7 +57,7 @@
 		<foreach collection="education" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND (TO_NUMBER(H.HBOARD_LOCATION) BETWEEN #{where_start} AND #{where_end})
 		<if test="active==1">AND (SYSDATE BETWEEN H.HBOARD_START AND H.HBOARD_END)</if>
-		AND (H.HBOARD_TITLE LIKE '%'||#{keyword}||'%' OR H.HBOARD_CONTENT LIKE '%'||#{keyword}||'%') ORDER BY ${sort} DESC</select>
+		AND (H.HBOARD_TITLE LIKE '%'||#{keyword}||'%' OR H.HBOARD_CONTENT LIKE '%'||#{keyword}||'%' OR CO.COMPANY_NAME LIKE '%'||#{keyword}||'%') ORDER BY ${sort} DESC</select>
 	<select id="getThumbOne" parameterType="hboard" resultMap="hattachmentResultSet">SELECT HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_INSERT, HATTACHMENT_LEVEL FROM HATTACHMENT WHERE HBOARD_NO=#{hboardNo} AND HATTACHMENT_LEVEL=1</select>
 	<select id="getTagInfo" parameterType="hboard" resultMap="hrelationResultSet">SELECT HR.HBOARD_NO, T.TAGS_NAME AS "TAGS_NO" FROM HRELATION HR, TAGS T WHERE HR.TAGS_NO=T.TAGS_NO AND HR.HBOARD_NO=#{hboardNo}</select>
 	<select id="getWishList" parameterType="hboard" resultType="_int">SELECT COUNT(*) FROM HWISHLIST WHERE HBOARD_NO=#{hboardNo} AND HWISHLIST_MEMBER=#{hboardContent}</select>
@@ -66,5 +66,7 @@
 	<insert id="insertWish" parameterType="hwishlist">INSERT INTO HWISHLIST(HWISHLIST_MEMBER, HBOARD_NO) VALUES(#{hwishlistMember}, #{hboardNo})</insert>
 	<update id="plusView" parameterType="_int">UPDATE HBOARD SET HBOARD_VIEWS=HBOARD_VIEWS+1 WHERE HBOARD_NO=#{hno} AND HBOARD_DELETE IS NULL</update>
 	<select id="selectBoard" parameterType="_int" resultMap="hboardResultSet">SELECT * FROM HBOARD WHERE HBOARD_NO=#{hno} AND HBOARD_DELETE IS NULL</select>
-	<select id="getAttachmentList" parameterType="hboard" resultMap="hattachmentResultSet">SELECT * FROM HATTACHMENT WHERE HBOARD_NO=#{hboardNo}</select>
+	<select id="getAttachmentList" parameterType="hboard" resultMap="hattachmentResultSet">SELECT * FROM HATTACHMENT WHERE HBOARD_NO=#{hboardNo} AND HATTACHMENT_LEVEL=0</select>
+	<insert id="addFile" parameterType="hattachment">INSERT INTO HATTACHMENT(HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_LEVEL) VALUES(SEQ_HATTACHMENT.NEXTVAL, #{hboardNo}, #{hattachmentOrigin}, #{hattachmentChange}, #{hattachmentPath}, #{hattachmentLevel})</insert>
+	<update id="minusFile" parameterType="_int">UPDATE HATTACHMENT SET HATTACHMENT_LEVEL=-1 WHERE HATTACHMENT_LEVEL=0 AND HATTACHMENT_NO=#{ano}</update>
 </mapper>

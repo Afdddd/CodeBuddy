@@ -22,5 +22,5 @@ public class CompanyServiceImpl implements CompanyService {
 	@Override public String getPassword(String companyId) { return companyDao.getPassword(sqlSession, companyId); }
 	@Override public int updateCompany(Company c) { return companyDao.updateCompany(sqlSession, c); }
 	@Override public int deleteCompany(int companyNo) { return companyDao.deleteCompany(sqlSession, companyNo); }
-	@Override public String getCompanyNameByNo(int companyNo) { return companyDao.getCompanyNameByNo(sqlSession, companyNo); }
+	@Override public Company getCompanyByNo(int companyNo) { return companyDao.getCompanyByNo(sqlSession, companyNo); }
 }

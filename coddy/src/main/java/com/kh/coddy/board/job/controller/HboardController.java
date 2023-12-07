@@ -1,7 +1,9 @@
 package com.kh.coddy.board.job.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -9,9 +11,11 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,6 +30,7 @@ import com.kh.coddy.board.job.model.vo.Hattachment;
 import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.job.model.vo.Hrelation;
 import com.kh.coddy.board.job.model.vo.Hwishlist;
+import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.tag.model.vo.Tags;
@@ -165,7 +170,7 @@ public class HboardController {
 		if(hboardService.plusView(Integer.parseInt(hboardNo)) < 1) { model.addAttribute("errorMsg", "페이지 찾기에 실패함"); return "common/errorPage"; }
 		Hboard hb = hboardService.selectBoard(Integer.parseInt(hboardNo));
 		String where = getLocationByAddr(Integer.parseInt(hb.getHboardLocation()));
-		String cname = companyService.getCompanyNameByNo(Integer.parseInt(hb.getCompanyNo()));
+		Company co = companyService.getCompanyByNo(Integer.parseInt(hb.getCompanyNo()));
 		Hattachment ht = hboardService.getThumbOne(hb);
 		ArrayList<Hattachment> ha = hboardService.getAttachmentList(hb);
 		ArrayList<Hrelation> hr = hboardService.getTagInfo(hb);
@@ -173,11 +178,30 @@ public class HboardController {
 		session.setAttribute("hb", hb);
 		session.setAttribute("ht", ht);
 		session.setAttribute("ha", ha);
-		session.setAttribute("cname", cname);
+		session.setAttribute("co", co);
 		session.setAttribute("where", where);
 		session.setAttribute("hr", hr);
 		session.setAttribute("geo", geo);
+		try { session.setAttribute("tmapKey", Keys.read(new ClassPathResource("keys/kakaoMap.json").getURL().getPath(), "key.kakaoMap")); }
+		catch (IOException | ParseException e) { e.printStackTrace(); }
 		return "board/job/hboardDetailView"; 
+	}
+	@PostMapping(value="addFile.hb", produces="text/html; charset=UTF-8") @ResponseBody public String addFile(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
+		try {
+			String path = req.getRealPath("resources\\file_upload\\hboard\\");
+			int hno = ((Hboard)(session.getAttribute("hb"))).getHboardNo();
+			UUID uuid = UUID.randomUUID();
+			File file = new File(path, uuid + "_" + uploadFiles.getOriginalFilename());
+			uploadFiles.transferTo(file);
+			Hattachment ha = new Hattachment(-1, hno, uploadFiles.getOriginalFilename(), uuid + "_" + uploadFiles.getOriginalFilename(), "resources\\file_upload\\hboard\\", null, 0);
+			if(hboardService.addFile(ha) <= 0) { return "이미지 삽입 실패"; }
+			else { return "이미지 삽입 성공"; }
+		}
+		catch(Exception e) { e.printStackTrace(); return "이미지 삽입 실패"; }
+	}
+	@PostMapping(value="minusFile.hb", produces="text/html; charset=UTF-8") @ResponseBody public String minusFile(HttpSession session, HttpServletRequest req, String ano) {
+		try { if(hboardService.minusFile(Integer.parseInt(ano)) > 0) { return "삭제 성공"; } else { return "삭제 실패"; } }
+		catch (Exception e) { e.printStackTrace(); return "삭제 에러"; }
 	}
 	public String getLocationByAddr(int address) { 
 		if((address >= 1000) && (address <= 8866)) return "서울특별시";
@@ -219,5 +243,13 @@ public class HboardController {
 		if(where.equals("광주광역시")) { return "61000,62466"; }
 		if(where.equals("제주도")) { return "63000,63644"; }
 		else { return "01000,63644"; }
+	 }
+	 public File convert(MultipartFile file) throws IOException {
+		 File convFile = new File(URLDecoder.decode(file.getOriginalFilename(), "UTF-8"));
+		 convFile.createNewFile();
+		 FileOutputStream fos = new FileOutputStream(convFile);
+		 fos.write(file.getBytes());
+		 fos.close();
+		 return convFile;
 	 }
 }

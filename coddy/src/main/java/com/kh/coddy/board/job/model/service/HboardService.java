@@ -24,4 +24,6 @@ public interface HboardService {
 	int plusView(int hno);
 	Hboard selectBoard(int hno);
 	ArrayList<Hattachment> getAttachmentList(Hboard hb);
+	int addFile(Hattachment ha);
+	int minusFile(int ano);
 }

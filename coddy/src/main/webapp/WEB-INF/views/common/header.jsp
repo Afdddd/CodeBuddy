@@ -67,8 +67,6 @@
     <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <!-- 도로명 주소 카카오 api -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <!-- KakaoMap 키값 -->
-    <script src="${ pageContext.request.contextPath }/resources/js/kakaoMap.js"></script>
     <style>
         div {box-sizing:border-box;}
         #header {
