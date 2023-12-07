@@ -146,7 +146,7 @@
 								<th>첨부파일 입력</th>
 								<td id="attachmentArea"><button type="button" onclick="addAttach();">추가하기</button></td>
 							</tr>
-							<tr>
+							<tr> 
 								<th colspan="2"><button type="submit" style="margin:auto; display:block;">작성완료</button></th>
 							</tr>
 						</tbody>

@@ -392,12 +392,24 @@
     <div class="chat_area">
         <div class="chat-card">
             <div class="chat-body" id="chat_body">
-              <!-- <div class="message incoming">
-                <p>Hello, how can I assist you today?</p>
+              <div class="message incoming">
+                <p>안녕하세요</p>
+              </div>
+              <div class="message incoming">
+                <p>반갑습니다.</p>
+              </div>
+              <div class="message incoming">
+                <p>어서오세요</p>
+              </div>
+              <div class="message incoming">
+                <p>안녕하세요</p>
+              </div>
+              <div class="message incoming">
+                <p>안녕하세요</p>
               </div>
               <div class="message outgoing">
-                <p>I have a question about your services.</p>
-              </div> -->
+                <p>반갑습니다</p>
+              </div>
               
               
             </div>
