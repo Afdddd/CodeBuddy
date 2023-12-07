@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
@@ -201,6 +202,13 @@ public class RecruitmentController {
 	public String wish(HttpSession session, int recruitmentNo) {
 		RecruitmentWishList rw = new RecruitmentWishList( ((Member)session.getAttribute("loginMember")).getMemberNo(),recruitmentNo );
 		return (rService.getWish(rw) > 0) ? rService.deleteWish(rw): rService.insertWish(rw);
+	}
+
+	@GetMapping(value="popular.rec", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String popularList(){
+		ArrayList<Recruitment> list = rService.selectPopular();
+		return new Gson().toJson(list);
 	}
 	
 	

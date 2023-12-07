@@ -86,6 +86,10 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	public String insertWish(RecruitmentWishList rw) {
 		int result = rDao.insertWish(sqlSession, rw); return (result > 0) ? "찜목록 추가에 성공함": "찜목록 추가에 실패함"; 
 	}
+	@Override
+	public ArrayList<Recruitment> selectPopular() {
+		return rDao.selectPopular(sqlSession);
+	}
 	
 	
 	

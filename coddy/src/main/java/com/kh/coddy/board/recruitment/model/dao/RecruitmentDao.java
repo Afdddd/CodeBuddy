@@ -62,8 +62,10 @@ public class RecruitmentDao {
 	public int insertWish(SqlSessionTemplate sqlSession, RecruitmentWishList rw) { 
 		return sqlSession.insert("recruitmentMapper.insertWish", rw); 
 	}
-	
-	
+	public ArrayList<Recruitment> selectPopular(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("recruitmentMapper.selectPopular");
+	}
+		
 	
 	
 		

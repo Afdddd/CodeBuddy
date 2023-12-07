@@ -450,28 +450,7 @@
                 
                 <div class="popular-project-list">
                     <ul>
-                        <li>
-                            <div>
-                                <h2>Lemon</h2>
-                                <span>23.11.22</span>
-                            </div>
-                            <h3>레시피몬스터, 레시피 커뮤니티</h3>
-                        </li>
-                        <li>
-                            <div>
-                                <h2>OurNeighborhood</h2>
-                                <span>23.11.22</span>
-                            </div>
-                            <h3>아파트 입주민들을 위한 소통 커뮤니티</h3>
-                        </li>
-                        
-                        <li>
-                            <div>
-                                <h2>Pet and Met</h2>
-                                <span>23.11.22</span>
-                            </div>
-                            <h3>애완 동물 커뮤니티</h3>
-                        </li>
+                      <!--ajax 실시간 조회-->  
                     </ul>
                 </div>
             </div>
@@ -603,8 +582,35 @@
   $(function(){
     $(".card").css("display", "inline-block");
     $(".container").css("width","0%");
+  
+    // 
+    $(document).on("load",function(){
+        $.ajax({
+          url: "popular.rec",
+          type: "get",
+          data: {},
+          success: function(result){
+           	
+            let resultStr = "";
+            
+            for(let i = 0; i < result.length; i++) {
+              
+              resultStr += "<li>"+
+                            	"<div>"+ 
+                              "<h2>"+ result[i].recruitmentTitle+ "</h2>"+
+                              "<span>"+ result[i].recruitmentInsert +"</span>"+
+                             "</div>"+
+                             "<h3>"+ result[i].recruitmentIntro+"</h3>"+
+                           "</li>";
+            }
+            $("popular-project-list>ul").html(resultStr);
+            }
+        });
+    });
+  
   });
  
+  // 찜하기
   function onWish(e) {
     $.ajax({
       url: "boardWish.rec",

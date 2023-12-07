@@ -25,7 +25,7 @@ public interface RecruitmentService {
 	int getWish(RecruitmentWishList rw);
 	String deleteWish(RecruitmentWishList rw);
 	String insertWish(RecruitmentWishList rw);
-	
+	ArrayList<Recruitment> selectPopular(); 
 	//프로젝트 생성
 	int createProject(Project p);
 }

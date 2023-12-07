@@ -196,7 +196,15 @@
 					 		#{projectStart},
 					 		#{projectEnd})	
 	</insert>
-	
+	<select id="selectPopular" resultMap="recruitmentResultSet">
+	SELECT *
+	FROM (
+	    SELECT *
+	    FROM RECRUITMENT
+	    ORDER BY RECRUITMENT_VIEWS DESC
+	)
+	WHERE ROWNUM <= 3
+	</select>
 
  
 </mapper>
