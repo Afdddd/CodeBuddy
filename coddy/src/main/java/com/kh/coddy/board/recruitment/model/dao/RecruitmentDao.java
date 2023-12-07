@@ -65,6 +65,9 @@ public class RecruitmentDao {
 	public ArrayList<Recruitment> selectPopular(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("recruitmentMapper.selectPopular");
 	}
+	public ArrayList<Rattachment> selectRecent(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("recruitmentMapper.selectRecent");
+	}
 		
 	
 	

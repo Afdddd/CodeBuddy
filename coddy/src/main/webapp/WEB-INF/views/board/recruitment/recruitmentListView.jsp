@@ -48,7 +48,7 @@
 
   .popular-project-list h2{
     font-size: 14px;
-    width: 100%;
+    width: 80%;
     font-weight: 500;
   }
 
@@ -65,6 +65,9 @@
   .popular-project-list div{
     display: flex;
     flex-direction: row;
+  }
+  .popular-project-list span{
+    font-size: 12px;
   }
 
   .content_1 h1{
@@ -143,6 +146,9 @@
       cursor: pointer;
     }
 
+    .explain{
+      font-size: 13px;
+    }
     .author {
       color: gray;
       font-weight: 400;
@@ -407,10 +413,11 @@
                     <div class="swiper">
                         <!-- Additional required wrapper -->
                         <div class="swiper-wrapper">
-                            <!-- Slides -->
+                            <!-- Slides 
                             <div class="swiper-slide"><img src="resources/image/001.png"></div>
                             <div class="swiper-slide"><img src="resources/image/002.png"></div>
                             <div class="swiper-slide"><img src="resources/image/003.png"></div>
+                          -->
                         </div>
                     
                         <!-- If we need pagination -->
@@ -581,34 +588,52 @@
             
   $(function(){
     $(".card").css("display", "inline-block");
-    $(".container").css("width","0%");
+    $(".container").css("width","0%");  
+  });
   
-    // 
-    $(document).on("load",function(){
+
+  $(document).ready(function(){
         $.ajax({
           url: "popular.rec",
           type: "get",
           data: {},
           success: function(result){
-           	
+           	console.log(result);
             let resultStr = "";
             
             for(let i = 0; i < result.length; i++) {
               
               resultStr += "<li>"+
                             	"<div>"+ 
-                              "<h2>"+ result[i].recruitmentTitle+ "</h2>"+
-                              "<span>"+ result[i].recruitmentInsert +"</span>"+
-                             "</div>"+
-                             "<h3>"+ result[i].recruitmentIntro+"</h3>"+
+                              "<h2>"+ result[i].recruitmentTitle + "</h2>"+
+                              "<span class='popular_list_insert'>" + result[i].recruitmentInsert + "</span>"+
+                             "</div>" +
+                             "<h3>" + result[i].recruitmentIntro + "</h3>" +
                            "</li>";
             }
-            $("popular-project-list>ul").html(resultStr);
+            $(".popular-project-list>ul").html(resultStr);
             }
         });
+
+        $.ajax({
+          url:"recent.rec",
+          type:"get",
+          data:{},
+          success:function(result){
+            console.log(result);
+            let resultStr = "";
+            for(let i = 0; i < result.length; i++) {
+              let path = result[i].rAttachmentPath+ "/"+ result[i].rAttachmentChange;
+              console.log(path);
+
+              resultStr += "<div class'swiper-slide'>"+
+                              "<img  style='width:100%; height:200px;' src='"+ path +"'>"+
+                            "</div>";
+            } 
+            $(".swiper-wrapper").html(resultStr);
+          }
+        })
     });
-  
-  });
  
   // 찜하기
   function onWish(e) {

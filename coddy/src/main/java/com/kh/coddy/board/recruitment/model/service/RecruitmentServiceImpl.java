@@ -90,6 +90,10 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	public ArrayList<Recruitment> selectPopular() {
 		return rDao.selectPopular(sqlSession);
 	}
+	@Override
+	public ArrayList<Rattachment> selectRecent() {
+		return rDao.selectRecent(sqlSession);
+	}
 	
 	
 	

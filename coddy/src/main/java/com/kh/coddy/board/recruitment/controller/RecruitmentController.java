@@ -157,7 +157,10 @@ public class RecruitmentController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		Map<String,Integer> wishMap = new HashMap<>(); 		
 		
-		if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { 
+		if(pi.getMaxPage()==0) {
+			return "board/recruitment/recruitmentListView";			
+		}
+		else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { 
 			model.addAttribute("errorMsg", "잘못된 페이지"); 
 			return "common/errorPage"; 
 		}else {
@@ -211,7 +214,12 @@ public class RecruitmentController {
 		return new Gson().toJson(list);
 	}
 	
-	
+	@GetMapping(value="recent.rec", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String recentList(){
+		ArrayList<Rattachment> list = rService.selectRecent();
+		return new Gson().toJson(list);
+	}
 	
 	
 	
