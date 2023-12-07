@@ -91,12 +91,20 @@ public class MemberController {
 	}
 	
 	@RequestMapping("myPage.me") // 마이페이지 수정화면 포워딩
-	public String myPage() {
+	public String myPage(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
 		return "member/myPage";
 	}
 	
 	@RequestMapping("myPage.se") // 마이페이지 화면 포워딩
-	public String myPageSe() {
+	public String myPageSe(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
 		return "member/myPage1";
 	}
 	
@@ -199,11 +207,14 @@ public class MemberController {
 	
 	// 비밀번호 페이지만 보여주는거
 	@RequestMapping("pwdChange.me")
-	public String PwdChange(){
+	public String PwdChange(HttpSession session){
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
 		return "member/PwdChange";
 	}
 	
-	// 비밀번호 업데이트
 	// 비밀번호 업데이트
 	@PostMapping(value="pwd.me")
 	public String PwdChangeForm(Member m, HttpSession session, HttpServletRequest request) throws Exception {
@@ -242,7 +253,11 @@ public class MemberController {
 	}
 	
 	@RequestMapping("delete.me")
-	public String deleteId() {
+	public String deleteId(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
 		return "member/deleteForm";
 	}
 	
@@ -282,12 +297,6 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping("profile.mo")
-	public void ProfileModal(Member m) {
-		
-		
-		
-	}
 	
 	@RequestMapping("written.me")
 	public String Written() {
