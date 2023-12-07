@@ -21,6 +21,8 @@
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Prelation" alias="pRelation"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Project" alias="project"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList" alias="rWishList"/>
     </typeAliases>
       
     <!-- environments 영역은 제외 

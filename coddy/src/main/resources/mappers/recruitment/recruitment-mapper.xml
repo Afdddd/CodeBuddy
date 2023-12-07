@@ -25,6 +25,7 @@
 		<result column="RECRUITMENT_START" property="recruitmentStart" />
 		<result column="RECRUITMENT_END" property="recruitmentEnd" />
 		<result column="RECRUITMENT_LOCATION" property="recruitmentLocation" />
+		<result column="RECRUITMENT_INTRO" property="recruitmentIntro" />
 	</resultMap>
 	
 	<resultMap id="rAttachmentResultSet" type="rAttachment">
@@ -42,6 +43,13 @@
 		<result column="RECRUITMENT_NO" property="recruitmentNo"/>
 		<result column="TAGS_NO" property="tagsNo"/>
 	</resultMap>
+	
+	<resultMap id="rStateResultSet" type="rState">
+		<result column="RECRUITMENT_NO" property="recruitmentNo" />
+		<result column="ROLE" property="position" />
+		<result column="MAX_PERSONNEL" property="maxPersonnel" />
+		<result column="PERSONNEL" property="personnel" />
+	</resultMap>
 
 
 
@@ -52,14 +60,16 @@
 								RECRUITMENT_WRITER,
 								RECRUITMENT_START,
 								RECRUITMENT_END,
-								RECRUITMENT_LOCATION								
+								RECRUITMENT_LOCATION,
+								RECRUITMENT_INTRO			
 					   ) VALUES(SEQ_RECRUITMENT.NEXTVAL,
 					   			#{recruitmentTitle},					   			
 					   			#{recruitmentContent},
 					   			#{recruitmentWriter},
 					   			#{recruitmentStart},
 					   			#{recruitmentEnd},
-					   			#{recruitmentLocation}
+					   			#{recruitmentLocation},
+					   			#{recruitmentIntro}
 					   			)
 	</insert>
 	<insert id="insertImg" parameterType="rAttachment">
@@ -82,7 +92,7 @@
 					   VALUES(SEQ_RECRUITMENT.CURRVAL,
 					   		  (SELECT TAGS_NO
 					   		     FROM TAGS T 
-					   		    WHERE T.TAGS_NAME=#{tagNo})) 
+					   		    WHERE T.TAGS_NAME=#{tagsNo})) 
 	</insert>
 	<insert id="insertState" parameterType="rState">
 		INSERT INTO RECRUITMENT_STATE(RECRUITMENT_NO,
@@ -108,7 +118,8 @@
 			   TO_CHAR(RECRUITMENT_START, 'YYYY-MM-DD') AS "RECRUITMENT_START", 
 			   TO_CHAR(RECRUITMENT_END, 'YYYY-MM-DD') AS "RECRUITMENT_END", 			   
 			   RECRUITMENT_VIEWS,			 
-			   RECRUITMENT_LOCATION
+			   RECRUITMENT_LOCATION,
+			   RECRUITMENT_INTRO
 		FROM RECRUITMENT, MEMBER
 	    WHERE RECRUITMENT_DELETE  IS NULL
 	    AND MEMBER_NO = RECRUITMENT_WRITER
@@ -137,6 +148,36 @@
 		AND PR.RECRUITMENT_NO=#{recruitmentNo}
 	</select>
 	
+	<select id="getState" parameterType="recruitment" resultMap="rStateResultSet">
+		SELECT * 
+		FROM RECRUITMENT_STATE
+		WHERE RECRUITMENT_NO = #{recruitmentNo}
+	</select>
+	
+	<select id="getWishList" parameterType="map" resultType="_int">
+		SELECT COUNT(*) 
+		FROM  RECRUITMENT_WISHLIST
+		WHERE RECRUITMENT_NO=#{rno} 
+		AND RECRUITMENT_WISHLIST_MEMBER=#{mno}
+	</select>
+	
+	<select id="getWish" parameterType="rWishList" resultType="_int">
+		SELECT COUNT(*) 
+		FROM RECRUITMENT_WISHLIST 
+		WHERE RECRUITMENT_NO=#{recruitmentNo} 
+		AND RECRUITMENT_WISHLIST_MEMBER=#{recruitmentWishNo}
+	</select>
+
+	<delete id="deleteWish" parameterType="rWishList">
+		DELETE FROM RECRUITMENT_WISHLIST  
+		WHERE RECRUITMENT_WISHLIST_MEMBER=#{recruitmentWishNo} 
+		AND RECRUITMENT_NO=#{recruitmentNo}
+	</delete>
+	
+	<insert id="insertWish" parameterType="rWishList">
+		INSERT INTO RECRUITMENT_WISHLIST (RECRUITMENT_WISHLIST_MEMBER, RECRUITMENT_NO) 
+		VALUES(#{recruitmentWishNo}, #{recruitmentNo})
+	</insert>
 	
 	
 	<insert id="createProject" parameterType="project">

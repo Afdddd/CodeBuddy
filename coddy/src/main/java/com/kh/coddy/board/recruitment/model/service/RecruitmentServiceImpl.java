@@ -1,12 +1,13 @@
 package com.kh.coddy.board.recruitment.model.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.coddy.board.job.model.vo.Hboard;
+import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.model.dao.RecruitmentDao;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
@@ -63,12 +64,30 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	public ArrayList<Prelation> getTagInfo(Recruitment r) {
 		return rDao.getTagInfo(sqlSession,r);
 	}
-//	
-//	@Override 
-//	public Boolean getWishList(Recruitment r, int mno) { 
-////		r.setHboardContent(String.valueOf(mno)); 
-//		return rDao.getWishList(sqlSession, r) > 0 ? true : false; 
-//	}
+	
+	@Override
+	public ArrayList<RecruitmentState> getState(Recruitment r) {
+		return rDao.getState(sqlSession, r);
+	}
+	
+	@Override 
+	public Boolean getWishList(Map<String,Integer> wishMap) { 
+		return rDao.getWishList(sqlSession, wishMap) > 0 ? true : false; 
+	}
+	@Override
+	public int getWish(RecruitmentWishList rw) {
+		return rDao.getWish(sqlSession, rw);
+	}
+	@Override
+	public String deleteWish(RecruitmentWishList rw) {
+		int result = rDao.deleteWish(sqlSession, rw); return (result > 0) ? "찜목록 제거에 성공함": "찜목록 제거에 실패함";
+	}
+	@Override
+	public String insertWish(RecruitmentWishList rw) {
+		int result = rDao.insertWish(sqlSession, rw); return (result > 0) ? "찜목록 추가에 성공함": "찜목록 추가에 실패함"; 
+	}
+	
+	
 	
 
 

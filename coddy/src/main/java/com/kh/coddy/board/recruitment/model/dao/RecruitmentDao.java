@@ -1,17 +1,19 @@
 package com.kh.coddy.board.recruitment.model.dao;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.coddy.board.job.model.vo.Hboard;
+import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
+import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Repository
@@ -45,10 +47,21 @@ public class RecruitmentDao {
 	public ArrayList<Prelation> getTagInfo(SqlSessionTemplate sqlSession, Recruitment r){
 		 return (ArrayList)sqlSession.selectList("recruitmentMapper.getTagInfo", r); 
 	}
-//	public int getWishList(SqlSessionTemplate sqlSession, Recruitment r) {
-//		return sqlSession.selectOne("hboardMapper.getWishList", r); 
-//	}
-	
+	public ArrayList<RecruitmentState> getState(SqlSessionTemplate sqlSession,Recruitment r) {
+		return (ArrayList)sqlSession.selectList("recruitmentMapper.getState",r);
+	}
+	public int getWishList(SqlSessionTemplate sqlSession, Map<String,Integer> wishMap) {
+		return sqlSession.selectOne("recruitmentMapper.getWishList",wishMap);
+	}
+	public int getWish(SqlSessionTemplate sqlSession, RecruitmentWishList rw) { 
+		return sqlSession.selectOne("recruitmentMapper.getWish", rw); 
+	}
+	public int deleteWish(SqlSessionTemplate sqlSession, RecruitmentWishList rw) { 
+		return sqlSession.delete("recruitmentMapper.deleteWish", rw); 
+	}
+	public int insertWish(SqlSessionTemplate sqlSession, RecruitmentWishList rw) { 
+		return sqlSession.insert("recruitmentMapper.insertWish", rw); 
+	}
 	
 	
 	

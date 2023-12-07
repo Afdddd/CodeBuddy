@@ -10,5 +10,6 @@ import lombok.ToString;
 public class RecruitmentState {
 	private int recruitmentNo;
 	private String position;
-	private String maxPersonnel;
+	private int maxPersonnel;
+	private int personnel;
 }
