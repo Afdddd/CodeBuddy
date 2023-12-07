@@ -31,4 +31,5 @@ public class HboardDao {
 	public ArrayList<Hattachment> getAttachmentList(SqlSessionTemplate sqlSession, Hboard h) { return (ArrayList)sqlSession.selectList("hboardMapper.getAttachmentList", h); }
 	public int addFile(SqlSessionTemplate sqlSession, Hattachment ha) { return sqlSession.insert("hboardMapper.addFile", ha); }
 	public int minusFile(SqlSessionTemplate sqlSession, int ano) { return sqlSession.update("hboardMapper.minusFile", ano); }
+	public int deleteBoard(SqlSessionTemplate sqlSession, int hboardNo) { return sqlSession.update("hboardMapper.deleteBoard", hboardNo); }
 }

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,6 +45,7 @@ public class HboardController {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	@Autowired private HboardService hboardService;
 	@Autowired private CompanyService companyService;
+	@Autowired private PasswordEncoder pbkdf2;
 
 	@GetMapping(value="listView.hb") public String listView(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage, 
 			@RequestParam(value="search", defaultValue="") String search, @RequestParam(value="education", defaultValue="none") String education, 
@@ -201,6 +203,38 @@ public class HboardController {
 	@PostMapping(value="minusFile.hb", produces="text/html; charset=UTF-8") @ResponseBody public String minusFile(HttpSession session, HttpServletRequest req, String ano) {
 		try { if(hboardService.minusFile(Integer.parseInt(ano)) > 0) { return "삭제 성공"; } else { return "삭제 실패"; } }
 		catch (Exception e) { e.printStackTrace(); return "삭제 에러"; }
+	}
+	@PostMapping(value="updateForm.hb") public String updateForm(HttpSession session, Hboard h) {
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
+			session.setAttribute("errorMsg", "잘못된 접근");
+			return "common/errorPage";
+		}
+		return "board/job/hboardUpdateForm"; 
+	}
+	@PostMapping(value="deleteForm.hb") public String deleteForm(HttpSession session, Model model, Hboard h) {
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
+			model.addAttribute("errorMsg", "잘못된 접근");
+			return "common/errorPage";
+		}
+		session.setAttribute("hb", h);
+		return "board/job/hboardDeleteForm"; 
+	}
+	@PostMapping(value="delete.hb") public String deleteBoard(HttpSession session, Model model, Hboard h, String password) {
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
+			model.addAttribute("errorMsg", "잘못된 접근");
+			return "common/errorPage";
+		}
+		if(pbkdf2.matches(password, ((Company)(session.getAttribute("loginCompany"))).getCompanyPwd())) { 
+			if(hboardService.deleteBoard(h.getHboardNo()) > 0) { session.setAttribute("alertMsg", "삭제완료"); return "redirect:/"; } 
+			else { model.addAttribute("errorMsg", "처리 오류"); return "common/errorPage"; } 
+		}
+		else { model.addAttribute("errorMsg", "비밀번호 오류"); return "common/errorPage"; }
 	}
 	public String getLocationByAddr(int address) { 
 		if((address >= 1000) && (address <= 8866)) return "서울특별시";

@@ -38,4 +38,5 @@ public class HboardServiceImpl implements HboardService {
 	@Override public ArrayList<Hattachment> getAttachmentList(Hboard h) { return hboardDao.getAttachmentList(sqlSession, h); }
 	@Override public int addFile(Hattachment ha) { return hboardDao.addFile(sqlSession, ha); }
 	@Override public int minusFile(int ano) { return hboardDao.minusFile(sqlSession, ano); }
+	@Override public int deleteBoard(int hboardNo) { return hboardDao.deleteBoard(sqlSession, hboardNo); }
 }

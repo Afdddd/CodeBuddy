@@ -69,4 +69,5 @@
 	<select id="getAttachmentList" parameterType="hboard" resultMap="hattachmentResultSet">SELECT * FROM HATTACHMENT WHERE HBOARD_NO=#{hboardNo} AND HATTACHMENT_LEVEL=0</select>
 	<insert id="addFile" parameterType="hattachment">INSERT INTO HATTACHMENT(HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_LEVEL) VALUES(SEQ_HATTACHMENT.NEXTVAL, #{hboardNo}, #{hattachmentOrigin}, #{hattachmentChange}, #{hattachmentPath}, #{hattachmentLevel})</insert>
 	<update id="minusFile" parameterType="_int">UPDATE HATTACHMENT SET HATTACHMENT_LEVEL=-1 WHERE HATTACHMENT_LEVEL=0 AND HATTACHMENT_NO=#{ano}</update>
+	<update id="deleteBoard" parameterType="_int">UPDATE HBOARD SET HBOARD_DELETE=SYSDATE WHERE HBOARD_NO=#{hboardNo} AND HBOARD_DELETE IS NULL</update>
 </mapper>

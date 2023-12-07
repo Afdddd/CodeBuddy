@@ -26,4 +26,5 @@ public interface HboardService {
 	ArrayList<Hattachment> getAttachmentList(Hboard hb);
 	int addFile(Hattachment ha);
 	int minusFile(int ano);
+	int deleteBoard(int hboardNo);
 }
