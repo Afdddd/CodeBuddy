@@ -244,6 +244,7 @@
 
 
 
+
 </style>
 </head>
 <body>
@@ -402,7 +403,7 @@
                 </div>
                 <div class="img">
                 </div>
-                <span> 김인엽</span>
+                <span> 김제니</span>
                 <p class="job"> Back-End</p>
                 <button> 프로필
                 </button>
@@ -422,7 +423,7 @@
                 </div>
                 <div class="img">
                 </div>
-                <span> 김인엽</span>
+                <span> 김사나</span>
                 <p class="job"> Back-End</p>
                 <button> 프로필
                 </button>
@@ -432,7 +433,7 @@
                 </div>
                 <div class="img">
                 </div>
-                <span> 김인엽</span>
+                <span> 전정국</span>
                 <p class="job"> Back-End</p>
                 <button> 프로필
                 </button>
@@ -442,7 +443,7 @@
                 </div>
                 <div class="img">
                 </div>
-                <span> 김인엽</span>
+                <span> 김민정</span>
                 <p class="job"> Back-End</p>
                 <button> 프로필
                 </button>
@@ -452,7 +453,7 @@
                 </div>
                 <div class="img">
                 </div>
-                <span> 김인엽</span>
+                <span> 유지민</span>
                 <p class="job"> Back-End</p>
                 <button> 프로필
                 </button>
@@ -462,7 +463,7 @@
                 </div>
                 <div class="img">
                 </div>
-                <span> 김인엽</span>
+                <span> 문빈</span>
                 <p class="job"> Back-End</p>
                 <button> 프로필
                 </button>
@@ -472,7 +473,7 @@
                 </div>
                 <div class="img">
                 </div>
-                <span> 김인엽</span>
+                <span> 차은우</span>
                 <p class="job"> Back-End</p>
                 <button> 프로필
                 </button>
@@ -482,7 +483,7 @@
                 </div>
                 <div class="img">
                 </div>
-                <span> 김인엽</span>
+                <span> 닝닝</span>
                 <p class="job"> Back-End</p>
                 <button> 프로필
                 </button>
@@ -492,7 +493,7 @@
                 </div>
                 <div class="img">
                 </div>
-                <span> 김인엽</span>
+                <span> 배수지</span>
                 <p class="job"> Back-End</p>
                 <button> 프로필
                 </button>

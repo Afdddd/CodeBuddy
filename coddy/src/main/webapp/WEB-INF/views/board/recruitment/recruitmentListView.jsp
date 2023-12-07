@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>모집</title>
 <style>
-  
+
   .content_1{
     width: 1200px;
     height: 250px;
@@ -259,19 +260,7 @@
       animation: checkAnim 0.2s forwards;
     }
 
-    /* 페이징바 */
-    .paging-area button:disabled{
-
-    	background-color : #5271FF;
-    	color : white;
-    }
-    .paging-area button{
-      background-color : white;
-      border-radius: 4px;
-      border-width: 1px;
-      margin: 2px;
-      border-color: rgba(0,0,0,.125);
-    }
+    #pagingArea {width:fit-content; margin:auto;}
 
     /* 좋아요 */
     .container input {
@@ -289,7 +278,6 @@
       font-size: 12px;
       user-select: none;
       transition: 100ms;
-      padding-bottom: 10px;
     }
 
     .checkmark {
@@ -355,7 +343,53 @@
       margin-right: 35px;
       font-size: 12px;
     }
+  /* TOOLTIP */
+  .tooltip-container {
+    position: relative;
+    display: inline-block;
+    margin-left: 10px;
+  }
 
+  .text {
+    color: lightgray;
+    font-size: 14px;
+  }
+
+  .tooltip {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    visibility: hidden;
+    background: #0b798a;
+    color: #fff;
+    padding: 10px;
+    border-radius: 4px;
+    transition: opacity 0.3s, visibility 0.3s, top 0.3s, background 0.3s;
+    z-index: 1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .tooltip::before {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent #0b798a transparent;
+    transform: translateX(-50%);
+  }
+
+  .tooltip-container:hover .tooltip {
+    top: 120%;
+    opacity: 1;
+    visibility: visible;
+    background: #5271FF;
+    transform: translate(-50%, -5px);
+  }
+  
 
 </style>
 </head>
@@ -453,251 +487,132 @@
 
             <label class="checkbox-container" style="text-align: center;">
               <span style="vertical-align: auto;">모집중</span>
-               <input class="custom-checkbox" checked="" type="checkbox">
+               <input class="custom-checkbox" type="checkbox">
               <span class="search-checkmark"></span>
             </label>            
         </div>
-        <div class="">
-          <button class="write_button" onclick="location.href='enrollForm.rec'">게시글 작성</button>
-        </div>
+        <c:if test="${not empty sessionScope.loginMember}">
+         <button class="write_button" onclick="location.href='enrollForm.rec'">게시글 작성</button>
+        </c:if>
         <div class="content_2">
           <div class="card-list">
-
+          <c:forEach var="r" items="${requestScope.list}" varStatus="status">
             <div class="card" >
-              <div class="card-image" onclick="location.href='detail.rec'"></div>
-              <div class="category">커뮤니티</div>
+              <div class="card-image" onclick="location.href='detail.rec'">
+                <img src="${requestScope.at_list[status.index].getRAttachmentPath()}/${requestScope.at_list[status.index].getRAttachmentChange()}" width="100%" height="100%" style="vertical-align:middle;" onerror="this.src='resources/image/003.png'">
+              </div>
+              <div class="category"></div>
               <div class="heading"> 
-                <h5 onclick="location.href='detail.rec'">OurNeighborhood</h5>
-                <div class="explain" onclick="location.href='detail.rec'">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
+                <h5 onclick="location.href='detail.rec'">${r.recruitmentTitle}</h5>
+                <div class="explain" onclick="location.href='detail.rec'">${r.recruitmentIntro}</div>              
+                  <div class="author"> By <span class="name">${r.recruitmentWriter} </span> ${r.recruitmentInsert}</div>
+                <c:choose>
+                  <c:when test="${requestScope.ws_list[status.index]}">
+                    <label class="container">
+                      <input checked="checked" type="checkbox" name="like" onclick="onWish('${r.recruitmentNo}');">
+                      <div class="checkmark">
+                        <svg viewBox="0 0 256 256">
+                        <rect fill="none" height="512" width="512"></rect>
+                        <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                      </div>
+                    </label>
+                  </c:when>
+                  <c:otherwise>
+                    <label class="container">
+                      <input type="checkbox" name="like" onclick="onWish('${r.recruitmentNo}');">
+                      <div class="checkmark">
+                        <svg viewBox="0 0 256 256">
+                        <rect fill="none" height="512" width="512"></rect>
+                        <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+                      </div>
+                    </label>
+                  </c:otherwise>
+                </c:choose> 
 
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
+                <div class="tooltip-container ">
+                  <span class="text">#기술</span>
+                  <span class="tooltip">
+                    <c:forEach var="r" items="${requestScope.tg_list[status.index]}" varStatus="status2">                    
+                         ${r.getTagsNo()}                     
+                    </c:forEach> 
+                  </span>
+                </div>
+                <div class="tooltip-container">
+                  <span class="text">#포지션</span>                 
+                  <span class="tooltip">              
+                    <c:forEach var="p" items="${requestScope.pos_list[status.index]}" varStatus="status3">
+                         ${p.getPosition()}
+                    </c:forEach> 
+                </span>
+                </div>
 
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
+                
+              </div>                          
             </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
-
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
-
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
-
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
-
-            <div class="card">
-              <div class="card-image"></div>
-              <div class="category">커뮤니티</div>
-              <div class="heading"> 
-                <h5>OurNeighborhood</h5>
-                <div class="explain">아파트 입주민들을 위한 소통 커뮤니티</div>
-                  <div class="author"> By <span class="name">김인엽</span> 4일전</div>
-                  <label class="container">
-                    <input checked="checked" type="checkbox">
-                    <div class="checkmark">
-                      <svg viewBox="0 0 256 256">
-                      <rect fill="none" height="512" width="512"></rect>
-                      <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                    </div>
-                  </label> 
-                </div>                          
-            </div>
-
-
-            
-
+          </c:forEach>
           </div>         
-          <script>
-            
-            $(function(){
-              $(".card").css("display", "inline-block");
-              $(".container").css("width","0%");
-            });
-
-          </script>
         </div>
         <br><br>
-        <div class="paging-area" align="center">
-            <!-- <button onclick="location.href=''">&lt;</button> -->
-            <button onclick="location.href=''" disabled>1</button>
-            <button onclick="location.href=''">2</button>
-            <button onclick="location.href=''">3</button>
-            <button onclick="location.href=''">4</button>   
-            <button onclick="location.href=''" >&gt;</button>
-             
-            </div>
+          <div id="pagingArea">
+            <ul class="pagination" style="margin: auto;">
+            
+              <c:choose>
+                <c:when test="${ requestScope.pi.currentPage eq 1 }">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Previous</a>
+                    </li>
+                  </c:when>
+                  <c:otherwise>
+                    <li class="page-item">
+                      <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                    </li>
+                  </c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${ requestScope.pi.startPage }" 
+                          end="${ requestScope.pi.endPage }"
+                          step="1">
+                  <li class="page-item">
+                    <a class="page-link" href="list.bo?rpage=${ p }">${ p }</a>
+                  </li>
+                </c:forEach>
+                
+                <c:choose>
+                  <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item">
+                      <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                    </li>
+                </c:otherwise>
+              </c:choose>
+            
+            </ul>
+          </div>
+      
     </div>
-
+    <jsp:include page="../../common/footer.jsp" />	
 </body>
+<script>
+            
+  $(function(){
+    $(".card").css("display", "inline-block");
+    $(".container").css("width","0%");
+  });
+ 
+  function onWish(e) {
+    $.ajax({
+      url: "boardWish.rec",
+      type: "get",
+      data: {recruitmentNo: e},
+      success: function(result) { console.log(result); },
+      error: function() { console.log("찜하기 실패"); }
+    });
+  }
+
+  
+</script>
 </html>

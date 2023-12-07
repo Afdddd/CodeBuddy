@@ -16,6 +16,13 @@
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hrelation" alias="hrelation"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hattachment"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hwishlist"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Recruitment" alias="recruitment"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Rattachment" alias="rAttachment"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Prelation" alias="pRelation"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Project" alias="project"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList" alias="rWishList"/>
     </typeAliases>
       
     <!-- environments 영역은 제외 
@@ -28,6 +35,7 @@
       <mapper resource="/mappers/member/company-mapper.xml"/>
       <mapper resource="/mappers/auth/auth-mapper.xml"/>
       <mapper resource="/mappers/job/hboard-mapper.xml"/>
+      <mapper resource="/mappers/recruitment/recruitment-mapper.xml" />
     </mappers>
   </configuration>
 

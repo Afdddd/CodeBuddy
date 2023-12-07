@@ -40,15 +40,7 @@
             font-size:13px;
         }
         #p2 {text-align:center;}
-        
-        ul{
-        	list-style:none;
-        }
-
-        td {
-        	padding-top : 30px;
-        	text-align : center
-        }
+      
         
         .td1 {
         	padding-right : 15px;
@@ -61,7 +53,7 @@
             font-family: 'Noto Serif KR', serif;
         }
         
-        p {
+        #p1 {
         font-family: 'Noto Sans KR', sans-serif;
 		font-family: 'Noto Serif KR', serif;
         }
@@ -75,51 +67,45 @@
         <div id="footer-1">
 			<table>
 				<tr>
-					<td style="padding-right : 30px;"><b>Creators</b></td>
-					<td class="td1">|</td>
-					<td class="td1">김인엽</td>
-					<td class="td1">| </td>
-					<td class="td1">봉영훈</td>
-					<td class="td1">|</td>
-					<td class="td1">김효중</td>
-					<td class="td1">|</td>
-					<td class="td1">정은지</td>
-					<td class="td1">|</td>
-					<td class="td1">한영욱</td>
+					<td id="td1" style="padding-right : 30px; padding-top : 30px;"><b>Creators</b></td>
+					<td class="td1" style="padding-top : 30px; text-align : center">|</td>
+					<td class="td1" style="padding-top : 30px; text-align : center">김인엽</td>
+					<td class="td1" style="padding-top : 30px; text-align : center">| </td>
+					<td class="td1" style="padding-top : 30px; text-align : center">봉영훈</td>
+					<td class="td1" style="padding-top : 30px; text-align : center">|</td>
+					<td class="td1" style="padding-top : 30px; text-align : center">김효중</td>
+					<td class="td1" style="padding-top : 30px; text-align : center">|</td>
+					<td class="td1" style="padding-top : 30px; text-align : center">정은지</td>
+					<td class="td1" style="padding-top : 30px; text-align : center">|</td>
+					<td class="td1" style="padding-top : 30px; text-align : center">한영욱</td>
 				</tr>
 				<tr>
-					<td style="padding-right : 30px;"><b>Reference</b></td>
-					<td style="padding-right : 15px;"> |</td>
-					<td class="td2"><a href="https://letspl.me/">LET'SPL</a></td>
-					<td >|</td>
-					<td class="td2"><a href="https://holaworld.io/">HOLA</a></td>
-					<td>|</td>
-					<td class="td2"><a href="https://www.inflearn.com/">Inflearn</a></td>
+					<td style="padding-right : 30px; padding-top : 30px; text-align : center"><b>Reference</b></td>
+					<td style="padding-right : 15px; padding-top : 30px; text-align : center"> |</td>
+					<td class="td2" style="padding-top : 30px; text-align : center"><a href="https://letspl.me/">LET'SPL</a></td>
+					<td style="padding-top : 30px; text-align : center">|</td>
+					<td class="td2" style="padding-top : 30px; text-align : center"><a href="https://holaworld.io/">HOLA</a></td>
+					<td style="padding-top : 30px; text-align : center">|</td>
+					<td class="td2" style="padding-top : 30px; text-align : center"><a href="https://www.inflearn.com/">Inflearn</a></td>
 					
 				</tr>
 				<tr>
-					<td style="padding-right : 30px;"><b>Compete</b></td>
-					<td style="padding-right : 15px;"> |</td>
-					<td colspan="2"><a href="#"><img src="resources/image/meetgo_logo.png" style="height : 50px; width : 50px;"></a></td>
-					<td colspan="2"><a href="#"><img src="resources/image/mbtingLoggo2.png" style="height : 50px; width : 50px;"></a></td>
-					<td colspan="2"><a href="#">원진이네</a></td>
+					<td style="padding-right : 30px; padding-top : 30px; text-align : center"><b>Compete</b></td>
+					<td style="padding-right : 15px; padding-top : 30px; text-align : center"> |</td>
+					<td colspan="2" style="padding-top : 30px; text-align : center"><a href="#"><img src="resources/image/meetgo_logo.png" style="height : 50px; width : 50px;"></a></td>
+					<td colspan="2" style="padding-top : 30px; text-align : center"><a href="#"><img src="resources/image/mbtingLoggo2.png" style="height : 50px; width : 50px;"></a></td>
+					<td colspan="2" style="padding-top : 30px; text-align : center"><a href="#">원진이네</a></td>
 				</tr>
 			</table>
         </div>
-        <!-- 
-			<ul>
-				<li style="padding-top : 35px;"><b>Creators</b></li><br>
-				<li><b>Reference</b></li><br>
-				<li><b>Compete</b></li><br>
-			</ul>
-			 -->
+
         <div id="footer-2">
             <p id="p1">
             	<br>
             	 <div style="text-align : center;">
             <img src="resources/image/logo.png" style="height : 50px; width:100px;"> <br><br>
            	<div style="text-align : left;">
-            <p style="font-size : 12px;">
+            <p style="font-size : 12px;" id="p1">
             	사업자 : ??? <br>
             	Contact : 010-1516-5162 <br>
                 Address : 서울특별시 영등포구 선유동2로 57 이레빌딩 <br>

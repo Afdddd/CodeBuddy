@@ -96,7 +96,6 @@
         /* 세부페이지마다 공통적으로 유지할 style */
         .content {
             width:1200px;
-            height: 1800px;
             margin:auto;
         }
         .content_title h2{
