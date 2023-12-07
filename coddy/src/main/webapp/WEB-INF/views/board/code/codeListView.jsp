@@ -33,22 +33,22 @@
         <div class="innerOuter" style="padding:5% 10%;">
             <h3 style="color:#5271FF;">코드리뷰</h3>
             
-            <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-            <c:if test="${ not empty sessionScope.loginUser }"> 
-	            <a class="btn btn-secondary" style="float:right;" 
-	            							href="enrollForm.bo">
-	            	글쓰기
-	            </a>
-	        </c:if>
+           
             <br>
             <br>
             <thead>
             <div class="codeList" align="left">
-                	<a>• 최신순 </a>
-                    <a>• 정확도순 </a>
-                    <a>• 답변많은순 </a>
-                    <a>• 좋아요순 </a>
-             </div>
+			    <a href="list.co?cpage=${requestScope.pi.currentPage}&sort=createdAtDesc">• 최신순</a>
+			    <a href="list.co?cpage=${requestScope.pi.currentPage}&sort=mostAnswers">• 답변많은순</a>
+			    <a href="list.co?cpage=${requestScope.pi.currentPage}&sort=mostLikes">• 좋아요순</a>
+			     <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+            <c:if test="${ not empty sessionScope.loginMember }"> 
+	            <a class="btn" style="float:right; color:white; background:#5271FF; padding:6px;" 
+	            							href="enrollForm.co">
+	            	글쓰기
+	            </a>
+	        </c:if>
+			</div>
              <hr>       
              </thead>
              <tbody></tbody>

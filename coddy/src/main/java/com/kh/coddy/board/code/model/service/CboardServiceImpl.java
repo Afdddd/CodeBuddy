@@ -1,6 +1,7 @@
 package com.kh.coddy.board.code.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,5 @@ public class CboardServiceImpl implements CboardService {
 	public ArrayList<Cboard> selectTopBoardList() {
 		return boardDao.selectTopBoardList(sqlSession);
 	}
-	
-	
+
 }
