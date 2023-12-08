@@ -24,10 +24,11 @@
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Recruitment" alias="recruitment"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Rattachment" alias="rAttachment"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
-     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Prelation" alias="pRelation"/>
-     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Project" alias="project"/>
-     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
+		<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList" alias="rWishList"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RSearch" alias="rSearch"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Prelation" alias="pRelation"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Project" alias="project"/>     	     
      	<typeAlias type="com.kh.coddy.board.notice.model.vo.Nboard" alias="nboard"/>
      	<typeAlias type="com.kh.coddy.board.notice.model.vo.Nattachment" alias="nattachment"/>
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Fboard" alias="fboard"/>

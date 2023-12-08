@@ -268,7 +268,7 @@
         <div class="content_1">
         <div class="content_left">
             <h2>모집 현황</h2>
-            <a href="room.rec2">입장하기</a> 
+            <a href="room.rec">입장하기</a> 
             
             <table class="position_status">
                 <tbody>

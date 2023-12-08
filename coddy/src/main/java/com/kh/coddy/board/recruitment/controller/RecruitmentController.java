@@ -23,10 +23,12 @@ import com.google.gson.Gson;
 import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.RSearch;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
+import com.kh.coddy.board.recruitment.model.vo.TestDto;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.vo.PageInfo;
@@ -149,8 +151,34 @@ public class RecruitmentController {
 		}
 	}
 	
+//	@GetMapping("list.rec")
+//	public String recruitmentList(@RequestParam(value="rpage", defaultValue="1") int currentPage, Model model, HttpSession session,
+//								  @RequestParam(value="tagCareer", defaultValue="")String tagCareer,  @RequestParam(value="tagTech", defaultValue="") String tagTech,@RequestParam(value="search", defaultValue="") String search,@RequestParam(value="recruiting", defaultValue="1")String recruiting ){
 	@GetMapping("list.rec")
-	public String recruitmentList(@RequestParam(value="rpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
+	public String recruitmentList(@RequestParam(value="rpage", defaultValue="1") int currentPage, Model model, HttpSession session){	
+//		String tagTechs = "";
+//		String tagCareers = "";
+//		
+//		if(tagCareer.equals("")) { 
+//			tagCareers="PM,기획,프론트엔드,백엔드,CDN,디자인,네트워크/서버,IOS 앱 개발,AOS 앱 개발,AI학습,게임개발";  
+//		}else {
+//			tagCareers = tagCareer; 
+//		}
+//		
+//		if(tagTech.equals("")) { 
+//			tagTechs="C언어,C++,C#,GO,Java,JavaScript,Spring,React,Node.js,Vue,Swift,Kotlin,Python,Django," +
+//				"Php,Flutter,MySql,MarianDB,MongoDB,OracleDB,Unity,AWS,Docker,Kubernetes,Git,Figma,Window,Linux,";
+//		}else {
+//			tagTechs = tagTech; 
+//		}
+//	
+//		log.info("tagTechs={}",tagTechs);
+//		log.info("tagCareers={}",tagCareers);
+//		log.info("recruiting={}",recruiting);
+//		log.info("search={}",search);
+//		RSearch rSearch = new RSearch(search,tagTechs.split(","),tagCareers.split(","),(recruiting.equals("t"))?1:0);
+		
+//		int listCount = rService.selectListCount(rSearch);
 		int listCount = rService.selectListCount();
 		int pageLimit = 5;
 		int boardLimit = 20;
@@ -164,7 +192,8 @@ public class RecruitmentController {
 			model.addAttribute("errorMsg", "잘못된 페이지"); 
 			return "common/errorPage"; 
 		}else {
-			ArrayList<Recruitment> list = rService.selectList(pi);		
+//			ArrayList<Recruitment> list = rService.selectList(pi,rSearch);
+			ArrayList<Recruitment> list = rService.selectList(pi);
 			ArrayList<Rattachment>at_list = new ArrayList<Rattachment>();	
 			ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
 			ArrayList<ArrayList<RecruitmentState>>pos_list = new ArrayList<>();
@@ -187,14 +216,13 @@ public class RecruitmentController {
 					ws_list.add(rService.getWishList(wishMap));
 					wishMap.clear();					
 				}				
-			}			
+			}						
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
 			model.addAttribute("at_list", at_list);
 			model.addAttribute("tg_list", tg_list);
 			model.addAttribute("ws_list", ws_list);
-			model.addAttribute("pos_list", pos_list);
-								
+			model.addAttribute("pos_list", pos_list);					
 			return "board/recruitment/recruitmentListView";				
 		}	
 	}
@@ -221,6 +249,10 @@ public class RecruitmentController {
 		return new Gson().toJson(list);
 	}
 	
+	@GetMapping("room.rec")
+	public String room() {
+		return "project/room";
+	}
 	
 	
 	

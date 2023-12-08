@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.RSearch;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
@@ -16,7 +17,9 @@ public interface RecruitmentService {
 	int insertImg(Rattachment ra);
 	int insertTag(Prelation rel);
 	int insertState(RecruitmentState state);
+//	int selectListCount(RSearch rs);
 	int selectListCount();
+//	ArrayList<Recruitment> selectList(PageInfo pi, RSearch rs);
 	ArrayList<Recruitment> selectList(PageInfo pi);
 	Rattachment getThumbOne(Recruitment r);
 	ArrayList<Prelation> getTagInfo(Recruitment r);

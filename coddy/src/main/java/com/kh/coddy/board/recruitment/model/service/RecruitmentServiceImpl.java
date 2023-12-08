@@ -11,6 +11,7 @@ import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.model.dao.RecruitmentDao;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.RSearch;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
@@ -46,10 +47,18 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 		return rDao.createProject(sqlSession,p);
 	}
 
+//	@Override 
+//	public int selectListCount(RSearch rs){ 
+//		return rDao.selectListCount(sqlSession, rs); 
+//	}
 	@Override 
 	public int selectListCount(){ 
 		return rDao.selectListCount(sqlSession); 
 	}
+//	@Override
+//	public ArrayList<Recruitment> selectList(PageInfo pi, RSearch rs) {
+//		return rDao.selectList(sqlSession,pi,rs);
+//	}
 	@Override
 	public ArrayList<Recruitment> selectList(PageInfo pi) {
 		return rDao.selectList(sqlSession,pi);

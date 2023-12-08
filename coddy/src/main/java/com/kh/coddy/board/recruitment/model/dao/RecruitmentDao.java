@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.RSearch;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
@@ -33,9 +34,17 @@ public class RecruitmentDao {
 	public int createProject(SqlSessionTemplate sqlSession, Project p) {
 		return sqlSession.insert("recruitmentMapper.createProject",p);
 	}
+//	public int selectListCount(SqlSessionTemplate sqlSession, RSearch rs) {
+//		return sqlSession.selectOne("recruitmentMapper.selectListCount", rs);
+//	}
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("recruitmentMapper.selectListCount");
 	}
+//	public ArrayList<Recruitment> selectList(SqlSessionTemplate sqlSession, PageInfo pi, RSearch rs){
+//		int limit = pi.getBoardLimit();
+//		int offset = (pi.getCurrentPage() -1) *limit;			
+//		return (ArrayList)sqlSession.selectList("recruitmentMapper.selectList", rs, new RowBounds(offset, limit)); 
+//	}
 	public ArrayList<Recruitment> selectList(SqlSessionTemplate sqlSession, PageInfo pi){
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() -1) *limit;			
