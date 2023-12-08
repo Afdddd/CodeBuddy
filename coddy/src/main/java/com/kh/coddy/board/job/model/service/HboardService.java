@@ -11,8 +11,11 @@ import com.kh.coddy.common.vo.PageInfo;
 
 public interface HboardService {
 	int insertBoard(Hboard h);
+	int initTag(int hboardNo);
 	boolean insertTag(Hrelation hr);
+	boolean insertTag2(Hrelation hr);
 	int insertThumb(Hattachment ha);
+	int insertThumb2(Hattachment ha);
 	int selectListCount(HSearch hs);
 	ArrayList<Hboard> selectList(PageInfo pi, HSearch hs);
 	Hattachment getThumbOne(Hboard h);
@@ -26,5 +29,7 @@ public interface HboardService {
 	ArrayList<Hattachment> getAttachmentList(Hboard hb);
 	int addFile(Hattachment ha);
 	int minusFile(int ano);
+	int rejectThumb(int hboardNo);
+	int updateBoard(Hboard h);
 	int deleteBoard(int hboardNo);
 }

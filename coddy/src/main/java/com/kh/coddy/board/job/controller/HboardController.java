@@ -211,7 +211,49 @@ public class HboardController {
 			session.setAttribute("errorMsg", "잘못된 접근");
 			return "common/errorPage";
 		}
+		Hboard hb = hboardService.selectBoard(h.getHboardNo());
+		ArrayList<Hrelation> hr = hboardService.getTagInfo(hb);
+		Hattachment ha = hboardService.getThumbOne(hb);
+		String tagList = "";
+		if (!hr.isEmpty()) { for(Hrelation hrr:hr) { tagList += hrr.getTagsNo() + ","; } }
+		session.setAttribute("hb", hb);
+		session.setAttribute("tagList", tagList.substring(0, tagList.length()-1));
+		session.setAttribute("ha", ha);
 		return "board/job/hboardUpdateForm"; 
+	}
+	@PostMapping(value="update.hb") public String updateBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb) {
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
+			session.setAttribute("errorMsg", "잘못된 접근");
+			return "common/errorPage";
+		}
+		if(hboardService.updateBoard(h) <= 0) { model.addAttribute("errorMsg", "게시글 수정 실패"); return "common/errorPage"; }
+		if(hboardService.initTag(h.getHboardNo()) <= 0) { model.addAttribute("errorMsg", "태그 초기화 실패"); return "common/errorPage"; }
+		if(tagAllName.equals("")) { log.info("hboardUpdateNoTag={}, ip={}", (Company)(session.getAttribute("loginCompany")), request.getRemoteAddr()); }
+		else { 
+			String[] tags = ReadTag.read(tagAllName);
+			for(String t:tags) { if(!hboardService.insertTag2(new Hrelation(h.getHboardNo(), t))) { model.addAttribute("errorMsg", "게시글은 작성하였으나 태그 설정이 잘못됨"); return "common/errorPage"; } }
+			log.info("hboardUpdateTags={}, ip={}", (Company)(session.getAttribute("loginCompany")), request.getRemoteAddr());
+		}
+		String path = request.getRealPath("resources\\file_upload\\hboard\\");
+		if(!thumb.isEmpty()) {
+			hboardService.rejectThumb(h.getHboardNo());
+			UUID uuid = UUID.randomUUID();
+			File file = new File(path + "\\" + uuid + "_" + thumb.getOriginalFilename());
+			try { thumb.transferTo(file); }
+			catch (Exception e) { 
+				e.printStackTrace();
+				model.addAttribute("errorMsg", "게시글 수정 및 첨부파일 제거에 성공했으나 새 첨부파일 저장에 실패함"); 
+				return "common/errorPage";
+			}
+			Hattachment ha = new Hattachment();
+			ha.setHattachmentOrigin(thumb.getOriginalFilename()); ha.setHattachmentLevel(1); ha.setHboardNo(h.getHboardNo());
+			ha.setHattachmentChange(uuid + "_" + thumb.getOriginalFilename()); ha.setHattachmentPath("resources\\file_upload\\hboard\\");
+			if(hboardService.insertThumb2(ha) <= 0) { model.addAttribute("errorMsg", "게시글 수정 및 첨부파일 제거에 성공했으나 새 첨부파일 저장에 실패함"); return "common/errorPage"; }
+		}
+		session.setAttribute("alertMsg", "게시글 수정 성공");
+		return "redirect:/boardDetail.hb?hno=" + h.getHboardNo();
 	}
 	@PostMapping(value="deleteForm.hb") public String deleteForm(HttpSession session, Model model, Hboard h) {
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 

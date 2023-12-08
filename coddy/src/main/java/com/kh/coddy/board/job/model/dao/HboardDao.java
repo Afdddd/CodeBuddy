@@ -16,8 +16,11 @@ import com.kh.coddy.common.vo.PageInfo;
 @Repository
 public class HboardDao {
 	public int insertBoard(SqlSessionTemplate sqlSession, Hboard h) { return sqlSession.insert("hboardMapper.insertBoard", h); }
+	public int initTag(SqlSessionTemplate sqlSession, int hboardNo) { return sqlSession.delete("hboardMapper.initTag", hboardNo); }
 	public int insertTag(SqlSessionTemplate sqlSession, Hrelation hr) { return sqlSession.insert("hboardMapper.insertTag", hr); }
+	public int insertTag2(SqlSessionTemplate sqlSession, Hrelation hr) { return sqlSession.insert("hboardMapper.insertTag2", hr); }
 	public int insertThumb(SqlSessionTemplate sqlSession, Hattachment ha) { return sqlSession.insert("hboardMapper.insertThumb", ha); }
+	public int insertThumb2(SqlSessionTemplate sqlSession, Hattachment ha) { return sqlSession.insert("hboardMapper.insertThumb2", ha); }
 	public int selectListCount(SqlSessionTemplate sqlSession, HSearch hs) { return sqlSession.selectOne("hboardMapper.selectListCount", hs); }
 	public ArrayList<Hboard> selectList(SqlSessionTemplate sqlSession, PageInfo pi, HSearch hs) { int limit = pi.getBoardLimit(); int offset = (pi.getCurrentPage() - 1) * limit; return (ArrayList)sqlSession.selectList("hboardMapper.selectList", hs, new RowBounds(offset, limit)); }
 	public Hattachment getThumbOne(SqlSessionTemplate sqlSession, Hboard h) { return (Hattachment)sqlSession.selectOne("hboardMapper.getThumbOne", h); }
@@ -31,5 +34,7 @@ public class HboardDao {
 	public ArrayList<Hattachment> getAttachmentList(SqlSessionTemplate sqlSession, Hboard h) { return (ArrayList)sqlSession.selectList("hboardMapper.getAttachmentList", h); }
 	public int addFile(SqlSessionTemplate sqlSession, Hattachment ha) { return sqlSession.insert("hboardMapper.addFile", ha); }
 	public int minusFile(SqlSessionTemplate sqlSession, int ano) { return sqlSession.update("hboardMapper.minusFile", ano); }
+	public int rejectThumb(SqlSessionTemplate sqlSession, int hboardNo) { return sqlSession.update("hboardMapper.rejectThumb", hboardNo); }
+	public int updateBoard(SqlSessionTemplate sqlSession, Hboard h) { return sqlSession.update("hboardMapper.updateBoard", h); }
 	public int deleteBoard(SqlSessionTemplate sqlSession, int hboardNo) { return sqlSession.update("hboardMapper.deleteBoard", hboardNo); }
 }
