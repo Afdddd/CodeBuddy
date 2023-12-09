@@ -28,10 +28,10 @@ public class ChatingHandler extends TextWebSocketHandler{
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	// 채팅방 목록 <방 번호, ArrayList<session> >이 들어간다.
-	private Map<String, ArrayList<WebSocketSession>> RoomList = new ConcurrentHashMap<>();
+	private Map<Integer, ArrayList<WebSocketSession>> RoomList = new ConcurrentHashMap<>();
 	
 	// session, 방 번호가 들어간다.
-	private Map<WebSocketSession,String> sessionList = new ConcurrentHashMap<>();
+	private Map<WebSocketSession,Integer> sessionList = new ConcurrentHashMap<>();
 	
 	private static int i;
 	
@@ -59,7 +59,7 @@ public class ChatingHandler extends TextWebSocketHandler{
 		
 		// Json 객체 -> java객체
 		ChatMessage chatMessage = objectMapper.readValue(msg, ChatMessage.class);
-		
+		log.info("chatMessage = {}", chatMessage);
 		// 받은 메세지에 담긴 roomId로 해당 채팅방을 찾아온다.
 		ChatRoom chatRoom = cService.selectChatRoom(chatMessage.getRoomId());
 		
@@ -75,7 +75,7 @@ public class ChatingHandler extends TextWebSocketHandler{
 			RoomList.put(chatRoom.getRoomId(), sessionTwo);
 			
 			log.info("채팅방 생성");
-			// 채팅방이 존재할때
+		// 채팅방이 존재할때
 		}else if(RoomList.get(chatRoom.getRoomId()) != null && chatMessage.getMessage().equals("ENTER-CHAT") && chatRoom != null){
 				// RoomList에서 해당 방번호를 가진 방이 있는지 확인.
 			  RoomList.get(chatRoom.getRoomId()).add(session);
@@ -84,11 +84,37 @@ public class ChatingHandler extends TextWebSocketHandler{
 			  // 확인용
 			  System.out.println("생성된 채팅방으로 입장");
 			}
-//		채팅 메세지 입략시 cpelse if()
+		// 메세지 입력 시 
+		else if(RoomList.get(chatRoom.getRoomId())!= null && !chatMessage.getMessage().equals("ENTER-CHAT") && chatRoom != null) {
+			// 메세지에 이름과 내용을 담는다.
+			TextMessage textMessage = new TextMessage(chatMessage.getMemberNo() + "," + chatMessage.getMemberName() + "," + chatMessage.getMessage());
 			
-		}
+			//현재 session 수
+			int sessionCount = 0;
+			
+			// 해탕 채팅방의 모든 session들에게 메세지를 뿌린다.
+			for(WebSocketSession sess : RoomList.get(chatRoom.getRoomId())) {
+				sess.sendMessage(textMessage);
+				sessionCount++;
+			}
+			
+			// 메세지를 읽었는지 안읽었는지 확인을 위해
+			chatMessage.setSessionCount(sessionCount);
+			
+			// DB에 메세지 저장
+			int result =cService.insertMessage(chatMessage);
+			log.info("chatMessage = {}",chatMessage);
+			
+			if(result == 1) {
+				log.info("메세지 DB에 저장 성공");
+			}else {
+				log.info("메세지 전송 실패");
+			}
+			
+		}		
+}
 		
-	}
+	
 	
 		
 		

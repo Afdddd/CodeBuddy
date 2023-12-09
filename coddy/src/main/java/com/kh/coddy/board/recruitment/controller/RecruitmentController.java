@@ -248,9 +248,11 @@ public class RecruitmentController {
 	}
 	
 	@GetMapping("room.rec")
-	public String room() {
+	public String room() {	
 		return "project/room";
 	}
+	
+	
 	
 	
 	

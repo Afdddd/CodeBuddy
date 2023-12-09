@@ -26,8 +26,8 @@ public interface ChatService {
      * @param roomId
      * @return
      */
-    List<ChatMessage> messageList(String roomId);
- 
+    List<ChatMessage> messageList(int roomId);
+
     /**
      * 채팅 방 DB 저장
      * @param room
