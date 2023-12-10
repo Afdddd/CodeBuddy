@@ -103,6 +103,26 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	public ArrayList<Rattachment> selectRecent() {
 		return rDao.selectRecent(sqlSession);
 	}
+	@Override
+	public Recruitment selectRecruitment(int rno) {
+		return rDao.selectRecruitment(sqlSession, rno);
+	}
+	@Override
+	public ArrayList<Rattachment> getAttachmentList(Recruitment r) {
+		return rDao.getAttachmentList(sqlSession, r);
+	}
+	@Override
+	public Project getProject(Recruitment r) {
+		return rDao.getProject(sqlSession, r);
+	}
+	@Override
+	public int selectApply(Map<String,String> aMap) {
+		int stateNo = rDao.selectStateNo(sqlSession, aMap);
+		return rDao.selectApply(sqlSession, stateNo);
+	}
+
+	
+	
 	
 	
 	

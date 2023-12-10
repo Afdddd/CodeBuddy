@@ -17,7 +17,7 @@
     width: 50%;
     height: 100%;  
     float: left;
-  }
+  }staty
   .popular-project{
     width: 50%;
     height: 100%;
@@ -449,7 +449,7 @@
                <input class="custom-checkbox" type="checkbox" name="recruiting" id="recruiting">
               <span class="search-checkmark"></span>
             </label>
-            <button  onclick="onSearch();">검색</button>          
+            <button >검색</button>          
         </div>
 
         <c:if test="${not empty sessionScope.loginMember}">
@@ -459,13 +459,13 @@
           <div class="card-list">
             <c:forEach var="rl" items="${requestScope.list}" varStatus="status">
               <div class="card" >
-                <div class="card-image" onclick="location.href='detail.rec'">
+                <div class="card-image" onclick="location.href='detail.rec?rno=${rl.recruitmentNo}'">
                   <img src="${requestScope.at_list[status.index].getRAttachmentPath()}/${requestScope.at_list[status.index].getRAttachmentChange()}" width="100%" height="100%" style="vertical-align:middle;" onerror="this.src='resources/image/003.png'">
                 </div>
                 <div class="category"></div>
                 <div class="heading"> 
-                  <h5 onclick="location.href='detail.rec'">${rl.recruitmentTitle}</h5>
-                  <div class="explain" onclick="location.href='detail.rec'">${rl.recruitmentIntro}</div>              
+                  <h5 onclick="location.href='detail.rec?rno=${rl.recruitmentNo}'">${rl.recruitmentTitle}</h5>
+                  <div class="explain" onclick="location.href='detail.rec?rno=${rl.recruitmentNo}'">${rl.recruitmentIntro}</div>              
                     <div class="author"> By <span class="name">${rl.recruitmentWriter} </span> ${rl.recruitmentInsert}</div>
                     <c:if test="${not empty sessionScope.loginMember}">
                       <c:choose>

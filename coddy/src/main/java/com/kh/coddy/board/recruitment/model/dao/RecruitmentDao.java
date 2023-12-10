@@ -77,7 +77,21 @@ public class RecruitmentDao {
 	public ArrayList<Rattachment> selectRecent(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("recruitmentMapper.selectRecent");
 	}
-		
+	public Recruitment selectRecruitment(SqlSessionTemplate sqlSession, int rno) {	
+		return sqlSession.selectOne("recruitmentMapper.selectRecruitment",rno);
+	}
+	public ArrayList<Rattachment> getAttachmentList(SqlSessionTemplate sqlSession,Recruitment r) {
+		return (ArrayList)sqlSession.selectList("recruitmentMapper.getAttachmentList",r);
+	}
+	public Project getProject(SqlSessionTemplate sqlSession,Recruitment r) {
+		return sqlSession.selectOne("recruitmentMapper.getProject",r);
+	}
+	public int selectStateNo(SqlSessionTemplate sqlSession, Map<String,String> aMap) {
+		return sqlSession.selectOne("recruitmentMapper.selectStateNo",aMap);
+	}
+	public int selectApply(SqlSessionTemplate sqlSession, int stateNo) {
+		return sqlSession.selectOne("recruitmentMapper.selectApply",stateNo);
+	}
 	
 	
 		

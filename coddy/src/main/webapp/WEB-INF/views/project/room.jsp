@@ -143,6 +143,7 @@
     }
 
     .chat-body {
+    overflow: auto;
     padding: 20px;
     height: 90%;
     }
@@ -470,30 +471,29 @@
 
 
       $(function(){
-          connect();
-          
+          connect();         
 
           $.ajax({
-            url:"room.rec",
-            type:"get",
-            data: {
-              roomId : 1
-            },
-            success : function(data){
-              console.log("메세지 불러오기 성공");
-              console.log(data);
-             
-              for(var i=0; i<data.length; i++){
+              url:"room.rec",
+              type:"get",
+              data: {
+                roomId : roomId
+              },
+              success : function(data){
+                console.log("메세지 불러오기 성공");
                 console.log(data);
-                checkLR(data[i]);
+              
+                for(var i=0; i<data.length; i++){
+                  console.log(data);
+                  checkLR(data[i]);
+                }
+                $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
+              },
+              error : function(){
+                console.log("메세지 불러오기 실패");
               }
-            },
-            error : function(){
-              console.log("메세지 불러오기 실패")
-            }
 
-          });
-
+            });
         });
 
           let roomId = 1; //${requestScope.projectNo}; 프로젝트 번호
@@ -504,7 +504,6 @@
 
             
             // 웹소켓 주소
-            
             var wsUri = "ws://localhost:8082/coddy/chat.do";
 
             // 소켓 객체 생성
@@ -555,6 +554,7 @@
             };
             
             checkLR(data);
+            $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
           }
 
           // 내가 보낸 메세지인지 확인
@@ -574,6 +574,7 @@
             $("#chat_body").append(div);
           }
 
+          
       </script>
 </body>
 </html>

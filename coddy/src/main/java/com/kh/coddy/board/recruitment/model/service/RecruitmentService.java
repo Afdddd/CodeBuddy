@@ -1,11 +1,11 @@
 package com.kh.coddy.board.recruitment.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
-import com.kh.coddy.board.recruitment.model.vo.RSearch;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
@@ -22,6 +22,7 @@ public interface RecruitmentService {
 //	ArrayList<Recruitment> selectList(PageInfo pi, RSearch rs);
 	ArrayList<Recruitment> selectList(PageInfo pi);
 	Rattachment getThumbOne(Recruitment r);
+	ArrayList<Rattachment> getAttachmentList(Recruitment r);
 	ArrayList<Prelation> getTagInfo(Recruitment r);
 	ArrayList<RecruitmentState> getState(Recruitment r);
 	Boolean getWishList(Map<String,Integer> wishMap);	
@@ -30,6 +31,9 @@ public interface RecruitmentService {
 	String insertWish(RecruitmentWishList rw);
 	ArrayList<Recruitment> selectPopular(); 
 	ArrayList<Rattachment> selectRecent();
+	Recruitment selectRecruitment(int rno);
+	Project getProject(Recruitment r);
+	int selectApply(Map<String,String>aMap);
 	//프로젝트 생성
 	int createProject(Project p);
 }

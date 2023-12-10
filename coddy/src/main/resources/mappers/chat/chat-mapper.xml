@@ -52,6 +52,7 @@
 		  FROM CHAT_RECORD C, MEMBER M
 		 WHERE C.CHATR_SENDER = M.MEMBER_NO
 	  	   AND C.PROJECT_NO = #{roomId}
+	     ORDER BY CHATR_INSERT ASC
 	</select>
 	
 </mapper>

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,25 @@ public class RecruitmentController {
 	RecruitmentService rService;
 	
 	@GetMapping("detail.rec")
-	public String recruitmentDetail() {
+	public String recruitmentDetail(int rno, HttpSession session, Model model) {
+		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
+		Recruitment r = rService.selectRecruitment(rno);
+		ArrayList<Prelation> tags = rService.getTagInfo(r); // 태그정보
+		ArrayList<RecruitmentState> state = rService.getState(r); // 지원 현황
+		Rattachment thumOne = rService.getThumbOne(r); // 대표이미지
+		ArrayList<Rattachment> thumList = rService.getAttachmentList(r); // 이미지 목록
+		int wish = rService.getWish(new RecruitmentWishList(memberNo,rno)); // 좋아요 여부
+		Project p = rService.getProject(r);
+		
+		log.info("thumList={}",thumList);
+		
+		model.addAttribute("r",r);
+		model.addAttribute("tags",tags);
+		model.addAttribute("state",state);
+		model.addAttribute("thumOne",thumOne);
+		model.addAttribute("thumList",thumList);
+		model.addAttribute("wish",wish);
+		model.addAttribute("p",p);
 		return "board/recruitment/recruitmentDetailView";
 	}
 	@GetMapping("enrollForm.rec")
@@ -53,17 +72,11 @@ public class RecruitmentController {
 	public String recruitmentInsert(Recruitment r, MultipartFile titleImg ,ArrayList<MultipartFile> img, HttpServletRequest request, Model model, String tagTechName, String[] position, int[] personnelMax) {		
 		// 게시글 insert
 		int result = rService.insertRecruitment(r);
-		log.info("r = {}",r);
-		log.info("tag = {}",tagTechName);
-		log.info("files = {}", img);
-		log.info("position = {}",position.length);
-		log.info("personnel = {}",personnelMax.length);
+
 		
 		// 첨부파일 insert
 		if(result>0) {
-			String path = request.getRealPath("resources\\file_upload\\recruitment\\");
-			log.info("titleImg={}",titleImg);
-			log.info("img = {}",img);
+			String path = request.getRealPath("resources\\file_upload\\recruitment\\");			
 			
 			if(titleImg != null) {
 				UUID uuid = UUID.randomUUID();
@@ -123,8 +136,7 @@ public class RecruitmentController {
 			// 모집인원 insert
 			if(position != null && personnelMax !=null && position.length == personnelMax.length) {		
 				for(int i=0; i<position.length; i++) {
-					RecruitmentState state = new RecruitmentState(r.getRecruitmentNo(),position[i],personnelMax[i],0);
-					log.info("Insert State={}",state);
+					RecruitmentState state = new RecruitmentState(0,r.getRecruitmentNo(),position[i],personnelMax[i]);
 					rService.insertState(state);
 				}							
 			}else {
@@ -247,8 +259,28 @@ public class RecruitmentController {
 		return new Gson().toJson(list);
 	}
 	
+	@GetMapping("selectApply.rec")
+	@ResponseBody
+	public void selectApply(String position, int rno, HttpServletResponse response) {
+		log.info("position = {}",position);
+		log.info("rno = {}",rno);
+		HashMap<String, String> aMap = new HashMap<>();
+		aMap.put("position",position);
+		aMap.put("rno", String.valueOf(rno));
+		int result = rService.selectApply(aMap);
+		response.setContentType("application/json; charset=UTF-8");
+		try {
+			response.getWriter().print(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
 	@GetMapping("room.rec")
 	public String room() {	
+		
 		return "project/room";
 	}
 	
