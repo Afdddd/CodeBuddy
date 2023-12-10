@@ -34,6 +34,7 @@ import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.ReadTag;
+import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.Geo;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.CompanyService;
@@ -43,6 +44,7 @@ import com.kh.coddy.member.model.vo.Member;
 @Controller
 public class HboardController {
 	private Logger log = LoggerFactory.getLogger(getClass());
+	@Autowired private TagsController tagsController;
 	@Autowired private HboardService hboardService;
 	@Autowired private CompanyService companyService;
 	@Autowired private PasswordEncoder pbkdf2;
@@ -54,9 +56,7 @@ public class HboardController {
 			@RequestParam(value="where", defaultValue="all") String where, Model model) {
 		String tags = "";
 		if(tag.equals("")) { 
-			tags="C언어,C++,C#,GO,Java,JavaScript,Spring,React,Node.js,Vue,Swift,Kotlin,Python,Django," +
-				"Php,Flutter,MySql,MarianDB,MongoDB,OracleDB,Unity,AWS,Docker,Kubernetes,Git,Figma,Window,Linux," +
-				"PM,기획,프론트엔드,백엔드,CDN,디자인,네트워크/서버,IOS 앱 개발,AOS 앱 개발,AI학습,게임개발"; } 
+			tags = tagsController.getTagsNameString(); } 
 		else { tags=tag; }
 		HSearch hs = new HSearch(search, education.split(" "), career.split(" "), null, tags.split(","), (active.equals("t"))?1:0, getAddressRangeByLocation(where).split(",")[0], getAddressRangeByLocation(where).split(",")[1]);
 		if(career.equals("none")) { hs.setCareer(("none,intern,newcomer,junior,middle,senior").split(",")); }
@@ -85,6 +85,7 @@ public class HboardController {
 			model.addAttribute("at_list", at_list);
 			model.addAttribute("tg_list", tg_list);
 			model.addAttribute("ws_list", ws_list);
+			model.addAttribute("tagAll", tagsController.getTagsNameList());
 			return "board/job/hboardListView";
 		}
 		else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { model.addAttribute("errorMsg", "잘못된 페이지"); return "common/errorPage"; }
@@ -105,12 +106,14 @@ public class HboardController {
 			model.addAttribute("at_list", at_list);
 			model.addAttribute("tg_list", tg_list);
 			model.addAttribute("ws_list", ws_list);
+			model.addAttribute("tagAll", tagsController.getTagsNameList());
 			return "board/job/hboardListView";
 		}
 	}
-	@GetMapping(value="insertForm.hb") public String insertBoardForm(HttpSession session) { 
+	@GetMapping(value="insertForm.hb") public String insertBoardForm(HttpSession session, Model model) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		model.addAttribute("tagAll", tagsController.getTagsNameList());
 		return "board/job/hboardInsertForm";
 	}
 	@PostMapping(value="insert.hb") public String insertBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb, List<MultipartFile> files) {
@@ -204,7 +207,7 @@ public class HboardController {
 		try { if(hboardService.minusFile(Integer.parseInt(ano)) > 0) { return "삭제 성공"; } else { return "삭제 실패"; } }
 		catch (Exception e) { e.printStackTrace(); return "삭제 에러"; }
 	}
-	@PostMapping(value="updateForm.hb") public String updateForm(HttpSession session, Hboard h) {
+	@PostMapping(value="updateForm.hb") public String updateForm(HttpSession session, Model model, Hboard h) {
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
 		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
@@ -219,6 +222,7 @@ public class HboardController {
 		session.setAttribute("hb", hb);
 		session.setAttribute("tagList", tagList.substring(0, tagList.length()-1));
 		session.setAttribute("ha", ha);
+		model.addAttribute("tagAll", tagsController.getTagsNameList());
 		return "board/job/hboardUpdateForm"; 
 	}
 	@PostMapping(value="update.hb") public String updateBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb) {

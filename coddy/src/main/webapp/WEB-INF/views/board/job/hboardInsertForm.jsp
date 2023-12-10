@@ -116,6 +116,7 @@
 										}
 										function onSubmit() {
 											if(!exitFlag) { alert("도로명 찾기를 해주세요."); }
+											if(tagifyAll.getTagElms()[0] == null) { alert("태그는 1개 이상 존재해야됩니다."); return false; }
 											return exitFlag; 
 										}
 									</script>

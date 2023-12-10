@@ -147,14 +147,17 @@
                             <span onclick="onSearch();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
                         </div>
                     </div>
-                    <c:choose>
-                        <c:when test="${not empty sessionScope.loginCompany}">
-                            &nbsp<a href="insertForm.hb" style="text-decoration: none; color: inherit; border: 3px solod sandybrown; float: right;">모집 공고 작성하기</a>
-                        </c:when>
-                    </c:choose>
-                    <label for="viewOn" class="form-check-label"><input type="checkbox" class="form-check-input" name="viewOn" id="viewOn">&nbsp;모집중인 공고만 보기</label>
-
-                    <div style="width: 100%; height: 75%;">
+                    <div style="width: 100%; height: 5%; display: flex;">
+                        <div style="width: 50%;">
+                            <label for="viewOn" class="form-check-label"><input type="checkbox" class="form-check-input" name="viewOn" id="viewOn">&nbsp;모집중인 공고만 보기</label>
+                        </div>
+                        <c:choose>
+                            <c:when test="${not empty sessionScope.loginCompany}">
+                                <div style="width: 50%;"><a href="insertForm.hb" style="text-decoration: none; color: inherit; border: 3px solod sandybrown; float: right;">모집 공고 작성하기</a></div>
+                            </c:when>
+                        </c:choose>
+                    </div>
+                    <div style="width: 100%; height: 70%;">
                         <div class="content_2">
                             <div class="card-list">
                             	<!--  
