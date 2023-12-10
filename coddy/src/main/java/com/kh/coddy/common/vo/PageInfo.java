@@ -67,4 +67,10 @@ public class PageInfo {
 	public void setEndPage(int endPage) {
 		this.endPage = endPage;
 	}
+	@Override
+	public String toString() {
+		return "PageInfo [listCount=" + listCount + ", currentPage=" + currentPage + ", pageLimit=" + pageLimit
+				+ ", boardLimit=" + boardLimit + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage="
+				+ endPage + "]";
+	}
 }

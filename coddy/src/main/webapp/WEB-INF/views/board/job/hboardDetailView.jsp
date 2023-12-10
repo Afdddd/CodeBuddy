@@ -46,7 +46,7 @@
 			<div class="mainContent">
 				<div class="boardTitleBar">
 					<div style="width: 100%; display: flex">
-						<img src="resources/file_upload/company/<fmt:formatNumber value='${sessionScope.hb.companyNo}' pattern='00000000' />.jpg" onerror="this.src='resources/image/white.jpg'" width="30px" height="30px">&nbsp;&nbsp;<h4 onclick="location.href='listView.hb?cpage=1&search=company&sort=new&career=none&education=none&tag=&where=all&viewOn=f'">${sessionScope.co.companyName}</h4>
+						<img src="resources/file_upload/company/<fmt:formatNumber value='${sessionScope.hb.companyNo}' pattern='00000000' />.jpg" onerror="this.src='resources/image/white.jpg'" width="30px" height="30px">&nbsp;&nbsp;<h4 onclick="location.href='listView.hb?cpage=1&search=${sessionScope.co.companyName}&sort=new&career=none&education=none&tag=&where=all&viewOn=f'">${sessionScope.co.companyName}</h4>
 					</div>
 					<h3>${sessionScope.hb.hboardTitle}</h3><br>
 				</div>

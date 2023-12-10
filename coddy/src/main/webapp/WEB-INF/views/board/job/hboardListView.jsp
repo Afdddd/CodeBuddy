@@ -60,6 +60,9 @@
             .container:hover { transform: scale(1.1); }
             @keyframes like_effect { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
             @keyframes dislike_effect { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+            /* 인엽이 페이지 네이션 맞추기 */
+            .pageForm { width:fit-content; margin:auto; }
         </style>
     </head>
     <body>
@@ -144,7 +147,7 @@
                             &nbsp;
                             <input type="search" class="form-control form-control-lg" id="hboardSearch" name="keyword">
                             &nbsp;&nbsp;
-                            <span onclick="onSearch();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
+                            <span onclick="onSearch(1);" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
                         </div>
                     </div>
                     <div style="width: 100%; height: 5%; display: flex;">
@@ -250,7 +253,46 @@
                         </div>
                     </div>
                     <div class="pageForm">
-
+                        <ul class="pagination" style="margin: auto;">
+                            <c:choose>
+                                <c:when test="${ requestScope.pi.currentPage eq 1 }">
+                                    <li class="page-item disabled">
+                                        <a class="page-link">Previous</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" onclick="onSearch('${requestScope.pi.currentPage - 1}');">Previous</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>  
+                            <c:forEach var="p" begin="${requestScope.pi.startPage}" end="${requestScope.pi.endPage}" step="1">
+                                <c:choose>
+                                    <c:when test="${ p eq requestScope.pi.currentPage }">
+                                        <li class="page-item disabled">
+                                            <a class="page-link">${p}</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item">
+                                            <a class="page-link" onclick="onSearch('${p}');">${p}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>  
+                            <c:choose>
+                                <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+                                    <li class="page-item disabled">
+                                        <a class="page-link">Next</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" onclick="onSearch('${requestScope.pi.currentPage + 1}');">Next</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
                     </div>
                 </div>
                 <div class="recommendForm">
@@ -277,8 +319,8 @@
 						error: function() { console.log("찜하기 실패"); }
 				});
             }
-            function onSearch() {
-                let cpage = 1;
+            function onSearch(cp) {
+                let cpage = cp;
                 // let cpage = getParameter("cpage");
                 let search = $("#hboardSearch").val();
                 let sort = $("#hboardSort").val();

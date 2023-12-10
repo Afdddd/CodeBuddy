@@ -41,7 +41,7 @@
 	<insert id="insertTag2" parameterType="hrelation">INSERT INTO HRELATION(HBOARD_NO, TAGS_NO) VALUES(#{hboardNo}, (SELECT TAGS_NO FROM TAGS T WHERE T.TAGS_NAME=#{tagsNo}))</insert>
 	<insert id="insertThumb" parameterType="hattachment">INSERT INTO HATTACHMENT(HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_LEVEL) VALUES(SEQ_HATTACHMENT.NEXTVAL, SEQ_HBOARD.CURRVAL, #{hattachmentOrigin}, #{hattachmentChange}, #{hattachmentPath}, #{hattachmentLevel})</insert>
 	<insert id="insertThumb2" parameterType="hattachment">INSERT INTO HATTACHMENT(HATTACHMENT_NO, HBOARD_NO, HATTACHMENT_ORIGIN, HATTACHMENT_CHANGE, HATTACHMENT_PATH, HATTACHMENT_LEVEL) VALUES(SEQ_HATTACHMENT.NEXTVAL, #{hboardNo}, #{hattachmentOrigin}, #{hattachmentChange}, #{hattachmentPath}, #{hattachmentLevel})</insert>
-	<select id="selectListCount" parameterType="hsearch" resultType="_int">SELECT DISTINCT COUNT(*) FROM HBOARD H, HRELATION HR, TAGS TG, COMPANY CO
+	<select id="selectListCount" parameterType="hsearch" resultType="_int">SELECT COUNT(DISTINCT(H.HBOARD_NO)) FROM HBOARD H, HRELATION HR, TAGS TG, COMPANY CO
 		WHERE H.HBOARD_NO=HR.HBOARD_NO AND HR.TAGS_NO=TG.TAGS_NO AND H.COMPANY_NO=CO.COMPANY_NO AND TG.TAGS_NAME IN 
 		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND H.HBOARD_DELETE IS NULL AND H.HBOARD_CAREER IN

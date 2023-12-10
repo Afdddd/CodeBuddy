@@ -344,6 +344,60 @@ CREATE TABLE HBOARD (
 
 COMMENT ON COLUMN HBOARD.HBOARD_INSERT IS '작성된 날짜';
 
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, 'NHN KCP JAVA 백엔드 웹개발자 모집', 'NHN KCP, 어떤 곳인가요?
+NHN KCP는 전자결제대행 서비스, 온·오프라인 카드 VAN 서비스, 모바일 결제 서비스 등 국내 유일의 통합결제 서비스 구축을 통하여
+전자결제 산업의 리딩 컴퍼니라는 자부심 속에 안전하고 편리한 결제를 제공하기 위해 노력하고 있습니다.
+
+이에 더 나아가 NHN KCP는 국내 온·오프라인을 통합한 O2O 결제 시스템 구축 및 글로벌 전자상거래 사업을 통해 급변하는 전자결제 시장에 적극적으로 대응함과 동시에 새로운 해외시장 개척에도 최선을 다하고 있습니다.
+
+최근 국내 전자결제 시장에서 화두로 떠오른 간편결제 분야에서도, NHN KCP는 철저한 사전 준비와 전략으로 해외 유수의 PG사 들과 어깨를 나란히 할 수 있는 글로벌 전자결제 업체로 성장할 것을 확신합니다.
+
+"결제 산업의 리딩컴퍼니 엔에이치엔한국사이버결제와 함께 결제 산업의 변화와 혁신을 선도할 열정있는 인재를 기다립니다."
+
+NHN KCP JAVA 백엔드 웹개발자 모집, 어떤 일을 하나요?
+NHN KCP 서비스개발팀 JAVA 백엔드 웹개발자 모집 채용공고입니다.', 3, TO_DATE('12-20-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('05-30-2024 00:00:00', 50000000, 'none', 'middle', '08393');
+
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, 'Java개발 팀장', '인라이플, 어떤 곳인가요?
+우리는 IT 플랫폼 기업으로서 경험하지 못한 플랫폼을 만들기 위해 노력합니다. 국내 최초의 리타게팅 광고 플랫폼 ‘모비온’, 시장의 블루오션을 보고 만든 모바일 퍼포먼스 광고 플랫폼 ‘애드밴티지’, 미래를 내다보고 꾸준히 투자한 AI 사업의 일환으로 커스터마이징이 가능한 인공지능 챗봇 ’아이봇’, 채팅은 물론 SNS와 커뮤니티 기능을 모두 담은 모임을 위한 메신저 ‘캠프’. 시장의 니즈를 미리 감지해 이전에 없던 서비스를 구현하고 있습니다.
+
+2012년 리타게팅 광고 플랫폼 사업을 시작하여 지속적인 기술투자(인공지능, 빅데이터)와 혁신으로 업계 1위로 성장하였습니다. 인공지능 연구 개발에 3년간 투자하여 자연어 처리에 특화된 AI엔진 ‘LUCY’는 2019년 1월에 열린 KorQuAD 대회에서 네이버, LG 등의 대기업을 제치고1위를 차지해 우리 기술의 가능성을 보여줬습니다. 전체 인력의 ½가 개발 인력일 정도로 기술 고도화에 집중하고 있고, 글로벌 수준의 기술력을 확보하기 위해 상당의 비용을 R and D에 쏟고 있습니다.
+
+최고 효율의 AD Tech, 빅데이터 보유 및 분석, Block chain을 이용한 데이터 저장 및 공유를 통해 광고 사업과 B2C 사업을 운영하고 있으며, 자체 AI 엔진 개발로 그 성장의 동력을 확보하여, 통합 AI 생태계 구축을 목표로 하고 있습니다.
+
+★ 회사 홈페이지 : http://www.enliple.com/
+★ 인라이플 소개 : https://sheer-aura-848.notion.site/Will-U-Join-ENLIPLE-9fc703171a4b4e54819463a4cb38113b
+★ 인라이플 블로그 : https://blog.naver.com/enliple_blog
+★ 복지좋은 회사의 기준 : https://blog.naver.com/enliple_blog/222203763903
+
+Java개발 팀장, 어떤 일을 하나요?
+Java 개발 팀장', 2, TO_DATE('12-02-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('02-14-2024 00:00:00', 50000000, 'none', 'senior', '08389');
+
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, '[숨고] Business Development Lead', '브레이브모바일 (숨고), 어떤 곳인가요?
+1,000만이 선택한 전국민 생활 솔루션, 숨고
+
+연결을 통해 우리의 일상에 유의미한 변화를 함께 만들어갈 당신을 찾습니다.
+
+숨고는 누구나 참여하여 서로의 가치를 교환하는 마켓플레이스입니다. 2022년을 기준으로 숨고는 약 1,000개 이상의 카테고리에서 900만 명의 고객과 100만 명의 고수가 모여, 연간 거래액 약 6,000억원에 달하는 가치 교환을 만들어내는 생태계가 되었습니다.
+
+하지만 숨고가 닿을 수 있는 약 126조 원 규모의 막대한 시장에 비한다면 지금의 성과는 아직 시작 단계에 불과합니다. 우리는 숨고 안에서 지금보다 훨씬 많은 연결이 만들어질 수 있도록 생태계를 키워나가고 있습니다. 한번도 가본적 없는 미지의 영역을 개척하고 우리 앞에 다가온 거대한 기회에 함께 도전할 용감한 당신을 기다립니다.
+
+? 우리는 [ ]합니다
+? 숨고 생태계의 가치와 비전에 공감합니다
+? 스스로 문제를 정의하고 해결하는 전문가 조직을 지향합니다
+? 자신이 맡은 일에 대해 프로라는 마음가짐을 가집니다
+? 나이와 경력, 직무에 상관없이 모두가 자유롭고 투명하게 의사소통합니다
+? 단순한 아이디어부터 중요한 결정까지 모든 과정에서 데이터를 기반으로 소통합니다
+? 유저와 제품에 가장 큰 임팩트를 줄 수 있는 방법을 고민합니다
+
+? 우리가 만들어낸 성과
+2023. 03: 누적 가입자 수 1,000만 돌파
+2022. 06: 누적 견적서 6,000만 건 돌파
+2022. 01: 첫 TVC 런칭
+2021. 11: 스마트대한민국대상 수상
+2021. 07: 320억원 규모 시리즈 C 유치
+2021. 02: ‘바로 견적’ 매칭 서비스 출시
+2020. 12: 휴먼테크놀로지어워드 수상', 4, TO_DATE('11-08-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('12-08-2023 00:00:00','MM-DD-YYYY HH24:MI:SS'), 50000000, 'none', 'none', '06160');
+
 DROP TABLE HWISHLIST;
 
 CREATE TABLE HWISHLIST (
@@ -352,6 +406,15 @@ CREATE TABLE HWISHLIST (
     FOREIGN KEY (HWISHLIST_MEMBER) REFERENCES MEMBER(MEMBER_NO),
     FOREIGN KEY (HBOARD_NO) REFERENCES HBOARD(HBOARD_NO)
 );
+
+INSERT INTO HWISHLIST VALUES(1, 1);
+INSERT INTO HWISHLIST VALUES(2, 1);
+INSERT INTO HWISHLIST VALUES(2, 2);
+INSERT INTO HWISHLIST VALUES(3, 1);
+INSERT INTO HWISHLIST VALUES(4, 2);
+INSERT INTO HWISHLIST VALUES(6, 1);
+INSERT INTO HWISHLIST VALUES(8, 1);
+INSERT INTO HWISHLIST VALUES(8, 2);
 
 DROP TABLE HATTACHMENT;
 DROP SEQUENCE SEQ_HATTACHMENT;
@@ -377,5 +440,26 @@ CREATE TABLE HRELATION (
     FOREIGN KEY (HBOARD_NO) REFERENCES HBOARD(HBOARD_NO),
     FOREIGN KEY (TAGS_NO) REFERENCES TAGS(TAGS_NO)
 );
+
+INSERT INTO HRELATION VALUES(1, 6);
+INSERT INTO HRELATION VALUES(1, 8);
+INSERT INTO HRELATION VALUES(1, 24);
+INSERT INTO HRELATION VALUES(1, 53);
+INSERT INTO HRELATION VALUES(2, 6);
+INSERT INTO HRELATION VALUES(2, 8);
+INSERT INTO HRELATION VALUES(2, 9);
+INSERT INTO HRELATION VALUES(2, 10);
+INSERT INTO HRELATION VALUES(2, 14);
+INSERT INTO HRELATION VALUES(2, 21);
+INSERT INTO HRELATION VALUES(2, 22);
+INSERT INTO HRELATION VALUES(2, 51);
+INSERT INTO HRELATION VALUES(2, 53);
+INSERT INTO HRELATION VALUES(2, 54);
+INSERT INTO HRELATION VALUES(2, 67);
+INSERT INTO HRELATION VALUES(2, 76);
+INSERT INTO HRELATION VALUES(3, 44);
+INSERT INTO HRELATION VALUES(3, 45);
+INSERT INTO HRELATION VALUES(3, 46);
+INSERT INTO HRELATION VALUES(3, 47);
 
 COMMIT;
