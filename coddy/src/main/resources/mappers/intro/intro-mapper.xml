@@ -23,6 +23,16 @@
 			<result column="IATTACHMENT_LEVEL" property="iAttachmentLevel"/>
 	</resultMap>
 
+	<resultMap id="pRelationResultSet" type="pRelation">
+		<result column="RECRUITMENT_NO" property="recruitmentNo"/>
+		<result column="TAGS_NO" property="tagsNo"/>
+	</resultMap>
+	
+	<resultMap id="LikesSet" type="likes">
+		<result column="LIKES_MEMBER" property="likesMember"/>
+		<result column="IBOARD_NO" property="iboardNo"/>
+	</resultMap>
+	
 	<insert id="insertBoard" parameterType="intro">
 		INSERT INTO IBOARD(
 			IBOARD_NO,
@@ -58,32 +68,68 @@
 		
 	</insert>
 	
-	<select id="selectListCount" resultType="_int">
-		SELECT COUNT(*)
-		  FROM IBOARD
-		 WHERE IBOARD_DELETE IS NULL
+	<select id="selectListCount" parameterType="isearch" resultType="_int">
+				SELECT COUNT (DISTINCT(I.IBOARD_NO)) 
+				  FROM IBOARD I, PRELATION PR, TAGS TG, PROJECT P
+				 WHERE PR.PROJECT_NO = P.PROJECT_NO 
+				   AND PR.TAGS_NO = TG.TAGS_NO 
+				   AND TG.TAGS_NAME IN 
+		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+				   AND I.IBOARD_DELETE IS NULL
+				   AND (I.IBOARD_TITLE LIKE '%'||#{keyword}||'%' 
+				    OR I.IBOARD_CONTENT LIKE '%'||#{keyword}||'%' 
+				    OR P.PROJECT_NAME LIKE '%'||#{keyword}||'%') 
+				 ORDER BY ${sort} DESC
 	</select>
 	
-	<select id="selectList" resultMap="introResultSet, introAttachmentResultSet">
-	 SELECT *
-		  FROM (
-		    SELECT ROWNUM RNUM, A.*
-		      FROM (
-		               SELECT IBOARD_NO
-				     , IBOARD_TITLE
-				     , IBOARD_VIEWS
-				     , I.IATTACHMENT_PATH || I.IATTACHMENT_CHANGE "TITLEIMG"
-		             , TO_CHAR(IBOARD_INSERT, 'YYYY-MM-DD') AS "IBOARD_INSERT"
-		             , M.MEMBER_ID
-		  FROM IBOARD B
-		  JOIN IATTACHMENT I USING (IBOARD_NO)
-          JOIN MEMBER M ON (MEMBER_NO = IBOARD_WRITER)
-         WHERE IBOARD_DELETE IS NULL
-		   AND IATTACHMENT_LEVEL = #{iAttachmentLevel}
-           AND IBOARD_NO = #{iboardNo}
-		 ORDER BY B.IBOARD_INSERT DESC
-		            ) A
-		        )
+		<select id="selectList" parameterType="isearch" resultMap="introResultSet">
+		SELECT DISTINCT I.IBOARD_NO AS "IBOARD_NO",
+		 	   I.IBOARD_TITLE AS "IBOARD_TITLE", 
+		 	   P.PROJECT_NAME AS "PROJECT_NO",
+		 	   I.IBOARD_VIEWS AS "IBOARD_VIEWS",
+		 	   TO_CHAR(I.IBOARD_INSERT, 'YYYY-MM-DD') AS "IBOARD_INSERT",
+		 	   P.PROJECT_START AS "PROJECT_START",
+		 	   P.PROJECT_END AS "PROJECT_END",
+		 	   FROM IBOARD I, PROJECT P, PRELATION PR, TAGS TG 
+		WHERE I.PROJECT_NO = P.PROJECT_NO
+		AND P.RPOJECT_NO = PR.PROJECT_NO 
+		AND TG.TAGS_NAME IN
+		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND I.IBOARD_DELETE IS NULL 
+		AND (I.IBOARD_TITLE LIKE '%'||#{keyword}||'%' 
+		OR I.IBOARD_CONTENT LIKE '%'||#{keyword}||'%'
+		OR P.PROJECT_NAME LIKE '%'||#{keyword}||'%')
+		ORDER BY ${sort} DESC
+		</select>
+	
+	<select id="selectattachment" parameterType="introAttachment" resultMap="introAttachmentResultSet">
+                SELECT 
+                  A.IATTACHMENT_PATH || A.IATTACHMENT_CHANGE "TITLEIMG"
+				  FROM IATTACHMENT A
+				  JOIN IBOARD I USING(IBOARD_NO)
+                 WHERE IBOARD_NO = #{iboardNo}
 	</select>
+	
+	<update id="increaseCount" parameterType="_int">
+		UPDATE IBOARD
+		   SET IBOARD_VIEWS = IBOARD_VIEWS + 1
+		 WHERE IBOARD_NO = #{iboardNo}
+		   AND IBOARD_DELETE IS NULL
+	</update>
+	
+	<select id="getTagInfo" parameterType="pRelation" resultMap="pRelationResultSet">
+	SELECT PR.PROJECT_NO, 
+	       T.TAGS_NAME AS "TAGS_NO" 
+	FROM PRELATION PR, TAGS T 
+	WHERE PRELATION.TAGS_NO = T.TAGS_NO 
+	AND PR.PROJECT_NO = #{projectNo}
+	</select>
+	
+	<select id="getWishList" parameterType="intro" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM LIKES 
+		 WHERE IBOARD_NO=#{iboardNo} 
+		   AND LIKES_MEMBER = #{iboardContent}
+    </select>
 </mapper>
 	

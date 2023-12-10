@@ -5,8 +5,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>모집</title>
+<title>프로젝트소개</title>
 <style>
+
+   #pagingArea{
+   width:fit-content; 
+   margin:auto;
+  }
+
   .content_1{
     width: 1200px;
     height: 250px;
@@ -52,10 +58,10 @@
       height: 200px;
   }   
 
-    /* 이미지 사이즈 조절 */
-    .swiper-slide>img {
-      width : 100%;
-      height : 200px;
+  /* 이미지 사이즈 조절 */
+  .swiper-slide>img {
+    width : 100%;
+    height : 200px;
   }
 
   /* 화살표 버튼색 변경 (기본색은 파란색) */
@@ -66,7 +72,7 @@
 
   /* 카드 css */
   .card {
-    width: 350px;
+    width: 300px;
     height: 250px;
     background: white;
     padding: .4em;
@@ -78,7 +84,7 @@
 
   .card-image {
     background-color: rgb(236, 236, 236);
-    width: 130px;
+    width: 140px;
     height: 110px;
     border-radius: 6px 6px 0 0;
   }
@@ -279,7 +285,6 @@
     <div class="content_1">
       <div class="popular-project">
         <h1>인기 프로젝트</h1>
-
         <div class="popular-project-list">
           <div class="swiper">
             <!-- Additional required wrapper -->
@@ -326,25 +331,26 @@
          
     </div>
     <div class="">
-    <c:if test=${ not empty sessionScope.loginMember }">
+    <c:if test="${not empty sessionScope.loginMember}">
       <button class="write_button" onclick="location.href='introForm.bo'">게시글 작성</button>
     </c:if>
     </div>
-    <c:forEach var="b" items="${ requestScope.list }">
+    
     <div class="content_2">
       <div class="card-list">
+        <c:forEach var="b" items="${requestScope.list}">
         <div class="card">
           <div class="cardTop">
             <div class="heading">
               <div class="card-image"></div>
-              <div class="title"><h5></h5></div>
+              <div class="title"><h5>${b.iboardTitle}</h5></div>
             </div>
             
                              
            
             <div class="notHeading">
-              <div class="explain">sdafsdafsadfsdafsdafsadfsafsfsdfsdfssdafsadfsafsfsdfsdfssdafsadfsafsfsdfsdfsdfsdfsdfsdfsdf위한 소통 커뮤니티</div>  
-              <div class="author"> By <span class="name">"${i.iboard. }</span> 4일전</div>
+              <div class="explain"><p>${b.iboardContent}</p></div>  
+              <div class="author"> By <span class="name"><b>${b.iboardWriter}</b></span><br>조회수 : ${b.iboardViews}<br>	 작성일 :  ${b.iboardInsert}</div>
               <label class="container">
                 <input checked="checked" type="checkbox">
                 <div class="checkmark">
@@ -356,27 +362,59 @@
             </div>
            
           </div>
-          
-          <br><br><br><br><br>
-
-          </div>
-       </c:forEach>   
-          <div class="paging-area" align="center">
-            <!-- <button onclick="location.href=''">&lt;</button> -->
-            <button onclick="location.href=''" disabled>1</button>
-            <button onclick="location.href=''">2</button>
-            <button onclick="location.href=''">3</button>
-            <button onclick="location.href=''">4</button>   
-            <button onclick="location.href=''" >&gt;</button> 
         </div>
+        </c:forEach>
+
       </div>
 
-    </div>
-    <script>
-      $(function(){
-        $(".card").css("display", "inline-block");
-        $(".container").css("width","0%");
-      });
-    </script>
+      <br><br><br><br><br>
+
+            
+       <div id="pagingArea">
+            <ul class="pagination" style="margin: auto;">
+            
+              <c:choose>
+                <c:when test="${ requestScope.pi.currentPage eq 1 }">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Previous</a>
+                    </li>
+                  </c:when>
+                  <c:otherwise>
+                    <li class="page-item">
+                      <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                    </li>
+                  </c:otherwise>
+                </c:choose>
+                
+                <c:forEach var="p" begin="${ requestScope.pi.startPage }" 
+                          end="${ requestScope.pi.endPage }"
+                          step="1">
+                  <li class="page-item">
+                    <a class="page-link" href="list.rec?rpage=${ p }">${ p }</a>
+                  </li>
+                </c:forEach>
+                
+                <c:choose>
+                  <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Next</a>
+                    </li>
+                </c:when>
+                <c:otherwise>
+                    <li class="page-item">
+                      <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                    </li>
+                </c:otherwise>
+              </c:choose>
+            
+            </ul>
+          </div>
+  </div>
+  <script>
+    $(function(){
+      $(".card").css("display", "inline-block");
+      $(".container").css("width","0%");
+    });
+  </script>
   </body>
 </html>

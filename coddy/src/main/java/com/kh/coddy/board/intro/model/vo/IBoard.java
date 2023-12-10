@@ -26,4 +26,5 @@ public class IBoard {
 	private String projectName;
 	private String tagsName;
 	private String titleImg;
+	private String memberId;
 }

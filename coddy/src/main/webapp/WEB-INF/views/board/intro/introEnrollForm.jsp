@@ -100,7 +100,7 @@
 
 			<h4 style="color : #5271FF;"><b style="padding-left: 50px;">프로젝트 리뷰 글쓰기</b></h4>
             <form id="enrollForm" method="post" action="introinsert.bo" enctype="multipart/form-data">
-            	<input type="hidden" name="projectNo" id="projectNo" value="4">
+            	<input type="hidden" name="projectNo" id="projectNo" value="1">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>

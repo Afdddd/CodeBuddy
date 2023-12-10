@@ -21,7 +21,9 @@
      	<typeAlias type="com.kh.coddy.board.job.model.vo.HSearch" alias="hsearch"/>
      	<typeAlias type="com.kh.coddy.board.intro.model.vo.IBoard" alias="intro"/>
      	<typeAlias type="com.kh.coddy.board.intro.model.vo.Iattachment" alias="introAttachment"/>
-     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Recruitment" alias="recruitment"/>
+     	<typeAlias type="com.kh.coddy.board.intro.model.vo.Likes" alias="likes"/>
+     	<typeAlias type="com.kh.coddy.board.intro.model.vo.Isearch" alias="isearch"/>
+      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Recruitment" alias="recruitment"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Rattachment" alias="rAttachment"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Prelation" alias="pRelation"/>
