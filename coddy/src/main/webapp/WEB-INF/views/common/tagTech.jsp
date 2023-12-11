@@ -14,11 +14,17 @@
 		<input type="text" name="tagTechName" id="tagTechName">
 		<script>
 			var inputTech = document.querySelector('input[name=tagTechName]');
+			/*
 			let tagTechArr = ['C언어', 'C++', 'C#', 'GO', 'Java', 'JavaScript', 
 				'Spring', 'React', 'Node.js', 'Vue', 'Swift', 'Kotlin', 
 				'Python', 'Django', 'Php', 'Flutter', 'MySql', 'MarianDB',
 				'MongoDB', 'OracleDB', 'Unity', 'AWS', 'Docker', 'Kubernetes',
 				'Git', 'Figma', 'Window', 'Linux'];
+			*/
+			var tagTechArr = [];
+			<c:forEach var="tag" items="${requestScope.tagTech}" varStatus="status">
+				tagTechArr.push("${tag}");
+			</c:forEach>
 
 			var tagifyTech = new Tagify(inputTech, {
 				enforceWhitelist: true,
@@ -26,7 +32,7 @@
 				blacklist : ["fuck", "shit"],
 				dropdown: {
 					enabled : 0,
-					maxItems: 40,
+					maxItems: 200,
 					classname: "tags-look",
 					enabled: 0,
 					closeOnSelect: false

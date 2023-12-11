@@ -39,7 +39,7 @@
 						<tbody>
 							<tr>
 								<th>상호명</th>
-								<td><input type="text" placeholder="" name="" id="" value="${sessionScope.loginCompany.companyName}" readonly>
+								<td><input type="text" placeholder="" name="companyName" id="companyName" value="${sessionScope.loginCompany.companyName}" readonly>
 								<input type="hidden" placeholder="" name="companyNo" id="companyNo" value="${sessionScope.loginCompany.companyNo}" required readonly></td>
 							</tr>
 							<tr>
@@ -116,6 +116,7 @@
 										}
 										function onSubmit() {
 											if(!exitFlag) { alert("도로명 찾기를 해주세요."); }
+											if(tagifyAll.getTagElms()[0] == null) { alert("태그는 1개 이상 존재해야됩니다."); return false; }
 											return exitFlag; 
 										}
 									</script>

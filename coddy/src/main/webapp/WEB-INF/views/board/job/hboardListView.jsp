@@ -1,4 +1,4 @@
-<%@page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -60,6 +60,9 @@
             .container:hover { transform: scale(1.1); }
             @keyframes like_effect { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
             @keyframes dislike_effect { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+
+            /* 인엽이 페이지 네이션 맞추기 */
+            .pageForm { width:fit-content; margin:auto; }
         </style>
     </head>
     <body>
@@ -144,44 +147,22 @@
                             &nbsp;
                             <input type="search" class="form-control form-control-lg" id="hboardSearch" name="keyword">
                             &nbsp;&nbsp;
-                            <span onclick="onSearch();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
+                            <span onclick="onSearch(1);" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
                         </div>
                     </div>
-                    <c:choose>
-                        <c:when test="${not empty sessionScope.loginCompany}">
-                            &nbsp<a href="insertForm.hb" style="text-decoration: none; color: inherit; border: 3px solod sandybrown; float: right;">모집 공고 작성하기</a>
-                        </c:when>
-                    </c:choose>
-                    <label for="viewOn" class="form-check-label"><input type="checkbox" class="form-check-input" name="viewOn" id="viewOn">&nbsp;모집중인 공고만 보기</label>
-
-                    <div style="width: 100%; height: 75%;">
+                    <div style="width: 100%; height: 5%; display: flex;">
+                        <div style="width: 50%;">
+                            <label for="viewOn" class="form-check-label"><input type="checkbox" class="form-check-input" name="viewOn" id="viewOn">&nbsp;모집중인 공고만 보기</label>
+                        </div>
+                        <c:choose>
+                            <c:when test="${not empty sessionScope.loginCompany}">
+                                <div style="width: 50%;"><a href="insertForm.hb" style="text-decoration: none; color: inherit; border: 3px solod sandybrown; float: right;">모집 공고 작성하기</a></div>
+                            </c:when>
+                        </c:choose>
+                    </div>
+                    <div style="width: 100%; height: 70%;">
                         <div class="content_2">
                             <div class="card-list">
-                            	<!--  
-                                <div class="card">
-                                    <div class="card-image"></div>
-                                    <div class="location">대충 지역 어디인지</div>
-                                    <div class="heading">
-                                        <h5>제목</h5>
-                                        <div class="company">기업명</div>
-                                        <div style="display: flex; width: 100%;">
-                                            <div class="info"><i class="fas fa-eye"></i>조회수&nbsp;504</div>
-                                            <label class="container">찜하기
-                                                <input checked="checked" type="checkbox">
-                                                <div class="checkmark">
-                                                    <svg viewBox="0 0 256 256">
-                                                    <rect fill="none" height="512" width="512"></rect>
-                                                    <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div> 
-                                    <div class="footing">
-                                        <span class="tagList">a</span>
-                                        <span class="tagList">b</span>
-                                    </div>                         
-                                </div>
-                                -->
                                 <c:forEach var="b" items="${requestScope.list}" varStatus="status">
                                     <div class="card">
                                         <div class="card-image" onclick="location.href='boardDetail.hb?hno=${b.hboardNo}'">
@@ -247,7 +228,46 @@
                         </div>
                     </div>
                     <div class="pageForm">
-
+                        <ul class="pagination" style="margin: auto;">
+                            <c:choose>
+                                <c:when test="${ requestScope.pi.currentPage eq 1 }">
+                                    <li class="page-item disabled">
+                                        <a class="page-link">Previous</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" onclick="onSearch('${requestScope.pi.currentPage - 1}');">Previous</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>  
+                            <c:forEach var="p" begin="${requestScope.pi.startPage}" end="${requestScope.pi.endPage}" step="1">
+                                <c:choose>
+                                    <c:when test="${ p eq requestScope.pi.currentPage }">
+                                        <li class="page-item disabled">
+                                            <a class="page-link">${p}</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item">
+                                            <a class="page-link" onclick="onSearch('${p}');">${p}</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>
+                            </c:forEach>  
+                            <c:choose>
+                                <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+                                    <li class="page-item disabled">
+                                        <a class="page-link">Next</a>
+                                    </li>
+                                </c:when>
+                                <c:otherwise>
+                                    <li class="page-item">
+                                        <a class="page-link" onclick="onSearch('${requestScope.pi.currentPage + 1}');">Next</a>
+                                    </li>
+                                </c:otherwise>
+                            </c:choose>
+                        </ul>
                     </div>
                 </div>
                 <div class="recommendForm">
@@ -272,11 +292,10 @@
 						data: {hboardNo: e},
 						success: function(result) { console.log(result); },
 						error: function() { console.log("찜하기 실패"); }
-					});
+				});
             }
-            function onSearch() {
-                let cpage = 1;
-                // let cpage = getParameter("cpage");
+            function onSearch(cp) {
+                let cpage = cp;
                 let search = $("#hboardSearch").val();
                 let sort = $("#hboardSort").val();
                 let career = $("#hboardCareer").val();
@@ -294,7 +313,6 @@
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             }
             function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
-            function addTag(strTag) { $(".tagify").html("<tag title='" + strTag + "' contenteditable='false' spellcheck='false' tabindex='-1' class='tagify__tag ' value='" + strTag + "'><x title='' class='tagify__tag__removeBtn' role='button' aria-label='remove tag'></x><div><span class='tagify__tag-text'>" + strTag + "</span></div></tag>" + $(".tagify").html()); }
         </script>
         <jsp:include page="../../common/footer.jsp" />
     </body>

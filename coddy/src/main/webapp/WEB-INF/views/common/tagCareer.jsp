@@ -14,7 +14,11 @@
 		<input type="text" name="tagCareerName" id="tagCareerName">
 		<script>
 			var inputCareer = document.querySelector('input[name=tagCareerName]');
-			let tagCareerArr = ['PM', '기획', '프론트엔드', '백엔드', 'CDN', '디자인', '네트워크/서버', 'IOS 앱 개발', 'AOS 앱 개발', 'AI학습', '게임개발'];
+			// let tagCareerArr = ['PM', '기획', '프론트엔드', '백엔드', 'CDN', '디자인', '네트워크/서버', 'IOS 앱 개발', 'AOS 앱 개발', 'AI학습', '게임개발'];
+			var tagCareerArr = [];
+			<c:forEach var="tag" items="${requestScope.tagCareer}" varStatus="status">
+				tagCareerArr.push("${tag}");
+			</c:forEach>
 
 			var tagifyCareer = new Tagify(inputCareer, {
 				enforceWhitelist: true,
@@ -22,7 +26,7 @@
 				blacklist : ["fuck", "shit"],
 				dropdown: {
 					enabled : 0,
-					maxItems: 40,
+					maxItems: 200,
 					classname: "tags-look",
 					enabled: 0,
 					closeOnSelect: false
