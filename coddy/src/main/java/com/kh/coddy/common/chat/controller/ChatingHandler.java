@@ -62,11 +62,28 @@ public class ChatingHandler extends TextWebSocketHandler{
 		log.info("chatMessage = {}", chatMessage);
 		// 받은 메세지에 담긴 roomId로 해당 채팅방을 찾아온다.
 		ChatRoom chatRoom = cService.selectChatRoom(chatMessage.getRoomId());
+		log.info("chatRoom = {}",chatRoom);
 		
-		
-		// 채팅 세션 목록에 채팅방이 존재하지 않고, 처음 들어왔고, DB에서의 채팅방이 있을 때
-		if(RoomList.get(chatRoom.getRoomId()) == null && chatMessage.getMessage().equals("ENTER-CHAT") && chatRoom != null) {
+		if(chatRoom == null && chatMessage.getMessage().equals("ENTER-CHAT")) {
+			chatRoom = new ChatRoom(Integer.parseInt(chatMessage.getRoomId()),chatMessage.getMemberNo());
+			int result = cService.createChat(chatRoom);
 			
+			
+			if(result>0) {
+				// 채팅 세션 목록에 채팅방이 존재하지 않고, 처음 들어왔고, DB에서의 채팅방이 있을 때	
+				ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
+				sessionTwo.add(session);
+				sessionList.put(session, chatRoom.getRoomId());
+				
+				// 해당 채팅방에 참여한 세션들 추가
+				RoomList.put(chatRoom.getRoomId(), sessionTwo);
+				
+				log.info("채팅방 생성");
+			}
+			
+			
+		}else if(RoomList.get(chatRoom.getRoomId()) == null && chatMessage.getMessage().equals("ENTER-CHAT") && chatRoom != null) {
+			// 채팅 세션 목록에 채팅방이 존재하지 않고, 처음 들어왔고, DB에서의 채팅방이 있을 때	
 			ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
 			sessionTwo.add(session);
 			sessionList.put(session, chatRoom.getRoomId());

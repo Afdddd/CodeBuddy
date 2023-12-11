@@ -20,5 +20,8 @@ public class ChatDao {
 	public List<ChatMessage> messageList(SqlSessionTemplate sqlSession, int roomId) {
 		return sqlSession.selectList("chatMapper.messageList",roomId);
 	}
+	public int createChat(SqlSessionTemplate sqlSession,ChatRoom room) {
+		return sqlSession.insert("chatMapper.createChat",room);
+	}
 		
 }

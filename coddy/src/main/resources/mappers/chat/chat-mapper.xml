@@ -3,13 +3,9 @@
 <mapper namespace="chatMapper">
 	
 	<resultMap id="chatRoomResultSet" type="chatRoom">
-		<result column="ROOM_ID" property="roomId" />
-		<result column="USER_NO" property="userNo" />
-		<result column="USER_NAME" property="userName" />
-		<result column="USER_PHOTO" property="userPhoto" />
-		<result column="MASTER_NO" property="masterNo" />
-		<result column="MASTER_NAME" property="masterName" />
-		<result column="MASTER_PHOTO" property="masterPhoto" />
+		<result column="PROJECT_NO" property="roomId"></result>
+		<result column="CHAT_MASTER" property="userNo"></result>
+		<result column="CHAT_INSERT" property="chatInsert"></result>
 	</resultMap>
 	
 	<resultMap id="chatMessageResultMap" type="chatMessage">
@@ -22,18 +18,10 @@
 	
 		
 	<select id="selectChatRoom" parameterType="string" resultMap="chatRoomResultSet">
-		SELECT P.PROJECT_NO AS "ROOM_ID",
-			   M1.MEMBER_NO AS "USER_NO",
-		       M1.MEMBER_NAME AS "USER_NAME",
-		       M1.MEMBER_PHOTO_EXTEND AS "USER_PHOTO",
-		       M2.MEMBER_NO AS "MASTER_NO",
-		       M2.MEMBER_NAME AS "MASTER_NAME",
-		       M2.MEMBER_PHOTO_EXTEND AS "MASTER_PHOTO"
-		  FROM CHAT C,MEMBER M1, MEMBER M2, PROJECT P
-		 WHERE C.CHAT_MEMBER1 = M1.MEMBER_NO
-		   AND C.CHAT_MEMBER2 = M2.MEMBER_NO
-		   AND C.PROJECT_NO = P.PROJECT_NO
-		   AND C.PROJECT_NO = #{roomId}
+		SELECT *
+		FROM CHAT
+		WHERE PROJECT_NO = #{roomId}
+	
 	</select>
 	
 	<insert id="insertMessage" parameterType="chatMessage">		     
@@ -54,5 +42,9 @@
 	  	   AND C.PROJECT_NO = #{roomId}
 	     ORDER BY CHATR_INSERT ASC
 	</select>
+	
+	<insert id="createChat" parameterType="chatRoom">
+		INSERT INTO CHAT(PROJECT_NO, CHAT_MASTER) VALUES(#{roomId}, #{userNo})
+	</insert>
 	
 </mapper>

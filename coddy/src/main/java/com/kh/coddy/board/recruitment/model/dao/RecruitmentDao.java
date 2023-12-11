@@ -15,6 +15,7 @@ import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Repository
@@ -86,13 +87,12 @@ public class RecruitmentDao {
 	public Project getProject(SqlSessionTemplate sqlSession,Recruitment r) {
 		return sqlSession.selectOne("recruitmentMapper.getProject",r);
 	}
-	public int selectStateNo(SqlSessionTemplate sqlSession, Map<String,String> aMap) {
-		return sqlSession.selectOne("recruitmentMapper.selectStateNo",aMap);
+	public int getApply(SqlSessionTemplate sqlSession, ChatMember cm) {
+		return sqlSession.selectOne("recruitmentMapper.getApply",cm);
 	}
-	public int selectApply(SqlSessionTemplate sqlSession, int stateNo) {
-		return sqlSession.selectOne("recruitmentMapper.selectApply",stateNo);
+	public int insertApply(SqlSessionTemplate sqlSession, ChatMember cm) {
+		return sqlSession.insert("recruitmentMapper.insertApply",cm);
 	}
-	
 	
 		
 }

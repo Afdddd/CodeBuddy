@@ -38,6 +38,7 @@
      	<typeAlias type="com.kh.coddy.board.code.model.vo.Cboard" alias="cboard"/>
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatRoom" alias="chatRoom" />
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMessage" alias="chatMessage" />
+     	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMember" alias="chatMember"/>
     </typeAliases>
       
     <!-- environments 영역은 제외 

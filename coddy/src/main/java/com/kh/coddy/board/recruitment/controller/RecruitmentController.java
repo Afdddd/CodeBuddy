@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,7 +29,9 @@ import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
 import com.kh.coddy.common.Pagination;
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.tag.ReadTag;
+import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.vo.Member;
 
@@ -40,6 +42,8 @@ public class RecruitmentController {
 	
 	@Autowired
 	RecruitmentService rService;
+	@Autowired
+	TagsController tagsController;
 	
 	@GetMapping("detail.rec")
 	public String recruitmentDetail(int rno, HttpSession session, Model model) {
@@ -64,7 +68,8 @@ public class RecruitmentController {
 		return "board/recruitment/recruitmentDetailView";
 	}
 	@GetMapping("enrollForm.rec")
-	public String enrollForm(){
+	public String enrollForm(Model model){
+		model.addAttribute("tagTech", tagsController.getTagsNameList(0));
 		return "board/recruitment/recruitmentEnrollForm";
 	}
 	
@@ -136,7 +141,7 @@ public class RecruitmentController {
 			// 모집인원 insert
 			if(position != null && personnelMax !=null && position.length == personnelMax.length) {		
 				for(int i=0; i<position.length; i++) {
-					RecruitmentState state = new RecruitmentState(0,r.getRecruitmentNo(),position[i],personnelMax[i]);
+					RecruitmentState state = new RecruitmentState(r.getRecruitmentNo(),position[i],personnelMax[i]);
 					rService.insertState(state);
 				}							
 			}else {
@@ -259,28 +264,30 @@ public class RecruitmentController {
 		return new Gson().toJson(list);
 	}
 	
-	@GetMapping("selectApply.rec")
 	@ResponseBody
-	public void selectApply(String position, String rno, HttpServletResponse response) {
-		log.info("position = {}",position);
-		log.info("rno = {}",rno);
-		HashMap<String, String> aMap = new HashMap<>();
-		aMap.put("position",position);
-		aMap.put("rno", rno);
-		int result = rService.selectApply(aMap);
-		response.setContentType("application/json; charset=UTF-8");
-		try {
-			response.getWriter().print(result);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	@GetMapping("getApply.rec")
+	public String getApply(int projectNo, String position) {
+		int result = rService.getApply(new ChatMember(projectNo,0,position));
+		return String.valueOf(result);		
+	}
+	
+	@ResponseBody
+	@GetMapping("insertApply.rec")
+	public String insertApply(int projectNo, int memberNo, String position, int maxPersonnel) {
+		log.info("projectNo = {}",projectNo);
+		int apply = rService.getApply(new ChatMember(projectNo,0,position));
+		if(maxPersonnel > apply) {
+			ChatMember cm = new ChatMember(projectNo,memberNo,position);
+			int result2 = rService.insertApply(cm);
+			log.info("chatMember = {}",cm);
+			return String.valueOf(result2);
+		}else {
+			return "0";
 		}
 	}
 	
-	
 	@GetMapping("room.rec")
 	public String room() {	
-		
 		return "project/room";
 	}
 	

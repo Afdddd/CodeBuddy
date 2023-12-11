@@ -1,4 +1,4 @@
-package com.kh.coddy.board.recruitment.model.vo;
+package com.kh.coddy.common.chat.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,8 +7,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
-public class RecruitmentState {
-	private int recruitmentNo;
-	private String position;
-	private int maxPersonnel;
+public class ChatMember {
+	private int projectNo;
+	private int memberNo;
+	private String role;
 }

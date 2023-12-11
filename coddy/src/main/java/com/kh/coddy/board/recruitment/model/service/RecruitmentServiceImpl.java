@@ -16,6 +16,7 @@ import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Service
@@ -116,11 +117,14 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 		return rDao.getProject(sqlSession, r);
 	}
 	@Override
-	public int selectApply(Map<String,String> aMap) {
-		int stateNo = rDao.selectStateNo(sqlSession, aMap);
-		return rDao.selectApply(sqlSession, stateNo);
+	public int getApply(ChatMember cm) {
+		return rDao.getApply(sqlSession, cm);
 	}
-
+	@Override
+	public int insertApply(ChatMember cm) {
+		return rDao.getApply(sqlSession, cm);
+	}
+	
 	
 	
 	
