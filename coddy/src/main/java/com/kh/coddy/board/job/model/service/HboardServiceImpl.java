@@ -44,4 +44,7 @@ public class HboardServiceImpl implements HboardService {
 	@Override public int rejectThumb(int hboardNo) { return hboardDao.rejectThumb(sqlSession, hboardNo); }
 	@Override public int updateBoard(Hboard h) { return hboardDao.updateBoard(sqlSession, h); }
 	@Override public int deleteBoard(int hboardNo) { return hboardDao.deleteBoard(sqlSession, hboardNo); }
+	@Override public int selectListCount(int companyNo) { return hboardDao.selectListCount(sqlSession, companyNo); }
+	@Override public ArrayList<Hboard> selectList(PageInfo pi, int companyNo) { return hboardDao.selectList(sqlSession, pi, companyNo); }
+	@Override public int getAllWish(int hboardNo) { return hboardDao.getAllWish(sqlSession, hboardNo); }
 }

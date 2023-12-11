@@ -32,4 +32,7 @@ public interface HboardService {
 	int rejectThumb(int hboardNo);
 	int updateBoard(Hboard h);
 	int deleteBoard(int hboardNo);
+	int selectListCount(int companyNo);
+	ArrayList<Hboard> selectList(PageInfo pi, int companyNo);
+	int getAllWish(int hboardNo);
 }

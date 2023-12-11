@@ -16,11 +16,13 @@
 		*/
 		.subContent { width: 100%; height: 5%; padding: 5px; }
 		.boardTitleBar { width: 100%; height: 5%; padding: 5px; border-bottom: 2px; border-bottom-style: solid; border-bottom-color: rgb(138, 125, 114); }
+		.boardTitleBarImg { border-radius: 7px; overflow: hidden; }
+		.boardTitleBarImg img { object-fit: cover; }
 		.boardContentBar { width: 100%; height: 95%; display: flex; }
 		.boardContentArea { width: 75%; height: 100%; }
 		.boardMiniArea { width: 25%; height: 600px; top: 20%; position: sticky; overflow: scroll; }
-		.boardMiniCard { width: 100%; height: 550px; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #7cc9e7; margin:0 auto; }
-		.boardMiniAttach { width: 100%; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #7cc9e7; }
+		.boardMiniCard { width: 100%; height: 550px; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #92d7f1; margin:0 auto; }
+		.boardMiniAttach { width: 100%; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #92d7f1; }
 		.boardContentThumb { width: 100%; height: 420px; padding: 4%; }
 		.boardContentTag { width: 100%; height: 120px; }
 		.boardContentContent { width: 100%; height: 630px; padding: 10px; }
@@ -46,7 +48,8 @@
 			<div class="mainContent">
 				<div class="boardTitleBar">
 					<div style="width: 100%; display: flex">
-						<img src="resources/file_upload/company/<fmt:formatNumber value='${sessionScope.hb.companyNo}' pattern='00000000' />.jpg" onerror="this.src='resources/image/white.jpg'" width="30px" height="30px">&nbsp;&nbsp;<h4 onclick="location.href='listView.hb?cpage=1&search=${sessionScope.co.companyName}&sort=new&career=none&education=none&tag=&where=all&viewOn=f'">${sessionScope.co.companyName}</h4>
+						<div class="boardTitleBarImg"><img src="resources/file_upload/company/<fmt:formatNumber value='${sessionScope.hb.companyNo}' pattern='00000000' />.jpg" onerror="this.src='resources/image/white.jpg'" width="30px" height="30px"></div>
+						&nbsp;&nbsp;<h4 onclick="location.href='listView.hb?cpage=1&search=${sessionScope.co.companyName}&sort=new&career=none&education=none&tag=&where=all&viewOn=f'">${sessionScope.co.companyName}</h4>
 					</div>
 					<h3>${sessionScope.hb.hboardTitle}</h3><br>
 				</div>
@@ -122,6 +125,14 @@
 									<tr>
 										<th>직원수</th>
 										<td>${sessionScope.co.companyWorker}</td>
+									</tr>
+									<tr>
+										<th>조회수</th>
+										<td>${sessionScope.hb.hboardViews}</td>
+									</tr>
+									<tr>
+										<th>찜수</th>
+										<td>${sessionScope.wish}명</td>
 									</tr>
 								</tbody>
 							</table>

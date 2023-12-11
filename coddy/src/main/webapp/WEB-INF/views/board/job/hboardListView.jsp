@@ -163,31 +163,6 @@
                     <div style="width: 100%; height: 70%;">
                         <div class="content_2">
                             <div class="card-list">
-                            	<!--  
-                                <div class="card">
-                                    <div class="card-image"></div>
-                                    <div class="location">대충 지역 어디인지</div>
-                                    <div class="heading">
-                                        <h5>제목</h5>
-                                        <div class="company">기업명</div>
-                                        <div style="display: flex; width: 100%;">
-                                            <div class="info"><i class="fas fa-eye"></i>조회수&nbsp;504</div>
-                                            <label class="container">찜하기
-                                                <input checked="checked" type="checkbox">
-                                                <div class="checkmark">
-                                                    <svg viewBox="0 0 256 256">
-                                                    <rect fill="none" height="512" width="512"></rect>
-                                                    <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                                                </div>
-                                            </label>
-                                        </div>
-                                    </div> 
-                                    <div class="footing">
-                                        <span class="tagList">a</span>
-                                        <span class="tagList">b</span>
-                                    </div>                         
-                                </div>
-                                -->
                                 <c:forEach var="b" items="${requestScope.list}" varStatus="status">
                                     <div class="card">
                                         <div class="card-image" onclick="location.href='boardDetail.hb?hno=${b.hboardNo}'">
@@ -321,7 +296,6 @@
             }
             function onSearch(cp) {
                 let cpage = cp;
-                // let cpage = getParameter("cpage");
                 let search = $("#hboardSearch").val();
                 let sort = $("#hboardSort").val();
                 let career = $("#hboardCareer").val();
@@ -339,7 +313,6 @@
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             }
             function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
-            function addTag(strTag) { $(".tagify").html("<tag title='" + strTag + "' contenteditable='false' spellcheck='false' tabindex='-1' class='tagify__tag ' value='" + strTag + "'><x title='' class='tagify__tag__removeBtn' role='button' aria-label='remove tag'></x><div><span class='tagify__tag-text'>" + strTag + "</span></div></tag>" + $(".tagify").html()); }
         </script>
         <jsp:include page="../../common/footer.jsp" />
     </body>

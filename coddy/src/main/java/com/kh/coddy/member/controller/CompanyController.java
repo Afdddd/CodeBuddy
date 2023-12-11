@@ -179,13 +179,13 @@ public class CompanyController {
 	@GetMapping(value="myPage.hb") public String myBoard(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
-		int listCount = hboardService.selectListCount();
+		int listCount = hboardService.selectListCount(((Company)session.getAttribute("loginCompany")).getCompanyNo());
 		int pageLimit = 5; int boardLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { model.addAttribute("errorMsg", "잘못된 페이지"); return "common/errorPage"; }
 		if(pi.getMaxPage() == 0) { model.addAttribute("errorMsg", "아직 작성한 게시판이 없습니다."); return "common/errorPage"; }
 		else {
-			ArrayList<Hboard>list = hboardService.selectList(pi);
+			ArrayList<Hboard>list = hboardService.selectList(pi, ((Company)session.getAttribute("loginCompany")).getCompanyNo());
 			ArrayList<ArrayList<Hrelation>>tg_list = new ArrayList<ArrayList<Hrelation>>();
 			for(Hboard h:list) { 
 				h.setHboardLocation(new HboardController().getLocationByAddr(Integer.parseInt(h.getHboardLocation())));

@@ -37,4 +37,7 @@ public class HboardDao {
 	public int rejectThumb(SqlSessionTemplate sqlSession, int hboardNo) { return sqlSession.update("hboardMapper.rejectThumb", hboardNo); }
 	public int updateBoard(SqlSessionTemplate sqlSession, Hboard h) { return sqlSession.update("hboardMapper.updateBoard", h); }
 	public int deleteBoard(SqlSessionTemplate sqlSession, int hboardNo) { return sqlSession.update("hboardMapper.deleteBoard", hboardNo); }
+	public int selectListCount(SqlSessionTemplate sqlSession, int companyNo) { return sqlSession.selectOne("hboardMapper.selectListCountForMyBoard", companyNo); }
+	public ArrayList<Hboard> selectList(SqlSessionTemplate sqlSession, PageInfo pi, int companyNo) { int limit = pi.getBoardLimit(); int offset = (pi.getCurrentPage() - 1) * limit; return (ArrayList)sqlSession.selectList("hboardMapper.selectListForMyBoard", companyNo, new RowBounds(offset, limit)); }
+	public int getAllWish(SqlSessionTemplate sqlSession, int hboardNo) { return sqlSession.selectOne("hboardMapper.getAllWish", hboardNo); }
 }

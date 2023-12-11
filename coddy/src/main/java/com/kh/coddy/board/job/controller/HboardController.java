@@ -162,7 +162,7 @@ public class HboardController {
 				log.info("hboardInsertTags={}, ip={}", (Company)(session.getAttribute("loginCompany")), request.getRemoteAddr());
 			}
 			session.setAttribute("alertMsg", "게시글 작성 성공");
-			return "redirect:/listView.hb";  
+			return "redirect:/listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=all&viewOn=f";  
 		}
 		else { model.addAttribute("errorMsg", "게시글 작성 실패"); return "common/errorPage"; }
 	}
@@ -186,6 +186,7 @@ public class HboardController {
 		session.setAttribute("where", where);
 		session.setAttribute("hr", hr);
 		session.setAttribute("geo", geo);
+		session.setAttribute("wish", hboardService.getAllWish(hb.getHboardNo()));
 		try { session.setAttribute("tmapKey", Keys.read(new ClassPathResource("keys/kakaoMap.json").getURL().getPath(), "key.kakaoMap")); }
 		catch (IOException | ParseException e) { e.printStackTrace(); }
 		return "board/job/hboardDetailView"; 
@@ -277,7 +278,7 @@ public class HboardController {
 			return "common/errorPage";
 		}
 		if(pbkdf2.matches(password, ((Company)(session.getAttribute("loginCompany"))).getCompanyPwd())) { 
-			if(hboardService.deleteBoard(h.getHboardNo()) > 0) { session.setAttribute("alertMsg", "삭제완료"); return "redirect:/"; } 
+			if(hboardService.deleteBoard(h.getHboardNo()) > 0) { session.setAttribute("alertMsg", "삭제완료"); return "redirect:/listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=all&viewOn=f"; } 
 			else { model.addAttribute("errorMsg", "처리 오류"); return "common/errorPage"; } 
 		}
 		else { model.addAttribute("errorMsg", "비밀번호 오류"); return "common/errorPage"; }
