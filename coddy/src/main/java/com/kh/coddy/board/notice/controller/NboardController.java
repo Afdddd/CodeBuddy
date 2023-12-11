@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.coddy.board.notice.model.service.NboardService;
-import com.kh.coddy.board.notice.model.service.Nboard;
+import com.kh.coddy.board.notice.model.vo.Nboard;
 
 @Controller
 public class NboardController {
