@@ -17,5 +17,5 @@ public class Project {
 	private String projectStart;
 	private String projectEnd;
 	private String projectLocation;
-	private int ready;
+	private int projectReady;
 }

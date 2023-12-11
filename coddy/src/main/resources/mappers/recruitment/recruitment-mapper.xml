@@ -45,10 +45,10 @@
 	</resultMap>
 	
 	<resultMap id="rStateResultSet" type="rState">
+		<result column="RECRUITMENT_STATE_NO" property="stateNo" />
 		<result column="RECRUITMENT_NO" property="recruitmentNo" />
 		<result column="ROLE" property="position" />
 		<result column="MAX_PERSONNEL" property="maxPersonnel" />
-		<result column="PERSONNEL" property="personnel" />
 	</resultMap>
 
 
@@ -95,10 +95,12 @@
 					   		    WHERE T.TAGS_NAME=#{tagsNo})) 
 	</insert>
 	<insert id="insertState" parameterType="rState">
-		INSERT INTO RECRUITMENT_STATE(RECRUITMENT_NO,
+		INSERT INTO RECRUITMENT_STATE(RECRUITMENT_STATE_NO,
+									  RECRUITMENT_NO,
 									  ROLE,
 									  MAX_PERSONNEL)
-							   VALUES(SEQ_RECRUITMENT.CURRVAL,
+							   VALUES(SEQ_RECRUITMENT_STATE.NEXTVAL,
+							   		  SEQ_RECRUITMENT.CURRVAL,
 							   		  #{position},
 							   		  #{maxPersonnel})	
 	</insert>
@@ -108,7 +110,7 @@
 		  FROM RECRUITMENT 
 		 WHERE RECRUITMENT_DELETE IS NULL
 	</select>
-	
+
 	<select id="selectList" resultMap="recruitmentResultSet">
 		SELECT RECRUITMENT_NO,
 			   RECRUITMENT_TITLE,
@@ -126,6 +128,54 @@
 	    ORDER BY RECRUITMENT_NO DESC
 	</select>
 	
+	
+	<!-- 
+	<select id="selectListCount" parameterType="rSearch" resultType="_int">
+		SELECT DISTINCT COUNT(*) FROM RECRUITMENT R, PRELATION PR, TAGS TG, PROJECT P, MEMBER M
+		WHERE R.RECRUITMENT_NO = PR.RECRUITMENT_NO
+		AND PR.TAGS_NO = TG.TAGS_NO
+		AND R.RECRUITMENT_NO = P.RECRUITMENT_NO 
+		AND M.MEMBER_NO = R.RECRUITMENT_WRITER
+		AND TG.TAGS_NAME IN
+		<foreach collection="tagCareers" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND TG.TAGS_NAME IN
+		<foreach collection="tagTechs" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND R.RECRUITMENT_DELETE IS NULL
+		<if test="recruiting==1">
+		AND P.PROJECT_READY == 0
+		</if>
+		AND (R.RECRUITMENT_TITLE LIKE '%'||#{keyword}||'%' OR M.MEMBER_NAME LIKE '%'||#{keyword}||'%') ORDER BY R.RECRUITMENT_INSERT DESC
+	</select>			
+	
+	
+	<select id="selectList" resultMap="recruitmentResultSet" parameterType="rSearch">
+		SELECT DISTINCT 
+			   R.RECRUITMENT_NO,
+			   R.RECRUITMENT_TITLE,
+			   R.RECRUITMENT_CONTENT,
+			   M.MEMBER_NAME AS "RECRUITMENT_WRITER",
+			   TO_CHAR(RECRUITMENT_INSERT, 'YYYY-MM-DD') AS "RECRUITMENT_INSERT", 
+			   TO_CHAR(RECRUITMENT_START, 'YYYY-MM-DD') AS "RECRUITMENT_START", 
+			   TO_CHAR(RECRUITMENT_END, 'YYYY-MM-DD') AS "RECRUITMENT_END", 			   
+			   R.RECRUITMENT_VIEWS,			 
+			   R.RECRUITMENT_LOCATION,
+			   R.RECRUITMENT_INTRO
+		FROM RECRUITMENT R, PRELATION PR, TAGS TG, PROJECT P, MEMBER M
+		WHERE R.RECRUITMENT_NO = PR.RECRUITMENT_NO
+		AND PR.TAGS_NO = TG.TAGS_NO
+		AND R.RECRUITMENT_NO = P.RECRUITMENT_NO 
+		AND M.MEMBER_NO = R.RECRUITMENT_WRITER
+		AND TG.TAGS_NAME IN
+		<foreach collection="tagCareers" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND TG.TAGS_NAME IN
+		<foreach collection="tagTechs" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND R.RECRUITMENT_DELETE IS NULL
+		<if test="recruiting==1">
+		AND P.PROJECT_READY == 0
+		</if>
+		AND (R.RECRUITMENT_TITLE LIKE '%'||#{keyword}||'%' OR M.MEMBER_NAME LIKE '%'||#{keyword}||'%') ORDER BY R.RECRUITMENT_INSERT DESC
+	</select> 
+ -->
 
 	<select id="getThumbOne" parameterType="recruitment" resultMap="rAttachmentResultSet">
 		SELECT RECRUITMENT_ATTACHMENT_NO, 
@@ -197,6 +247,69 @@
 					 		#{projectEnd})	
 	</insert>
 	
-
+	<select id="selectPopular" resultMap="recruitmentResultSet">
+		SELECT *
+		FROM (
+		    SELECT RECRUITMENT_NO,
+                   RECRUITMENT_TITLE,
+                   TO_CHAR(RECRUITMENT_INSERT, 'YYYY-MM-DD') AS "RECRUITMENT_INSERT",
+                   RECRUITMENT_INTRO
+		    FROM RECRUITMENT
+		    ORDER BY RECRUITMENT_VIEWS DESC
+		)
+		<![CDATA[WHERE ROWNUM <= 3]]>
+	</select>
+	<select id="selectRecent" resultMap="rAttachmentResultSet">
+		SELECT *
+			FROM (
+			    SELECT RECRUITMENT_NO,
+	                   RECRUITMENT_ATTACHMENT_PATH,
+	                   RECRUITMENT_ATTACHMENT_CHANGE
+			    FROM RECRUITMENT_ATTACHMENT
+			    ORDER BY RECRUITMENT_ATTACHMENT_INSERT DESC
+			)
+			<![CDATA[WHERE ROWNUM <= 3]]>
+	</select>
+	
+	<select id="selectRecruitment" parameterType="_int" resultMap="recruitmentResultSet">
+		SELECT  RECRUITMENT_NO,
+				RECRUITMENT_TITLE,
+				RECRUITMENT_CONTENT,
+				MEMBER_NAME AS "RECRUITMENT_WRITER",
+        		RECRUITMENT_INSERT,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,
+        		RECRUITMENT_INTRO
+		FROM RECRUITMENT, MEMBER
+		WHERE RECRUITMENT_WRITER = MEMBER_NO
+		AND RECRUITMENT_NO = #{rno}
+		AND RECRUITMENT_DELETE IS NULL
+	</select>
+	
+	<select id="getAttachmentList" parameterType="recruitment" resultMap="rAttachmentResultSet">
+		SELECT * FROM 
+		RECRUITMENT_ATTACHMENT
+		WHERE RECRUITMENT_NO=#{recruitmentNo} 
+		AND RECRUITMENT_ATTACHMENT_LEVEL=1
+	</select>
+	
+	<select id="getProject" parameterType="recruitment" resultMap="projectResultSet">
+		SELECT * 
+		FROM PROJECT 		 
+		WHERE RECRUITMENT_NO = #{recruitmentNo}
+	</select>
+	
+	<select id="selectStateNo" parameterType="map" resultType="_int">
+		SELECT RECRUITMENT_STATE_NO
+		FROM RECRUITMENT_STATE
+		WHERE RECRUITMENT_NO = TO_NUMBER(#{rno})
+		AND ROLE = #{position}
+	</select>
+	
+	<select id="selectApply" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM APPLY_PERSONNEL
+		WHERE RECRUITMENT_STATE_NO = #{stateNo}
+	</select>
+	
+	
  
 </mapper>

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.Gson;
 import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
@@ -40,7 +42,25 @@ public class RecruitmentController {
 	RecruitmentService rService;
 	
 	@GetMapping("detail.rec")
-	public String recruitmentDetail() {
+	public String recruitmentDetail(int rno, HttpSession session, Model model) {
+		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
+		Recruitment r = rService.selectRecruitment(rno);
+		ArrayList<Prelation> tags = rService.getTagInfo(r); // 태그정보
+		ArrayList<RecruitmentState> state = rService.getState(r); // 지원 현황
+		Rattachment thumOne = rService.getThumbOne(r); // 대표이미지
+		ArrayList<Rattachment> thumList = rService.getAttachmentList(r); // 이미지 목록
+		int wish = rService.getWish(new RecruitmentWishList(memberNo,rno)); // 좋아요 여부
+		Project p = rService.getProject(r);
+		
+		log.info("thumList={}",thumList);
+		
+		model.addAttribute("r",r);
+		model.addAttribute("tags",tags);
+		model.addAttribute("state",state);
+		model.addAttribute("thumOne",thumOne);
+		model.addAttribute("thumList",thumList);
+		model.addAttribute("wish",wish);
+		model.addAttribute("p",p);
 		return "board/recruitment/recruitmentDetailView";
 	}
 	@GetMapping("enrollForm.rec")
@@ -52,17 +72,11 @@ public class RecruitmentController {
 	public String recruitmentInsert(Recruitment r, MultipartFile titleImg ,ArrayList<MultipartFile> img, HttpServletRequest request, Model model, String tagTechName, String[] position, int[] personnelMax) {		
 		// 게시글 insert
 		int result = rService.insertRecruitment(r);
-		log.info("r = {}",r);
-		log.info("tag = {}",tagTechName);
-		log.info("files = {}", img);
-		log.info("position = {}",position.length);
-		log.info("personnel = {}",personnelMax.length);
+
 		
 		// 첨부파일 insert
 		if(result>0) {
-			String path = request.getRealPath("resources\\file_upload\\recruitment\\");
-			log.info("titleImg={}",titleImg);
-			log.info("img = {}",img);
+			String path = request.getRealPath("resources\\file_upload\\recruitment\\");			
 			
 			if(titleImg != null) {
 				UUID uuid = UUID.randomUUID();
@@ -122,8 +136,7 @@ public class RecruitmentController {
 			// 모집인원 insert
 			if(position != null && personnelMax !=null && position.length == personnelMax.length) {		
 				for(int i=0; i<position.length; i++) {
-					RecruitmentState state = new RecruitmentState(r.getRecruitmentNo(),position[i],personnelMax[i],0);
-					log.info("Insert State={}",state);
+					RecruitmentState state = new RecruitmentState(0,r.getRecruitmentNo(),position[i],personnelMax[i]);
 					rService.insertState(state);
 				}							
 			}else {
@@ -148,19 +161,49 @@ public class RecruitmentController {
 		}
 	}
 	
+//	@GetMapping("list.rec")
+//	public String recruitmentList(@RequestParam(value="rpage", defaultValue="1") int currentPage, Model model, HttpSession session,
+//								  @RequestParam(value="tagCareer", defaultValue="")String tagCareer,  @RequestParam(value="tagTech", defaultValue="") String tagTech,@RequestParam(value="search", defaultValue="") String search,@RequestParam(value="recruiting", defaultValue="1")String recruiting ){
 	@GetMapping("list.rec")
-	public String recruitmentList(@RequestParam(value="rpage", defaultValue="1") int currentPage, Model model, HttpSession session) {
+	public String recruitmentList(@RequestParam(value="rpage", defaultValue="1") int currentPage, Model model, HttpSession session){	
+//		String tagTechs = "";
+//		String tagCareers = "";
+//		
+//		if(tagCareer.equals("")) { 
+//			tagCareers="PM,기획,프론트엔드,백엔드,CDN,디자인,네트워크/서버,IOS 앱 개발,AOS 앱 개발,AI학습,게임개발";  
+//		}else {
+//			tagCareers = tagCareer; 
+//		}
+//		
+//		if(tagTech.equals("")) { 
+//			tagTechs="C언어,C++,C#,GO,Java,JavaScript,Spring,React,Node.js,Vue,Swift,Kotlin,Python,Django," +
+//				"Php,Flutter,MySql,MarianDB,MongoDB,OracleDB,Unity,AWS,Docker,Kubernetes,Git,Figma,Window,Linux,";
+//		}else {
+//			tagTechs = tagTech; 
+//		}
+//	
+//		log.info("tagTechs={}",tagTechs);
+//		log.info("tagCareers={}",tagCareers);
+//		log.info("recruiting={}",recruiting);
+//		log.info("search={}",search);
+//		RSearch rSearch = new RSearch(search,tagTechs.split(","),tagCareers.split(","),(recruiting.equals("t"))?1:0);
+		
+//		int listCount = rService.selectListCount(rSearch);
 		int listCount = rService.selectListCount();
 		int pageLimit = 5;
 		int boardLimit = 20;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		Map<String,Integer> wishMap = new HashMap<>(); 		
 		
-		if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { 
+		if(pi.getMaxPage()==0) {
+			return "board/recruitment/recruitmentListView";			
+		}
+		else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { 
 			model.addAttribute("errorMsg", "잘못된 페이지"); 
 			return "common/errorPage"; 
 		}else {
-			ArrayList<Recruitment> list = rService.selectList(pi);		
+//			ArrayList<Recruitment> list = rService.selectList(pi,rSearch);
+			ArrayList<Recruitment> list = rService.selectList(pi);
 			ArrayList<Rattachment>at_list = new ArrayList<Rattachment>();	
 			ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
 			ArrayList<ArrayList<RecruitmentState>>pos_list = new ArrayList<>();
@@ -183,14 +226,13 @@ public class RecruitmentController {
 					ws_list.add(rService.getWishList(wishMap));
 					wishMap.clear();					
 				}				
-			}			
+			}						
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
 			model.addAttribute("at_list", at_list);
 			model.addAttribute("tg_list", tg_list);
 			model.addAttribute("ws_list", ws_list);
-			model.addAttribute("pos_list", pos_list);
-								
+			model.addAttribute("pos_list", pos_list);					
 			return "board/recruitment/recruitmentListView";				
 		}	
 	}
@@ -202,7 +244,45 @@ public class RecruitmentController {
 		RecruitmentWishList rw = new RecruitmentWishList( ((Member)session.getAttribute("loginMember")).getMemberNo(),recruitmentNo );
 		return (rService.getWish(rw) > 0) ? rService.deleteWish(rw): rService.insertWish(rw);
 	}
+
+	@GetMapping(value="popular.rec", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String popularList(){
+		ArrayList<Recruitment> list = rService.selectPopular();
+		return new Gson().toJson(list);
+	}
 	
+	@GetMapping(value="recent.rec", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String recentList(){
+		ArrayList<Rattachment> list = rService.selectRecent();
+		return new Gson().toJson(list);
+	}
+	
+	@GetMapping("selectApply.rec")
+	@ResponseBody
+	public void selectApply(String position, String rno, HttpServletResponse response) {
+		log.info("position = {}",position);
+		log.info("rno = {}",rno);
+		HashMap<String, String> aMap = new HashMap<>();
+		aMap.put("position",position);
+		aMap.put("rno", rno);
+		int result = rService.selectApply(aMap);
+		response.setContentType("application/json; charset=UTF-8");
+		try {
+			response.getWriter().print(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@GetMapping("room.rec")
+	public String room() {	
+		
+		return "project/room";
+	}
 	
 	
 	

@@ -1,6 +1,7 @@
 package com.kh.coddy.board.recruitment.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
@@ -16,16 +17,23 @@ public interface RecruitmentService {
 	int insertImg(Rattachment ra);
 	int insertTag(Prelation rel);
 	int insertState(RecruitmentState state);
+//	int selectListCount(RSearch rs);
 	int selectListCount();
+//	ArrayList<Recruitment> selectList(PageInfo pi, RSearch rs);
 	ArrayList<Recruitment> selectList(PageInfo pi);
 	Rattachment getThumbOne(Recruitment r);
+	ArrayList<Rattachment> getAttachmentList(Recruitment r);
 	ArrayList<Prelation> getTagInfo(Recruitment r);
 	ArrayList<RecruitmentState> getState(Recruitment r);
 	Boolean getWishList(Map<String,Integer> wishMap);	
 	int getWish(RecruitmentWishList rw);
 	String deleteWish(RecruitmentWishList rw);
 	String insertWish(RecruitmentWishList rw);
-	
+	ArrayList<Recruitment> selectPopular(); 
+	ArrayList<Rattachment> selectRecent();
+	Recruitment selectRecruitment(int rno);
+	Project getProject(Recruitment r);
+	int selectApply(Map<String,String>aMap);
 	//프로젝트 생성
 	int createProject(Project p);
 }

@@ -183,8 +183,8 @@
                     <h3>모집인원</h3>
                         <select id="skills" name="position">
                             <option>PM</option>                                            
-                            <option>Front-End</option>                             
-                            <option>Back-End</option>                             
+                            <option>FrontEnd</option>                             
+                            <option>BackEnd</option>                             
                             <option>CDN</option>                             
                             <option>Designer</option>                             
                             <option>Network/Server</option>                             
@@ -310,18 +310,16 @@ function loadImg(inputFile, num){
         $("#personnel_add").on("click",function(){
             let $list = $(  "<div class='project_member'>"+
                                 "<select id='skills' name='position'"+
-                                    "<option>누구나 참여 가능</option>"+
-                                    "<option>PM</option>"+
-                                    "<option>기획</option>"+
-                                    "<option>프론트엔드</option>"+
-                                    "<option>백엔드</option>"+
+                                    "<option>PM</option>"+                                 
+                                    "<option>FrontEnd</option>"+
+                                    "<option>BackEnd</option>"+
                                     "<option>CDN</option>"+
-                                    "<option>디자인</option>"+
-                                    "<option>네트워크/서버</option>"+
-                                    "<option>IOS 앱 개발</option>"+
-                                    "<option>AOS 앱 개발</option>"+
-                                    "<option>AI학습</option>"+
-                                    "<option>게임개발</option>"+
+                                    "<option>Designer</option>"+
+                                    "<option>Network/Server</option>"+
+                                    "<option>IOS</option>"+
+                                    "<option>AOS</option>"+
+                                    "<option>AI</option>"+
+                                    "<option>Game</option>"+
                                 "</select>"+
                                 "<input type='number' name='personnelMax'>"+
                             "</div>");           
