@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="introMapper"> 
+
 	<resultMap id="introResultSet" type="intro">
 			<result column="IBOARD_NO" property="iboardNo"/>
 			<result column="IBOARD_TITLE" property="iboardTitle"/>
@@ -89,7 +90,7 @@
 		 	   I.IBOARD_VIEWS AS "IBOARD_VIEWS",
 		 	   TO_CHAR(I.IBOARD_INSERT, 'YYYY-MM-DD') AS "IBOARD_INSERT",
 		 	   P.PROJECT_START AS "PROJECT_START",
-		 	   P.PROJECT_END AS "PROJECT_END",
+		 	   P.PROJECT_END AS "PROJECT_END"
 		 	   FROM IBOARD I, PROJECT P, PRELATION PR, TAGS TG 
 		WHERE I.PROJECT_NO = P.PROJECT_NO
 		AND P.RPOJECT_NO = PR.PROJECT_NO 
@@ -103,11 +104,16 @@
 		</select>
 	
 	<select id="selectattachment" parameterType="introAttachment" resultMap="introAttachmentResultSet">
-                SELECT 
-                  A.IATTACHMENT_PATH || A.IATTACHMENT_CHANGE "TITLEIMG"
-				  FROM IATTACHMENT A
-				  JOIN IBOARD I USING(IBOARD_NO)
-                 WHERE IBOARD_NO = #{iboardNo}
+     SELECT IATTACHMENT_NO,
+            IBOARD_NO, 
+            IATTACHMENT_ORIGIN, 
+            IATTACHMENT_CHANGE, 
+            IATTACHMENT_PATH,
+            IATTACHMENT_INSERT, 
+            IATTACHMENT_LEVEL 
+      FROM IATTACHMENT 
+     WHERE IBOARD_NO = #{iboardNo} 
+       AND IATTACHMENT_LEVEL = 1
 	</select>
 	
 	<update id="increaseCount" parameterType="_int">
@@ -131,5 +137,47 @@
 		 WHERE IBOARD_NO=#{iboardNo} 
 		   AND LIKES_MEMBER = #{iboardContent}
     </select>
+    
+  	<select id="getWish" parameterType="likes" resultType="_int">
+	  	SELECT COUNT(*) 
+	  	  FROM LIKES 
+	     WHERE IBOARD_NO = #{iboardNo} 
+	  	   AND LIKES_MEMBER = #{likesMember}
+  	</select>
+	<delete id="deleteWish" parameterType="likes">
+	DELETE 
+	  FROM LIKES 
+	 WHERE LIKES_MEMBER = #{likesMember} 
+	   AND IBOARD_NO = #{iboardNo}
+	</delete>
+	<insert id="insertWish" parameterType="likes">
+	INSERT INTO LIKES(LIKES_MEMBER,
+	                  IBOARD_NO) 
+	           VALUES(#{likesMember},
+	                  #{iboardNo})
+    </insert>  
+    
+    <insert id="insertReply">
+    	INSERT INTO IREPLY(IREPLY_NO,
+    					IBOARD_NO,
+    					MEMBER_NO,
+    					IREPLY_CONTENT,
+    					IREPLY_INSERT)
+    				VALUES(SEQ_IREPLY.NEXTVAL,
+    					#{iboardNo},
+    					#{memberNo},
+    					#{ireplyContent},
+    					SYSDATE)
+    </insert>
+    
+    <insert id="insertReplies">
+    	INSERT INTO REPLY(IREPLY_NO,
+    					IBOARD_NO,
+    					MEMBER_NO,
+    					IREPLY_CONTENT,
+    					IREPLY_INSERT,
+    					IREPLY_PARENT
+    	)
+    </insert>
 </mapper>
 	

@@ -17,16 +17,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.coddy.board.intro.model.service.IntroService;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
+import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.Isearch;
-import com.kh.coddy.board.job.model.vo.Hattachment;
-import com.kh.coddy.board.job.model.vo.Hboard;
-import com.kh.coddy.board.job.model.vo.Hrelation;
+import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.vo.PageInfo;
@@ -96,7 +96,7 @@ public class IntroController {
 		
 		
 		for(IBoard ib: list) { 
-			listi.add(introService.selectattachment(ib.getIboardNo())); 
+			listi.add(introService.selectattachment(ib)); 
 			tg_list.add(introService.getTagInfo(ib));
 			if(session.getAttribute("loginMember") != null) {
 			ws_list.add(introService.getWishList(ib, ((Member)(session.getAttribute("loginMember"))).getMemberNo())); }
@@ -118,12 +118,13 @@ public class IntroController {
 		return "common/errorPage"; }
 	
 	else {
+		
 		ArrayList<IBoard> list = introService.selectList(pi, is);
 		ArrayList<Iattachment> listi = new ArrayList<Iattachment>();
 		ArrayList<ArrayList<Prelation>> tg_list = new ArrayList<ArrayList<Prelation>>();
 		ArrayList<Boolean> ws_list = new ArrayList<Boolean>();
 		for(IBoard ib : list) { 
-			listi.add(introService.selectattachment(ib.getIboardNo()));
+			listi.add(introService.selectattachment(ib));
 			tg_list.add(introService.getTagInfo(ib));
 			if(session.getAttribute("loginMember") != null) { ws_list.add(introService.getWishList(ib, ((Member)(session.getAttribute("loginMember"))).getMemberNo())); }
 		}
@@ -148,6 +149,12 @@ public class IntroController {
 		
 		return "board/intro/introEnrollForm";
 	
+	}
+	
+	@GetMapping("introDetail.bo")
+	public String DetailSelect() {
+		
+		return "board/intro/introDetailView";
 	}
 	
 	@PostMapping(value="introinsert.bo")
@@ -213,6 +220,24 @@ public class IntroController {
 		}
 		
 		return changeName;
+	}
+	
+	@GetMapping(value="introWish.hb", produces="text/html; charset=UTF-8") 
+	@ResponseBody 
+	public String wish(HttpSession session, String iboardNo) {
+		
+		Likes iw = new Likes(((Member)session.getAttribute("loginMember")).getMemberNo(), Integer.parseInt(iboardNo));
+		
+		return (introService.getWish(iw) > 0) ? introService.deleteWish(iw) : introService.insertWish(iw);
+	}
+	
+	@ResponseBody
+	@RequestMapping("insertReply.bo")
+	public String insertReply(Ireply r, Model model) {
+		
+		int result = introService.insertReply(r);
+		return result > 0 ? "success" : "fail"; 
+		
 	}
 	
 

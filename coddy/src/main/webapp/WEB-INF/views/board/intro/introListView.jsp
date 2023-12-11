@@ -324,12 +324,26 @@
       </div>
     </div>
 
-    <div class="search-bar">
-
-      <input class="search-input" placeholder="기술스택">
-      <input class="search-input" placeholder="프로젝트 이름">    
-         
+    <div style="width: 100%; height: 60%; display: flex; border: 2px solid silver; padding: 1%;">
+      <h5 style="width: 10%; margin: auto;" align="center">#태그</h5>
+      <div style="width: 90%; margin: auto;">
+          <jsp:include page="../../common/tagAll.jsp" />
+      </div>
     </div>
+    
+    <div style="float: right; display: flex; margin-top: 2%; margin-bottom: 2%;">
+          <select name="hboardSort" id="hboardSort">
+              <option value="new" selected>최신순</option>
+              <option value="old">끝난순</option>
+              <option value="view">조회순</option>
+              <option value="like">좋아요순</option>
+          </select>
+          &nbsp;
+          <input type="search" class="form-control form-control-lg" id="hboardSearch" name="keyword">
+          &nbsp;&nbsp;
+          <span onclick="onSearch();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
+    </div>
+    
     <div class="">
     <c:if test="${not empty sessionScope.loginMember}">
       <button class="write_button" onclick="location.href='introForm.bo'">게시글 작성</button>
@@ -342,7 +356,9 @@
         <div class="card">
           <div class="cardTop">
             <div class="heading">
-              <div class="card-image"></div>
+              <div class="card-image" onclick="location.href='introDetail.ib?ino=${i.iboardNo}'">
+              <img src="${requestScope.listi[status.index].iattachmentPath}/${requestScope.listi[status.index].iattachmentChange}" onerror="this.src='resources/image/white.jpg'">
+              </div>
               <div class="title"><h5>${b.iboardTitle}</h5></div>
             </div>
             
@@ -351,14 +367,30 @@
             <div class="notHeading">
               <div class="explain"><p>${b.iboardContent}</p></div>  
               <div class="author"> By <span class="name"><b>${b.iboardWriter}</b></span><br>조회수 : ${b.iboardViews}<br>	 작성일 :  ${b.iboardInsert}</div>
-              <label class="container">
-                <input checked="checked" type="checkbox">
-                <div class="checkmark">
-                  <svg viewBox="0 0 256 256">
-                  <rect fill="none" height="512" width="512"></rect>
-                  <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
-                </div>
-              </label> 
+            <c:if test="${not empty sessionScope.loginMember}">
+	         	<c:choose>
+	            	<c:when test="${requestScope.ws_list[status.index]}">
+		              <label class="container">
+		                <input type="checkbox" checked="checked" name="favorite" onclick="onWish('${i.iboardNo}');">
+		                <div class="checkmark">
+		                  <svg viewBox="0 0 256 256">
+		                  <rect fill="none" height="512" width="512"></rect>
+		                  <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+		                </div>
+		              </label>
+		            </c:when>
+		           <c:otherwise>
+		             <label class="container">
+		               <input type="checkbox" name="favorite" onclick="onWish('${i.iboardNo}');">
+		                <div class="checkmark">
+		                  <svg viewBox="0 0 256 256">
+		                  <rect fill="none" height="512" width="512"></rect>
+		                  <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
+		                </div>
+		             </label>
+		           </c:otherwise>
+	          </c:choose>
+         </c:if>  
             </div>
            
           </div>
@@ -415,6 +447,41 @@
       $(".card").css("display", "inline-block");
       $(".container").css("width","0%");
     });
-  </script>
-  </body>
+    
+    $(document).ready(function() {
+        $("#iboardSearch").val(getParameter("search"));
+        $("#iboardSort").val(getParameter("sort"));
+        tagifyAll.addTags(getParameter("tag"));
+    })
+    
+   function onWish(e) {
+            $.ajax({
+		url: "introWish.hb",
+ 				type: "get",
+		data: {iboardNo: e},
+		success: function(result) { console.log(result); },
+		error: function() { console.log("좋아요 실패"); }
+		});
+            
+   }
+    
+   function onSearch() {
+        let cpage = 1;
+        let search = $("#iboardSearch").val();
+        let sort = $("#iboardSort").val();
+        let tag = $("#tagAllName").val();
+        tag = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tag, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+        location.href='introlist.bo?cpage='+cpage+'&search='+search+'&sort='+sort+'&tag='+tag;
+   }
+   function getParameter(name) {
+       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+       var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+       return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+   }
+   
+   function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
+   
+</script>
+
+</body>
 </html>

@@ -26,40 +26,29 @@
 
             <table id="contentArea" align="center" class="table">
                 <tr>
-                    <th>${ requestScope.b.cboardTitle }</th>
+                    <th>제목 : ㄴㅁㅇㄹㄴㅇㄹㅇㄴㄹㄴㅁㄻㄴㅇㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㄹㅇㄴㄹ</th>
                 </tr>
                 <tr>
-                    <th>${ requestScope.c.cboardWriter }</th>
-                    <th>${ requestScope.c.cboardDelte }</th>
-                    <th>${ requestScope.c.cboardViews }</th>
+                    <th>작성자 : ㄴㅇㄹㄴㅇ</th>
                 </tr>
                 <tr>
-                    <th>첨부파일</th>
-                    <td colspan="3">
-                    	<c:choose>
-                    		<c:when test="${ empty requestScope.c.originName }">
-                    			첨부파일이 없습니다.
-                    		</c:when>
-                    		<c:otherwise>
-                        		<a href="${ requestScope.c.changeName }" 
-                        		   download="${ requestScope.c.originName }">
-                        			${ requestScope.c.originName }
-                        		</a>
-                        	</c:otherwise>
-                    	</c:choose>
-                    </td>
+                    <th>작성일 : ㄴㅇㅁㄹㄴㄹ</th>
                 </tr>
                 <tr>
-                    <th>내용</th>
-                    <td colspan="3"></td>
+                	<th>사용기술 / 언어</th>
                 </tr>
                 <tr>
+                	<th>내용</th>
                     <td colspan="4">
 	                    <p style="height:150px;">
-	                    	${ requestScope.c.cboardContent }
+	                    
 	                    </p>
                     </td>
                 </tr>
+                <tr>
+                	
+                </tr>
+                
             </table>
             <br>
 
@@ -124,99 +113,65 @@
                         <td colspan="3">댓글(<span id="rcount">0</span>)</td>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody>           
                 </tbody>
             </table>
         </div>
         <br><br>
-
+  
+        
     </div>
     
-    <!--
     <script>
-    	$(function() {
-    		
-    		// 댓글리스트 조회용 선언적 함수 호출
-    		selectReplyList();
-    		
-    		// 만약, 댓글이 실시간으로 달리는걸 보고싶다면?
-    		setInterval(selectReplyList, 1000);
-    		
-    	});
-    	
-    	function addReply() {
-    		
-    		// 댓글 작성 요청용 ajax 요청
-    		
-    		// 댓글내용이 있는지 먼저 검사 후
-    		// 댓글 내용 중 공백 제거 후 길이가 0 이 아닌 경우
-    		// => textarea 가 form 태그 내부에 있지 않음
-    		//    (required 속성으로 필수 입력값임을 나타낼 수 없음)
-    		if($("#content").val().trim().length != 0) {
-    			
-    			$.ajax({
-    				url : "rinsert.bo",
-    				type : "get",
-    				data : { // Ajax 요청 또한 Spring 에서 커맨드 객체 방식 사용 가능
-    					refBoardNo : ${ requestScope.c.cboardNo }, 
-    					replyWriter : "${ sessionScope.loginUser.userId }", 
-    					replyContent : $("#content").val()
-    				},
-    				success : function(result) { 
-    					
-    					if(result == "success") {
-    						
-    						// 댓글 작성 성공 시
-    						selectReplyList();
-    						$("#content").val("");
-    						
-    					}
-    					
-    				},
-    				error : function() {
-    					console.log("댓글 작성용 ajax 통신 실패!");
-    				}
-    			});
-    			
-    		} else {
-    			
-    			alertify.alert("Alert", "댓글 작성 후 등록을 요청해주세요.", function(){ alertify.success('Ok'); });	
-    		}
-    	}
-    	
-    	function selectReplyList() {
-    		
-    		// 해당 게시글에 딸린 댓글 조회 요청용 ajax 요청
-    		$.ajax({
-    			url : "rlist.bo",
-    			type : "get",
-    			data : {bno : ${ requestScope.c.cboardNo }},
-    			success : function(result) {
-    				
-    				// console.log(result);
-    				
-    				let resultStr = "";
-    				
-    				for(let i = 0; i < result.length; i++) {
-    					
-    					resultStr += "<tr>"
-    							   + 	"<th>" + result[i].replyWriter + "</th>"
-    							   + 	"<td>" + result[i].replyContent + "</td>"
-    							   +	"<td>" + result[i].createDate + "</td>"
-    							   + "</tr>";
-    				}
-    				
-    				$("#replyArea>tbody").html(resultStr);
-    				$("#rcount").text(result.length);
-    				
-    			},
-    			error : function() {
-    				console.log("댓글리스트 조회용 ajax 통신 실패!");
-    			}
-    		});
-    	}
+		// Ajax 댓글 작성하기
+		function insertReply(){
+			
+			if($("#comment").val().trim().length != 0){
+				// 댓글일 때
+				$.ajax({
+					url : "insertReply.bo",
+					data : {
+						iboardNo : ${i.bno}
+						, ireplyContent : $("#comment").val()
+						, memberNo : '${loginMember.memberNo}'
+					}, success : function(status){
+						
+						if(status == "success"){
+							// 전체 댓글 리스트 갱싱
+							selectReplyList();
+							$("#comment").val("");
+						}
+					}
+				
+				})
+			}
+		}
+		
+		// Ajax 대댓글 작성하기
+		function insertReplies(repNo){
+			
+			if($("#insertReplies").val().trim().length != 0){
+				// 대댓글일 때
+				$.ajax({
+					url : "",
+					data : {
+						iboardNo : ${i.bno}
+						, repContent : $("#insertReplies").val()
+						, memberNo : '${loginMember.memberNo}'
+						, refRepNo : repNo
+					}, success : function(status){
+						if(status == "success"){
+							// 전체 댓글 리스트 갱신
+							selectReplyList();
+							// 작성해놓은 대댓글 삭제
+							$("#insertReplies").val("");
+							
+						}
+					}
+				})
+			}
+		}
     </script>
-    -->
     
     
 </body>

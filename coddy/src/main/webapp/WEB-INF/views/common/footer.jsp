@@ -94,7 +94,7 @@
 					<td style="padding-right : 15px; padding-top : 30px; text-align : center"> |</td>
 					<td colspan="2" style="padding-top : 30px; text-align : center"><a href="#"><img src="resources/image/meetgo_logo.png" style="height : 50px; width : 50px;"></a></td>
 					<td colspan="2" style="padding-top : 30px; text-align : center"><a href="#"><img src="resources/image/mbtingLoggo2.png" style="height : 50px; width : 50px;"></a></td>
-					<td colspan="2" style="padding-top : 30px; text-align : center"><a href="#">원진이네</a></td>
+					<td colspan="2" style="padding-top : 30px; text-align : center"><a href="#"><img src="resources/image/logo2.png" style="height : 50px; width : 50px;"></a></td>
 				</tr>
 			</table>
         </div>
