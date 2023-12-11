@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="cboardMapper">
+    <insert id="insertBoard" parameterType="cboard">
+        INSERT INTO CBOARD (CBOARD_NO, 
+        					CBOARD_TITLE, 
+        					CBOARD_CONTENT, 
+        					CBOARD_WRITER, 
+        					ORIGIN_NAME, 
+        					CHANGE_NAME)
+        VALUES(SEQ_BNO.NEXTVAL, 
+        		#{cboardTitle}, 
+        		#{cboardContent}, 
+        		#{cboardWriter}, 
+        		#{originName}, 
+        		#{changeName})
+    </insert>
+</mapper>
