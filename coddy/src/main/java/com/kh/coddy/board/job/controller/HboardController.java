@@ -61,7 +61,7 @@ public class HboardController {
 		HSearch hs = new HSearch(search, education.split(" "), career.split(" "), null, tags.split(","), (active.equals("t"))?1:0, getAddressRangeByLocation(where).split(",")[0], getAddressRangeByLocation(where).split(",")[1]);
 		if(career.equals("none")) { hs.setCareer(("none,intern,newcomer,junior,middle,senior").split(",")); }
 		if(education.equals("none")) { hs.setEducation(("none,highSchool,juniorCollege,university,master,doctor,professor").split(",")); }
-		if(sort.equals("new") || sort.equals("")) { hs.setSort("HBOARD_INSERT"); }
+		if(sort.equals("new") || sort.equals("")) { hs.setSort("H.HBOARD_NO"); }
 		else if(sort.equals("old")) { hs.setSort("HBOARD_END"); }
 		else if(sort.equals("view")) { hs.setSort("HBOARD_VIEWS"); }
 		else { hs.setSort("HBOARD_SALARY"); }

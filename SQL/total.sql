@@ -261,6 +261,19 @@ INSERT INTO COMPANY(COMPANY_NO, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_
 
 "결제 산업의 리딩컴퍼니 엔에이치엔한국사이버결제와 함께 결제 산업의 변화와 혁신을 선도할 열정있는 인재를 기다립니다."', 201, 72000000);
 INSERT INTO COMPANY(COMPANY_NO, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_NAME, COMPANY_OWNER, COMPANY_BNO, COMPANY_INFO, COMPANY_WORKER, COMPANY_SALARY) VALUES(SEQ_COMPANY.NEXTVAL, 'soomgo', '$2a$10$J1rPzY5.J8mb8DhHjnv4t.ncEytRQ2Y5ejOCU2Tdcrtv3mI30YR5q', 'soomgo@coddy.com', 'Soomgo', 'KIM ROBIN H', 0000000003, '(주)브레이브모바일은 통신판매중개자로서 통신판매의 당사자가 아니며 개별 판매자가 제공하는 서비스에 대한 이행, 계약사항 등과 관련한 의무와 책임은 거래당사자에게 있습니다.', 51, 60000000);
+INSERT INTO COMPANY(COMPANY_NO, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_NAME, COMPANY_OWNER, COMPANY_BNO, COMPANY_INFO, COMPANY_WORKER, COMPANY_SALARY) VALUES(SEQ_COMPANY.NEXTVAL, 'enuri', '$2a$10$J1rPzY5.J8mb8DhHjnv4t.ncEytRQ2Y5ejOCU2Tdcrtv3mI30YR5q', 'enuri@coddy.com', '(주)써머스플랫폼', '정희정', 0000000004, '㈜써머스플랫폼의 전신인 에누리닷컴은 1998년 5월 국내 최초 가격비교 사이트로 시작해 지속적으로 객관적이고 정확한 상품 및 가격 정보를 고객에게 제공하고있습니다.', 201, 90000000);
+INSERT INTO COMPANY(COMPANY_NO, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_NAME, COMPANY_OWNER, COMPANY_BNO, COMPANY_INFO, COMPANY_WORKER, COMPANY_SALARY) VALUES(SEQ_COMPANY.NEXTVAL, 'inflearn', '$2a$10$J1rPzY5.J8mb8DhHjnv4t.ncEytRQ2Y5ejOCU2Tdcrtv3mI30YR5q', 'inflearn@coddy.com', '인프랩 (인프런)', '이형주', 4998100612, '우리는 때로 무언가를 배워야만 합니다.
+
+꿈을 이루기 위해서, 하고 싶은걸 해나가기 위해선 그 분야에 대한 배움이 가장 기본적인 요소이기 때문입니다. 하지만, 모두에게 배우기 좋은 환경이 보장 되진 않죠.? 너무 비싸서, 거리가 멀어서, 여러 이유로 당연하다고 생각되어 지는것들이 어떤 누군가에게는 사치가 되기도 합니다. 인프런은 그런 현실에 도전하려 합니다.
+
+인프런은 누구나, 경제적으로 시간적 제약없이 내가 원하는 것을 배우고, 지식을 나눌 수 있는 공간입니다. 현재 2,000여개가 넘는 학습 콘텐츠, 95만 명의 유저가 함께하고 있습니다.
+
+인프런 서비스를 운영하는 (주)인프랩은 2017년 4월 법인설립 이후 매년 3배가 넘는 성장을 이뤄내고, 단단한 팀워크를 지니고 있습니다. 2021년 12월, 월 거래액 21억 원을 기록, 2021년에는 한국투자파트너스, 미래에셋캐피탈, 본엔젤스로부터 60억 원 규모의 시리즈 A 투자를 유치했습니다.
+
+앞으로 인프런은 일하는 사람들의 성장을 돕는 온라인 강의 플랫폼 뿐만 아니라 1:1 멘토링, 채용 등 다양한 커리어 서비스를 제공하며 IT 분야의 전문화된 커리어 성장을 돕는 서비스로 거듭나려 합니다. 그리고 이 여정을 함께 걸어갈 멋진 동료들을 찾고 있습니다.
+
+성장하고 싶은 모든 사람들이 더 나아지는 과정에 인프런이 보탬이 되기를 바랍니다.
+당신의 성장을 늘 응원하겠습니다.', 51, 120000000);
 
 COMMIT;
 
@@ -692,6 +705,50 @@ INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_S
 2021. 02: ‘바로 견적’ 매칭 서비스 출시
 2020. 12: 휴먼테크놀로지어워드 수상', 4, TO_DATE('11-08-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('12-08-2023 00:00:00','MM-DD-YYYY HH24:MI:SS'), 64000000, 'none', 'none', '06160');
 
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, '[스마트택배] 스윗트래커CIC_인프라 담당 채용', '[스마트택배] 스윗트래커CIC_인프라 담당 채용, 어떤 일을 하나요?
+[스마트택배] 스윗트래커CIC_인프라 담당 채용
+
+주요업무
+? Public Cloud(AWS, KT) 서비스 운영관리
+? On-Premise 서버 운영관리
+? 보안장비(방화벽/IPS/VPN) 운영관리
+
+자격요건
+? 학력 : 학력무관
+? 경력 : 2년~ 8년
+? 보안장비 운영 경험자
+? Cloud 서비스 운영 경험자
+? 리눅스 운영 경험자
+
+우대사항
+? H/W, S/W 보안관리 경험자 우대
+? 개인정보보호 보안관리 경험자 우대
+? 동료와의 커뮤니케이션 협업이 즐거우신분
+
+혜택 및 복지
+4대보험/퇴직연금/건강검진지원/복지휴가/월요일점심시간1시간30분/월1회3시간 조기퇴근/웰컴키트/사내동호회/카페테리아/어버이날감사선물/경조사지원/리조트사용/장기근속휴가지원/명절상품권지급/성과급지급/매주금요일시차출퇴근제운영/임직원구매지원/임직원근로복지대출/', 5, TO_DATE('12-13-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('03-15-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 90000000, 'university', 'middle', '08502');
+
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, 'React Native 개발자 (경력 1년 이상)', '주요업무
+- TypeScript, React Native 를 기반으로 Android / iOS 애플리케이션을 개발하고 배포합니다.
+- 모바일 영상 플레이어, OAuth 를 비롯한 각 서비스에 필요한 기능들을 구현, 개선 합니다.
+- 상황에 맞게 적절한 형태로 네이티브 구현과 웹앱 구현을 나눠 진행합니다.
+- 시스템 전반의 성능 최적화를 위해 API 호출 최소화 / 렌더링 최적화 / 번들링 최적화 등을 상시로 진행합니다.
+- DataDog, Sentry 등의 APM을 통해 사용자 디바이스에서 발생하는 에러에 대해서 추적하고 해결합니다.
+- Figma를 통해 디자이너와 함께 사용자를 위한 UI/UX 개선을 고민하고 적용합니다.
+- Swagger, Codegen 기반으로 백엔드 개발팀과 함께 데이터에 대해 협업합니다.
+- 웹 프론트엔드 개발파트와 함께 사용할 공통의 라이브러리 등을 개발/개선합니다.
+
+자격요건
+아래 개발팀의 미션과 가치에 동의하시는 분이어야 합니다.
+https://tech.inflab.com/20231117-devteam-value/
+
+- JavaScript, TypeScript 에 대한 이해가 있으신 분
+- React Native 사용 경험이 있는 분
+- Android/iOS 다양한 환경과 디바이스에 적합한 UI/UX에 전반적인 이해를 갖춘 분
+- CodePush 등을 이용한 효율적인 배포 관리 경험이 있는 분
+- HTTP 통신에 대해 기본적인 이해가 있으신 분
+- Git과 Github에 대한 기본적인 사용법을 알고 있고, Rebase, Merge, Squash 에 대해 이해하고 계신 분', 6, TO_DATE('12-11-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('01-25-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 120000000, 'none', 'junior', '13494');
+
 CREATE TABLE HWISHLIST (
 	HWISHLIST_MEMBER	NUMBER		NOT NULL,
 	HBOARD_NO	NUMBER		NOT NULL,
@@ -726,6 +783,8 @@ CREATE TABLE HATTACHMENT (
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 3, 'pcpXcPaKAYas7AMLgewVc.jpg', 'f02c6a8b-1084-4e0b-bdea-8fc0afc95205_pcpXcPaKAYas7AMLgewVc.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 1, 'LAoD-XZaVF1c2wrySrLrt.JPG', '086eb887-515e-44cf-a64b-2972bb44ddd8_LAoD-XZaVF1c2wrySrLrt.JPG', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 2, 'TbAr4BVz11JIPt_jb_yDc.png', 'f67ef705-8562-4a0b-aeec-ff8de2a5bd7e_TbAr4BVz11JIPt_jb_yDc.png', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 4, 'ISJr977sDyqHcQBrKI5BQ.jpg', 'c18a5898-e0c6-4241-8df6-591b0f9a486d_ISJr977sDyqHcQBrKI5BQ.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 5, 'zWVCtXZfCDVujmzobblNq.png', '9cb81c12-ac1d-477f-8025-f30c0c5829bc_zWVCtXZfCDVujmzobblNq.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 
 CREATE TABLE HRELATION (
 	HBOARD_NO	NUMBER		NOT NULL,
@@ -754,6 +813,11 @@ INSERT INTO HRELATION VALUES(3, 44);
 INSERT INTO HRELATION VALUES(3, 45);
 INSERT INTO HRELATION VALUES(3, 46);
 INSERT INTO HRELATION VALUES(3, 47);
+INSERT INTO HRELATION VALUES(4, 40);
+INSERT INTO HRELATION VALUES(4, 50);
+INSERT INTO HRELATION VALUES(5, 11);
+INSERT INTO HRELATION VALUES(5, 43);
+INSERT INTO HRELATION VALUES(5, 44);
 
 COMMIT;
 

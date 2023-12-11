@@ -398,6 +398,50 @@ INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_S
 2021. 02: ‘바로 견적’ 매칭 서비스 출시
 2020. 12: 휴먼테크놀로지어워드 수상', 4, TO_DATE('11-08-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('12-08-2023 00:00:00','MM-DD-YYYY HH24:MI:SS'), 64000000, 'none', 'none', '06160');
 
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, '[스마트택배] 스윗트래커CIC_인프라 담당 채용', '[스마트택배] 스윗트래커CIC_인프라 담당 채용, 어떤 일을 하나요?
+[스마트택배] 스윗트래커CIC_인프라 담당 채용
+
+주요업무
+? Public Cloud(AWS, KT) 서비스 운영관리
+? On-Premise 서버 운영관리
+? 보안장비(방화벽/IPS/VPN) 운영관리
+
+자격요건
+? 학력 : 학력무관
+? 경력 : 2년~ 8년
+? 보안장비 운영 경험자
+? Cloud 서비스 운영 경험자
+? 리눅스 운영 경험자
+
+우대사항
+? H/W, S/W 보안관리 경험자 우대
+? 개인정보보호 보안관리 경험자 우대
+? 동료와의 커뮤니케이션 협업이 즐거우신분
+
+혜택 및 복지
+4대보험/퇴직연금/건강검진지원/복지휴가/월요일점심시간1시간30분/월1회3시간 조기퇴근/웰컴키트/사내동호회/카페테리아/어버이날감사선물/경조사지원/리조트사용/장기근속휴가지원/명절상품권지급/성과급지급/매주금요일시차출퇴근제운영/임직원구매지원/임직원근로복지대출/', 5, TO_DATE('12-13-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('03-15-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 90000000, 'university', 'middle', '08502');
+
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, 'React Native 개발자 (경력 1년 이상)', '주요업무
+- TypeScript, React Native 를 기반으로 Android / iOS 애플리케이션을 개발하고 배포합니다.
+- 모바일 영상 플레이어, OAuth 를 비롯한 각 서비스에 필요한 기능들을 구현, 개선 합니다.
+- 상황에 맞게 적절한 형태로 네이티브 구현과 웹앱 구현을 나눠 진행합니다.
+- 시스템 전반의 성능 최적화를 위해 API 호출 최소화 / 렌더링 최적화 / 번들링 최적화 등을 상시로 진행합니다.
+- DataDog, Sentry 등의 APM을 통해 사용자 디바이스에서 발생하는 에러에 대해서 추적하고 해결합니다.
+- Figma를 통해 디자이너와 함께 사용자를 위한 UI/UX 개선을 고민하고 적용합니다.
+- Swagger, Codegen 기반으로 백엔드 개발팀과 함께 데이터에 대해 협업합니다.
+- 웹 프론트엔드 개발파트와 함께 사용할 공통의 라이브러리 등을 개발/개선합니다.
+
+자격요건
+아래 개발팀의 미션과 가치에 동의하시는 분이어야 합니다.
+https://tech.inflab.com/20231117-devteam-value/
+
+- JavaScript, TypeScript 에 대한 이해가 있으신 분
+- React Native 사용 경험이 있는 분
+- Android/iOS 다양한 환경과 디바이스에 적합한 UI/UX에 전반적인 이해를 갖춘 분
+- CodePush 등을 이용한 효율적인 배포 관리 경험이 있는 분
+- HTTP 통신에 대해 기본적인 이해가 있으신 분
+- Git과 Github에 대한 기본적인 사용법을 알고 있고, Rebase, Merge, Squash 에 대해 이해하고 계신 분', 6, TO_DATE('12-11-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('01-25-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 120000000, 'none', 'junior', '13494');
+
 DROP TABLE HWISHLIST;
 
 CREATE TABLE HWISHLIST (
@@ -435,6 +479,8 @@ CREATE TABLE HATTACHMENT (
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 3, 'pcpXcPaKAYas7AMLgewVc.jpg', 'f02c6a8b-1084-4e0b-bdea-8fc0afc95205_pcpXcPaKAYas7AMLgewVc.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 1, 'LAoD-XZaVF1c2wrySrLrt.JPG', '086eb887-515e-44cf-a64b-2972bb44ddd8_LAoD-XZaVF1c2wrySrLrt.JPG', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 2, 'TbAr4BVz11JIPt_jb_yDc.png', 'f67ef705-8562-4a0b-aeec-ff8de2a5bd7e_TbAr4BVz11JIPt_jb_yDc.png', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 4, 'ISJr977sDyqHcQBrKI5BQ.jpg', 'c18a5898-e0c6-4241-8df6-591b0f9a486d_ISJr977sDyqHcQBrKI5BQ.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 5, 'zWVCtXZfCDVujmzobblNq.png', '9cb81c12-ac1d-477f-8025-f30c0c5829bc_zWVCtXZfCDVujmzobblNq.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 
 DROP TABLE HRELATION;
 
@@ -465,5 +511,10 @@ INSERT INTO HRELATION VALUES(3, 44);
 INSERT INTO HRELATION VALUES(3, 45);
 INSERT INTO HRELATION VALUES(3, 46);
 INSERT INTO HRELATION VALUES(3, 47);
+INSERT INTO HRELATION VALUES(4, 40);
+INSERT INTO HRELATION VALUES(4, 50);
+INSERT INTO HRELATION VALUES(5, 11);
+INSERT INTO HRELATION VALUES(5, 43);
+INSERT INTO HRELATION VALUES(5, 44);
 
 COMMIT;
