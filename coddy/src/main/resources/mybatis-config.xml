@@ -18,6 +18,7 @@
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hrelation" alias="hrelation"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hattachment"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hwishlist"/>
+<<<<<<< Updated upstream
      	<typeAlias type="com.kh.coddy.board.job.model.vo.HSearch" alias="hsearch"/>
      	<typeAlias type="com.kh.coddy.board.intro.model.vo.IBoard" alias="intro"/>
      	<typeAlias type="com.kh.coddy.board.intro.model.vo.Iattachment" alias="introAttachment"/>
@@ -32,6 +33,9 @@
      	<typeAlias type="com.kh.coddy.board.notice.model.vo.Nattachment" alias="nattachment"/>
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Fboard" alias="fboard"/>
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Freply" alias="freply"/>
+=======
+     	<typeAlias type="com.kh.coddy.board.code.model.vo.Cboard" alias="cboard"/>
+>>>>>>> Stashed changes
     </typeAliases>
       
     <!-- environments 영역은 제외 
@@ -44,8 +48,12 @@
       <mapper resource="/mappers/member/company-mapper.xml"/>
       <mapper resource="/mappers/auth/auth-mapper.xml"/>
       <mapper resource="/mappers/job/hboard-mapper.xml"/>
+<<<<<<< Updated upstream
       <mapper resource="/mappers/intro/intro-mapper.xml"/>
       <mapper resource="/mappers/recruitment/recruitment-mapper.xml" />
+=======
+      <mapper resource="/mappers/code/cboard-mapper.xml"/>
+>>>>>>> Stashed changes
     </mappers>
   </configuration>
 
