@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.ReadTag;
+import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.Geo;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.CompanyService;
@@ -42,8 +44,10 @@ import com.kh.coddy.member.model.vo.Member;
 @Controller
 public class HboardController {
 	private Logger log = LoggerFactory.getLogger(getClass());
+	@Autowired private TagsController tagsController;
 	@Autowired private HboardService hboardService;
 	@Autowired private CompanyService companyService;
+	@Autowired private PasswordEncoder pbkdf2;
 
 	@GetMapping(value="listView.hb") public String listView(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage, 
 			@RequestParam(value="search", defaultValue="") String search, @RequestParam(value="education", defaultValue="none") String education, 
@@ -52,14 +56,12 @@ public class HboardController {
 			@RequestParam(value="where", defaultValue="all") String where, Model model) {
 		String tags = "";
 		if(tag.equals("")) { 
-			tags="C언어,C++,C#,GO,Java,JavaScript,Spring,React,Node.js,Vue,Swift,Kotlin,Python,Django," +
-				"Php,Flutter,MySql,MarianDB,MongoDB,OracleDB,Unity,AWS,Docker,Kubernetes,Git,Figma,Window,Linux," +
-				"PM,기획,프론트엔드,백엔드,CDN,디자인,네트워크/서버,IOS 앱 개발,AOS 앱 개발,AI학습,게임개발"; } 
+			tags = tagsController.getTagsNameString(); } 
 		else { tags=tag; }
 		HSearch hs = new HSearch(search, education.split(" "), career.split(" "), null, tags.split(","), (active.equals("t"))?1:0, getAddressRangeByLocation(where).split(",")[0], getAddressRangeByLocation(where).split(",")[1]);
 		if(career.equals("none")) { hs.setCareer(("none,intern,newcomer,junior,middle,senior").split(",")); }
 		if(education.equals("none")) { hs.setEducation(("none,highSchool,juniorCollege,university,master,doctor,professor").split(",")); }
-		if(sort.equals("new") || sort.equals("")) { hs.setSort("HBOARD_INSERT"); }
+		if(sort.equals("new") || sort.equals("")) { hs.setSort("H.HBOARD_NO"); }
 		else if(sort.equals("old")) { hs.setSort("HBOARD_END"); }
 		else if(sort.equals("view")) { hs.setSort("HBOARD_VIEWS"); }
 		else { hs.setSort("HBOARD_SALARY"); }
@@ -83,6 +85,7 @@ public class HboardController {
 			model.addAttribute("at_list", at_list);
 			model.addAttribute("tg_list", tg_list);
 			model.addAttribute("ws_list", ws_list);
+			model.addAttribute("tagAll", tagsController.getTagsNameList());
 			return "board/job/hboardListView";
 		}
 		else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) { model.addAttribute("errorMsg", "잘못된 페이지"); return "common/errorPage"; }
@@ -103,12 +106,14 @@ public class HboardController {
 			model.addAttribute("at_list", at_list);
 			model.addAttribute("tg_list", tg_list);
 			model.addAttribute("ws_list", ws_list);
+			model.addAttribute("tagAll", tagsController.getTagsNameList());
 			return "board/job/hboardListView";
 		}
 	}
-	@GetMapping(value="insertForm.hb") public String insertBoardForm(HttpSession session) { 
+	@GetMapping(value="insertForm.hb") public String insertBoardForm(HttpSession session, Model model) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		model.addAttribute("tagAll", tagsController.getTagsNameList());
 		return "board/job/hboardInsertForm";
 	}
 	@PostMapping(value="insert.hb") public String insertBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb, List<MultipartFile> files) {
@@ -157,7 +162,7 @@ public class HboardController {
 				log.info("hboardInsertTags={}, ip={}", (Company)(session.getAttribute("loginCompany")), request.getRemoteAddr());
 			}
 			session.setAttribute("alertMsg", "게시글 작성 성공");
-			return "redirect:/listView.hb";  
+			return "redirect:/listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=all&viewOn=f";  
 		}
 		else { model.addAttribute("errorMsg", "게시글 작성 실패"); return "common/errorPage"; }
 	}
@@ -181,6 +186,7 @@ public class HboardController {
 		session.setAttribute("where", where);
 		session.setAttribute("hr", hr);
 		session.setAttribute("geo", geo);
+		session.setAttribute("wish", hboardService.getAllWish(hb.getHboardNo()));
 		try { session.setAttribute("tmapKey", Keys.read(new ClassPathResource("keys/kakaoMap.json").getURL().getPath(), "key.kakaoMap")); }
 		catch (IOException | ParseException e) { e.printStackTrace(); }
 		return "board/job/hboardDetailView"; 
@@ -201,6 +207,81 @@ public class HboardController {
 	@PostMapping(value="minusFile.hb", produces="text/html; charset=UTF-8") @ResponseBody public String minusFile(HttpSession session, HttpServletRequest req, String ano) {
 		try { if(hboardService.minusFile(Integer.parseInt(ano)) > 0) { return "삭제 성공"; } else { return "삭제 실패"; } }
 		catch (Exception e) { e.printStackTrace(); return "삭제 에러"; }
+	}
+	@PostMapping(value="updateForm.hb") public String updateForm(HttpSession session, Model model, Hboard h) {
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
+			session.setAttribute("errorMsg", "잘못된 접근");
+			return "common/errorPage";
+		}
+		Hboard hb = hboardService.selectBoard(h.getHboardNo());
+		ArrayList<Hrelation> hr = hboardService.getTagInfo(hb);
+		Hattachment ha = hboardService.getThumbOne(hb);
+		String tagList = "";
+		if (!hr.isEmpty()) { for(Hrelation hrr:hr) { tagList += hrr.getTagsNo() + ","; } }
+		session.setAttribute("hb", hb);
+		session.setAttribute("tagList", tagList.substring(0, tagList.length()-1));
+		session.setAttribute("ha", ha);
+		model.addAttribute("tagAll", tagsController.getTagsNameList());
+		return "board/job/hboardUpdateForm"; 
+	}
+	@PostMapping(value="update.hb") public String updateBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb) {
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
+			session.setAttribute("errorMsg", "잘못된 접근");
+			return "common/errorPage";
+		}
+		if(hboardService.updateBoard(h) <= 0) { model.addAttribute("errorMsg", "게시글 수정 실패"); return "common/errorPage"; }
+		if(hboardService.initTag(h.getHboardNo()) <= 0) { model.addAttribute("errorMsg", "태그 초기화 실패"); return "common/errorPage"; }
+		if(tagAllName.equals("")) { log.info("hboardUpdateNoTag={}, ip={}", (Company)(session.getAttribute("loginCompany")), request.getRemoteAddr()); }
+		else { 
+			String[] tags = ReadTag.read(tagAllName);
+			for(String t:tags) { if(!hboardService.insertTag2(new Hrelation(h.getHboardNo(), t))) { model.addAttribute("errorMsg", "게시글은 작성하였으나 태그 설정이 잘못됨"); return "common/errorPage"; } }
+			log.info("hboardUpdateTags={}, ip={}", (Company)(session.getAttribute("loginCompany")), request.getRemoteAddr());
+		}
+		String path = request.getRealPath("resources\\file_upload\\hboard\\");
+		if(!thumb.isEmpty()) {
+			hboardService.rejectThumb(h.getHboardNo());
+			UUID uuid = UUID.randomUUID();
+			File file = new File(path + "\\" + uuid + "_" + thumb.getOriginalFilename());
+			try { thumb.transferTo(file); }
+			catch (Exception e) { 
+				e.printStackTrace();
+				model.addAttribute("errorMsg", "게시글 수정 및 첨부파일 제거에 성공했으나 새 첨부파일 저장에 실패함"); 
+				return "common/errorPage";
+			}
+			Hattachment ha = new Hattachment();
+			ha.setHattachmentOrigin(thumb.getOriginalFilename()); ha.setHattachmentLevel(1); ha.setHboardNo(h.getHboardNo());
+			ha.setHattachmentChange(uuid + "_" + thumb.getOriginalFilename()); ha.setHattachmentPath("resources\\file_upload\\hboard\\");
+			if(hboardService.insertThumb2(ha) <= 0) { model.addAttribute("errorMsg", "게시글 수정 및 첨부파일 제거에 성공했으나 새 첨부파일 저장에 실패함"); return "common/errorPage"; }
+		}
+		session.setAttribute("alertMsg", "게시글 수정 성공");
+		return "redirect:/boardDetail.hb?hno=" + h.getHboardNo();
+	}
+	@PostMapping(value="deleteForm.hb") public String deleteForm(HttpSession session, Model model, Hboard h) {
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
+			model.addAttribute("errorMsg", "잘못된 접근");
+			return "common/errorPage";
+		}
+		session.setAttribute("hb", h);
+		return "board/job/hboardDeleteForm"; 
+	}
+	@PostMapping(value="delete.hb") public String deleteBoard(HttpSession session, Model model, Hboard h, String password) {
+		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
+			model.addAttribute("errorMsg", "잘못된 접근");
+			return "common/errorPage";
+		}
+		if(pbkdf2.matches(password, ((Company)(session.getAttribute("loginCompany"))).getCompanyPwd())) { 
+			if(hboardService.deleteBoard(h.getHboardNo()) > 0) { session.setAttribute("alertMsg", "삭제완료"); return "redirect:/listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=all&viewOn=f"; } 
+			else { model.addAttribute("errorMsg", "처리 오류"); return "common/errorPage"; } 
+		}
+		else { model.addAttribute("errorMsg", "비밀번호 오류"); return "common/errorPage"; }
 	}
 	public String getLocationByAddr(int address) { 
 		if((address >= 1000) && (address <= 8866)) return "서울특별시";

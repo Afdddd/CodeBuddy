@@ -17,7 +17,7 @@
     width: 50%;
     height: 100%;  
     float: left;
-  }
+  }staty
   .popular-project{
     width: 50%;
     height: 100%;
@@ -48,7 +48,7 @@
 
   .popular-project-list h2{
     font-size: 14px;
-    width: 100%;
+    width: 80%;
     font-weight: 500;
   }
 
@@ -65,6 +65,9 @@
   .popular-project-list div{
     display: flex;
     flex-direction: row;
+  }
+  .popular-project-list span{
+    font-size: 12px;
   }
 
   .content_1 h1{
@@ -143,6 +146,9 @@
       cursor: pointer;
     }
 
+    .explain{
+      font-size: 13px;
+    }
     .author {
       color: gray;
       font-weight: 400;
@@ -170,22 +176,21 @@
 
     /* 검색바 */
 
-    .search-bar{
+    .search-bar {
       margin-top: 40px;
     }
-    .search-input {
+    .search-input, .tagify{
       border: 2px solid transparent;
       width: 15em;
       height: 2.5em;
       padding-left: 0.8em;
       outline: none;
-      overflow: hidden;
       background-color: #F3F3F3;
       border-radius: 10px;
-      transition: all 0.5s;
       margin-left: 5px;
     }
-
+    .tagify:hover,
+    .tagify:focus,
     .search-input:hover,
     .search-input:focus {
       border: 2px solid #5271FF;
@@ -406,41 +411,19 @@
                 <div class="new-project-list">
                     <div class="swiper">
                         <!-- Additional required wrapper -->
-                        <div class="swiper-wrapper">
-                            <!-- Slides -->
-                            <div class="swiper-slide"><img src="resources/image/001.png"></div>
-                            <div class="swiper-slide"><img src="resources/image/002.png"></div>
-                            <div class="swiper-slide"><img src="resources/image/003.png"></div>
+                        <div class="swiper-wrapper">  
+                          <div class='swiper-slide' id="slide0"></div>                 
+                          <div class='swiper-slide' id="slide1"></div>                 
+                          <div class='swiper-slide' id="slide2"></div>                 
                         </div>
                     
                         <!-- If we need pagination -->
                         <div class="swiper-pagination"></div>
-                    
                         <!-- If we need navigation buttons -->
                         <div class="swiper-button-prev"></div>
-                        <div class="swiper-button-next"></div>
-                    
-                       
+                        <div class="swiper-button-next"></div>  
                     </div>
-                </div>
-                <script>
-                  // 슬라이더 동작 정의
-                  const swiper = new Swiper('.swiper', {
-                      autoplay : {
-                          delay : 3000 // 3초마다 이미지 변경
-                      },
-                      loop : true, //반복 재생 여부
-                      slidesPerView : 1, // 이전, 이후 사진 미리보기 갯수
-                      pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
-                          el: '.swiper-pagination',
-                          clickable: true
-                      },
-                      navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
-                          prevEl: '.swiper-button-prev',
-                          nextEl: '.swiper-button-next'
-                      }
-                  }); 
-                </script>
+                </div>             
             </div>
             
             
@@ -450,28 +433,7 @@
                 
                 <div class="popular-project-list">
                     <ul>
-                        <li>
-                            <div>
-                                <h2>Lemon</h2>
-                                <span>23.11.22</span>
-                            </div>
-                            <h3>레시피몬스터, 레시피 커뮤니티</h3>
-                        </li>
-                        <li>
-                            <div>
-                                <h2>OurNeighborhood</h2>
-                                <span>23.11.22</span>
-                            </div>
-                            <h3>아파트 입주민들을 위한 소통 커뮤니티</h3>
-                        </li>
-                        
-                        <li>
-                            <div>
-                                <h2>Pet and Met</h2>
-                                <span>23.11.22</span>
-                            </div>
-                            <h3>애완 동물 커뮤니티</h3>
-                        </li>
+                      <!--ajax 실시간 조회-->  
                     </ul>
                 </div>
             </div>
@@ -479,16 +441,17 @@
         </div>
 
         <div class="search-bar">
-            <input class="search-input" placeholder="기술스택">
-            <input class="search-input" placeholder="포지션">
-            <input class="search-input" placeholder="프로젝트 이름">    
-
+            <jsp:include page="../../common/tagCareer.jsp" />
+            <jsp:include page="../../common/tagTech.jsp" />
+            <input class="search-input" name="projectTitle" placeholder="프로젝트 이름" id="projectSearch">    
             <label class="checkbox-container" style="text-align: center;">
               <span style="vertical-align: auto;">모집중</span>
-               <input class="custom-checkbox" type="checkbox">
+               <input class="custom-checkbox" type="checkbox" name="recruiting" id="recruiting">
               <span class="search-checkmark"></span>
-            </label>            
+            </label>
+            <button >검색</button>          
         </div>
+
         <c:if test="${not empty sessionScope.loginMember}">
          <button class="write_button" onclick="location.href='enrollForm.rec'">게시글 작성</button>
         </c:if>
@@ -496,13 +459,13 @@
           <div class="card-list">
             <c:forEach var="rl" items="${requestScope.list}" varStatus="status">
               <div class="card" >
-                <div class="card-image" onclick="location.href='detail.rec'">
+                <div class="card-image" onclick="location.href='detail.rec?rno=${rl.recruitmentNo}'">
                   <img src="${requestScope.at_list[status.index].getRAttachmentPath()}/${requestScope.at_list[status.index].getRAttachmentChange()}" width="100%" height="100%" style="vertical-align:middle;" onerror="this.src='resources/image/003.png'">
                 </div>
                 <div class="category"></div>
                 <div class="heading"> 
-                  <h5 onclick="location.href='detail.rec'">${rl.recruitmentTitle}</h5>
-                  <div class="explain" onclick="location.href='detail.rec'">${rl.recruitmentIntro}</div>              
+                  <h5 onclick="location.href='detail.rec?rno=${rl.recruitmentNo}'">${rl.recruitmentTitle}</h5>
+                  <div class="explain" onclick="location.href='detail.rec?rno=${rl.recruitmentNo}'">${rl.recruitmentIntro}</div>              
                     <div class="author"> By <span class="name">${rl.recruitmentWriter} </span> ${rl.recruitmentInsert}</div>
                     <c:if test="${not empty sessionScope.loginMember}">
                       <c:choose>
@@ -599,19 +562,93 @@
     <jsp:include page="../../common/footer.jsp" />	
 </body>
 <script>
-            
-  $(function(){
+
+  function onSearch() {
+    let rpage = 1;
+    let search = $("#projectSearch").val();
+    let tagCareer = $("#tagCareerName").val();
+    let tagTech = $("#tagTechName").val();
+    let recruiting = 'f';
+    if($("#recruiting").is(":checked") == true) { recruiting = 't'; }
+    tagCareer = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tagCareer, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+    tagTech = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tagTech, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+    location.href='list.rec?rpage='+rpage+'&search='+search+'&tagCareer='+tagCareer+'&tagTech='+tagTech+'&recruiting='+recruiting;
+    }
+    function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
+
+  $(document).ready(function(){
+
     $(".card").css("display", "inline-block");
-    $(".container").css("width","0%");
-  });
+    $(".container").css("width","0%");  
+
+    // 인기
+    $.ajax({
+      url: "popular.rec",
+      type: "get",
+      data: {},
+      success: function(result){
+  
+        let resultStr = "";
+        
+        for(let i = 0; i < result.length; i++) {
+          
+          resultStr += "<li>"+
+                          "<div>"+ 
+                          "<h2>"+ result[i].recruitmentTitle + "</h2>"+
+                          "<span class='popular_list_insert'>" + result[i].recruitmentInsert + "</span>"+
+                          "</div>" +
+                          "<h3>" + result[i].recruitmentIntro + "</h3>" +
+                        "</li>";
+        }
+        $(".popular-project-list>ul").html(resultStr);
+        }
+    });
+
+    // 최신
+    $.ajax({
+      url:"recent.rec",
+      type:"get",
+      data:{},
+      success:function(result){
+
+        let resultStr = "";
+        for(let i = 0; i < result.length; i++) {
+          let path = result[i].rAttachmentPath+ "/"+ result[i].rAttachmentChange;
+          let el = "#slide"+i;
+          resultStr="<img src='"+path+"'>";
+          $(".swiper-wrapper>"+el).html(resultStr);
+        } 
+       
+      }
+    });
+    // 슬라이더 동작 정의
+    const swiper = new Swiper('.swiper', {
+                  autoplay : {
+                      delay : 3000 // 3초마다 이미지 변경
+                  },
+                  loop : true, //반복 재생 여부
+                  slidesPerView : 1, // 이전, 이후 사진 미리보기 갯수
+                  pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
+                      el: '.swiper-pagination',
+                      clickable: true
+                  },
+                  navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
+                      prevEl: '.swiper-button-prev',
+                      nextEl: '.swiper-button-next'
+                  }
+              });
+              
+      
+    });
  
+  // 찜하기
   function onWish(e) {
     $.ajax({
       url: "boardWish.rec",
       type: "get",
       data: {recruitmentNo: e},
-      success: function(result) { console.log(result); },
-      error: function() { console.log("찜하기 실패"); }
+      success: function(result) {  },
+      error: function() {  }
     });
   }
 

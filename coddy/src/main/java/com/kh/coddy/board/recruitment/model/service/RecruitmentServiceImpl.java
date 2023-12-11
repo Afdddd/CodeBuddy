@@ -11,6 +11,7 @@ import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.model.dao.RecruitmentDao;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.RSearch;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
@@ -46,10 +47,18 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 		return rDao.createProject(sqlSession,p);
 	}
 
+//	@Override 
+//	public int selectListCount(RSearch rs){ 
+//		return rDao.selectListCount(sqlSession, rs); 
+//	}
 	@Override 
 	public int selectListCount(){ 
 		return rDao.selectListCount(sqlSession); 
 	}
+//	@Override
+//	public ArrayList<Recruitment> selectList(PageInfo pi, RSearch rs) {
+//		return rDao.selectList(sqlSession,pi,rs);
+//	}
 	@Override
 	public ArrayList<Recruitment> selectList(PageInfo pi) {
 		return rDao.selectList(sqlSession,pi);
@@ -86,6 +95,34 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	public String insertWish(RecruitmentWishList rw) {
 		int result = rDao.insertWish(sqlSession, rw); return (result > 0) ? "찜목록 추가에 성공함": "찜목록 추가에 실패함"; 
 	}
+	@Override
+	public ArrayList<Recruitment> selectPopular() {
+		return rDao.selectPopular(sqlSession);
+	}
+	@Override
+	public ArrayList<Rattachment> selectRecent() {
+		return rDao.selectRecent(sqlSession);
+	}
+	@Override
+	public Recruitment selectRecruitment(int rno) {
+		return rDao.selectRecruitment(sqlSession, rno);
+	}
+	@Override
+	public ArrayList<Rattachment> getAttachmentList(Recruitment r) {
+		return rDao.getAttachmentList(sqlSession, r);
+	}
+	@Override
+	public Project getProject(Recruitment r) {
+		return rDao.getProject(sqlSession, r);
+	}
+	@Override
+	public int selectApply(Map<String,String> aMap) {
+		int stateNo = rDao.selectStateNo(sqlSession, aMap);
+		return rDao.selectApply(sqlSession, stateNo);
+	}
+
+	
+	
 	
 	
 	

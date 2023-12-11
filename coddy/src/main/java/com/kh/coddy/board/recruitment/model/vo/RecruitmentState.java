@@ -8,8 +8,8 @@ import lombok.ToString;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
 public class RecruitmentState {
+	private int stateNo;
 	private int recruitmentNo;
 	private String position;
 	private int maxPersonnel;
-	private int personnel;
 }

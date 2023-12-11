@@ -27,8 +27,6 @@ public interface MemberService {
 
 
 	int updateMember(Member m);
-	
-	int updateMember(Member m, String webPath, String folderPath);
 
 
 	int deleteMember(String memberId);

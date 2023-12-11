@@ -66,18 +66,18 @@
 	<body>
         <div class="profile-widget">
             <h2 class="widget-heading">About Business...</h2>
-            <div class="cover-img"><label for="chooseFileBg"><img src="resources/file_upload/company_bg/<fmt:formatNumber value='${sessionScope.loginCompany.companyNo}' pattern='00000000' />.jpg" onerror="this.src='resources/image/company/myPage-bg.jpg'" onclick="" id="uploadFilesBg"></label></div>
+            <div class="cover-img"><label for="chooseFileBg"><img src="resources/file_upload/company_bg/<fmt:formatNumber value='${sessionScope.loginCompany.companyNo}' pattern='00000000' />.jpg" onerror="this.src='resources/image/white.jpg'" onclick="" id="uploadFilesBg"></label></div>
             <div class="user-details">
                 <div class="user-img">
                     <form method="post" enctype="multipart/form-data">
                         <label for="chooseFile">
                             <div id="canvas">
                                 <c:choose>
-                                    <c:when test="${sessionScope.loginCompany.companyPhotoExtend eq jpg}">
-                                        <img src="resources/image/company/uploadFile.jpg" id="uploadFiles">
+                                    <c:when test="${sessionScope.loginCompany.companyPhotoExtend eq 'jpg'}">
+										<img src="resources/file_upload/company/<fmt:formatNumber value='${sessionScope.loginCompany.companyNo}' pattern ='00000000' />.jpg" onerror="this.src='resources/image/company/uploadFile.jpg'" id="uploadFiles">
                                     </c:when>
                                     <c:otherwise>
-                                        <img src="resources/file_upload/company/<fmt:formatNumber value='${sessionScope.loginCompany.companyNo}' pattern ='00000000' />.${sessionScope.loginCompany.companyPhotoExtend}" alt="User photo2" id="uploadFiles">
+										<img src="resources/image/company/uploadFile.jpg" id="uploadFiles">
                                     </c:otherwise>
                                 </c:choose>
                             </div>
