@@ -1,11 +1,13 @@
 package com.kh.coddy.board.code.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.UUID;
 
 
 import org.apache.commons.io.FilenameUtils;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +29,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.coddy.board.code.model.service.CboardService;
 import com.kh.coddy.board.code.model.vo.Cboard;
+import com.kh.coddy.common.Pagination;
+import com.kh.coddy.common.vo.PageInfo;
+import com.kh.coddy.member.model.vo.Member;
 
 @Controller
 public class CboardController {
@@ -34,14 +40,47 @@ public class CboardController {
 		private CboardService cboardService;
 		
 		@GetMapping("list.co")
-		public String cboardList() {
-	           
-	        return "board/code/codeListView";
-	    }
+		public ModelAndView selectList(
+				@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
+				ModelAndView mv) {
+			
+			int listCount = cboardService.selectListCount();
+			
+			int pageLimit = 10;
+			int boardLimit = 10;
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, 
+							currentPage, pageLimit, boardLimit);
+			
+			ArrayList<Cboard> list = cboardService.selectList(pi);
+			
+			mv.addObject("list", list)
+			  .addObject("pi", pi)
+			  .setViewName("board/code/codeListView");
+			  
+			return mv;
+		}
 		
-		@GetMapping("detail.co")
-		public String cboardDetail() {
-			return "board/code/codeDetailView";
+		@RequestMapping("detail.co")
+		public ModelAndView selectBoard(int bno, 
+										ModelAndView mv) {
+			
+			
+			int result = cboardService.increaseCount(bno);
+			
+			if(result > 0) { // 성공
+				
+				Cboard c = cboardService.selectBoard(bno);
+				
+				mv.addObject("c", c)
+				  .setViewName("board/code/codeDetailView"); 
+				
+			} else { 
+				mv.addObject("errorMsg", "게시글 상세조회 실패")
+				  .setViewName("common/errorPage");
+			}
+			
+			return mv;
 		}
 	
 		@GetMapping("enrollForm.co")
@@ -90,8 +129,10 @@ public class CboardController {
 		public String insertBoard(Cboard c,
 								  HttpSession session,
 								  Model model) {
+		   
+		    // c.setCboardContent("ss");
 		    System.out.println(c);
-		    
+		    c.setCboardWriter(String.valueOf(((Member)(session.getAttribute("loginMember"))).getMemberNo()));
 		    int result = cboardService.insertBoard(c);
 
 		    if(result > 0) { // 게시글 작성 성공
@@ -107,6 +148,7 @@ public class CboardController {
 				return "common/errorPage";
 		    }
 		}
+		
 }
 		
 		

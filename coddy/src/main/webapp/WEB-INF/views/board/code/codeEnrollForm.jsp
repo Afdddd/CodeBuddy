@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <script src="https://cdn.jsdelivr.net/npm/ckeditor5-classic-plus@36.0.1/build/ckeditor.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/ckeditor5-upload-adapter@1.0.3/src/uploadadapter.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <title>Insert title here</title>
 <style>
 
@@ -61,24 +62,25 @@
         <h4 style="color : #5271FF;"><b style="padding-left: 50px;">코드리뷰 글쓰기</b></h4>
         <div class="Outer">
         <div class="innerOuter">
-        	<form id="enrollForm" method="post" action="enrollForm.co" enctype="multipart/form-data">
+        	<form id="enrollForm" method="post" action="insert.co" enctype="multipart/form-data">
+                
+                <input type="hidden" id="cboardContent" name="cboardContent" value="">
                 <table align="center">
                     <tr>
                         <th><label for="title"></label></th>
                         <td><input type="text" id="title" class="form-control" name="cboardTitle" placeholder="제목을 입력하세요." style="width:1100px;" required></td>
                     </tr>
                     <tr>
+                        <th><label for="writer"></label></th>
+                        <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginMember.memberId }" name="cboardWriter" readonly></td>
+                    </tr>
+                    <tr>
                     	<th><label for="content"></label></th>
                     	<td>
                     	    <div id="editor">
-<<<<<<< Updated upstream
-					        <p>내용을 입력하세요.</p>
+					        	<p id="">내용을 입력하세요.</p>
 					    	</div>
-=======
-					        <p name="cboardContent">내용을 입력하세요.</p>
-					    </div>
-					    	 
->>>>>>> Stashed changes
+
 					    <script>
 					        ClassicEditor
 					            .create( document.querySelector( '#editor' ), {
@@ -98,9 +100,20 @@
 
                 <div align="center">
                 	<button type="reset" class="">취소하기</button>
-                    <button type="submit" class="">등록하기</button>
+                    <button type="submit" class="" onclick="setContent();">등록하기</button>
                 </div>
             </form>
+            
+            <script>
+            	function setContent() {
+            		
+            		let value = $("#editor").html();
+            		
+            		$("#cboardContent").val(value);
+            		
+            		console.log($("#cboardContent").val());
+            	}
+            </script>
         </div>
         </div>
         <br><br>
