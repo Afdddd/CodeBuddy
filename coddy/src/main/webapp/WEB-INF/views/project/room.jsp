@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -142,6 +143,7 @@
     }
 
     .chat-body {
+    overflow: auto;
     padding: 20px;
     height: 90%;
     }
@@ -392,30 +394,11 @@
     <div class="chat_area">
         <div class="chat-card">
             <div class="chat-body" id="chat_body">
-              <div class="message incoming">
-                <p>안녕하세요</p>
-              </div>
-              <div class="message incoming">
-                <p>반갑습니다.</p>
-              </div>
-              <div class="message incoming">
-                <p>어서오세요</p>
-              </div>
-              <div class="message incoming">
-                <p>안녕하세요</p>
-              </div>
-              <div class="message incoming">
-                <p>안녕하세요</p>
-              </div>
-              <div class="message outgoing">
-                <p>반갑습니다</p>
-              </div>
-              
-              
+              <!-- 동적으로 메세지 로드 -->
             </div>
             <div class="chat-footer">
               <input placeholder="Type your message" type="text" id="chat_input">
-              <button onclick="send();">Send</button>
+              <button>Send</button>
             </div>
           </div>        
     </div>
@@ -462,60 +445,136 @@
       </div>
 
       <script>
-      
-     	let load = 0;
-      
-        window.onload = function(){         
-          if(load==0){
-        	  connect();  
-          }
-          load++;
-          console.log(load);
-        }
-        let socket;
-        function connect(){
-        	
-          let url = "ws://localhost:8082/coddy/chat.do";
-          socket = new WebSocket(url);
-		  
-		  
-          socket.onopen = function(){
-            console.log("연결");      
-          };
-          
-          socket.onmessage = function(e){
-            let obj = JSON.parse(e.data);
-            console.log(obj);
-            let div;
-            
-            console.log(${loginMember.memberNo});
-           
-            console.log(obj.memberNo);
-            
-            if(${loginMember.memberNo} != obj.memberNo){           		            
-            	 div = $("<div class='message incoming'>"
-            			 + "<div>"+ obj.memberName + "</div>"
-	                   	 +"<p>"+ obj.msg +"</p>"+obj.sendTime
-	                    +"</div>");
-            }else{
-            	div = $("<div class='message outgoing'>"
-             			 + "<div>"+ obj.memberName + "</div>"
-                        	 +"<p>"+ obj.msg +"</p>"+obj.sendTime
-                         +"</div>");
-            	
-            }       
-            
-			$("#chat_body").append(div);
-          }
-        }
 
-        function send(){
-          let text = $("#chat_input").val();
-          if(text.trim()!==""){ 
-            socket.send(text);
-            $("#chat_input").val("");
+        // 메세지 입력해서 전송
+      $(document).on("keydown", ".chat-footer>input", function(e){
+          if(e.keyCode == 13 && !e.shiftKey){
+            e.preventDefault();
+            const message = $(this).val();
+
+            let search3 = $('.chat-footer>input').val();
+                
+            if(search3.replace(/\s|  /gi, "").length == 0){ // 문자 공백 확인
+                  return false;
+                  $('.chat-footer>input').focus();
+            }
+            
+            sendMessage(message);
+            clearText();
           }
-        }
+      });
+
+      function clearText() {
+            $('.chat-footer>input').val('');
+            return false;
+      };
+
+
+      $(function(){
+          connect();         
+
+          $.ajax({
+              url:"room.rec",
+              type:"get",
+              data: {
+                roomId : roomId
+              },
+              success : function(data){
+                console.log("메세지 불러오기 성공");
+                console.log(data);
+              
+                for(var i=0; i<data.length; i++){
+                  console.log(data);
+                  checkLR(data[i]);
+                }
+                $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
+              },
+              error : function(){
+                console.log("메세지 불러오기 실패");
+              }
+
+            });
+        });
+
+          let roomId = 1; //${requestScope.projectNo}; 프로젝트 번호
+
+          let webSocket;
+
+          function connect(){
+
+            
+            // 웹소켓 주소
+            var wsUri = "ws://localhost:8082/coddy/chat.do";
+
+            // 소켓 객체 생성
+            webSocket = new WebSocket(wsUri);
+
+            // 웹소켓에 이벤트가 발생했을때 호출될 함수
+            webSocket.onopen = onOpen;
+            webSocket.onmessage = onMessage;
+          }
+
+
+          // 웹소켓에 연결되었을 때 호출될 함수
+          function onOpen(){
+            // ENTER-CHAT 이라는 메세지를 보내고 채팅방이 존재하지 않는다면 채팅방을 생성, 존재한다면 채팅방 입장
+            const data = {
+              "roomId" : roomId,
+              "memberNo" : "${sessionScope.loginMember.memberNo}",
+              "memberName" : "${sessionScope.loginMember.memberName}",
+              "message": "ENTER-CHAT"
+            };
+
+            let jsonData = JSON.stringify(data);
+            webSocket.send(jsonData);
+          }
+
+          //  메세지 전송 함수
+          function sendMessage(message){
+
+            const data={
+              "roomId" : roomId,
+              "memberNo" : "${sessionScope.loginMember.memberNo}",
+              "memberName" : "${sessionScope.loginMember.memberName}",
+              "message" : message 
+            };
+            
+            let jsonData = JSON.stringify(data);
+            webSocket.send(jsonData);
+          }
+
+          // 메세지 수신
+          function onMessage(evt){
+
+            let receive = evt.data.split(",");
+            const data = {
+              "memberNo" : receive[0],
+              "memberName" : receive[1],
+              "message" : receive[2]
+            };
+            
+            checkLR(data);
+            $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
+          }
+
+          // 내가 보낸 메세지인지 확인
+          function checkLR(data){ 
+            let div;
+            if("${loginMember.memberNo}" != data.memberNo){
+            div = $("<div class='message incoming'>"
+                  + "<div>"+ data.memberName + "</div>"
+                      +"<p>"+ data.message +"</p>"
+                    +"</div>");
+            }else{
+              div = $("<div class='message outgoing'>"
+                    + "<div>"+ data.memberName + "</div>"
+                            +"<p>"+ data.message +"</p>"
+                          +"</div>");
+            }
+            $("#chat_body").append(div);
+          }
+
+          
       </script>
 </body>
 </html>
