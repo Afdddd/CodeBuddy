@@ -355,7 +355,7 @@ NHN KCP는 전자결제대행 서비스, 온·오프라인 카드 VAN 서비스, 모바일 결제 서비스 
 "결제 산업의 리딩컴퍼니 엔에이치엔한국사이버결제와 함께 결제 산업의 변화와 혁신을 선도할 열정있는 인재를 기다립니다."
 
 NHN KCP JAVA 백엔드 웹개발자 모집, 어떤 일을 하나요?
-NHN KCP 서비스개발팀 JAVA 백엔드 웹개발자 모집 채용공고입니다.', 3, TO_DATE('12-20-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('05-30-2024 00:00:00', 50000000, 'none', 'middle', '08393');
+NHN KCP 서비스개발팀 JAVA 백엔드 웹개발자 모집 채용공고입니다.', 3, TO_DATE('12-20-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('05-30-2024 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), 50000000, 'none', 'middle', '08393');
 
 INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, 'Java개발 팀장', '인라이플, 어떤 곳인가요?
 우리는 IT 플랫폼 기업으로서 경험하지 못한 플랫폼을 만들기 위해 노력합니다. 국내 최초의 리타게팅 광고 플랫폼 ‘모비온’, 시장의 블루오션을 보고 만든 모바일 퍼포먼스 광고 플랫폼 ‘애드밴티지’, 미래를 내다보고 꾸준히 투자한 AI 사업의 일환으로 커스터마이징이 가능한 인공지능 챗봇 ’아이봇’, 채팅은 물론 SNS와 커뮤니티 기능을 모두 담은 모임을 위한 메신저 ‘캠프’. 시장의 니즈를 미리 감지해 이전에 없던 서비스를 구현하고 있습니다.
@@ -370,7 +370,7 @@ INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_S
 ★ 복지좋은 회사의 기준 : https://blog.naver.com/enliple_blog/222203763903
 
 Java개발 팀장, 어떤 일을 하나요?
-Java 개발 팀장', 2, TO_DATE('12-02-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('02-14-2024 00:00:00', 50000000, 'none', 'senior', '08389');
+Java 개발 팀장', 2, TO_DATE('12-02-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('02-14-2024 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), 72000000, 'none', 'senior', '08389');
 
 INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, '[숨고] Business Development Lead', '브레이브모바일 (숨고), 어떤 곳인가요?
 1,000만이 선택한 전국민 생활 솔루션, 숨고
@@ -396,7 +396,7 @@ INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_S
 2021. 11: 스마트대한민국대상 수상
 2021. 07: 320억원 규모 시리즈 C 유치
 2021. 02: ‘바로 견적’ 매칭 서비스 출시
-2020. 12: 휴먼테크놀로지어워드 수상', 4, TO_DATE('11-08-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('12-08-2023 00:00:00','MM-DD-YYYY HH24:MI:SS'), 50000000, 'none', 'none', '06160');
+2020. 12: 휴먼테크놀로지어워드 수상', 4, TO_DATE('11-08-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('12-08-2023 00:00:00','MM-DD-YYYY HH24:MI:SS'), 64000000, 'none', 'none', '06160');
 
 DROP TABLE HWISHLIST;
 
@@ -431,6 +431,10 @@ CREATE TABLE HATTACHMENT (
 	HATTACHMENT_LEVEL	NUMBER	DEFAULT 0	NOT NULL,
     FOREIGN KEY (HBOARD_NO) REFERENCES HBOARD(HBOARD_NO)
 );
+
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 3, 'pcpXcPaKAYas7AMLgewVc.jpg', 'f02c6a8b-1084-4e0b-bdea-8fc0afc95205_pcpXcPaKAYas7AMLgewVc.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 1, 'LAoD-XZaVF1c2wrySrLrt.JPG', '086eb887-515e-44cf-a64b-2972bb44ddd8_LAoD-XZaVF1c2wrySrLrt.JPG', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 2, 'TbAr4BVz11JIPt_jb_yDc.png', 'f67ef705-8562-4a0b-aeec-ff8de2a5bd7e_TbAr4BVz11JIPt_jb_yDc.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 
 DROP TABLE HRELATION;
 
