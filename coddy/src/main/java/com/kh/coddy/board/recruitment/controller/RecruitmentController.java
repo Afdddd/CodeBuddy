@@ -261,12 +261,12 @@ public class RecruitmentController {
 	
 	@GetMapping("selectApply.rec")
 	@ResponseBody
-	public void selectApply(String position, int rno, HttpServletResponse response) {
+	public void selectApply(String position, String rno, HttpServletResponse response) {
 		log.info("position = {}",position);
 		log.info("rno = {}",rno);
 		HashMap<String, String> aMap = new HashMap<>();
 		aMap.put("position",position);
-		aMap.put("rno", String.valueOf(rno));
+		aMap.put("rno", rno);
 		int result = rService.selectApply(aMap);
 		response.setContentType("application/json; charset=UTF-8");
 		try {

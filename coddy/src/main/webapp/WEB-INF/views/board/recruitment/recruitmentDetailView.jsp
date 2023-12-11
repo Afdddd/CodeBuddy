@@ -289,9 +289,17 @@
                   <c:forEach var="state" items="${requestScope.state}" varStatus="status">
                     <tr>
                         <td colspan="2" style="width: 100px;">${state.position}</td>
-                        <td style="width: 200px;"><span  id="applyState_${status.index}" onclick="getApply('${state.position}','${r.recruitmentNo}','${state.maxPersonnel}','${status.index}')">여기</span> / ${state.maxPersonnel}</td>
+                        <td style="width: 200px;"><span  id="applyState_${status.index}"  onload=""></span> / ${state.maxPersonnel}</td>
                         <td colspan="2"><button class="position_button" id="position_button_${status.index}">지원하기</button></td>
                     </tr>
+                        <script>
+                          $(function(){
+                            getApply('${state.position}','${r.recruitmentNo}','${state.maxPersonnel}','${status.index}');
+                          })
+                          
+
+                         
+                          </script>
                   </c:forEach>
                 </tbody>
             </table> 
@@ -503,34 +511,33 @@
           $(".container").css("width","10px");      
       });
 
-     
-
-
-
-          $.ajax({
-            url:"selectApply.rec",
-            type:"get",
-            data:{
-              position : position,
-              rno : rno
-            },
-            success : function(result){
-              console.log(result);
-              if(result >= maxPersonnel){
-                let btn = "#position_button_" + i ;
-                console.log(btn);
-                $(btn).prop("disabled", false);
-              }else{
-                let applyStateEl = "#applyState_"+ i;
-                console.log(applyStateEl);
-                $(applyStateEl).text(result);
-              }
-            },
-            error : function(){
-              console.log("지원 현황 불러오기 실패");
+      function getApply(position,rno, maxPersonnel, i){
+        $.ajax({
+          url:"selectApply.rec",
+          type:"get",
+          data:{
+            position : position,
+            rno : rno
+          },
+          success : function(result){
+            console.log(result);
+            if(result >= maxPersonnel){
+              let btn = "#position_button_" + i ;
+              console.log(btn);
+              $(btn).prop("disabled", false);
+            }else{
+              let applyStateEl = "#applyState_"+ i;
+              console.log(applyStateEl);
+              $(applyStateEl).text(result);
             }
-          });
-       
+          },
+          error : function(){
+            console.log("지원 현황 불러오기 실패");
+          }
+        });
+      }
+
+        
   </script>
 </body>
 

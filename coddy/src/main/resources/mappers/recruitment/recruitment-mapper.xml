@@ -300,7 +300,7 @@
 	<select id="selectStateNo" parameterType="map" resultType="_int">
 		SELECT RECRUITMENT_STATE_NO
 		FROM RECRUITMENT_STATE
-		WHERE RECRUITMENT_NO = #{rno}
+		WHERE RECRUITMENT_NO = TO_NUMBER(#{rno})
 		AND ROLE = #{position}
 	</select>
 	
