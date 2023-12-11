@@ -4,14 +4,14 @@ import java.io.File;
 import java.util.Map;
 import java.util.UUID;
 
-<<<<<<< Updated upstream
+
 import org.apache.commons.io.FilenameUtils;
-=======
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
->>>>>>> Stashed changes
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,9 +84,7 @@ public class CboardController {
 
 		    return mav;
 		}
-<<<<<<< Updated upstream
 
-=======
 		
 		@PostMapping("insert.co")
 		public String insertBoard(Cboard c,
@@ -109,7 +107,6 @@ public class CboardController {
 				return "common/errorPage";
 		    }
 		}
-		
-		
->>>>>>> Stashed changes
 }
+		
+		
