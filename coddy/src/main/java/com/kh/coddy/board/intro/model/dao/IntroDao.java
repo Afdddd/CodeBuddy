@@ -30,12 +30,6 @@ public class IntroDao {
 		return sqlSession.insert("introMapper.insertBoardImg", ia);
 	}
 
-
-	public int increaseCount(SqlSessionTemplate sqlSession, int iboardNo) {
-		
-		return sqlSession.update("introMapper.increaseCount", iboardNo);
-	}
-
 	public ArrayList<Iattachment> selectattachment(SqlSessionTemplate sqlSession) {
 		
 		return (ArrayList)sqlSession.selectList("introMapper.selectattachment");
@@ -94,6 +88,32 @@ public class IntroDao {
 	public int insertReply(SqlSessionTemplate sqlSession, Ireply r) {
 		
 		return sqlSession.insert("introMapper.insertWish", r);
+	}
+
+	public int plusView(SqlSessionTemplate sqlSession, int ino) {
+		
+		return sqlSession.update("introMapper.plusView", ino);
+		
+	}
+
+	public IBoard selectBoard(SqlSessionTemplate sqlSession, int ino) {
+
+		return sqlSession.selectOne("introMapper.selectBoard", ino);
+	}
+
+	public ArrayList<Iattachment> getAttachmentList(SqlSessionTemplate sqlSession, IBoard ib) {
+	
+		return (ArrayList)sqlSession.selectList("introMapper.getAttachmentList", ib);
+	}
+
+	public int getAllWish(SqlSessionTemplate sqlSession, int iboardNo) {
+		
+		return sqlSession.selectOne("introMapper.getAllWish", iboardNo);
+	}
+
+	public int deleteForm(SqlSessionTemplate sqlSession, int iboardNo) {
+		
+		return sqlSession.update("introMapper.deleteForm", iboardNo);
 	}
 
 

@@ -72,7 +72,7 @@
 
   /* 카드 css */
   .card {
-    width: 300px;
+    width: 350px;
     height: 250px;
     background: white;
     padding: .4em;
@@ -83,9 +83,9 @@
   }
 
   .card-image {
-    background-color: rgb(236, 236, 236);
-    width: 140px;
-    height: 110px;
+  	padding-top : 10px;
+    width: 120px;
+    height: 120px;
     border-radius: 6px 6px 0 0;
   }
 
@@ -273,7 +273,11 @@
   .title {
     padding-left : 20px;
     width : 90%;
+
   }
+  
+  
+  
 </style>
 </head>
 <div>
@@ -329,10 +333,10 @@
       <div style="width: 90%; margin: auto;">
           <jsp:include page="../../common/tagAll.jsp" />
       </div>
+      
     </div>
-    
-    <div style="float: right; display: flex; margin-top: 2%; margin-bottom: 2%;">
-          <select name="hboardSort" id="hboardSort">
+        <div style="float: right; display: flex; margin-top: 2%; margin-bottom: 2%;">
+          <select name="iboardSort" id="iboardSort">
               <option value="new" selected>최신순</option>
               <option value="old">끝난순</option>
               <option value="view">조회순</option>
@@ -343,6 +347,8 @@
           &nbsp;&nbsp;
           <span onclick="onSearch();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
     </div>
+    <br><br><br><br>
+
     
     <div class="">
     <c:if test="${not empty sessionScope.loginMember}">
@@ -352,21 +358,26 @@
     
     <div class="content_2">
       <div class="card-list">
-        <c:forEach var="b" items="${requestScope.list}">
+        <c:forEach var="i" items="${requestScope.list}" varStatus="status">
         <div class="card">
-          <div class="cardTop">
-            <div class="heading">
-              <div class="card-image" onclick="location.href='introDetail.ib?ino=${i.iboardNo}'">
-              <img src="${requestScope.listi[status.index].iattachmentPath}/${requestScope.listi[status.index].iattachmentChange}" onerror="this.src='resources/image/white.jpg'">
+        <div class="cardTop">
+        <div class="heading" onclick="location.href='introDetail.bo?ino=${i.iboardNo}'">
+              <div class="card-image">
+              <img src="${requestScope.listi[status.index].getIAttachmentPath()}/${requestScope.listi[status.index].getIAttachmentChange()}" width="100%" height="100%"onerror="this.src='resources/image/white.jpg'">
               </div>
-              <div class="title"><h5>${b.iboardTitle}</h5></div>
-            </div>
+              <div>
+              	<div class="title"><h5>[프로젝트]<br> ${i.iboardTitle}</h5></div>
+              	<br>
+              	<div class="title"><p style="font-size: 12px;">${i.iboardContent}</p></div>
+              </div>
+              </div>
             
                              
            
             <div class="notHeading">
-              <div class="explain"><p>${b.iboardContent}</p></div>  
-              <div class="author"> By <span class="name"><b>${b.iboardWriter}</b></span><br>조회수 : ${b.iboardViews}<br>	 작성일 :  ${b.iboardInsert}</div>
+
+              <div class="author"> By <span class="name"><b>${i.iboardWriter}</b></span>
+              <br><i class="fas fa-eye" style="line-height: 18px; margin-left: 3px;"></i>&nbsp; ${i.iboardViews}<br>	 작성일 :  ${i.iboardInsert}</div>
             <c:if test="${not empty sessionScope.loginMember}">
 	         	<c:choose>
 	            	<c:when test="${requestScope.ws_list[status.index]}">
@@ -391,11 +402,12 @@
 		           </c:otherwise>
 	          </c:choose>
          </c:if>  
-            </div>
-           
+                
           </div>
+           
         </div>
-        </c:forEach>
+      </div>
+           </c:forEach>
 
       </div>
 
@@ -422,7 +434,7 @@
                           end="${ requestScope.pi.endPage }"
                           step="1">
                   <li class="page-item">
-                    <a class="page-link" href="list.rec?rpage=${ p }">${ p }</a>
+                    <a class="page-link" href="introlist.bo?cpage=${ p }">${ p }</a>
                   </li>
                 </c:forEach>
                 
@@ -434,7 +446,7 @@
                 </c:when>
                 <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                      <a class="page-link" href="introlist.bo?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
                     </li>
                 </c:otherwise>
               </c:choose>
@@ -482,6 +494,8 @@
    function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
    
 </script>
+	</div>
+  <jsp:include page="../../common/footer.jsp" />	
 
 </body>
 </html>

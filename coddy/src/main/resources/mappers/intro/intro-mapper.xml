@@ -71,29 +71,32 @@
 	
 	<select id="selectListCount" parameterType="isearch" resultType="_int">
 				SELECT COUNT (DISTINCT(I.IBOARD_NO)) 
-				  FROM IBOARD I, PRELATION PR, TAGS TG, PROJECT P
-				 WHERE PR.PROJECT_NO = P.PROJECT_NO 
+				  FROM IBOARD I, PRELATION PR, TAGS TG, RECRUITMENT RE, PROJECT P
+				 WHERE PR.RECRUITMENT_NO = RE.RECRUITMENT_NO 
 				   AND PR.TAGS_NO = TG.TAGS_NO 
 				   AND TG.TAGS_NAME IN 
 		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 				   AND I.IBOARD_DELETE IS NULL
 				   AND (I.IBOARD_TITLE LIKE '%'||#{keyword}||'%' 
-				    OR I.IBOARD_CONTENT LIKE '%'||#{keyword}||'%' 
 				    OR P.PROJECT_NAME LIKE '%'||#{keyword}||'%') 
 				 ORDER BY ${sort} DESC
 	</select>
 	
-		<select id="selectList" parameterType="isearch" resultMap="introResultSet">
+	<select id="selectList" parameterType="isearch" resultMap="introResultSet">
 		SELECT DISTINCT I.IBOARD_NO AS "IBOARD_NO",
 		 	   I.IBOARD_TITLE AS "IBOARD_TITLE", 
-		 	   P.PROJECT_NAME AS "PROJECT_NO",
+		 	   P.PROJECT_NO AS "PROJECT_NO",
 		 	   I.IBOARD_VIEWS AS "IBOARD_VIEWS",
+		 	   I.IBOARD_CONTENT AS "IBOARD_CONTENT",
+		 	   M.MEMBER_NAME AS "IBOARD_WRITER",
 		 	   TO_CHAR(I.IBOARD_INSERT, 'YYYY-MM-DD') AS "IBOARD_INSERT",
 		 	   P.PROJECT_START AS "PROJECT_START",
 		 	   P.PROJECT_END AS "PROJECT_END"
-		 	   FROM IBOARD I, PROJECT P, PRELATION PR, TAGS TG 
-		WHERE I.PROJECT_NO = P.PROJECT_NO
-		AND P.RPOJECT_NO = PR.PROJECT_NO 
+		 	   FROM IBOARD I, PROJECT P, PRELATION PR, TAGS TG, RECRUITMENT RE, MEMBER M
+		WHERE PR.RECRUITMENT_NO = RE.RECRUITMENT_NO
+		AND I.PROJECT_NO = P.PROJECT_NO
+		AND PR.TAGS_NO = TG.TAGS_NO
+		AND M.MEMBER_NO = I.IBOARD_WRITER
 		AND TG.TAGS_NAME IN
 		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND I.IBOARD_DELETE IS NULL 
@@ -101,7 +104,7 @@
 		OR I.IBOARD_CONTENT LIKE '%'||#{keyword}||'%'
 		OR P.PROJECT_NAME LIKE '%'||#{keyword}||'%')
 		ORDER BY ${sort} DESC
-		</select>
+	</select>
 	
 	<select id="selectattachment" parameterType="introAttachment" resultMap="introAttachmentResultSet">
      SELECT IATTACHMENT_NO,
@@ -124,11 +127,11 @@
 	</update>
 	
 	<select id="getTagInfo" parameterType="pRelation" resultMap="pRelationResultSet">
-	SELECT PR.PROJECT_NO, 
+	SELECT RE.RECRUITMENT_NO, 
 	       T.TAGS_NAME AS "TAGS_NO" 
-	FROM PRELATION PR, TAGS T 
-	WHERE PRELATION.TAGS_NO = T.TAGS_NO 
-	AND PR.PROJECT_NO = #{projectNo}
+	FROM RECRUITMENT RE, TAGS T, PRELATION PR 
+	WHERE PR.TAGS_NO = T.TAGS_NO 
+	AND RE.RECRUITMENT_NO = #{recruitMentNo}
 	</select>
 	
 	<select id="getWishList" parameterType="intro" resultType="_int">
@@ -157,7 +160,46 @@
 	                  #{iboardNo})
     </insert>  
     
-    <insert id="insertReply">
+    <update id="plusView" parameterType="_int">
+    UPDATE IBOARD 
+       SET IBOARD_VIEWS = IBOARD_VIEWS + 1 
+     WHERE IBOARD_NO = #{ino} 
+       AND IBOARD_DELETE IS NULL
+   </update>
+   
+   <select id="selectBoard" parameterType="_int" resultMap="introResultSet">
+   SELECT I.IBOARD_NO,
+   		  I.IBOARD_TITLE,
+   		  I.IBOARD_CONTENT,
+   		  I.IBOARD_INSERT,
+   		  I.IBOARD_VIEWS,
+  		  M.MEMBER_NAME AS "IBOARD_WRITER"
+     FROM IBOARD I, MEMBER M 
+    WHERE I.IBOARD_WRITER = M.MEMBER_NO
+      AND IBOARD_NO = #{ino} 
+      AND IBOARD_DELETE IS NULL
+   </select>
+    
+    <select id="getAttachmentList" parameterType="intro" resultMap="introAttachmentResultSet">
+    SELECT * 
+      FROM IATTACHMENT 
+     WHERE IBOARD_NO = #{iboardNo} 
+       AND IATTACHMENT_LEVEL = 0
+    </select>
+    
+    <select id="getAllWish" parameterType="_int" resultType="_int">
+    	SELECT COUNT(*) 
+    	  FROM LIKES 
+    	 WHERE IBOARD_NO = #{iboardNo}
+    </select>
+    
+      <update id="deleteForm" parameterType="_int">
+  		UPDATE IBOARD
+  		SET IBOARD_DELETE = SYSDATE
+  		WHERE IBOARD_NO = #{iboardNo}
+  </update>
+    
+    <insert id="insertReply" parameterType="ireply">
     	INSERT INTO IREPLY(IREPLY_NO,
     					IBOARD_NO,
     					MEMBER_NO,
@@ -170,7 +212,7 @@
     					SYSDATE)
     </insert>
     
-    <insert id="insertReplies">
+    <insert id="insertReplies" parameterType="ireply">
     	INSERT INTO REPLY(IREPLY_NO,
     					IBOARD_NO,
     					MEMBER_NO,

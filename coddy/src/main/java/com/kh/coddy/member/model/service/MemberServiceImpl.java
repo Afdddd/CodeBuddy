@@ -1,11 +1,20 @@
 package com.kh.coddy.member.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.coddy.board.code.model.vo.Cboard;
+import com.kh.coddy.board.free.model.vo.Fboard;
+import com.kh.coddy.board.intro.model.vo.IBoard;
+import com.kh.coddy.board.job.model.vo.Hboard;
+import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
+import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.dao.MemberDao;
+import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 @Service
@@ -49,6 +58,12 @@ public class MemberServiceImpl implements MemberService{
 	@Override public int findPwd(Member findMember) { return memberDao.findPwd(sqlSession, findMember); }
 	@Override public int setNewPassword(Member newMember) { return memberDao.setNewPassword(sqlSession, newMember); }
 	@Override public String findEmail(Member findMember) { return memberDao.findEmail(sqlSession, findMember); }
+	
+
+	
+	
+
+	
 
 
 
