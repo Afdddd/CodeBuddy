@@ -43,13 +43,7 @@
     ul {
         list-style:none;
     }
-    table {
-      border-spacing: 10px;
-      border-collapse: separate;
-    }
-    table td {
-      width: 300px;
-    }
+
   </style>
 </head>
 <body>
@@ -93,18 +87,18 @@
                          -->
             <input type="hidden" name="memberId" value="${sessionScope.loginMember.memberId}" id="memberId">
             <br><br><br><br><br><br>	
-            <table>
+            <table style=" border-spacing: 10px; border-collapse: separate;">
               <tr>
-                <td style="text-align : right">현재 비밀번호</td>
-                <td><input type="password" name="memberPwd" id="memberPwd" placeholder="현재 비밀번호" required></td>
+                <td style="text-align : right; width: 300px;" >현재 비밀번호</td>
+                <td style="width: 300px;"><input type="password" name="memberPwd" id="memberPwd" placeholder="현재 비밀번호" required></td>
               </tr>
               <tr style="height : 150px;">
-                <td style="text-align : right">변경할 비밀번호</td>
-                <td><input type="password" name="updatePwd" id="updatePwd" placeholder="새 비밀번호" required></td>
+                <td style="text-align : right; width: 300px;">변경할 비밀번호</td>
+                <td style="width: 300px;"><input type="password" name="updatePwd" id="updatePwd" placeholder="새 비밀번호" required></td>
               </tr>
               <tr>
-                <td style="text-align : right">변경할 비밀번호 재입력</td>
-                <td><input type="password" name="checkPwd" id="checkPwd" placeholder="새 비밀번호 확인" required></td>
+                <td style="text-align : right; width: 300px;">변경할 비밀번호 재입력</td>
+                <td style="width: 300px;"><input type="password" name="checkPwd" id="checkPwd" placeholder="새 비밀번호 확인" required></td>
               </tr>
             </table>
             <br><br><br>
@@ -117,6 +111,6 @@
         </div>
       </div>
     </div>
-  </div>
+	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

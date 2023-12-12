@@ -1,6 +1,7 @@
 package com.kh.coddy.board.intro.controller;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystemNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,9 +9,11 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,9 +30,16 @@ import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
+import com.kh.coddy.board.job.model.vo.Hattachment;
+import com.kh.coddy.board.job.model.vo.Hboard;
+import com.kh.coddy.board.job.model.vo.Hrelation;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
+import com.kh.coddy.common.tag.controller.TagsController;
+import com.kh.coddy.common.vo.Geo;
 import com.kh.coddy.common.vo.PageInfo;
+import com.kh.coddy.member.model.vo.Company;
 import com.kh.coddy.member.model.vo.Member;
 
 
@@ -40,19 +50,26 @@ public class IntroController {
 	@Autowired 
 	private IntroService introService;
 	
-	@RequestMapping("introDetail.bo")
-	public ModelAndView selectBoard(int bno, ModelAndView mv) {
+	@Autowired private TagsController tagsController;
+	
+	@GetMapping("introDetail.bo")
+	public String selectBoard(HttpSession session, @RequestParam(value="ino") String iboardNo, Model model) {
 		
-		int result = introService.increaseCount(bno);
-		
-		if(result > 0) {
-			
-			
+		if(introService.plusView(Integer.parseInt(iboardNo)) < 1) {
+			model.addAttribute("errorMsg", "페이지 찾기에 실패함"); return "common/errorPage"; 
 		}
-		return mv;
+		IBoard ib = introService.selectBoard(Integer.parseInt(iboardNo));
+		Iattachment it = introService.selectattachment(ib);
+		ArrayList<Iattachment> ia = introService.getAttachmentList(ib);
+		ArrayList<Prelation> ir = introService.getTagInfo(ib);
+		
+		session.setAttribute("ib", ib);
+		session.setAttribute("it", it);
+		session.setAttribute("ia", ia);
+		session.setAttribute("ir", ir);
+		session.setAttribute("wish", introService.getAllWish(ib.getIboardNo()));
+		return "board/intro/introDetailView"; 
 	}
-	
-	
 	
 	@GetMapping("introlist.bo")	
 	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage,
@@ -64,13 +81,13 @@ public class IntroController {
 		// 검색창 태그
 		String tags = "";
 		if(tag.equals("")) { 
-			tags="C언어,C++,C#,GO,Java,JavaScript,Spring,React,Node.js,Vue,Swift,Kotlin,Python,Django," +
-				"Php,Flutter,MySql,MarianDB,MongoDB,OracleDB,Unity,AWS,Docker,Kubernetes,Git,Figma,Window,Linux," +
-				"PM,기획,프론트엔드,백엔드,CDN,디자인,네트워크/서버,IOS 앱 개발,AOS 앱 개발,AI학습,게임개발"; } 
+			tags=tagsController.getTagsNameString(); } 
 		else { 
 			tags = tag; 
 		}
+		
 		Isearch is = new Isearch(search, null, tags.split(","));
+		
 		if(sort.equals("new") || sort.equals("")) {
 			is.setSort("IBOARD_INSERT");
 		} else if(sort.equals("old")) {
@@ -89,52 +106,36 @@ public class IntroController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
 		if(pi.getMaxPage() == 0) {
+			return "board/intro/introListView";		
+
+		}
+		else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) {
+			model.addAttribute("errorMsg", "잘못된 페이지입니다.");
+			return "common/errorPage"; 
+		}
+	
+		else {
 		ArrayList<IBoard> list = introService.selectList(pi, is);
 		ArrayList<Iattachment> listi = new ArrayList<Iattachment>();
 		ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
 		ArrayList<Boolean>ws_list = new ArrayList<Boolean>();
-		
-		
-		for(IBoard ib: list) { 
-			listi.add(introService.selectattachment(ib)); 
-			tg_list.add(introService.getTagInfo(ib));
-			if(session.getAttribute("loginMember") != null) {
-			ws_list.add(introService.getWishList(ib, ((Member)(session.getAttribute("loginMember"))).getMemberNo())); }
-		}
-		
-		
-		model.addAttribute("is", is);
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		model.addAttribute("listi", listi);
-		model.addAttribute("tg_list", tg_list);
-		model.addAttribute("ws_list", ws_list);
-		
-		return "board/intro/introListView";
-		
-	}
-	else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) {
-		model.addAttribute("errorMsg", "잘못된 페이지입니다.");
-		return "common/errorPage"; }
-	
-	else {
-		
-		ArrayList<IBoard> list = introService.selectList(pi, is);
-		ArrayList<Iattachment> listi = new ArrayList<Iattachment>();
-		ArrayList<ArrayList<Prelation>> tg_list = new ArrayList<ArrayList<Prelation>>();
-		ArrayList<Boolean> ws_list = new ArrayList<Boolean>();
+
 		for(IBoard ib : list) { 
 			listi.add(introService.selectattachment(ib));
 			tg_list.add(introService.getTagInfo(ib));
 			if(session.getAttribute("loginMember") != null) { ws_list.add(introService.getWishList(ib, ((Member)(session.getAttribute("loginMember"))).getMemberNo())); }
 		}
+		
 		model.addAttribute("is", is);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("listi", listi);
 		model.addAttribute("tg_list", tg_list);
 		model.addAttribute("ws_list", ws_list);
-		
+		model.addAttribute("tagAll", tagsController.getTagsNameList());
+		System.out.println(listi);
+		System.out.println(tg_list);
+		System.out.println(ws_list);
 		return "board/intro/introListView";
 	}
 		
@@ -149,12 +150,6 @@ public class IntroController {
 		
 		return "board/intro/introEnrollForm";
 	
-	}
-	
-	@GetMapping("introDetail.bo")
-	public String DetailSelect() {
-		
-		return "board/intro/introDetailView";
 	}
 	
 	@PostMapping(value="introinsert.bo")
@@ -220,6 +215,28 @@ public class IntroController {
 		}
 		
 		return changeName;
+	}
+	
+	@PostMapping(value="deleteForm.ib")
+	public String deleteForm(HttpSession session, Model model, String filePath, int ino) {
+		
+		if(session.getAttribute("loginMember") == null) { 
+			session.setAttribute("alertMsg", "로그인을 먼저해주세요."); 
+			return "redirect:/"; 
+		}
+		
+		int result = introService.deleteForm(ino);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "글이 삭제되었습니다.");
+		
+		}
+		
+			return "redirect:/introlist.bo";
+		
+		
+		
 	}
 	
 	@GetMapping(value="introWish.hb", produces="text/html; charset=UTF-8") 

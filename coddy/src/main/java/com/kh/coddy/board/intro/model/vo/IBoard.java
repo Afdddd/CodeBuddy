@@ -23,8 +23,5 @@ public class IBoard {
 	private int iboardViews;		//	IBOARD_VIEWS	NUMBER
 	
 	// 필요한 정보들
-	private String projectName;
-	private String tagsName;
-	private String titleImg;
-	private String memberId;
+	private int recruitMentNo;
 }

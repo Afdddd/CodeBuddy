@@ -10,10 +10,7 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.UUID;
-
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -32,15 +29,25 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.kh.coddy.board.code.model.vo.Cboard;
+import com.kh.coddy.board.free.model.vo.Fboard;
+import com.kh.coddy.board.intro.model.vo.IBoard;
+import com.kh.coddy.board.job.model.vo.Hboard;
+import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.Keys;
+import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.auth.model.vo.Auth;
+import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.MemberService;
+import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 @Controller
@@ -304,6 +311,25 @@ public class MemberController {
 		return "member/writtenBoard";
 	}
 	
+	@GetMapping(value="written.io")
+	public String WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv)  {
+
+		int listCount = memberService.selectListCounti();
+		
+		int pageLimit = 5;
+		int boardLimit = 9;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+
+		ArrayList<IBoard> list = memberService.selectList(pi);
+		
+		mv.addObject("list", list).addObject("pi", pi).setViewName("member/boardListView");
+		
+		return mv;
+	}
+	
+	
 	@GetMapping(value="signup.me") public String signup(HttpSession session) {
 		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; }
 		try { session.setAttribute("googleKey", Keys.read(new ClassPathResource("keys/recaptcha2.json").getURL().getPath(), "key")); } 
@@ -458,6 +484,7 @@ public class MemberController {
 		} catch (IOException e) { e.printStackTrace(); }
 		return kakaoMember;
 	}
+	
 	
 
 	@RequestMapping("myRank.me")

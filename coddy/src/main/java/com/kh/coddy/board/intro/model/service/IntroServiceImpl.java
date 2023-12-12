@@ -45,12 +45,6 @@ public class IntroServiceImpl implements IntroService {
 	}
 
 	@Override
-	public int increaseCount(int iboardNo) {
-		
-		return introDao.increaseCount(sqlSession, iboardNo);
-	}
-
-	@Override
 	public ArrayList<Prelation> getTagInfo(IBoard ib) {
 		
 		return introDao.getTagInfo(sqlSession, ib);
@@ -98,6 +92,36 @@ public class IntroServiceImpl implements IntroService {
 	public int insertReply(Ireply r) {
 
 		return introDao.insertReply(sqlSession, r);
+	}
+
+	@Override
+	public int plusView(int ino) {
+	
+		return introDao.plusView(sqlSession, ino);
+	}
+
+	@Override
+	public IBoard selectBoard(int ino) {
+		
+		return introDao.selectBoard(sqlSession, ino);
+	}
+
+	@Override
+	public ArrayList<Iattachment> getAttachmentList(IBoard ib) {
+		
+		return introDao.getAttachmentList(sqlSession, ib);
+	}
+
+	@Override
+	public int getAllWish(int iboardNo) {
+		
+		return introDao.getAllWish(sqlSession, iboardNo);
+	}
+
+	@Override
+	public int deleteForm(int iboardNo) {
+		
+		return introDao.deleteForm(sqlSession, iboardNo);
 	}
 
 }

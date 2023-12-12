@@ -21,28 +21,32 @@
             <h2>게시글 상세보기</h2>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="list.bo">목록으로</a>
+            
             <br><br>
 
             <table id="contentArea" align="center" class="table">
                 <tr>
-                    <th>제목 : ㄴㅁㅇㄹㄴㅇㄹㅇㄴㄹㄴㅁㄻㄴㅇㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㅁㄹㄴㅇㄹㅇㄴㄹ</th>
+                    <th>제목 : ${ib.iboardTitle}</th>
+                    <td></td>
                 </tr>
                 <tr>
-                    <th>작성자 : ㄴㅇㄹㄴㅇ</th>
+                    <th>작성자 : ${ib.iboardWriter}</th>
+                     <td></td>
                 </tr>
                 <tr>
-                    <th>작성일 : ㄴㅇㅁㄹㄴㄹ</th>
+                    <th>작성일 : ${ib.iboardInsert}</th>
+                     <td></td>
                 </tr>
                 <tr>
                 	<th>사용기술 / 언어</th>
+                	 <td></td>
                 </tr>
                 <tr>
-                	<th>내용</th>
+                	<th style="height:150px;">내용 :
+	                    	${ib.iboardContent}
+	                    </th>
                     <td colspan="4">
-	                    <p style="height:150px;">
 	                    
-	                    </p>
                     </td>
                 </tr>
                 <tr>
@@ -50,42 +54,22 @@
                 </tr>
                 
             </table>
+            <a class="btn btn-secondary" style="float:center;" href="list.bo">목록으로</a>
             <br>
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-	            <c:if test="${ not empty sessionScope.loginUser and sessionScope.loginUser.userId eq requestScope.b.cboardWriter }">
+	        
+	        		
 	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-	                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
 	                
-	                <form id="postForm" action="" method="post">
-	                	<input type="hidden" name="bno" 
-	                				value="${ requestScope.c.cboardNo }">
-	                	<input type="hidden" name="filePath" 
-	                				value="${ requestScope.c.changeName }">
-	                </form>
 	                
-	                <script>
-	                	function postFormSubmit(num) {
-	                		
-	                		// num 값에 따라 위의 form 태그에 action 속성을 부여한 후
-	                		// submit 시키기
-	                		
-	                		if(num == 1) { 
-	                			// num == 1 일 경우 : 수정하기 버튼을 클릭한 상태
-	                			
-	                			$("#postForm").attr("action", "updateForm.bo").submit();
-	                			
-	                		} else {
-	                			// num == 2 일 경우 : 삭제하기 버튼을 클릭한 상태
-	                			
-	                			$("#postForm").attr("action", "delete.bo").submit();
-	                			
-	                			// jQuery 의 submit() 메소드 : 해당 form 의 submit 버튼을 누르는 효과
-	                		}
-	                	}
-	                </script>
-            	</c:if>
+	                <form action="deleteForm.ib" method="post">
+	                
+	                		<input type="hidden" name="ino" value="${sessionScope.ib.iboardNo}">
+							<input type="hidden" name="iboardWriter" value="${sessionScope.ib.iboardWriter}">
+	                	<button type="submit" class="btn btn-danger">삭제</button>
+            		</form>
             </div>
             <br><br>
 
@@ -173,6 +157,6 @@
 		}
     </script>
     
-    
+    <jsp:include page="../../common/footer.jsp" />
 </body>
 </html>

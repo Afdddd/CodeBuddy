@@ -39,17 +39,7 @@
         background-color: #5271FF;
         color: white;
       }
-      
-      ul {
-        list-style:none;
-      }
-      table {
-        border-spacing: 10px;
-        border-collapse: separate;
-      }
-      table td {
-        width: 300px;
-      }
+
     </style>
   </head>
   <body>
@@ -62,7 +52,7 @@
         <div style="display: flex;">
           <ul class="menu" style="padding-left:0px; width : 230px;"><br>
             <li><a href="myPage.se">마이페이지</a>
-              <ul style="width : 210px;">
+              <ul class="ul" style="width : 210px; list-style:none;">
                 <li><a href="pwdChange.me">- 비밀번호 변경</a></li>
                 <li><a href="delete.me">- 회원 탈퇴</a></li>
               </ul>
@@ -92,10 +82,10 @@
                           -->
               <input type="hidden" name="memberId" value="${ sessionScope.loginMember.memberId }">
               <br><br><br><br><br><br>	
-              <table>
+              <table style="border-spacing: 10px; border-collapse: separate;">
                 <tr>
-                  <td style="text-align : right">비밀번호</td>
-                  <td><input type="password" id="memberPwd" name="memberPwd" required></td>
+                  <td style="text-align : right;  width: 300px;">비밀번호</td>
+                  <td style=" width: 300px;"><input type="password" id="memberPwd" name="memberPwd" required></td>
                 </tr>
               </table>
               <br><br><br>
@@ -107,5 +97,7 @@
         </div>
       </div>
     </div>
+    
+    <jsp:include page="../common/footer.jsp" />	
   </body>
 </html>

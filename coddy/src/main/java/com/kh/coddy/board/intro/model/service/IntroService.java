@@ -24,9 +24,6 @@ public interface IntroService {
 	// 전체조회
 	ArrayList<IBoard> selectList(PageInfo pi, Isearch is);
 
-	// 게시글 조회수 증가
-	int increaseCount(int iboardNo);
-
 	// 이미지 전체조회용
 	Iattachment selectattachment(IBoard ib);
 
@@ -47,6 +44,21 @@ public interface IntroService {
 
 	// 댓글 작성용
 	int insertReply(Ireply r);
+
+	// 상세조회 조회수 증가
+	int plusView(int ino);
+
+	// 상세조회용 select
+	IBoard selectBoard(int ino);
+
+	// 상세조회용 이미지 리스트 가져오기
+	ArrayList<Iattachment> getAttachmentList(IBoard ib);
+
+	// 상세
+	int getAllWish(int iboardNo);
+
+	// 게시판 글 삭제
+	int deleteForm(int iboardNo);
 
 	
 
