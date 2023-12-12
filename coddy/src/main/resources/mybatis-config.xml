@@ -37,6 +37,7 @@
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Freply" alias="freply"/>
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Fattachment" alias="Fattachment"/>
      	<typeAlias type="com.kh.coddy.board.code.model.vo.Cboard" alias="cboard"/>
+     	<typeAlias type="com.kh.coddy.board.code.model.vo.Creply" alias="creply"/>
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatRoom" alias="chatRoom" />
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMessage" alias="chatMessage" />
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMember" alias="chatMember"/>

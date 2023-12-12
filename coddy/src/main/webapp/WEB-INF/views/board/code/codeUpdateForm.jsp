@@ -59,30 +59,43 @@
     	<hr>
     	<br><br>
         
-        <h4 style="color : #5271FF;"><b style="padding-left: 50px;">코드리뷰 글쓰기</b></h4>
+        <h4 style="color : #5271FF;"><b style="padding-left: 50px;">게시글 수정</b></h4>
         <div class="Outer">
         <div class="innerOuter">
-        	<form id="enrollForm" method="post" action="insert.co" enctype="multipart/form-data">
+        	<form id="updateForm" method="post" action="update.co" enctype="multipart/form-data">
                 
-                <input type="hidden" id="cboardContent" name="cboardContent" value="">
+                <input type="hidden" id="cboardNo" name="cboardNo" value="${ c.cboardNo }">
                 <table align="center">
                     <tr>
                         <th><label for="title"></label></th>
-                        <td><input type="text" id="title" class="form-control" name="cboardTitle" placeholder="제목을 입력하세요." style="width:1100px;" required></td>
+                        <td><input type="text" id="title" class="form-control" value="${ requestScope.c.cboardTitle }" name="cboardTitle" placeholder="제목을 입력하세요." style="width:1100px;" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer"></label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginMember.memberId }" name="cboardWriter" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${ requestScope.c.cboardWriter }" readonly></td>
                     </tr>
                     <tr>
-                        <th><label for="upfile"></label></th>
-                        <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
+                    	<th><label for="file"></label></th>
+						<td>
+							<input type="file" id="upfile" class="form-control-file border" name="reupfile">
+                            
+                            <c:if test="${ not empty requestScope.c.originName }">
+	                            현재 업로드된 파일 : 
+	                            <a href="${ requestScope.c.changeName }" 
+	                               download="${ requestScope.c.originName }">
+									${ requestScope.c.originName }
+								</a>
+								<!-- 기존의 첨부파일이 있다라는 뜻 -->
+								<input type="hidden" name="originName" value="${ requestScope.c.originName }">
+								<input type="hidden" name="changeName" value="${ requestScope.c.changeName }">
+                            </c:if>
+						</td>                   
                     </tr>
                     <tr>
                     	<th><label for="content"></label></th>
                     	<td>
                     	    <div id="editor">
-					        	<p id="">내용을 입력하세요.</p>
+					        	<p id="">${ requestScope.c.cboardContent }</p>
 					    	</div>
 
 					    <script>
@@ -103,8 +116,8 @@
                 <br>
 
                 <div align="center">
-                	<button type="reset" class="">취소하기</button>
-                    <button type="submit" class="" onclick="setContent();">등록하기</button>
+                    <button type="submit" class="btn btn-secondary">수정하기</button>
+                    <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1);">이전으로</button>
                 </div>
             </form>
             
