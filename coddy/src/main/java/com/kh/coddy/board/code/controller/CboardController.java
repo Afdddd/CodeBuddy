@@ -1,7 +1,10 @@
 package com.kh.coddy.board.code.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 import java.util.UUID;
 
@@ -62,15 +65,15 @@ public class CboardController {
 		}
 		
 		@RequestMapping("detail.co")
-		public ModelAndView selectBoard(int bno, 
+		public ModelAndView selectBoard(int cno, 
 										ModelAndView mv) {
 			
 			
-			int result = cboardService.increaseCount(bno);
+			int result = cboardService.increaseCount(cno);
 			
 			if(result > 0) { // 성공
 				
-				Cboard c = cboardService.selectBoard(bno);
+				Cboard c = cboardService.selectBoard(cno);
 				
 				mv.addObject("c", c)
 				  .setViewName("board/code/codeDetailView"); 
@@ -148,7 +151,119 @@ public class CboardController {
 				return "common/errorPage";
 		    }
 		}
+		    
+		@PostMapping("updateForm.co")
+		public String updateForm(int cno, Model model) {
+				
+			Cboard c = cboardService.selectBoard(cno);
+				
+			model.addAttribute("c", c);
+				
+			return "board/code/codeUpdateForm";
+			}   
+		    
 		
-}
+		@PostMapping("update.co")
+		public String updateBoard(Cboard c, 
+								  MultipartFile reupfile,
+								  HttpSession session,
+								  Model model) {
+			
+			System.out.println(c);
+			c.setCboardContent(String.valueOf(session.getAttribute("cboardContent")));
+			
+			if (reupfile != null && !reupfile.getOriginalFilename().equals("")) {
+				
+				if(c.getChangeName() != null) {
+					
+					String realPath = session.getServletContext()
+										.getRealPath(c.getChangeName());
+					
+					new File(realPath).delete();
+				}
+				String changeName = saveFile(reupfile, session);
+				
+				c.setOriginName(reupfile.getOriginalFilename());
+				c.setChangeName("/src/main/webapp/resources/file_upload/cboard/" + changeName);
+			}
+			int result = cboardService.updateBoard(c);
+			
+			if(result > 0) { 
+				session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+				
+				return "redirect:/detail.co?cno=" + c.getCboardNo();
+				
+			} else {
+				
+				model.addAttribute("errorMsg", "게시글 수정 실패");
+				
+				return "common/errorPage";
+			}   
+		    
+		}
+		
+		
+		public String saveFile(MultipartFile upfile,
+				   HttpSession session) {
+
+			String originName = upfile.getOriginalFilename();
+			
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss")
+													.format(new Date());
+			
+			int ranNum = (int)(Math.random() * 90000 + 10000);
+			
+			String ext = originName.substring(originName.lastIndexOf("."));
+			
+			String changeName = currentTime + ranNum + ext;
+			
+			String savePath = session.getServletContext()
+					.getRealPath("/src/main/webapp/resources/file_upload/cboard/");
+			
+			try {
+				
+				upfile.transferTo(new File(savePath + changeName));
+			
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			return changeName;
+			}
+		
+		
+		@RequestMapping("delete.co")
+		public String deleteBoard(int cno,
+								  String filePath,
+								  Model model,
+								  HttpSession session) {
+			
+			int result = cboardService.deleteBoard(cno);
+			
+			if(result > 0) {
+				if(!filePath.equals("")) {
+					
+					String realPath = session.getServletContext()
+									.getRealPath(filePath);
+					
+					new File(realPath).delete();
+				}
+				
+				session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+				
+				return "redirect:/list.co";
+				
+			} else { 
+				
+				model.addAttribute("errorMsg", "게시글 삭제 실패");
+				
+				return "common/errorPage";
+			}
+		}
+		
+		
+		
+		
+		}
 		
 		

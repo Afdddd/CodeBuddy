@@ -64,7 +64,7 @@
                 <tbody>
                 	<c:forEach var="c" items="${ requestScope.list }">
 	                    <tr>
-	                        <td class="bno">${ c.cboardNo }</td>
+	                        <td class="cno">${ c.cboardNo }</td>
 	                        <td>${ c.cboardTitle }</td>
 	                        <td>${ c.cboardWriter }</td>
 	                        <td>${ c.cboardViews }</td>
@@ -86,9 +86,9 @@
             		
             		$("#cboardList>tbody>tr").click(function() {
             			
-            			let bno = $(this).children(".bno").text();
+            			let cno = $(this).children(".cno").text();
             			
-            			location.href = "detail.co?bno=" + bno;
+            			location.href = "detail.co?cno=" + cno;
             		});
             	});
             </script>

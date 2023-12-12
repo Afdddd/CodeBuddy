@@ -71,9 +71,32 @@
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-	            <c:if test="${ not empty sessionScope.loginMember and sessionScope.loginMember.memberId eq requestScope.c.cboardWriter }">
-	                <a class="btn btn-primary" onclick="">수정하기</a>
-	                <a class="btn btn-danger" onclick="">삭제하기</a>
+	            <c:if test="${ not empty sessionScope.loginMember and sessionScope.loginMember.memberNo eq requestScope.c.cboardWriter }"> 
+	                <a class="btn btn-secondary" onclick="postFormSubmit(1);">수정하기</a>
+	                <a class="btn btn-secondary" onclick="postFormSubmit(2);">삭제하기</a>
+	                
+	                <form id="postForm" action="" method="post">
+	                	<input type="hidden" name="cno" 
+	                				value="${ requestScope.c.cboardNo }">
+	                	<input type="hidden" name="filePath" 
+	                				value="${ requestScope.c.changeName }">
+	                </form>
+	                
+	                <script>
+	                	function postFormSubmit(num) {
+	                		
+	                		if(num == 1) { 
+	                			
+	                			$("#postForm").attr("action", "updateForm.co").submit();
+	                			
+	                		} else {
+	                			
+	                			$("#postForm").attr("action", "delete.co").submit();
+	                			
+	                			
+	                		}
+	                	}
+	                </script>
 	            </c:if>   
 
             </div>
@@ -169,7 +192,7 @@
     		$.ajax({
     			url : "rlist.co",
     			type : "get",
-    			data : {bno : ${ requestScope.c.cboardNo }},
+    			data : {cno : ${ requestScope.c.cboardNo }},
     			success : function(result) {
     				
     				// console.log(result);

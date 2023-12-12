@@ -27,11 +27,15 @@
         INSERT INTO CBOARD (CBOARD_NO, 
         					CBOARD_TITLE,
         					CBOARD_WRITER, 
-        					CBOARD_CONTENT)
+        					CBOARD_CONTENT,
+        					ORIGIN_NAME,
+        					CHANGE_NAME)
         VALUES(SEQ_CBOARD.NEXTVAL, 
         		#{cboardTitle}, 
         		#{cboardWriter}, 
-        		#{cboardContent})
+        		#{cboardContent},
+        		#{originName},
+        		#{changeName})
     </insert>
     
 	<select id="selectListCount" resultType="int">
@@ -69,7 +73,8 @@
 	</select>    
  
 	<update id="deleteBoard" parameterType="_int">
-		UPDATE CBOARD
+		DELETE  
+		  FROM CBOARD 
 		 WHERE CBOARD_NO = #{cboardNo}
 	</update>    
     
@@ -88,14 +93,14 @@
 	         , CREPLY_CONTENT
 	         , TO_CHAR(CBOARD_INSERT, 'YYYY-MM-DD') AS "CBOARD_INSERT"
 	      FROM CREPLY
-	     WHERE REF_BNO = #{cboardNo}
+	     WHERE REF_CNO = #{cboardNo}
 	     ORDER BY CREPLY_NO DESC
 	</select>
 	
 	<insert id="insertReply" parameterType="creply">
 		INSERT INTO CREPLY(CREPLY_NO
 		                , CREPLY_CONTENT
-		                , CREF_BNO
+		                , CREF_CNO
 		                , CREPLY_WRITER)
 		           VALUES(SEQ_RNO.NEXTVAL
 		                , #{creplyContent}
