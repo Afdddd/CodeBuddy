@@ -181,8 +181,60 @@
 					$("#hboardStart").val($(this).val().split(" - ")[0]);
 					$("#hboardEnd").val($(this).val().split(" - ")[1]);
 				})
+				$('#hboardContent').summernote({
+					minHeight: 300,
+					maxHeight: null,
+					focus: false,
+					lang: "ko-KR",
+					toolbar: [
+						// [groupName, [list of button]]
+						['fontname', ['fontname']],
+						['fontsize', ['fontsize']],
+						['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+						['color', ['forecolor','color']],
+						['table', ['table']],
+						['para', ['ul', 'ol', 'paragraph']],
+						['height', ['height']],
+						['insert',['picture','link','video']],
+						['view', ['fullscreen', 'help']]
+					],
+					fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+					fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72','76','102	'],
+					callbacks: {
+						onImageUpload : function(files) {
+							uploadSummernoteImageFile(files[0],this);
+						},
+						onPaste: function (e) {
+							var clipboardData = e.originalEvent.clipboardData;
+							if (clipboardData && clipboardData.items && clipboardData.items.length) {
+								var item = clipboardData.items[0];
+								if (item.kind === 'file' && item.type.indexOf('image/') !== -1) {
+									e.preventDefault();
+								}
+							}
+						}
+					}
+				});
+				$("div.note-editable").on('drop',function(e){
+					for(i=0; i< e.originalEvent.dataTransfer.files.length; i++){ uploadSummernoteImageFile(e.originalEvent.dataTransfer.files[i],$("#summernote")[0]); }
+					e.preventDefault();
+				});
 			});
 			function addAttach() { $("#attachmentArea").html("<input type='file' name='files' required>" + $("#attachmentArea").html()); }
+			function uploadSummernoteImageFile(file, editor) {
+				data = new FormData();
+				data.append("file", file);
+				$.ajax({
+					data : data,
+					type : "post",
+					url : "uploadSummernoteImageFile.hb",
+					contentType : false,
+					processData : false,
+					success : function(data) {
+						$(editor).summernote('insertImage', data);
+					}
+				});
+			}
 		</script>
 	</body>
 </html>

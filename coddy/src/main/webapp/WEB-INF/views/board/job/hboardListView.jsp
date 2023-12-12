@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,7 +10,7 @@
         <title>취업 공고 게시판</title>
         <style>
             .outerForm { width: 100%; height: 100%; padding-top: 3%; padding-bottom: 3%; }
-            .searchForm { width: 100%; height: 15%; padding: 3%; background: linear-gradient(white, #86b4f1); color: black; }
+            .searchForm { width: 100%; height: 15%; padding: 3%; background: linear-gradient(white, #a2c6f5); color: black; }
             .searchForm1 { width: 100%; height: 100%; border-radius: 20px; color: black; }
             .searchForm1 div { width: 100%; border-radius: 20px; }
             .searchForm2 { width: 100%; height: 0%; border-radius: 12px; border: 2.2px solid khaki; }
@@ -63,6 +64,17 @@
 
             /* 인엽이 페이지 네이션 맞추기 */
             .pageForm { width:fit-content; margin:auto; }
+
+            /* 인엽이 툴팁 */
+            .text { color: #5271FF; font-size: 14px; }
+            .tooltip-container { position: relative; display: inline-block; margin-left: 10px; }
+            .tooltip {
+                position: absolute; top: 100%; left: 50%; transform: translateX(-50%); opacity: 0; visibility: hidden;
+                background: white; color: black; padding: 10px; border-radius: 4px; transition: opacity 0.3s, visibility 0.3s, top 0.3s, background 0.3s;
+                z-index: 1; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            .tooltip::before { content: ""; position: absolute; bottom: 100%; left: 50%; border-width: 8px; border-style: solid; border-color: transparent transparent #5271FF transparent; transform: translateX(-50%); }
+            .tooltip-container:hover .tooltip { top: 120%; opacity: 1; visibility: visible; background: white; transform: translate(-50%, -5px); }
         </style>
     </head>
     <body>
@@ -218,9 +230,19 @@
                                             <c:if test="${ empty requestScope.tg_list[status.index]}">
                                                 <span class="tagListNo">태그없음</span>
                                             </c:if>
-                                            <c:forEach var="tg" items="${requestScope.tg_list[status.index]}" begin="0" end="5">
+                                            <c:forEach var="tg" items="${requestScope.tg_list[status.index]}" begin="0" end="4">
                                                 <span class="tagList" onclick="onSearchAddTag('${tg.tagsNo}')">${tg.tagsNo}</span>
                                             </c:forEach>
+                                            <div class="tooltip-container">
+                                                <c:if test="${fn:length(requestScope.tg_list[status.index]) gt 5 }">
+                                                    <span class="text">그리고 ${fn:length(requestScope.tg_list[status.index])-5}개의 태그</span>
+                                                    <span class="tooltip">
+                                                        <c:forEach var="tg" items="${requestScope.tg_list[status.index]}" begin="5" end="${fn:length(requestScope.tg_list[status.index])}">
+                                                            <span class="tagList" onclick="onSearchAddTag('${tg.tagsNo}')">${tg.tagsNo}</span>
+                                                        </c:forEach>
+                                                    </span>
+                                                </c:if>
+                                            </div>
                                         </div>                         
                                     </div>
                                 </c:forEach>

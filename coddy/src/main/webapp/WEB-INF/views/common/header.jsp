@@ -67,6 +67,10 @@
     <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <!-- 도로명 주소 카카오 api -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- include summernote css/js -->
+    <script src="${ pageContext.request.contextPath }/resources/js/summernote/summernote-lite.js"></script>
+    <script src="${ pageContext.request.contextPath }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+    <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/summernote/summernote-lite.css">
     <style>
         div {box-sizing:border-box;}
         #header {

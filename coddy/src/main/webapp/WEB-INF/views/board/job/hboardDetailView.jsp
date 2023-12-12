@@ -67,7 +67,7 @@
                             </c:forEach>
 						</div>
 						<div class="boardContentContent">
-							<p style="overflow: auto; width: 100%; height: 100%;">${sessionScope.hb.hboardContent}</p>
+							<pre style="overflow: auto; width: 100%; height: 100%;">${sessionScope.hb.hboardContent}</pre>
 						</div>
 						<div class="boardContentMap">
 							<h4 style="border: 2px solid khaki; border-radius: 20px; width: 480px; text-align: center; padding: 2px;" onclick="location.href='listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=${sessionScope.where}&viewOn=f'">${sessionScope.geo.addr}</h4>
@@ -207,7 +207,6 @@
 					success : function(result) { alert(result); location.href="/coddy/boardDetail.hb?hno=${sessionScope.hb.hboardNo}"; },
 					error : function(xhr, status, error) { alert(error); }
 				})
-				// $(".boardMiniAttach").text($(".boardMiniAttach").text());
 			}
 			function minusAttachment(e) {
 				$.ajax({
