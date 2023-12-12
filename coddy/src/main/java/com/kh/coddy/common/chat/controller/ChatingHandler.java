@@ -14,6 +14,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.coddy.common.chat.model.service.ChatService;
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.chat.model.vo.ChatMessage;
 import com.kh.coddy.common.chat.model.vo.ChatRoom;
 
@@ -28,7 +29,7 @@ public class ChatingHandler extends TextWebSocketHandler{
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	// 채팅방 목록 <방 번호, ArrayList<session> >이 들어간다.
-	private Map<Integer, ArrayList<WebSocketSession>> RoomList = new ConcurrentHashMap<>();
+	private Map<Integer, ArrayList<WebSocketSession>> RoomList = new ConcurrentHashMap<>();       
 	
 	// session, 방 번호가 들어간다.
 	private Map<WebSocketSession,Integer> sessionList = new ConcurrentHashMap<>();
@@ -39,6 +40,7 @@ public class ChatingHandler extends TextWebSocketHandler{
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		i++;
 		log.info("연결 성공! 현재인원 = {}",i);
+		log.info("session = {}",session.getAttributes());
 	}
 
 	@Override
@@ -62,10 +64,26 @@ public class ChatingHandler extends TextWebSocketHandler{
 		log.info("chatMessage = {}", chatMessage);
 		// 받은 메세지에 담긴 roomId로 해당 채팅방을 찾아온다.
 		ChatRoom chatRoom = cService.selectChatRoom(chatMessage.getRoomId());
+		log.info("chatRoom = {}",chatRoom);
 		
-		
-		// 채팅 세션 목록에 채팅방이 존재하지 않고, 처음 들어왔고, DB에서의 채팅방이 있을 때
-		if(RoomList.get(chatRoom.getRoomId()) == null && chatMessage.getMessage().equals("ENTER-CHAT") && chatRoom != null) {
+		if(chatRoom == null && chatMessage.getMessage().equals("ENTER-CHAT")) {
+			chatRoom = new ChatRoom(Integer.parseInt(chatMessage.getRoomId()),chatMessage.getMemberNo());
+			int result = cService.createChat(chatRoom);
+						
+			if(result>0) {
+				// 채팅 세션 목록에 채팅방이 존재하지 않고, 처음 들어왔고, DB에서의 채팅방이 있을 때	
+				ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
+				sessionTwo.add(session);
+				sessionList.put(session, chatRoom.getRoomId());
+				
+				// 해당 채팅방에 참여한 세션들 추가
+				RoomList.put(chatRoom.getRoomId(), sessionTwo);
+				
+				log.info("채팅방 생성");
+			}
+			
+			// 채팅 세션 목록에 채팅방이 존재하지 않고, 처음 들어왔고, DB에서의 채팅방이 있을 때	
+		}else if(RoomList.get(chatRoom.getRoomId()) == null && chatMessage.getMessage().equals("ENTER-CHAT") && chatRoom != null) {
 			
 			ArrayList<WebSocketSession> sessionTwo = new ArrayList<>();
 			sessionTwo.add(session);
@@ -81,11 +99,12 @@ public class ChatingHandler extends TextWebSocketHandler{
 			  RoomList.get(chatRoom.getRoomId()).add(session);
 			  // sessionList에 추가
 			  sessionList.put(session, chatRoom.getRoomId());
+
 			  // 확인용
 			  System.out.println("생성된 채팅방으로 입장");
 			}
 		// 메세지 입력 시 
-		else if(RoomList.get(chatRoom.getRoomId())!= null && !chatMessage.getMessage().equals("ENTER-CHAT") && chatRoom != null) {
+		else if(RoomList.get(chatRoom.getRoomId())!= null && !chatMessage.getMessage().equals("ENTER-CHAT") && !chatMessage.getMessage().equals("END-CHAT")&& chatRoom != null) {
 			// 메세지에 이름과 내용을 담는다.
 			TextMessage textMessage = new TextMessage(chatMessage.getMemberNo() + "," + chatMessage.getMemberName() + "," + chatMessage.getMessage());
 			
@@ -111,7 +130,13 @@ public class ChatingHandler extends TextWebSocketHandler{
 				log.info("메세지 전송 실패");
 			}
 			
-		}		
+			// 채팅방 나가기
+		}else if(RoomList.get(chatRoom.getRoomId())!= null && chatMessage.getMessage().equals("END-CHAT") && chatRoom != null) {
+			ChatMember cm = new ChatMember(Integer.parseInt(chatMessage.getRoomId()),chatMessage.getMemberNo(),chatMessage.getRole());
+			cService.outCaht(cm);
+			RoomList.get(sessionList.get(session)).remove(session);
+			sessionList.remove(session);
+		}
 }
 		
 	

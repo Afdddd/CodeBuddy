@@ -1,5 +1,7 @@
 package com.kh.coddy.common.chat.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +13,10 @@ public class ChatRoom {
 	
 	private Integer roomId;  // 방번호
 	private int userNo;
-	private String userName;// 사용자 이름
-	private String userPhoto; // 사용자 사진
-	private int masterNo;
-	private String masterName; // 상대방 이름
-	private String masterPhoto;  // 상대방 사진
-	private int unReadCount;   // 안읽은메세지 수
+	private Date chatInsert;
 	
+	public ChatRoom(Integer roomId, int userNo) {
+		this.roomId = roomId;
+		this.userNo = userNo;
+	}
 }

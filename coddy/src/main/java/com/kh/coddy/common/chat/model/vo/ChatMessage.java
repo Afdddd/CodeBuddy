@@ -13,6 +13,7 @@ public class ChatMessage {
 	private String roomId;    // 프로젝트 번호
 	private int memberNo; 	  // 보낸사람 회원번호
 	private String memberName; 	  // 보낸사람 이름
+	private String role;
 	private String message;   // 메세지 내용	
 	private int unReadCount;  // 안읽은 메세지 수
 	private int sessionCount; // 현재 세션 수

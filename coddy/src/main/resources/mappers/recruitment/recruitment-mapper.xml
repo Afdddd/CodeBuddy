@@ -44,8 +44,7 @@
 		<result column="TAGS_NO" property="tagsNo"/>
 	</resultMap>
 	
-	<resultMap id="rStateResultSet" type="rState">
-		<result column="RECRUITMENT_STATE_NO" property="stateNo" />
+	<resultMap id="rStateResultSet" type="rState">		
 		<result column="RECRUITMENT_NO" property="recruitmentNo" />
 		<result column="ROLE" property="position" />
 		<result column="MAX_PERSONNEL" property="maxPersonnel" />
@@ -95,12 +94,10 @@
 					   		    WHERE T.TAGS_NAME=#{tagsNo})) 
 	</insert>
 	<insert id="insertState" parameterType="rState">
-		INSERT INTO RECRUITMENT_STATE(RECRUITMENT_STATE_NO,
-									  RECRUITMENT_NO,
+		INSERT INTO RECRUITMENT_STATE(RECRUITMENT_NO,
 									  ROLE,
 									  MAX_PERSONNEL)
-							   VALUES(SEQ_RECRUITMENT_STATE.NEXTVAL,
-							   		  SEQ_RECRUITMENT.CURRVAL,
+							   VALUES(SEQ_RECRUITMENT.CURRVAL,
 							   		  #{position},
 							   		  #{maxPersonnel})	
 	</insert>
@@ -297,18 +294,18 @@
 		WHERE RECRUITMENT_NO = #{recruitmentNo}
 	</select>
 	
-	<select id="selectStateNo" parameterType="map" resultType="_int">
-		SELECT RECRUITMENT_STATE_NO
-		FROM RECRUITMENT_STATE
-		WHERE RECRUITMENT_NO = TO_NUMBER(#{rno})
-		AND ROLE = #{position}
+	<select id="getApply" parameterType="chatMember" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM CHAT_MEMBER 
+		 WHERE PROJECT_NO = #{projectNo} 
+		   AND ROLE = #{role}
 	</select>
 	
-	<select id="selectApply" parameterType="_int" resultType="_int">
-		SELECT COUNT(*)
-		FROM APPLY_PERSONNEL
-		WHERE RECRUITMENT_STATE_NO = #{stateNo}
-	</select>
+	<insert id="insertApply" parameterType="chatMember">
+		INSERT INTO CHAT_MEMBER
+		VALUES(#{projectNo},#{memberNo},#{role})
+	</insert>
+	
 	
 	
  

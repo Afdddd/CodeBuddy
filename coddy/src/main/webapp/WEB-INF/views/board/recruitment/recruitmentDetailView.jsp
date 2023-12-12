@@ -281,25 +281,46 @@
         </div>
         <div class="content_1">
         <div class="content_left">
-            <h2>모집 현황</h2>
-            <a href="room.rec">입장하기</a> 
-            
+            <h2>모집 현황</h2>   
             <table class="position_status">
                 <tbody>
                   <c:forEach var="state" items="${requestScope.state}" varStatus="status">
                     <tr>
                         <td colspan="2" style="width: 100px;">${state.position}</td>
-                        <td style="width: 200px;"><span  id="applyState_${status.index}"  onload=""></span> / ${state.maxPersonnel}</td>
-                        <td colspan="2"><button class="position_button" id="position_button_${status.index}">지원하기</button></td>
+                        <td style="width: 200px;"><span  id="applyState_${status.index}"></span> / ${state.maxPersonnel}</td>
+                        <td colspan="2"><button class="position_button" id="position_button_${status.index}" data-toggle="modal" data-target="#apply_${status.index}">지원하기</button></td>
                     </tr>
-                        <script>
-                          $(function(){
-                            getApply('${state.position}','${r.recruitmentNo}','${state.maxPersonnel}','${status.index}');
-                          })
-                          
+                    <script>
+                      $(function(){
+                        setInterval(
+                        getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}'),3000);
+                      });
+                      </script>
+                    <div class="modal" id="apply_${status.index}">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
 
-                         
-                          </script>
+                          <!-- Modal Header -->
+                          <div class="modal-header">
+                            <h4 class="modal-title">지원하기</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                          </div>
+
+                          <!-- Modal body -->
+                          <div class="modal-body">
+                            <b>${state.position}</b> 에 지원하시겠습니까?
+                          </div>
+
+                          <!-- Modal footer -->
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="insertApply('${p.projectNo}','${sessionScope.loginMember.memberNo}','${state.position}','${state.maxPersonnel}');">지원하기</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+
                   </c:forEach>
                 </tbody>
             </table> 
@@ -511,30 +532,55 @@
           $(".container").css("width","10px");      
       });
 
-      function getApply(position,rno, maxPersonnel, i){
+
+      function getApply(projectNo, position, i, maxPersonnel){
+        console.log("getApply");
         $.ajax({
-          url:"selectApply.rec",
+          url:"getApply.rec",
           type:"get",
           data:{
-            position : position,
-            rno : rno
+            projectNo : projectNo,
+            position : position
           },
           success : function(result){
             console.log(result);
             if(result >= maxPersonnel){
               let btn = "#position_button_" + i ;
               console.log(btn);
-              $(btn).prop("disabled", false);
+              $(btn).prop("disabled", true);
+              $("#applyState_"+i).text(result);
             }else{
               let applyStateEl = "#applyState_"+ i;
               console.log(applyStateEl);
               $(applyStateEl).text(result);
+              $("#applyState_"+i).text(result);
             }
           },
           error : function(){
             console.log("지원 현황 불러오기 실패");
           }
         });
+      }
+
+      function insertApply(projectNo, memberNo, position,maxPersonnel){
+          $.ajax({
+            url:"insertApply.rec",
+            type:"get",
+            data: {
+              projectNo : projectNo,
+              memberNo : memberNo,
+              position : position,
+              maxPersonnel : maxPersonnel
+            },
+            success:function(result){
+              console.log(result);
+              location.href="room.rec?pno="+result;
+            },
+            error:function(){
+              alert("이미 꽉찼습니다.");
+            }
+
+          })
       }
 
         
