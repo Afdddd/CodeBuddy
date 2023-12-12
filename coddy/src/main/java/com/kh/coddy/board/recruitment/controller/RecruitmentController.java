@@ -271,29 +271,17 @@ public class RecruitmentController {
 		return String.valueOf(result);		
 	}
 	
-	@ResponseBody
 	@GetMapping("insertApply.rec")
-	public String insertApply(int projectNo, int memberNo, String position, int maxPersonnel) {
-		log.info("projectNo = {}",projectNo);
-		int apply = rService.getApply(new ChatMember(projectNo,0,position));
-		if(maxPersonnel > apply) {
-			ChatMember cm = new ChatMember(projectNo,memberNo,position);
-			int result2 = rService.insertApply(cm);
-			log.info("chatMember = {}",cm);
-			return String.valueOf(result2);
-		}else {
-			return "0";
-		}
+	@ResponseBody
+	public String insertApply(int projectNo, int memberNo, String position, int maxPersonnel, HttpSession session) {		
+		ChatMember cm = new ChatMember(projectNo,memberNo, position);		
+		session.setAttribute("chatMember", cm);
+		return String.valueOf(rService.insertApply(cm, maxPersonnel)); 
 	}
 	
 	@GetMapping("room.rec")
 	public String room() {	
 		return "project/room";
-	}
-	
-	
-	
-	
-	
+	}	
 	
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.chat.model.vo.ChatMessage;
 import com.kh.coddy.common.chat.model.vo.ChatRoom;
 
@@ -22,6 +23,9 @@ public class ChatDao {
 	}
 	public int createChat(SqlSessionTemplate sqlSession,ChatRoom room) {
 		return sqlSession.insert("chatMapper.createChat",room);
+	}
+	public int outChat(SqlSessionTemplate sqlSession, ChatMember cm) {
+		return sqlSession.delete("chatMapper.outChat",cm);
 	}
 		
 }

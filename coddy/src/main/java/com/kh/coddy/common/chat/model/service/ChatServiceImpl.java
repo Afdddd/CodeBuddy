@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.coddy.common.chat.model.dao.ChatDao;
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.chat.model.vo.ChatMessage;
 import com.kh.coddy.common.chat.model.vo.ChatRoom;
 
@@ -61,6 +62,11 @@ public class ChatServiceImpl implements ChatService{
 	public int updateCount(ChatMessage message) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public int outCaht(ChatMember cm) {
+		return cDao.outChat(sqlSession, cm);
 	}
 
 }

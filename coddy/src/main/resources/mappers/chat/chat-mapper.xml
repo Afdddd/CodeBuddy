@@ -47,4 +47,11 @@
 		INSERT INTO CHAT(PROJECT_NO, CHAT_MASTER) VALUES(#{roomId}, #{userNo})
 	</insert>
 	
+	<delete id="outChat" parameterType="chatMember">
+		DELETE FROM CHAT_MEMBER
+		WHERE PROJECT_NO = #{projectNo}
+		AND MEMBER_NO = #{memberNo}
+		AND ROLE = #{role}
+	</delete>
+	
 </mapper>

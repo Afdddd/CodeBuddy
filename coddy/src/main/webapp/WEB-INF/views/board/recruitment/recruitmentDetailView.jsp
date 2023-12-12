@@ -287,12 +287,13 @@
                   <c:forEach var="state" items="${requestScope.state}" varStatus="status">
                     <tr>
                         <td colspan="2" style="width: 100px;">${state.position}</td>
-                        <td style="width: 200px;"><span  id="applyState_${status.index}"  onload=""></span> / ${state.maxPersonnel}</td>
+                        <td style="width: 200px;"><span  id="applyState_${status.index}"></span> / ${state.maxPersonnel}</td>
                         <td colspan="2"><button class="position_button" id="position_button_${status.index}" data-toggle="modal" data-target="#apply_${status.index}">지원하기</button></td>
                     </tr>
                     <script>
                       $(function(){
-                        getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}');
+                        setInterval(
+                        getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}'),3000);
                       });
                       </script>
                     <div class="modal" id="apply_${status.index}">
@@ -531,7 +532,9 @@
           $(".container").css("width","10px");      
       });
 
+
       function getApply(projectNo, position, i, maxPersonnel){
+        console.log("getApply");
         $.ajax({
           url:"getApply.rec",
           type:"get",
@@ -544,11 +547,13 @@
             if(result >= maxPersonnel){
               let btn = "#position_button_" + i ;
               console.log(btn);
-              $(btn).prop("disabled", false);
+              $(btn).prop("disabled", true);
+              $("#applyState_"+i).text(result);
             }else{
               let applyStateEl = "#applyState_"+ i;
               console.log(applyStateEl);
               $(applyStateEl).text(result);
+              $("#applyState_"+i).text(result);
             }
           },
           error : function(){
@@ -558,7 +563,6 @@
       }
 
       function insertApply(projectNo, memberNo, position,maxPersonnel){
-        alert(projectNo);
           $.ajax({
             url:"insertApply.rec",
             type:"get",

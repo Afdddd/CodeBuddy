@@ -335,7 +335,8 @@
 <body>
     <header>
         <div>
-            나가기
+            <button onclick="onClose()">나가기</button>
+
         </div>
     </header>
     <div class="sidebar_left">
@@ -472,6 +473,11 @@
 
       $(function(){
           connect();         
+          window.onpopstate = function(){
+            console.log("뒤로가기");
+            onClose();
+          }
+
 
           $.ajax({
               url:"room.rec",
@@ -512,6 +518,9 @@
             // 웹소켓에 이벤트가 발생했을때 호출될 함수
             webSocket.onopen = onOpen;
             webSocket.onmessage = onMessage;
+            webSocket.onclose = onClose;
+
+          
           }
 
 
@@ -572,6 +581,21 @@
                           +"</div>");
             }
             $("#chat_body").append(div);
+          }
+
+          function onClose(){
+
+            location.href = 'detail.rec?rno='+'${sessionScope.chatMember.projectNo}';
+            const data = {
+              "roomId" : roomId,
+              "memberNo" : "${sessionScope.loginMember.memberNo}",
+              "memberName" : "${sessionScope.loginMember.memberName}",
+              "role" : "${sessionScope.chatMember.role}",
+              "message": "END-CHAT"
+            };
+
+            let jsonData = JSON.stringify(data);
+            webSocket.send(jsonData);
           }
 
           
