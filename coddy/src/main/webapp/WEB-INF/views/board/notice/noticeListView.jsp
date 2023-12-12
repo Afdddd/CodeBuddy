@@ -36,14 +36,14 @@
             <!-- 로그인 상태일 경우에만 나타남 -->
             <c:if test="${ not empty sessionScope.loginUser }"> 
 	            <a class="btn btn-secondary" style="float:right;" 
-	            							href="noiceEnrollForm.bo">
+	            							href="enrollForm.no">
 	            	글쓰기
 	            </a>
 	        </c:if>
             <br>
             <br>
             <thead>
-            <div class="noiceBoardList" align="left">
+            <div class="noticeBoardList" align="left">
                 	<a>• 최신순 </a>
                     <a>• 정확도순 </a>
                     <a>• 답변많은순 </a>
@@ -58,11 +58,11 @@
             <script>
             	$(function() {
             		
-            		$("#noiceBoardList>tbody>tr").click(function() {
+            		$("#noticeBoardList>tbody>tr").click(function() {
             			
-            			let bno = $(this).children(".bno").text();
+            			let bno = $(this).children(".nno").text();
             			
-            			location.href = "noiceDetail.bo?bno=" + bno;
+            			location.href = "detail.no?nno=" + bno;
             		});
             	});
             </script>
@@ -78,7 +78,7 @@
                     	</c:when>
                     	<c:otherwise>
 	                    	<li class="page-item">
-	                    		<a class="page-link" href="list.bo?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+	                    		<a class="page-link" href="list.no?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
 	                    	</li>
                     	</c:otherwise>
                     </c:choose>
@@ -87,7 +87,7 @@
                     					 end="${ requestScope.pi.endPage }"
                     					step="1">
                     	<li class="page-item">
-                    		<a class="page-link" href="freeList.bo?cpage=${ p }">${ p }</a>
+                    		<a class="page-link" href="list.no?cpage=${ p }">${ p }</a>
                     	</li>
                     </c:forEach>
                     
@@ -99,7 +99,7 @@
 		                </c:when>
 		                <c:otherwise>
 		                    <li class="page-item">
-		                    	<a class="page-link" href="freeList.bo?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+		                    	<a class="page-link" href="list.no?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
 		                    </li>
 		                </c:otherwise>
                 	</c:choose>

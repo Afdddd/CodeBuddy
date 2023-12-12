@@ -28,7 +28,7 @@
             <p class="subtitle">공지입니다.</p>
             <br>
 
-            <form id="noticeEnrollForm" method="post" action="noticeInsert.bo" enctype="multipart/form-data">
+            <form id="noticeEnrollForm" method="post" action="noticeInsert.no" enctype="multipart/form-data">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
@@ -57,7 +57,9 @@
         </div>
         <br><br>
 
-    </div>    
+    </div> 
+    
+    <jsp:include page="../../common/footer.jsp" />   
 
 </body>
 </html>

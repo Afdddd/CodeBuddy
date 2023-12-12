@@ -14,7 +14,7 @@ public class Fboard {
 	private int fboardNo;			//	FBOARD_NO   NUMBER
 	private String fboardTitle;		//	FBOARD_TITLE    VARCHAR2(400)
 	private String fboardContent;	//	FBOARD_CONTENT  VARCHAR2(4000)
-	private int fboardWriter;		//	FBOARD_WRITER   NUMBER
+	private String fboardWriter;		//	FBOARD_WRITER   NUMBER
 	private String fboardInsert;	//	FBOARD_INSERT   DATE
 	private String fboardUpdate;	//	FBOARD_UPDATE   DATE
 	private String fboardDelte;		//	FBOARD_DELETE   DATE
