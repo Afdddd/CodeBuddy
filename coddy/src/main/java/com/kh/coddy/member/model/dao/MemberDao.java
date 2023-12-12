@@ -2,25 +2,14 @@ package com.kh.coddy.member.model.dao;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.mapping.FetchType;
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.context.annotation.Role;
 import org.springframework.stereotype.Repository;
 
-import com.kh.coddy.board.code.model.vo.Cboard;
-import com.kh.coddy.board.free.model.vo.Fboard;
 import com.kh.coddy.board.intro.model.vo.IBoard;
-import com.kh.coddy.board.job.model.vo.Hboard;
-import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
-import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Repository
 public class MemberDao {
@@ -51,17 +40,21 @@ public class MemberDao {
 		
 		return sqlSession.update("memberMapper.uploadFile", memberNo);
 	}
-	public int selectListCount(SqlSessionTemplate sqlSession) {
-		
-		return sqlSession.selectOne("memberMapper.selectListCount");
-	}
-	public ArrayList<IBoard> selectListCount(SqlSessionTemplate sqlSession, PageInfo pi) {
-		
-		return sqlSession.selectOne("memberMapper.selectListCount", );
-	}
-	public int selectListCounti(SqlSessionTemplate sqlSession) {
+
+
+	public int selectListCounti(SqlSessionTemplate sqlSession, int memberNo) {
 		
 		return sqlSession.selectOne("memberMapper.selectListCounti");
+	}
+	
+	public ArrayList<IBoard> selectListi(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectListi", memberNo, rowBounds);
 	}
 
 	

@@ -13,6 +13,18 @@
 		<result column="MEMBER_INSERT" property="memberInsert"/>
 		<result column="MEMBER_DELETE" property="memberDelete"/>
 	</resultMap>
+	
+		<resultMap id="introResultSet" type="intro">
+			<result column="IBOARD_NO" property="iboardNo"/>
+			<result column="IBOARD_TITLE" property="iboardTitle"/>
+			<result column="IBOARD_CONTENT" property="iboardContent"/>
+			<result column="IBOARD_WRITER" property="iboardWriter"/>
+			<result column="IBOARD_INSERT" property="iboardInsert"/>
+			<result column="IBOARD_UPDATE" property="iboardUpdate"/>
+			<result column="IBOARD_DELETE" property="iboardDelete"/>
+			<result column="PROJECT_NO" property="projectNo"/>
+			<result column="IBOARD_VIEWS" property="iboardViews"/>
+	</resultMap>
 
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet"> SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId} AND MEMBER_DELETE IS NULL </select>
 	<select id="memberCheck" parameterType="string" resultType="_int">SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID=#{checkId}</select>
@@ -49,9 +61,20 @@
 	<select id="selectListCounti" parameterType="isearch" resultType="_int">
 		  SELECT COUNT(*)
 		    FROM IBOARD
-		  WHERE IBOARD_DELETE IS NULL
+		   WHERE IBOARD_DELETE IS NULL
 	</select>
 	
+	<select id="selectListi" parameterType="intro" resultMap="introResultSet">
+		 SELECT I.IBOARD_NO,
+		 		I.IBOARD_TITLE,
+		 		I.IBOARD_VIEWS,
+		 		M.MEMBER_NAME AS "IBOARD_WRITER",
+		 	    TO_CHAR(I.IBOARD_INSERT, 'YYYY-MM-DD') AS "IBOARD_INSERT"
+		   FROM IBOARD I, MEMBER M
+		  WHERE M.MEMBER_NO = I.IBOARD_WRITER
+		    AND IBOARD_DELETE IS NULL
+		    AND IBOARD_WRITER = #{memberNo}
+	</select>
 	
 	<insert id="insertMember" parameterType="member">INSERT INTO MEMBER(MEMBER_NO, MEMBER_ID, MEMBER_PWD, MEMBER_EMAIL, MEMBER_NAME, MEMBER_INFO) VALUES(SEQ_MEMBER.NEXTVAL, #{memberId}, #{memberPwd}, #{memberEmail}, #{memberName}, #{memberInfo})</insert>
 	<select id="findId" parameterType="member" resultType="string">SELECT MEMBER_ID FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail} AND MEMBER_NAME=#{memberName} AND MEMBER_DELETE IS NULL</select>

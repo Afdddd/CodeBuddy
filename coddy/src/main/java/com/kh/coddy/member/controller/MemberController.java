@@ -47,7 +47,6 @@ import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.MemberService;
-import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 @Controller
@@ -304,29 +303,25 @@ public class MemberController {
 		}
 	}
 	
-	
-	@RequestMapping("written.me")
-	public String Written() {
-		
-		return "member/writtenBoard";
-	}
-	
+	@ResponseBody
 	@GetMapping(value="written.io")
-	public String WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
-			ModelAndView mv)  {
+	public ModelAndView WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv, @RequestParam(value="memberNo") int memberNo)  {
 
-		int listCount = memberService.selectListCounti();
+		int listCount = memberService.selectListCounti(memberNo);
 		
 		int pageLimit = 5;
-		int boardLimit = 9;
+		int boardLimit = 15;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
-		ArrayList<IBoard> list = memberService.selectList(pi);
+			
+			ArrayList<IBoard> list = memberService.selectListi(pi, memberNo);
+			System.out.println(list);
+			mv.addObject("list", list).addObject("pi", pi).setViewName("member/writtenBoardI");
+			
+			return mv;
 		
-		mv.addObject("list", list).addObject("pi", pi).setViewName("member/boardListView");
-		
-		return mv;
 	}
 	
 	
