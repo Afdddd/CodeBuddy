@@ -157,7 +157,7 @@
 				<div class="animated bounceInDown">
 					<div class="container">
 						<span class="error animated tada" id="msg"></span>
-						<form action="login.co" method="post" name="form1" class="box" onsubmit="return checkStuff()">
+						<form action="login.cp" method="post" name="form1" class="box" onsubmit="return checkStuff()">
 							<h4>기업용<span>로그인 페이지</span></h4>
 							<h5>아이디와 비밀번호를 입력해주세요.</h5>
 							<input type="text" name="companyId" placeholder="ID" autocomplete="off" required>
@@ -171,10 +171,10 @@
 							</label>
 							-->
 							<a href="/coddy/">홈으로</a>
-							<a href="findPassword.co" class="forgetpass">비밀번호 찾으러 가기</a>
+							<a href="findPassword.cp" class="forgetpass">비밀번호 찾으러 가기</a>
 							<input type="submit" value="Sign in" class="btn1">
 						</form>
-						<a href="signupPage.co" class="dnthave">기업전용 회원 가입하러 가기</a>
+						<a href="signupPage.cp" class="dnthave">기업전용 회원 가입하러 가기</a>
 					</div> 
 					<div class="reference">
 						<span>문의하기 <i class="fa fa-heart pulse"></i><a href=""><a href="">1:1 상담</a><br></span>

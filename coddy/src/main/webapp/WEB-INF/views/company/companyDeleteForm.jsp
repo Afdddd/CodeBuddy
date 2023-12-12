@@ -113,7 +113,7 @@
 					<div class="container">
 						<div class="screen">
 							<div class="screen__content">
-								<form action="delete.co" method="post" class="login">
+								<form action="delete.cp" method="post" class="login">
 									<div class="login__field">
 										<i class="login__icon fas fa-user"></i>
 										<input type="password" class="login__input" name="companyPwd" placeholder="PWD 확인" required>

@@ -182,9 +182,7 @@
 					$("#hboardEnd").val($(this).val().split(" - ")[1]);
 				})
 			});
-			function addAttach() {
-				$("#attachmentArea").html("<input type='file' name='files' required>" + $("#attachmentArea").html());
-			}
+			function addAttach() { $("#attachmentArea").html("<input type='file' name='files' required>" + $("#attachmentArea").html()); }
 		</script>
 	</body>
 </html>

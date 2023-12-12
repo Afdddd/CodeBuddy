@@ -278,8 +278,8 @@
                             </c:when>
                             <c:otherwise>
                                 <label><b style="color: #34974d; font-size: 13px;">${sessionScope.loginCompany.companyName}</b> 기업 로그인중</label> &nbsp;&nbsp;
-                                <a href="myPage.co">마이페이지</a>
-                                <a href="logout.co">로그아웃</a>
+                                <a href="myPage.cp">마이페이지</a>
+                                <a href="logout.cp">로그아웃</a>
                             </c:otherwise>
                         </c:choose>
                     </c:when>
@@ -367,7 +367,7 @@
                                 <a href="https://kauth.kakao.com/oauth/authorize?client_id=<%= kakaoLoginKey %>&redirect_uri=http://localhost:8082/coddy/kakaoLogin.me&response_type=code">
                                     <img src="resources/image/login/kakao_login.png" style="width: 100%; height: 100%;">
                                 </a>
-                                <a href='loginPage.co'>기업전용 로그인<span></span><span></span><span></span><span></span></a>
+                                <a href='loginPage.cp'>기업전용 로그인<span></span><span></span><span></span><span></span></a>
                             </div>
                         </form>
                     </div>

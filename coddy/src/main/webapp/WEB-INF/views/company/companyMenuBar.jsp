@@ -86,10 +86,10 @@
         <div class="menuBarContent">
             <nav>
                 <ul>
-                    <li><a href="myPage.co">회사 배너</a></li>
-                    <li><a href="myPageInfo.co">회사 정보</a></li>
-                    <li><a href="updateForm.co">정보 수정</a></li>
-                    <li><a href="deleteForm.co">회원 탈퇴</a></li>
+                    <li><a href="myPage.cp">회사 배너</a></li>
+                    <li><a href="myPageInfo.cp">회사 정보</a></li>
+                    <li><a href="updateForm.cp">정보 수정</a></li>
+                    <li><a href="deleteForm.cp">회원 탈퇴</a></li>
                     <li><a href="myPage.hb">내가 작성한 모집공고</a></li>
                 </ul>
             </nav>

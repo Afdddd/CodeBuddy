@@ -49,8 +49,8 @@ public class CompanyController {
 	@Autowired private JavaMailSender mailSender;
 	private final int[] AUTH_KEY = { 1, 3, 7, 1, 3, 7, 1, 3, 5 };
 	
-	@GetMapping(value="loginPage.co") public String loginPageCompany(HttpSession session) { if(session.getAttribute("loginMember") != null && session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } else { return "company/login"; } }
-	@GetMapping(value="signupPage.co") public String signupPageCompany(HttpSession session) { 
+	@GetMapping(value="loginPage.cp") public String loginPageCompany(HttpSession session) { if(session.getAttribute("loginMember") != null && session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } else { return "company/login"; } }
+	@GetMapping(value="signupPage.cp") public String signupPageCompany(HttpSession session) { 
 		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
 		else { 
 			String gKey = "";
@@ -60,8 +60,8 @@ public class CompanyController {
 			return "company/signup"; 
 		} 
 	}
-	@RequestMapping(value="companyCheck.co", produces="text/html; charset=UTF-8") @ResponseBody public String companyCheck(String id) { int count = companyService.companyCheck(id); if(count > 0) { return "NNNNN"; } else { return "NNNNY"; } }
-	@PostMapping(value="companyBnoCheck.co", produces="text/html; charset=UTF-8") @ResponseBody public String companyBnoCheck(String companyBno) {
+	@RequestMapping(value="companyCheck.cp", produces="text/html; charset=UTF-8") @ResponseBody public String companyCheck(String id) { int count = companyService.companyCheck(id); if(count > 0) { return "NNNNN"; } else { return "NNNNY"; } }
+	@PostMapping(value="companyBnoCheck.cp", produces="text/html; charset=UTF-8") @ResponseBody public String companyBnoCheck(String companyBno) {
 		int numberAuth = 0;
 		/*
 		try { Integer.valueOf(companyBno); }
@@ -72,7 +72,7 @@ public class CompanyController {
 		if(10 - (numberAuth % 10) != Integer.valueOf(companyBno.charAt(9) - '0')) { return "not a valid"; }
 		else { return "success"; }
 	}
-	@PostMapping(value="companyEmailCheck.co", produces="text/html; charset=UTF-8") @ResponseBody public String companyEmailCheck(String companyEmail) {
+	@PostMapping(value="companyEmailCheck.cp", produces="text/html; charset=UTF-8") @ResponseBody public String companyEmailCheck(String companyEmail) {
 		int r = (int)(Math.random() * 90000000 + 10000000);
 		int isSuccess = memberService.authMake(new Auth("", String.valueOf(r), companyEmail));
 		if(isSuccess > 0) { 
@@ -82,13 +82,13 @@ public class CompanyController {
 		}
 		else { return "failed"; }
 	}
-	@PostMapping(value="signup.co") public String signup(Company c, HttpSession session, Model model) {
+	@PostMapping(value="signup.cp") public String signup(Company c, HttpSession session, Model model) {
 		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
 		else { c.setCompanyPwd(pbkdf2.encode(c.getCompanyPwd()));
 			int result = companyService.insertCompany(c); 
 			if(result > 0) { log.info("insertCompanyId={}", c.getCompanyId()); session.setAttribute("alertMsg", "성공적으로 회원가입이 완료되었습니다. 로그인을 진행해주세요."); return "redirect:/loginPage.co"; } 
 			else { model.addAttribute("errorMsg", "회원가입 실패"); return "common/errorPage"; } } }
-	@PostMapping(value="login.co") public String login(Company c, HttpSession session, Model model, HttpServletRequest request) {
+	@PostMapping(value="login.cp") public String login(Company c, HttpSession session, Model model, HttpServletRequest request) {
 		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
 		else {
 			Company loginCompany = companyService.login(c);
@@ -101,14 +101,14 @@ public class CompanyController {
 			}
 		}
 	}
-	@GetMapping(value="logout.co") public String logout(HttpSession session) { 
+	@GetMapping(value="logout.cp") public String logout(HttpSession session) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "이미 로그인된 회원이 있습니다."); }
 		else if(session.getAttribute("loginCompany") != null) { session.removeAttribute("loginCompany"); session.setAttribute("alertMsg", "로그아웃됨"); }
 		else { session.setAttribute("alertMsg", "잘못된 요청입니다."); }
 		return "redirect:/";
 	}
-	@GetMapping(value="findPassword.co") public String findPasswordPage(HttpSession session) { if(session.getAttribute("loginMember") != null || session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } else { return "company/findPasswordPage"; } }
-	@PostMapping(value="findIdAccess.co") public String findIdAccess(Company c, HttpSession session, HttpServletRequest req) {
+	@GetMapping(value="findPassword.cp") public String findPasswordPage(HttpSession session) { if(session.getAttribute("loginMember") != null || session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } else { return "company/findPasswordPage"; } }
+	@PostMapping(value="findIdAccess.cp") public String findIdAccess(Company c, HttpSession session, HttpServletRequest req) {
 		String companyId = companyService.findIdAccess(c);
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setSubject("Coddy 사이트 요청하신 결과입니다.");
@@ -123,8 +123,8 @@ public class CompanyController {
 		session.setAttribute("alertMsg", "요청 성공");
 		return "redirect:/loginPage.co";
 	}
-	@GetMapping(value="myPage.co") public String myPage(HttpSession session) { if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업전용 메뉴입니다."); return "redirect:/"; } if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "비로그인 상태입니다."); return "redirect:/"; } return "company/myPage"; }
-	@PostMapping(value="uploadFile.co", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFile(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
+	@GetMapping(value="myPage.cp") public String myPage(HttpSession session) { if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업전용 메뉴입니다."); return "redirect:/"; } if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "비로그인 상태입니다."); return "redirect:/"; } return "company/myPage"; }
+	@PostMapping(value="uploadFile.cp", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFile(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
 		String path = req.getRealPath("resources\\file_upload\\company\\");
 		File file = new File(path, String.format("%08d", ((Company)(session.getAttribute("loginCompany"))).getCompanyNo()) + ".jpg");
 		try { 
@@ -138,7 +138,7 @@ public class CompanyController {
 		}
 		catch (IllegalStateException | IOException e) { e.printStackTrace(); return "이미지 업로드 실패"; }
 	}
-	@PostMapping(value="uploadFileBg.co", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFileBg(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
+	@PostMapping(value="uploadFileBg.cp", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFileBg(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
 		String path = req.getRealPath("resources\\file_upload\\company_bg\\");
 		File file = new File(path, String.format("%08d", ((Company)(session.getAttribute("loginCompany"))).getCompanyNo()) + ".jpg");
 		try { 
@@ -147,15 +147,15 @@ public class CompanyController {
 		}
 		catch (IllegalStateException | IOException e) { e.printStackTrace(); return "이미지 업로드 실패"; }
 	}
-	@GetMapping(value="updateForm.co") public String updateForm(HttpSession session) { 
+	@GetMapping(value="updateForm.cp") public String updateForm(HttpSession session) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
 		else { int result = companyService.countWritten(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()); session.setAttribute("howManyWritten", result); return "company/companyUpdateForm"; } }
-	@GetMapping(value="myPageInfo.co") public String myPageInfo(HttpSession session) { 
+	@GetMapping(value="myPageInfo.cp") public String myPageInfo(HttpSession session) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
 		else { int result = companyService.countWritten(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()); session.setAttribute("howManyWritten", result); return "company/companyInfoPage"; } }
-	@PostMapping(value="update.co") public String updateCompany(HttpSession session, Model model, Company c, String companyNewPwd) { 
+	@PostMapping(value="update.cp") public String updateCompany(HttpSession session, Model model, Company c, String companyNewPwd) { 
 		if(pbkdf2.matches(c.getCompanyPwd(), companyService.getPassword(c.getCompanyId()))) { 
 			if(!companyNewPwd.equals("")) { c.setCompanyPwd(pbkdf2.encode(companyNewPwd)); }
 			else { c.setCompanyPwd(((Company)(session.getAttribute("loginCompany"))).getCompanyPwd()); }
@@ -163,12 +163,12 @@ public class CompanyController {
 			if(result > 0) { session.setAttribute("alertMsg", "성공적으로 변경에 성공함. 다시 로그인 해주세요."); session.removeAttribute("loginCompany"); return "redirect:/loginPage.co"; } 
 			else { session.setAttribute("alertMsg", "변경 실패."); return "redirect:/updateForm.co"; } }
 		else { model.addAttribute("errorMsg","인증 실패"); return "common/errorPage"; } }
-	@GetMapping(value="deleteForm.co") public String deleteForm(HttpSession session) { 
+	@GetMapping(value="deleteForm.cp") public String deleteForm(HttpSession session) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; }
 		else { return "company/companyDeleteForm"; }
 	}
-	@PostMapping(value="delete.co") public String deleteCompany(HttpSession session, Model model, String companyPwd) { 
+	@PostMapping(value="delete.cp") public String deleteCompany(HttpSession session, Model model, String companyPwd) { 
 		if(pbkdf2.matches(companyPwd, companyService.getPassword(((Company)(session.getAttribute("loginCompany"))).getCompanyId()))) {
 			int result = companyService.deleteCompany(((Company)(session.getAttribute("loginCompany"))).getCompanyNo());
 			if(result > 0) { session.setAttribute("alertMsg", "탈퇴가 완료되었습니다. 재가입시 1:1 문의해주세요."); session.removeAttribute("loginCompany"); return "redirect:/"; }

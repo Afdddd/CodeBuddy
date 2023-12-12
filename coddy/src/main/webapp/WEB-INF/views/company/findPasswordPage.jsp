@@ -321,7 +321,7 @@
 				<!-- <ul class="selected"><li>메뉴 1</li><li>메뉴 2</li></ul> -->
 				<div class="tab-view">
 					<div class="background-wrap"><div class="background"></div></div>
-					<form id="accesspanel" action="findIdAccess.co" method="post">
+					<form id="accesspanel" action="findIdAccess.cp" method="post">
 						<h1 id="litheader">기업 비밀번호 찾기</h1>
 						<div class="inset">
 					    	<p><input type="email" name="companyEmail" id="companyEmail" placeholder="Email 입력" required></p>
@@ -336,7 +336,7 @@
 					   		<input class="loginLoginValue" type="hidden" name="service" value="login" />
 					  	</div>
 					  	<p class="p-container"><input type="submit" name="Login" id="go" value="비밀번호 요청"></p>
-						<p class="p-container"><input type="button" onclick="location.href='loginPage.co'" value="돌아가기"></p>
+						<p class="p-container"><input type="button" onclick="location.href='loginPage.cp'" value="돌아가기"></p>
 					</form>
 				</div>
 			</div>
