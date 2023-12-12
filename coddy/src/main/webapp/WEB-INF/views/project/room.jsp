@@ -335,7 +335,7 @@
 <body>
     <header>
         <div>
-            <button onclick="onClose()">나가기</button>
+            <button onclick="onClose();">나가기</button>
 
         </div>
     </header>
@@ -465,6 +465,8 @@
           }
       });
 
+      
+
       function clearText() {
             $('.chat-footer>input').val('');
             return false;
@@ -472,12 +474,7 @@
 
 
       $(function(){
-          connect();         
-          window.onpopstate = function(){
-            console.log("뒤로가기");
-            onClose();
-          }
-
+          connect();   
 
           $.ajax({
               url:"room.rec",
@@ -499,8 +496,11 @@
                 console.log("메세지 불러오기 실패");
               }
 
-            });
+            });          
         });
+
+
+        
 
           let roomId = 1; //${requestScope.projectNo}; 프로젝트 번호
 
@@ -566,6 +566,24 @@
             $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
           }
 
+          
+
+          // 채팅방 나가기
+          function onClose(){
+            location.href='detail.rec?rno='+'${sessionScope.chatMember.projectNo}'
+            console.log("연결 끊기");
+            const data = {
+              "roomId" : roomId,
+              "memberNo" : "${sessionScope.loginMember.memberNo}",
+              "memberName" : "${sessionScope.loginMember.memberName}",
+              "role" : "${sessionScope.chatMember.role}",
+              "message": "END-CHAT"
+            };
+
+            let jsonData = JSON.stringify(data);
+            webSocket.send(jsonData);
+          }
+
           // 내가 보낸 메세지인지 확인
           function checkLR(data){ 
             let div;
@@ -583,20 +601,7 @@
             $("#chat_body").append(div);
           }
 
-          function onClose(){
-
-            location.href = 'detail.rec?rno='+'${sessionScope.chatMember.projectNo}';
-            const data = {
-              "roomId" : roomId,
-              "memberNo" : "${sessionScope.loginMember.memberNo}",
-              "memberName" : "${sessionScope.loginMember.memberName}",
-              "role" : "${sessionScope.chatMember.role}",
-              "message": "END-CHAT"
-            };
-
-            let jsonData = JSON.stringify(data);
-            webSocket.send(jsonData);
-          }
+          
 
           
       </script>

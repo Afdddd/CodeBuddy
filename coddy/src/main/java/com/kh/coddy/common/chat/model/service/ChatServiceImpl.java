@@ -68,5 +68,18 @@ public class ChatServiceImpl implements ChatService{
 	public int outCaht(ChatMember cm) {
 		return cDao.outChat(sqlSession, cm);
 	}
-
+	@Override
+	public int getApply(ChatMember cm) {
+		return cDao.getApply(sqlSession, cm);
+	}
+	@Override
+	public int insertApply(ChatMember cm, int maxPersonnel) {
+		int apply = getApply(cm); 
+		int result = 0;
+		if(apply<maxPersonnel) {
+			result = cDao.insertApply(sqlSession, cm);
+		}
+		return result;
+	}
+	
 }

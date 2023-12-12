@@ -41,6 +41,9 @@ public class ChatingHandler extends TextWebSocketHandler{
 		i++;
 		log.info("연결 성공! 현재인원 = {}",i);
 		log.info("session = {}",session.getAttributes());
+		ChatMember cm = (ChatMember)session.getAttributes().get("chatMember");
+		int maxPersonnel = (Integer)session.getAttributes().get("maxPersonnel");
+		cService.insertApply(cm, maxPersonnel);
 	}
 
 	@Override
@@ -50,6 +53,12 @@ public class ChatingHandler extends TextWebSocketHandler{
 		if(sessionList.get(session) != null) {
 			RoomList.get(sessionList.get(session)).remove(session);
 			sessionList.remove(session);
+		}
+		log.info("session={}",session.getAttributes());
+		ChatMember cm = (ChatMember)session.getAttributes().get("chatMember");
+		int result = cService.outCaht(cm);
+		if(result>0) {
+			log.info("채팅방 나가짐");
 		}
 	}
 	
@@ -133,7 +142,10 @@ public class ChatingHandler extends TextWebSocketHandler{
 			// 채팅방 나가기
 		}else if(RoomList.get(chatRoom.getRoomId())!= null && chatMessage.getMessage().equals("END-CHAT") && chatRoom != null) {
 			ChatMember cm = new ChatMember(Integer.parseInt(chatMessage.getRoomId()),chatMessage.getMemberNo(),chatMessage.getRole());
-			cService.outCaht(cm);
+			int result = cService.outCaht(cm);
+			if(result>0) {
+				log.info("채팅방 나가짐");
+			}
 			RoomList.get(sessionList.get(session)).remove(session);
 			sessionList.remove(session);
 		}

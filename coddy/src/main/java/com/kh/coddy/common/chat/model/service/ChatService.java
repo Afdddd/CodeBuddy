@@ -70,6 +70,7 @@ public interface ChatService {
      * @return
      */
     int outCaht(ChatMember cm);
-
+    int getApply(ChatMember cm);
+	int insertApply(ChatMember cm, int maxPersonnel);
 
 }

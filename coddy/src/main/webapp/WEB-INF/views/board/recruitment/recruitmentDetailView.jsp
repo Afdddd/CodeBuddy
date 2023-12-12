@@ -291,9 +291,12 @@
                         <td colspan="2"><button class="position_button" id="position_button_${status.index}" data-toggle="modal" data-target="#apply_${status.index}">지원하기</button></td>
                     </tr>
                     <script>
-                      $(function(){
-                        setInterval(
-                        getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}'),3000);
+                        $(function(){
+                          
+                          getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}')
+
+                        setInterval(function(){
+                          getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}')},3000);
                       });
                       </script>
                     <div class="modal" id="apply_${status.index}">
@@ -506,6 +509,7 @@
     <jsp:include page="../../common/footer.jsp" />	
     
     <script>
+
       function state(){
         let state = "";
         if(${requestScope.p.projectReady}>0){
@@ -529,38 +533,38 @@
 
       $(function(){
           state();
-          $(".container").css("width","10px");      
+          $(".container").css("width","10px");          
       });
 
-
       function getApply(projectNo, position, i, maxPersonnel){
-        console.log("getApply");
-        $.ajax({
-          url:"getApply.rec",
-          type:"get",
-          data:{
-            projectNo : projectNo,
-            position : position
-          },
-          success : function(result){
-            console.log(result);
-            if(result >= maxPersonnel){
-              let btn = "#position_button_" + i ;
-              console.log(btn);
-              $(btn).prop("disabled", true);
-              $("#applyState_"+i).text(result);
-            }else{
-              let applyStateEl = "#applyState_"+ i;
-              console.log(applyStateEl);
-              $(applyStateEl).text(result);
-              $("#applyState_"+i).text(result);
+          console.log("getApply");
+          $.ajax({
+            url:"getApply.rec",
+            type:"get",
+            data:{
+              projectNo : projectNo,
+              position : position
+            },
+            success : function(result){
+              console.log(result);
+              if(result >= maxPersonnel){
+                let btn = "#position_button_" + i ;
+                console.log(btn);
+                $(btn).prop("disabled", true);
+                $("#applyState_"+i).text(result);
+              }else{
+                let applyStateEl = "#applyState_"+ i;
+                console.log(applyStateEl);
+                $(applyStateEl).text(result);
+                $("#applyState_"+i).text(result);
+              }
+            },
+            error : function(){
+              console.log("지원 현황 불러오기 실패");
             }
-          },
-          error : function(){
-            console.log("지원 현황 불러오기 실패");
-          }
-        });
-      }
+          });
+        }
+      
 
       function insertApply(projectNo, memberNo, position,maxPersonnel){
           $.ajax({
@@ -573,8 +577,7 @@
               maxPersonnel : maxPersonnel
             },
             success:function(result){
-              console.log(result);
-              location.href="room.rec?pno="+result;
+              location.href="room.rec?pno="+projectNo;
             },
             error:function(){
               alert("이미 꽉찼습니다.");
@@ -583,7 +586,12 @@
           })
       }
 
-        
+     
+          
+
+      
+
+
   </script>
 </body>
 

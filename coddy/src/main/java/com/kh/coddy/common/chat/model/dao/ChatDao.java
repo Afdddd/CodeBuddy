@@ -27,5 +27,11 @@ public class ChatDao {
 	public int outChat(SqlSessionTemplate sqlSession, ChatMember cm) {
 		return sqlSession.delete("chatMapper.outChat",cm);
 	}
+	public int getApply(SqlSessionTemplate sqlSession, ChatMember cm) {
+		return sqlSession.selectOne("chatMapper.getApply",cm);
+	}
+	public int insertApply(SqlSessionTemplate sqlSession, ChatMember cm) {
+		return sqlSession.insert("chatMapper.insertApply",cm);
+	}
 		
 }

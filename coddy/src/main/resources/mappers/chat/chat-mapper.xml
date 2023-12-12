@@ -54,4 +54,16 @@
 		AND ROLE = #{role}
 	</delete>
 	
+	<select id="getApply" parameterType="chatMember" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM CHAT_MEMBER 
+		 WHERE PROJECT_NO = #{projectNo} 
+		   AND ROLE = #{role}
+	</select>
+	
+	<insert id="insertApply" parameterType="chatMember">
+		INSERT INTO CHAT_MEMBER
+		VALUES(#{projectNo},#{memberNo},#{role})
+	</insert>
+	
 </mapper>
