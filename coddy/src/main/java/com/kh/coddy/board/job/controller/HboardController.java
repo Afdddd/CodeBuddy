@@ -3,14 +3,17 @@ package com.kh.coddy.board.job.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.gson.JsonObject;
 import com.kh.coddy.board.job.model.service.HboardService;
 import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.board.job.model.vo.Hattachment;
@@ -55,10 +59,9 @@ public class HboardController {
 			@RequestParam(value="tag", defaultValue="") String tag, @RequestParam(value="viewOn", defaultValue="f") String active,
 			@RequestParam(value="where", defaultValue="all") String where, Model model) {
 		String tags = "";
-		if(tag.equals("")) { 
-			tags = tagsController.getTagsNameString(); } 
+		if(tag.equals("")) { tags = tagsController.getTagsNameString(); } 
 		else { tags=tag; }
-		HSearch hs = new HSearch(search, education.split(" "), career.split(" "), null, tags.split(","), (active.equals("t"))?1:0, getAddressRangeByLocation(where).split(",")[0], getAddressRangeByLocation(where).split(",")[1]);
+		HSearch hs = new HSearch(search, education.split(" "), career.split(" "), null, Arrays.stream(tags.split(",")).distinct().toArray(String[]::new), (active.equals("t"))?1:0, getAddressRangeByLocation(where).split(",")[0], getAddressRangeByLocation(where).split(",")[1]);
 		if(career.equals("none")) { hs.setCareer(("none,intern,newcomer,junior,middle,senior").split(",")); }
 		if(education.equals("none")) { hs.setEducation(("none,highSchool,juniorCollege,university,master,doctor,professor").split(",")); }
 		if(sort.equals("new") || sort.equals("")) { hs.setSort("H.HBOARD_NO"); }
@@ -112,11 +115,12 @@ public class HboardController {
 	}
 	@GetMapping(value="insertForm.hb") public String insertBoardForm(HttpSession session, Model model) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
-		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.cp"; }
 		model.addAttribute("tagAll", tagsController.getTagsNameList());
 		return "board/job/hboardInsertForm";
 	}
 	@PostMapping(value="insert.hb") public String insertBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb, List<MultipartFile> files) {
+		System.out.println(h);
 		int result = hboardService.insertBoard(h);
 		if(result > 0) {
 			String path = request.getRealPath("resources\\file_upload\\hboard\\");
@@ -199,8 +203,8 @@ public class HboardController {
 			File file = new File(path, uuid + "_" + uploadFiles.getOriginalFilename());
 			uploadFiles.transferTo(file);
 			Hattachment ha = new Hattachment(-1, hno, uploadFiles.getOriginalFilename(), uuid + "_" + uploadFiles.getOriginalFilename(), "resources\\file_upload\\hboard\\", null, 0);
-			if(hboardService.addFile(ha) <= 0) { return "이미지 삽입 실패"; }
-			else { return "이미지 삽입 성공"; }
+			if(hboardService.addFile(ha) <= 0) { return "파일 삽입 실패"; }
+			else { return "파일 삽입 성공"; }
 		}
 		catch(Exception e) { e.printStackTrace(); return "이미지 삽입 실패"; }
 	}
@@ -210,7 +214,7 @@ public class HboardController {
 	}
 	@PostMapping(value="updateForm.hb") public String updateForm(HttpSession session, Model model, Hboard h) {
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
-		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.cp"; }
 		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
 			session.setAttribute("errorMsg", "잘못된 접근");
 			return "common/errorPage";
@@ -228,7 +232,7 @@ public class HboardController {
 	}
 	@PostMapping(value="update.hb") public String updateBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb) {
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
-		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.cp"; }
 		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
 			session.setAttribute("errorMsg", "잘못된 접근");
 			return "common/errorPage";
@@ -262,7 +266,7 @@ public class HboardController {
 	}
 	@PostMapping(value="deleteForm.hb") public String deleteForm(HttpSession session, Model model, Hboard h) {
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
-		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.cp"; }
 		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
 			model.addAttribute("errorMsg", "잘못된 접근");
 			return "common/errorPage";
@@ -272,7 +276,7 @@ public class HboardController {
 	}
 	@PostMapping(value="delete.hb") public String deleteBoard(HttpSession session, Model model, Hboard h, String password) {
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업에게만 제공되는 서비스입니다."); return "redirect:/"; } 
-		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.co"; }
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "로그인을 먼저해주세요."); return "redirect:/loginPage.cp"; }
 		if(((Company)(session.getAttribute("loginCompany"))).getCompanyNo() != Integer.parseInt(h.getCompanyNo())) { 
 			model.addAttribute("errorMsg", "잘못된 접근");
 			return "common/errorPage";
@@ -282,6 +286,16 @@ public class HboardController {
 			else { model.addAttribute("errorMsg", "처리 오류"); return "common/errorPage"; } 
 		}
 		else { model.addAttribute("errorMsg", "비밀번호 오류"); return "common/errorPage"; }
+	}
+	@PostMapping(value="/uploadSummernoteImageFile.hb", produces="text/html; charset=UTF-8") @ResponseBody
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest req) {
+		String path = req.getRealPath("resources\\file_upload\\hboard\\content\\");
+		UUID uuid = UUID.randomUUID();
+		
+		File file = new File(path, uuid + "_" + multipartFile.getOriginalFilename());
+		try { multipartFile.transferTo(file); return "resources\\file_upload\\hboard\\content\\" + uuid + "_" + multipartFile.getOriginalFilename(); }
+		catch (IOException e) { FileUtils.deleteQuietly(file); e.printStackTrace(); }
+		return null;
 	}
 	public String getLocationByAddr(int address) { 
 		if((address >= 1000) && (address <= 8866)) return "서울특별시";

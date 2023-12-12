@@ -100,7 +100,7 @@
 			<div class="signupOuter">
 				<div class="signupInner">
 					<h1>기업 회원가입 양식</h1>
-					<form action="signup.co" method="post" onsubmit="return onSubmit();">
+					<form action="signup.cp" method="post" onsubmit="return onSubmit();">
 						<fieldset class="fieldSets">
 							<legend style="width: 30%; text-decoration-color: lemonchiffon; font-size: 30px;">계정 정보 입력</legend>
 							<div>
@@ -202,7 +202,7 @@
 				if($("#companyId").val().length < 6) { alert("ID는 최소 6글자 이상으로 맞춰주세요."); }
 				else {
 					$.ajax({
-						url: "companyCheck.co",
+						url: "companyCheck.cp",
 	    				type: "get",
 	    				data: {id: $("#companyId").val()},
 	    				success: function(result) { 
@@ -216,7 +216,7 @@
 				if($("#companyBno").val().length != 10) { alert("사업자 등록번호는 10자리 숫자입니다."); }
 				else {
 					$.ajax({
-						url: "companyBnoCheck.co",
+						url: "companyBnoCheck.cp",
 	    				type: "post",
 						data: {companyBno: $("#companyBno").val()},
 						success: function(result) { if(result == "not a number") { alert("사업자 등록번호가 숫자가 아닙니다."); } else if(result == "not a valid") { alert("유효하지않은 사업자 등록번호입니다."); } else { apiBno($("#companyBno").val()); } },
@@ -226,14 +226,14 @@
 			};
 			function onEmail() {
 				$.ajax({
-						url: "companyEmailCheck.co",
+						url: "companyEmailCheck.cp",
 	    				type: "post",
 						data: {companyEmail: $("#companyEmail").val()},
 						success: function(result) { if(result == "failed") { alert("인증번호 생성 실패. 관리자에게 문의해주세요!"); checkEmail = false; } else { if(prompt("인증번호 입력") != result) { alert("인증 실패"); checkEmail = false; } else { alert("인증성공"); checkEmail = true; $("#companyEmail").attr("readonly", true); $("#onEmail").removeAttr("onclick"); } } },
 						error: function() { console.log("이메일 인증 실패"); }
 					});
 			}
-			function backToLogin() { if(confirm("정말로 로그인 페이지로 돌아갑니까?") == true) { location.href = "/coddy/loginPage.co"; } }
+			function backToLogin() { if(confirm("정말로 로그인 페이지로 돌아갑니까?") == true) { location.href = "/coddy/loginPage.cp"; } }
 			function apiBno(number) { 
 				let apiKey = BNO_KEY;
 				var data = { b_no: [number] };

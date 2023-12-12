@@ -24,7 +24,7 @@
 					<jsp:include page="./companyProfileCard.jsp" />
 					&nbsp;
                     <div class="profile-widget" style="width: 500px;">
-						<form action="update.co" method="post">
+						<form action="update.cp" method="post">
 							<input type="hidden" name="companyNo" value="${sessionScope.loginCompany.companyNo}">
 							<h1 align="center">Profile</h1>
 							<table align="center" style="width: 100%;">

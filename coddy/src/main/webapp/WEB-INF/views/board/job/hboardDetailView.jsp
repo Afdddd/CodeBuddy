@@ -20,13 +20,13 @@
 		.boardTitleBarImg img { object-fit: cover; }
 		.boardContentBar { width: 100%; height: 95%; display: flex; }
 		.boardContentArea { width: 75%; height: 100%; }
-		.boardMiniArea { width: 25%; height: 600px; top: 20%; position: sticky; overflow: scroll; }
+		.boardMiniArea { width: 25%; height: 600px; top: 20%; position: sticky; overflow: auto; }
 		.boardMiniCard { width: 100%; height: 550px; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #92d7f1; margin:0 auto; }
 		.boardMiniAttach { width: 100%; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #92d7f1; }
 		.boardContentThumb { width: 100%; height: 420px; padding: 4%; }
 		.boardContentTag { width: 100%; height: 120px; }
 		.boardContentContent { width: 100%; height: 630px; padding: 10px; }
-		.boardContentMap { width: 100%; height: 360px; padding: 10px; overflow: scroll; }
+		.boardContentMap { width: 100%; height: 360px; padding: 10px; overflow: auto; }
 
 		.tagList { border: 1px solid grey; border-radius: 8px; margin: 3px; padding: 3px; display: inline-flex; }
         .tagList:before { content: '#'; }
@@ -67,7 +67,7 @@
                             </c:forEach>
 						</div>
 						<div class="boardContentContent">
-							<p style="overflow: scroll; width: 100%; height: 100%;">${sessionScope.hb.hboardContent}</p>
+							<pre style="overflow: auto; width: 100%; height: 100%;">${sessionScope.hb.hboardContent}</pre>
 						</div>
 						<div class="boardContentMap">
 							<h4 style="border: 2px solid khaki; border-radius: 20px; width: 480px; text-align: center; padding: 2px;" onclick="location.href='listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=${sessionScope.where}&viewOn=f'">${sessionScope.geo.addr}</h4>
@@ -207,7 +207,6 @@
 					success : function(result) { alert(result); location.href="/coddy/boardDetail.hb?hno=${sessionScope.hb.hboardNo}"; },
 					error : function(xhr, status, error) { alert(error); }
 				})
-				// $(".boardMiniAttach").text($(".boardMiniAttach").text());
 			}
 			function minusAttachment(e) {
 				$.ajax({
