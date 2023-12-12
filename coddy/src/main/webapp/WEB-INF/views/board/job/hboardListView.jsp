@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,7 +10,7 @@
         <title>취업 공고 게시판</title>
         <style>
             .outerForm { width: 100%; height: 100%; padding-top: 3%; padding-bottom: 3%; }
-            .searchForm { width: 100%; height: 15%; padding: 3%; background: linear-gradient(white, #6E9DDC); color: black; }
+            .searchForm { width: 100%; height: 15%; padding: 3%; background: linear-gradient(white, #a2c6f5); color: black; }
             .searchForm1 { width: 100%; height: 100%; border-radius: 20px; color: black; }
             .searchForm1 div { width: 100%; border-radius: 20px; }
             .searchForm2 { width: 100%; height: 0%; border-radius: 12px; border: 2.2px solid khaki; }
@@ -32,7 +33,7 @@
             .pageForm { width: 100%; height: 15%; }
 
             /* 카드 css */
-            .card { width: 250px; height: 480px; background: white; padding: .4em; border-radius: 6px; margin: 15px; margin-bottom: 20px; }
+            .card { width: 250px; height: 520px; background: white; padding: .4em; border-radius: 6px; margin: 15px; margin-bottom: 20px; }
             .card-image { background-color: rgb(236, 236, 236); width: 100%; height: 130px; border-radius: 6px 6px 0 0; text-align: center; line-height:130px; }
             .card-image:hover { cursor: pointer; transform: scale(0.98); }
             .location { text-transform: uppercase; font-size: 0.7em; font-weight: 600; color: #5271FF; padding: 10px 7px 0; width: 50%; }
@@ -43,7 +44,7 @@
             .name { font-weight: 600; }
             .card:hover { border: 1px ridge white; box-shadow: 5px 5px 5px 5px #6E9DDC; }
             .card-list{ width: 100%; margin-top: 50px; border-top: 1px solid lightgray; display: flex; flex-wrap: wrap; }
-            .footing { height: 60px; width: 100%; }
+            .footing { height: 120px; width: 100%; word-break: break-all; }
             .tagList { border: 1px solid grey; border-radius: 8px; margin: 3px; padding: 3px; display: inline-flex; }
             .tagList:before { content: '#'; }
             .tagList:hover { cursor: pointer; transform: scale(1.24); background-color: black; color: white; }
@@ -63,6 +64,17 @@
 
             /* 인엽이 페이지 네이션 맞추기 */
             .pageForm { width:fit-content; margin:auto; }
+
+            /* 인엽이 툴팁 */
+            .text { color: #5271FF; font-size: 14px; }
+            .tooltip-container { position: relative; display: inline-block; margin-left: 10px; }
+            .tooltip {
+                position: absolute; top: 100%; left: 50%; transform: translateX(-50%); opacity: 0; visibility: hidden;
+                background: white; color: black; padding: 10px; border-radius: 4px; transition: opacity 0.3s, visibility 0.3s, top 0.3s, background 0.3s;
+                z-index: 1; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            .tooltip::before { content: ""; position: absolute; bottom: 100%; left: 50%; border-width: 8px; border-style: solid; border-color: transparent transparent #5271FF transparent; transform: translateX(-50%); }
+            .tooltip-container:hover .tooltip { top: 120%; opacity: 1; visibility: visible; background: white; transform: translate(-50%, -5px); }
         </style>
     </head>
     <body>
@@ -168,7 +180,7 @@
                                         <div class="card-image" onclick="location.href='boardDetail.hb?hno=${b.hboardNo}'">
                                             <img src="${requestScope.at_list[status.index].hattachmentPath}/${requestScope.at_list[status.index].hattachmentChange}" width="80%" height="80%" style="vertical-align:middle;" onerror="this.src='resources/image/white.jpg'">
                                         </div>
-                                        <div class="location" onclick="location.href='listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=&where=${b.hboardLocation}&viewOn=f'">${b.hboardLocation}</div>
+                                        <div class="location" onclick="onSearchAddWhere('${b.hboardLocation}')">${b.hboardLocation}</div>
                                         <div class="heading">   
                                             <h5 onclick="location.href='boardDetail.hb?hno=${b.hboardNo}'">${b.hboardTitle}</h5>
                                             <div class="company">${b.companyNo}</div>
@@ -218,9 +230,19 @@
                                             <c:if test="${ empty requestScope.tg_list[status.index]}">
                                                 <span class="tagListNo">태그없음</span>
                                             </c:if>
-                                            <c:forEach var="tg" items="${requestScope.tg_list[status.index]}">
-                                                <span class="tagList" onclick="location.href='listView.hb?cpage=1&search=&sort=new&career=none&education=none&tag=${tg.tagsNo}&where=all&viewOn=f'">${tg.tagsNo}</span>
+                                            <c:forEach var="tg" items="${requestScope.tg_list[status.index]}" begin="0" end="4">
+                                                <span class="tagList" onclick="onSearchAddTag('${tg.tagsNo}')">${tg.tagsNo}</span>
                                             </c:forEach>
+                                            <div class="tooltip-container">
+                                                <c:if test="${fn:length(requestScope.tg_list[status.index]) gt 5 }">
+                                                    <span class="text">그리고 ${fn:length(requestScope.tg_list[status.index])-5}개의 태그</span>
+                                                    <span class="tooltip">
+                                                        <c:forEach var="tg" items="${requestScope.tg_list[status.index]}" begin="5" end="${fn:length(requestScope.tg_list[status.index])}">
+                                                            <span class="tagList" onclick="onSearchAddTag('${tg.tagsNo}')">${tg.tagsNo}</span>
+                                                        </c:forEach>
+                                                    </span>
+                                                </c:if>
+                                            </div>
                                         </div>                         
                                     </div>
                                 </c:forEach>
@@ -229,44 +251,46 @@
                     </div>
                     <div class="pageForm">
                         <ul class="pagination" style="margin: auto;">
-                            <c:choose>
-                                <c:when test="${ requestScope.pi.currentPage eq 1 }">
-                                    <li class="page-item disabled">
-                                        <a class="page-link">Previous</a>
-                                    </li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item">
-                                        <a class="page-link" onclick="onSearch('${requestScope.pi.currentPage - 1}');">Previous</a>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>  
-                            <c:forEach var="p" begin="${requestScope.pi.startPage}" end="${requestScope.pi.endPage}" step="1">
+                            <c:if test="${ requestScope.pi.maxPage ne 0 }">
                                 <c:choose>
-                                    <c:when test="${ p eq requestScope.pi.currentPage }">
+                                    <c:when test="${ requestScope.pi.currentPage eq 1 }">
                                         <li class="page-item disabled">
-                                            <a class="page-link">${p}</a>
+                                            <a class="page-link">Previous</a>
                                         </li>
                                     </c:when>
                                     <c:otherwise>
                                         <li class="page-item">
-                                            <a class="page-link" onclick="onSearch('${p}');">${p}</a>
+                                            <a class="page-link" onclick="onSearch('${requestScope.pi.currentPage - 1}');">Previous</a>
+                                        </li>
+                                    </c:otherwise>
+                                </c:choose>  
+                                <c:forEach var="p" begin="${requestScope.pi.startPage}" end="${requestScope.pi.endPage}" step="1">
+                                    <c:choose>
+                                        <c:when test="${ p eq requestScope.pi.currentPage }">
+                                            <li class="page-item disabled">
+                                                <a class="page-link">${p}</a>
+                                            </li>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <li class="page-item">
+                                                <a class="page-link" onclick="onSearch('${p}');">${p}</a>
+                                            </li>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:forEach>  
+                                <c:choose>
+                                    <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+                                        <li class="page-item disabled">
+                                            <a class="page-link">Next</a>
+                                        </li>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <li class="page-item">
+                                            <a class="page-link" onclick="onSearch('${requestScope.pi.currentPage + 1}');">Next</a>
                                         </li>
                                     </c:otherwise>
                                 </c:choose>
-                            </c:forEach>  
-                            <c:choose>
-                                <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
-                                    <li class="page-item disabled">
-                                        <a class="page-link">Next</a>
-                                    </li>
-                                </c:when>
-                                <c:otherwise>
-                                    <li class="page-item">
-                                        <a class="page-link" onclick="onSearch('${requestScope.pi.currentPage + 1}');">Next</a>
-                                    </li>
-                                </c:otherwise>
-                            </c:choose>
+                            </c:if>
                         </ul>
                     </div>
                 </div>
@@ -313,6 +337,12 @@
                 return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
             }
             function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
+            function onSearchAddTag(tagName) {
+                let tagList = getParameter("tag").split(",");
+                if(tagList.indexOf(tagName) > -1) { }
+                else { location.href='listView.hb?cpage='+getParameter("cpage")+'&search='+getParameter("search")+'&sort='+getParameter("sort")+'&career='+getParameter("career")+'&education='+getParameter("education")+'&tag='+getParameter("tag")+','+tagName+'&where='+getParameter("where")+'&viewOn='+getParameter("viewOn"); }
+            }
+            function onSearchAddWhere(whereName) { location.href='listView.hb?cpage='+getParameter("cpage")+'&search='+getParameter("search")+'&sort='+getParameter("sort")+'&career='+getParameter("career")+'&education='+getParameter("education")+'&tag='+getParameter("tag")+'&where='+whereName+'&viewOn='+getParameter("viewOn"); }
         </script>
         <jsp:include page="../../common/footer.jsp" />
     </body>

@@ -21,5 +21,6 @@ public class Cboard {
 	private int cboardViews;		//	CBOARD_VIEWS    NUMBER
 	private String originName;		//	ORIGIN_NAME	VARCHAR2(100)
 	private String changeName;		//	CHANGE_NAME	VARCHAR2(100)
+	
 }
 

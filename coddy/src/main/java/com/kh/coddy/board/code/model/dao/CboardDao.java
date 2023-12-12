@@ -24,38 +24,38 @@ public class CboardDao {
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-//		(ArrayList)sqlSession.selectList("cboardMapper.selectList", null, rowBounds);
-		return null;
+
+		return (ArrayList)sqlSession.selectList("cboardMapper.selectList", null, rowBounds);
 	}
 	
 	public int insertBoard(SqlSessionTemplate sqlSession, Cboard c) {
-//		sqlSession.insert("boardMapper.insertBoard", c);
-		return 0;
+	
+		return sqlSession.insert("cboardMapper.insertBoard", c);
 	}
 	
 	public int increaseCount(SqlSessionTemplate sqlSession, int cboardNo) {
-//		sqlSession.update("boardMapper.increaseCount", cboardNo);
-		return 0;
+
+		return sqlSession.update("cboardMapper.increaseCount", cboardNo);
 	}
 	
 	public Cboard selectBoard(SqlSessionTemplate sqlSession, int cboardNo) {
-//		sqlSession.selectOne("boardMapper.selectBoard", cboardNo);
-		return null;
+	
+		return sqlSession.selectOne("cboardMapper.selectBoard", cboardNo);
 	}
 	
 	public int deleteBoard(SqlSessionTemplate sqlSession, int cboardNo) {
-//		sqlSession.update("boardMapper.deleteBoard", cboardNo);
-		return 0;
+		
+		return sqlSession.update("cboardMapper.deleteBoard", cboardNo);
 	}
 	
 	public int updateBoard(SqlSessionTemplate sqlSession, Cboard c) {
-//		sqlSession.update("boardMapper.updateBoard", c);
-		return 0;
+		
+		return sqlSession.update("cboardMapper.updateBoard", c);
 	}
 	
 	public ArrayList<Creply> selectReplyList(SqlSessionTemplate sqlSession, int cboardNo) {
-//		(ArrayList)sqlSession.selectList("boardMapper.selectReplyList", cboardNo);
-		return null;
+	
+		return (ArrayList)sqlSession.selectList("cboardMapper.selectReplyList", cboardNo);
 	}
 	
 	public int insertReply(SqlSessionTemplate sqlSession, Creply r) {
@@ -64,8 +64,8 @@ public class CboardDao {
 	}
 	
 	public ArrayList<Cboard> selectTopBoardList(SqlSessionTemplate sqlSession) {
-//		(ArrayList)sqlSession.selectList("boardMapper.selectTopBoardList");
-		return null;
+	
+		return (ArrayList)sqlSession.selectList("cboardMapper.selectTopBoardList");
 	}
 
 

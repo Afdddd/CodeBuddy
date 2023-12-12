@@ -93,7 +93,7 @@
                     <h3>${sessionScope.loginCompany.companyWorker}<br><span>직원수</span></h3>
                     <h3>${sessionScope.howManyWritten}<br><span>작성글수</span></h3>
                 </div>
-                <button class="follow-btn" onclick="location.href='updateForm.co'">내 정보 수정</button>
+                <button class="follow-btn" onclick="location.href='updateForm.cp'">내 정보 수정</button>
             </div>
             Image by <a href="https://www.freepik.com/free-photo/empty-room-with-chairs-desks_15501155.htm#query=office&position=4&from_view=search&track=sph&uuid=bc5b64e6-870d-4c59-a1d8-d8ba1d700a20">Freepik</a>
             <c:choose>
@@ -112,7 +112,7 @@
 
 				$.ajax({
 					type : "POST",
-					url : "uploadFile.co",
+					url : "uploadFile.cp",
 					processData: false,
 					contentType: false,
 					data : formData,
@@ -129,7 +129,7 @@
 
 				$.ajax({
 					type : "POST",
-					url : "uploadFileBg.co",
+					url : "uploadFileBg.cp",
 					processData: false,
 					contentType: false,
 					data : formData,

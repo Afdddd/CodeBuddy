@@ -2,6 +2,7 @@ package com.kh.coddy.common.chat.model.service;
 
 import java.util.List;
 
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.chat.model.vo.ChatMessage;
 import com.kh.coddy.common.chat.model.vo.ChatRoom;
 
@@ -62,7 +63,13 @@ public interface ChatService {
      * @return
      */
     int updateCount(ChatMessage message);
- 
+    
+    /**
+     * 채팅방 나갈시 채팅 인원 삭제
+     * @param cm
+     * @return
+     */
+    int outCaht(ChatMember cm);
 
 
 }

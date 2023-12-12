@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	#codeList {text-align:left;}
+	#cboardList {margin: 0 auto;}
 
     #pagingArea {width:fit-content; margin:auto;}
     
@@ -49,20 +49,46 @@
 	            </a>
 	        </c:if>
 			</div>
-             <hr>       
-             </thead>
-             <tbody></tbody>
+            <br>
+                 
+            <table id="cboardList" class="table table-hover" align="center">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>조회수</th>
+                        <th>작성일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<c:forEach var="c" items="${ requestScope.list }">
+	                    <tr>
+	                        <td class="cno">${ c.cboardNo }</td>
+	                        <td>${ c.cboardTitle }</td>
+	                        <td>${ c.cboardWriter }</td>
+	                        <td>${ c.cboardViews }</td>
+	                        <td>${ c.cboardInsert }</td>
+	                        <td>
+	                        	<c:if test="${ not empty c.originName }">
+	                        		★
+	                        	</c:if>
+	                        </td>
+	                    </tr>
+	            	</c:forEach>
+                </tbody>
+            </table>
             
             <br>
             
             <script>
             	$(function() {
             		
-            		$("#codeList>tbody>tr").click(function() {
+            		$("#cboardList>tbody>tr").click(function() {
             			
-            			let bno = $(this).children(".bno").text();
+            			let cno = $(this).children(".cno").text();
             			
-            			location.href = "detail.co?bno=" + bno;
+            			location.href = "detail.co?cno=" + cno;
             		});
             	});
             </script>
@@ -78,7 +104,7 @@
                     	</c:when>
                     	<c:otherwise>
 	                    	<li class="page-item">
-	                    		<a class="page-link" href="list.bo?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+	                    		<a class="page-link" href="list.co?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
 	                    	</li>
                     	</c:otherwise>
                     </c:choose>
@@ -87,7 +113,7 @@
                     					 end="${ requestScope.pi.endPage }"
                     					step="1">
                     	<li class="page-item">
-                    		<a class="page-link" href="list.bo?cpage=${ p }">${ p }</a>
+                    		<a class="page-link" href="list.co?cpage=${ p }">${ p }</a>
                     	</li>
                     </c:forEach>
                     
@@ -99,7 +125,7 @@
 		                </c:when>
 		                <c:otherwise>
 		                    <li class="page-item">
-		                    	<a class="page-link" href="list.bo?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+		                    	<a class="page-link" href="list.co?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
 		                    </li>
 		                </c:otherwise>
                 	</c:choose>

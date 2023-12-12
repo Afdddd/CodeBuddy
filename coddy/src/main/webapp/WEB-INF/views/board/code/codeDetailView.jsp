@@ -8,7 +8,15 @@
 <title>Insert title here</title>
 <style>
     table * {margin:5px;}
-    table {width:100%;}
+    
+    
+    .innerOuter {
+    	width:1000px;
+    	margin-left:100px;
+    }
+    
+
+    
 </style>
 </head>
 <body>
@@ -18,20 +26,21 @@
     <div class="content">
         <br><br>
         <div class="innerOuter">
-            <h2>게시글 상세보기</h2>
+            <h4 style="color : #5271FF;"><b style="padding-left: 15px;">게시글 상세보기</b></h4>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="list.bo">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="list.co">목록으로</a>
             <br><br>
 
             <table id="contentArea" align="center" class="table">
                 <tr>
-                    <th>${ requestScope.b.cboardTitle }</th>
+                    <th>${ requestScope.c.cboardTitle }</th>
+                    <td colspan="3"></td>
                 </tr>
                 <tr>
                     <th>${ requestScope.c.cboardWriter }</th>
-                    <th>${ requestScope.c.cboardDelte }</th>
-                    <th>${ requestScope.c.cboardViews }</th>
+                    <th>${ requestScope.c.cboardInsert }</th>
+                    <th>조회수 ${ requestScope.c.cboardViews }</th>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
@@ -49,10 +58,7 @@
                     	</c:choose>
                     </td>
                 </tr>
-                <tr>
-                    <th>내용</th>
-                    <td colspan="3"></td>
-                </tr>
+                
                 <tr>
                     <td colspan="4">
 	                    <p style="height:150px;">
@@ -65,12 +71,12 @@
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-	            <c:if test="${ not empty sessionScope.loginUser and sessionScope.loginUser.userId eq requestScope.b.cboardWriter }">
-	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-	                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+	            <c:if test="${ not empty sessionScope.loginMember and sessionScope.loginMember.memberNo eq requestScope.c.cboardWriter }"> 
+	                <a class="btn btn-secondary" onclick="postFormSubmit(1);">수정하기</a>
+	                <a class="btn btn-secondary" onclick="postFormSubmit(2);">삭제하기</a>
 	                
 	                <form id="postForm" action="" method="post">
-	                	<input type="hidden" name="bno" 
+	                	<input type="hidden" name="cno" 
 	                				value="${ requestScope.c.cboardNo }">
 	                	<input type="hidden" name="filePath" 
 	                				value="${ requestScope.c.changeName }">
@@ -79,24 +85,20 @@
 	                <script>
 	                	function postFormSubmit(num) {
 	                		
-	                		// num 값에 따라 위의 form 태그에 action 속성을 부여한 후
-	                		// submit 시키기
-	                		
 	                		if(num == 1) { 
-	                			// num == 1 일 경우 : 수정하기 버튼을 클릭한 상태
 	                			
-	                			$("#postForm").attr("action", "updateForm.bo").submit();
+	                			$("#postForm").attr("action", "updateForm.co").submit();
 	                			
 	                		} else {
-	                			// num == 2 일 경우 : 삭제하기 버튼을 클릭한 상태
 	                			
-	                			$("#postForm").attr("action", "delete.bo").submit();
+	                			$("#postForm").attr("action", "delete.co").submit();
 	                			
-	                			// jQuery 의 submit() 메소드 : 해당 form 의 submit 버튼을 누르는 효과
+	                			
 	                		}
 	                	}
 	                </script>
-            	</c:if>
+	            </c:if>   
+
             </div>
             <br><br>
 
@@ -105,18 +107,18 @@
                 <thead>
                     <tr>
                     	<c:choose>
-                    		<c:when test="${ empty sessionScope.loginUser }">
+                    		<c:when test="${ empty sessionScope.loginMember }">
                     			<!-- 로그인 전 : 댓글창 막기 -->
                     			<th colspan="2">
 		                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용 바랍니다.</textarea>
 		                        </th>
-		                        <th style="vertical-align:middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
+		                        <th style="vertical-align:middle" ><button class="btn" style="color:white; background:#5271FF; padding:6px;" disabled>등록하기</button></th>
                     		</c:when>
                     		<c:otherwise>
 		                        <th colspan="2">
 		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
 		                        </th>
-		                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
+		                        <th style="vertical-align:middle"><button class="btn" style="color:white; background:#5271FF; padding:6px;" onclick="addReply();">등록하기</button></th>
                     		</c:otherwise>
                     	</c:choose>
                     </tr>
@@ -132,7 +134,7 @@
 
     </div>
     
-    <!--
+ <!--  
     <script>
     	$(function() {
     		
@@ -155,12 +157,12 @@
     		if($("#content").val().trim().length != 0) {
     			
     			$.ajax({
-    				url : "rinsert.bo",
+    				url : "rinsert.co",
     				type : "get",
     				data : { // Ajax 요청 또한 Spring 에서 커맨드 객체 방식 사용 가능
     					refBoardNo : ${ requestScope.c.cboardNo }, 
-    					replyWriter : "${ sessionScope.loginUser.userId }", 
-    					replyContent : $("#content").val()
+    					creplyWriter : "${ sessionScope.loginMember.memberId }", 
+    					creplyContent : $("#content").val()
     				},
     				success : function(result) { 
     					
@@ -188,9 +190,9 @@
     		
     		// 해당 게시글에 딸린 댓글 조회 요청용 ajax 요청
     		$.ajax({
-    			url : "rlist.bo",
+    			url : "rlist.co",
     			type : "get",
-    			data : {bno : ${ requestScope.c.cboardNo }},
+    			data : {cno : ${ requestScope.c.cboardNo }},
     			success : function(result) {
     				
     				// console.log(result);
@@ -200,13 +202,13 @@
     				for(let i = 0; i < result.length; i++) {
     					
     					resultStr += "<tr>"
-    							   + 	"<th>" + result[i].replyWriter + "</th>"
-    							   + 	"<td>" + result[i].replyContent + "</td>"
-    							   +	"<td>" + result[i].createDate + "</td>"
+    							   + 	"<th>" + result[i].creplyWriter + "</th>"
+    							   + 	"<td>" + result[i].creplyContent + "</td>"
+    							   +	"<td>" + result[i].cboardInsert + "</td>"
     							   + "</tr>";
     				}
     				
-    				$("#replyArea>tbody").html(resultStr);
+    				$("#creplyArea>tbody").html(resultStr);
     				$("#rcount").text(result.length);
     				
     			},
@@ -216,8 +218,8 @@
     		});
     	}
     </script>
+
     -->
-    
     
 </body>
 </html>
