@@ -9,15 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.coddy.board.recruitment.controller.RecruitmentController;
 import com.kh.coddy.common.chat.model.service.ChatService;
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.chat.model.vo.ChatMessage;
 
-@Controller
+import lombok.extern.slf4j.Slf4j;
+
+@Controller @Slf4j
 public class ChatController {    
 	
 	@Autowired
@@ -31,6 +34,11 @@ public class ChatController {
 		
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         gson.toJson(mList,response.getWriter());
+		
+	}
+	
+	@GetMapping("outChat.do")
+	public void outChat(int projectNo, int memberNo, String role) {
 		
 	}
 	

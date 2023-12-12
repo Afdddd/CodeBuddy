@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.coddy.board.job.model.vo.Hwishlist;
+import com.kh.coddy.board.recruitment.controller.RecruitmentController;
 import com.kh.coddy.board.recruitment.model.dao.RecruitmentDao;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
@@ -16,9 +17,12 @@ import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.vo.PageInfo;
 
-@Service
+import lombok.extern.slf4j.Slf4j;
+
+@Service @Slf4j
 public class RecruitmentServiceImpl implements RecruitmentService{
 
 	@Autowired
@@ -116,11 +120,20 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 		return rDao.getProject(sqlSession, r);
 	}
 	@Override
-	public int selectApply(Map<String,String> aMap) {
-		int stateNo = rDao.selectStateNo(sqlSession, aMap);
-		return rDao.selectApply(sqlSession, stateNo);
+	public int getApply(ChatMember cm) {
+		return rDao.getApply(sqlSession, cm);
 	}
-
+	@Override
+	public int insertApply(ChatMember cm, int maxPersonnel) {
+		int apply = getApply(cm); 
+		int result = 0;
+		if(apply<maxPersonnel) {
+			result = rDao.insertApply(sqlSession, cm);
+			log.info("result={}",result);
+		}
+		return result;
+	}
+	
 	
 	
 	
