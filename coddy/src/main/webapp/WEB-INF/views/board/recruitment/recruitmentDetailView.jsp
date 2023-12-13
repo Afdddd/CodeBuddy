@@ -296,7 +296,7 @@
                           getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}')
 
                         setInterval(function(){
-                          getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}')},3000);
+                          getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}')},500);
                       });
                       </script>
                     <div class="modal" id="apply_${status.index}">
@@ -549,12 +549,12 @@
               console.log(result);
               if(result >= maxPersonnel){
                 let btn = "#position_button_" + i ;
-                console.log(btn);
                 $(btn).prop("disabled", true);
                 $("#applyState_"+i).text(result);
               }else{
                 let applyStateEl = "#applyState_"+ i;
-                console.log(applyStateEl);
+                let btn = "#position_button_" + i ;
+                $(btn).prop("disabled", false);
                 $(applyStateEl).text(result);
                 $("#applyState_"+i).text(result);
               }
@@ -577,13 +577,12 @@
               maxPersonnel : maxPersonnel
             },
             success:function(result){
-              location.href="room.rec?pno="+projectNo;
+              location.href='room.rec?pno='+projectNo;
             },
             error:function(){
-              alert("이미 꽉찼습니다.");
             }
 
-          })
+          });
       }
 
      

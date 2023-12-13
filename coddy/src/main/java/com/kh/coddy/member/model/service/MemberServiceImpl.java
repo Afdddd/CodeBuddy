@@ -14,7 +14,6 @@ import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.dao.MemberDao;
-import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 @Service
@@ -58,10 +57,14 @@ public class MemberServiceImpl implements MemberService{
 	@Override public int findPwd(Member findMember) { return memberDao.findPwd(sqlSession, findMember); }
 	@Override public int setNewPassword(Member newMember) { return memberDao.setNewPassword(sqlSession, newMember); }
 	@Override public String findEmail(Member findMember) { return memberDao.findEmail(sqlSession, findMember); }
+	@Override
+	public int selectListCounti() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 
-	
-	
+
 
 	
 

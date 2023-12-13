@@ -1,11 +1,13 @@
 package com.kh.coddy.common.chat.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.common.chat.model.dao.ChatDao;
 import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.chat.model.vo.ChatMessage;
@@ -31,7 +33,7 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public List<ChatMessage> messageList(int roomId) {
+	public ArrayList<ChatMessage> messageList(int roomId) {
 		return cDao.messageList(sqlSession,roomId);		
 	}
 
@@ -80,6 +82,16 @@ public class ChatServiceImpl implements ChatService{
 			result = cDao.insertApply(sqlSession, cm);
 		}
 		return result;
+	}
+
+	@Override
+	public ArrayList<ChatMember> chatMemberList(int projectNo) {
+		return cDao.chatMemberList(sqlSession, projectNo);
+	}
+
+	@Override
+	public Project getProject(int projectNo) {
+		return cDao.getProject(sqlSession, projectNo);
 	}
 	
 }
