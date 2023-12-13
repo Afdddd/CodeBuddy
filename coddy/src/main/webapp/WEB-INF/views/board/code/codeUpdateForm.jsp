@@ -63,8 +63,8 @@
         <div class="Outer">
         <div class="innerOuter">
         	<form id="updateForm" method="post" action="update.co" enctype="multipart/form-data">
-                
-                <input type="hidden" id="cboardNo" name="cboardNo" value="${ c.cboardNo }">
+                <input type="hidden" id="cboardContent" name="cboardContent" value="">
+				<input type="hidden" id="cboardNo" name="cboardNo" value="${ c.cboardNo }">
                 <table align="center">
                     <tr>
                         <th><label for="title"></label></th>
@@ -99,15 +99,18 @@
 					    	</div>
 
 					    <script>
-					        ClassicEditor
-					            .create( document.querySelector( '#editor' ), {
-					            	ckfinder: {
-					            		uploadUrl: '${pageContext.request.contextPath}/resources/file_upload/cboard/upload'
-					            	}
-					            })
-					            .catch( error => {
-					                console.error( error );
-					            } );
+					    ClassicEditor
+				            .create( document.querySelector( '#editor' ), {
+				            	ckfinder: {
+				            		uploadUrl: '${pageContext.request.contextPath}resources/file_upload/cboard/upload/'
+				            	}
+				            })
+				            .then( newEditor => {
+						        editor = newEditor;
+						    } )
+				            .catch( error => {
+				                console.error( error );
+				            } );
 					    </script>
 					    </td>
                     </tr>
@@ -116,20 +119,22 @@
                 <br>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-secondary">수정하기</button>
+                    <button type="submit" class="btn btn-secondary" onclick="setContent();">수정하기</button>
                     <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1);">이전으로</button>
                 </div>
             </form>
             
             <script>
-            	function setContent() {
-            		
-            		let value = $("#editor").html();
-            		
-            		$("#cboardContent").val(value);
-            		
-            		console.log($("#cboardContent").val());
-            	}
+	            function setContent() {
+	        		
+	        		let value = editor.getData();
+	        		
+	        		console.log(value);
+	        		
+	        		$("#cboardContent").val(value);
+	        		
+	        		console.log($("#cboardContent").val());
+	        	}
             </script>
         </div>
         </div>

@@ -89,9 +89,12 @@
 					        ClassicEditor
 					            .create( document.querySelector( '#editor' ), {
 					            	ckfinder: {
-					            		uploadUrl: '${pageContext.request.contextPath}/resources/file_upload/cboard/upload'
+					            		uploadUrl: '${pageContext.request.contextPath}resources/file_upload/cboard/upload/'
 					            	}
 					            })
+					            .then( newEditor => {
+							        editor = newEditor;
+							    } )
 					            .catch( error => {
 					                console.error( error );
 					            } );
@@ -111,7 +114,9 @@
             <script>
             	function setContent() {
             		
-            		let value = $("#editor").html();
+            		let value = editor.getData();
+            		
+            		console.log(value);
             		
             		$("#cboardContent").val(value);
             		

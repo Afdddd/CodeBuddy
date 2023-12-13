@@ -30,8 +30,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.coddy.board.code.model.service.CboardService;
 import com.kh.coddy.board.code.model.vo.Cboard;
+import com.kh.coddy.board.code.model.vo.Creply;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.vo.Member;
@@ -93,7 +95,7 @@ public class CboardController {
 		}
 		
 		@PostMapping(value = "/resources/file_upload/cboard/upload")
-		public ModelAndView image(MultipartHttpServletRequest request) throws Exception {
+		public ModelAndView image(MultipartHttpServletRequest request, HttpServletRequest req) throws Exception {
 		    ModelAndView mav = new ModelAndView("jsonView");
 
 		    try {
@@ -104,10 +106,11 @@ public class CboardController {
 		            String ext = originalFileName.substring(originalFileName.indexOf("."));
 		            String newFileName = UUID.randomUUID() + ext;
 
-		            String savePath = System.getProperty("user.dir") + "/src/main/webapp/resources/file_upload/cboard/" + newFileName;
+		            // String savePath = System.getProperty("user.dir") + "/src/main/webapp/resources/file_upload/cboard/upload/" + newFileName;
+		            String savePath = req.getRealPath("resources/file_upload/cboard/upload/" + "/" + newFileName);
+		            String uploadPath = "./cboard/upload/" + newFileName;
 
-		            String uploadPath = "./cboard/" + newFileName;
-
+		            
 		            File file = new File(savePath);
 
 		            uploadFile.transferTo(file);
@@ -127,15 +130,25 @@ public class CboardController {
 		    return mav;
 		}
 
-		
 		@PostMapping("insert.co")
 		public String insertBoard(Cboard c,
+								  MultipartFile upfile,
 								  HttpSession session,
 								  Model model) {
 		   
+			if(!upfile.getOriginalFilename().equals("")) {
+				
+				String changeName = saveFile(upfile, session);
+				
+				c.setOriginName(upfile.getOriginalFilename());
+				c.setChangeName("/resources/file_upload/cboard/upload/" + changeName);	
+			}
+			
 		    // c.setCboardContent("ss");
 		    System.out.println(c);
+		    
 		    c.setCboardWriter(String.valueOf(((Member)(session.getAttribute("loginMember"))).getMemberNo()));
+		    
 		    int result = cboardService.insertBoard(c);
 
 		    if(result > 0) { // 게시글 작성 성공
@@ -170,7 +183,8 @@ public class CboardController {
 								  Model model) {
 			
 			System.out.println(c);
-			c.setCboardContent(String.valueOf(session.getAttribute("cboardContent")));
+			
+			// c.setCboardContent(String.valueOf(session.getAttribute("cboardContent")));
 			
 			if (reupfile != null && !reupfile.getOriginalFilename().equals("")) {
 				
@@ -184,7 +198,7 @@ public class CboardController {
 				String changeName = saveFile(reupfile, session);
 				
 				c.setOriginName(reupfile.getOriginalFilename());
-				c.setChangeName("/src/main/webapp/resources/file_upload/cboard/" + changeName);
+				c.setChangeName("/resources/file_upload/cboard/upload/" + changeName);
 			}
 			int result = cboardService.updateBoard(c);
 			
@@ -218,7 +232,7 @@ public class CboardController {
 			String changeName = currentTime + ranNum + ext;
 			
 			String savePath = session.getServletContext()
-					.getRealPath("/src/main/webapp/resources/file_upload/cboard/");
+					.getRealPath("/resources/file_upload/cboard/upload/");
 			
 			try {
 				
@@ -261,7 +275,28 @@ public class CboardController {
 			}
 		}
 		
+		@ResponseBody
+		@RequestMapping(value = "rlist.co", produces = "application/json; charset=UTF-8")
+		public String ajaxSelectReplyList(int cno) {
+			
+			ArrayList<Creply> list = cboardService.selectReplyList(cno);
+			
+			// Gson gson = new Gson();
+			// return gson.toJson(list);
+			
+			return new Gson().toJson(list);
+		}
 		
+		@ResponseBody
+		@RequestMapping(value = "rinsert.co", produces = "text/html; charset=UTF-8")
+		public String ajaxInsertReply(Creply r) {
+			
+			// System.out.println(r);
+			
+			int result = cboardService.insertReply(r);
+			
+			return (result > 0) ? "success" : "fail";
+		}
 		
 		
 		}

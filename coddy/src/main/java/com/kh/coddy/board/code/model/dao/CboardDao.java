@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Creply;
+import com.kh.coddy.board.intro.model.vo.IBoard;
+import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Repository
@@ -59,8 +61,8 @@ public class CboardDao {
 	}
 	
 	public int insertReply(SqlSessionTemplate sqlSession, Creply r) {
-//		sqlSession.insert("boardMapper.insertReply", r);
-		return 0;
+	
+		return sqlSession.insert("cboardMapper.insertReply", r);
 	}
 	
 	public ArrayList<Cboard> selectTopBoardList(SqlSessionTemplate sqlSession) {
@@ -68,5 +70,5 @@ public class CboardDao {
 		return (ArrayList)sqlSession.selectList("cboardMapper.selectTopBoardList");
 	}
 
-
+	
 }

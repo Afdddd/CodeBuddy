@@ -15,7 +15,12 @@
     	margin-left:100px;
     }
     
-
+	pre { background-color: rgb(225, 225, 225);
+		  	   width: 1000px;
+			   padding: 10px;
+			   border : 1px solid lightgray;
+	}
+						
     
 </style>
 </head>
@@ -134,11 +139,10 @@
 
     </div>
     
- <!--  
+  <!-- 
     <script>
     	$(function() {
     		
-    		// 댓글리스트 조회용 선언적 함수 호출
     		selectReplyList();
     		
     		// 만약, 댓글이 실시간으로 달리는걸 보고싶다면?
@@ -219,7 +223,7 @@
     	}
     </script>
 
-    -->
+   -->
     
 </body>
 </html>

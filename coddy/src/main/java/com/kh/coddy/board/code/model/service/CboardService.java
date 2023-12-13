@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Creply;
+import com.kh.coddy.board.intro.model.vo.IBoard;
+import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.common.vo.PageInfo;
 
 

@@ -19,9 +19,7 @@
 		<result column="CBOARD_CONTENT" property="cboardContent" />
 		<result column="CHANGE_NAME" property="changeName" />
 		<result column="CBOARD_VIEWS" property="cboardViews" />
-		
 	</resultMap>
-
 
     <insert id="insertBoard" parameterType="cboard">
         INSERT INTO CBOARD (CBOARD_NO, 
@@ -93,7 +91,7 @@
 	         , CREPLY_CONTENT
 	         , TO_CHAR(CBOARD_INSERT, 'YYYY-MM-DD') AS "CBOARD_INSERT"
 	      FROM CREPLY
-	     WHERE REF_CNO = #{cboardNo}
+	     WHERE CREPLY_CNO = #{cboardNo}
 	     ORDER BY CREPLY_NO DESC
 	</select>
 	
@@ -120,6 +118,6 @@
 		         ORDER BY CBOARD_VIEWS DESC) B
 		 WHERE ROWNUM BETWEEN 1 AND 5
 	</select>    
-    
+ 
     
 </mapper>
