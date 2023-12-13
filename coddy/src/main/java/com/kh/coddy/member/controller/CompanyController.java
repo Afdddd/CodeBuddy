@@ -4,10 +4,12 @@ import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,7 +88,7 @@ public class CompanyController {
 		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
 		else { c.setCompanyPwd(pbkdf2.encode(c.getCompanyPwd()));
 			int result = companyService.insertCompany(c); 
-			if(result > 0) { log.info("insertCompanyId={}", c.getCompanyId()); session.setAttribute("alertMsg", "성공적으로 회원가입이 완료되었습니다. 로그인을 진행해주세요."); return "redirect:/loginPage.co"; } 
+			if(result > 0) { log.info("insertCompanyId={}", c.getCompanyId()); session.setAttribute("alertMsg", "성공적으로 회원가입이 완료되었습니다. 로그인을 진행해주세요."); return "redirect:/loginPage.cp"; } 
 			else { model.addAttribute("errorMsg", "회원가입 실패"); return "common/errorPage"; } } }
 	@PostMapping(value="login.cp") public String login(Company c, HttpSession session, Model model, HttpServletRequest request) {
 		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
@@ -117,7 +119,7 @@ public class CompanyController {
 			message.setText("아이디는 " + companyId + "이며, 새비밀번호는 " + sb.toString() + "입니다."); 
 			Company newCompany = new Company(); newCompany.setCompanyPwd(pbkdf2.encode(sb.toString())); newCompany.setCompanyEmail(c.getCompanyEmail()); newCompany.setCompanyBno(c.getCompanyBno());
 			int answer = companyService.setNewPassword(newCompany);
-			if(answer <= 0) { session.setAttribute("alertMsg", "요청 실패"); return "redirect:/loginPage.co"; } }
+			if(answer <= 0) { session.setAttribute("alertMsg", "요청 실패"); return "redirect:/loginPage.cp"; } }
 		else { message.setText("아이디는 " + companyId + "입니다"); }
 		message.setTo(c.getCompanyEmail()); mailSender.send(message);
 		session.setAttribute("alertMsg", "요청 성공");
@@ -149,23 +151,23 @@ public class CompanyController {
 	}
 	@GetMapping(value="updateForm.cp") public String updateForm(HttpSession session) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
-		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.cp"; } 
 		else { int result = companyService.countWritten(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()); session.setAttribute("howManyWritten", result); return "company/companyUpdateForm"; } }
 	@GetMapping(value="myPageInfo.cp") public String myPageInfo(HttpSession session) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
-		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.cp"; } 
 		else { int result = companyService.countWritten(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()); session.setAttribute("howManyWritten", result); return "company/companyInfoPage"; } }
 	@PostMapping(value="update.cp") public String updateCompany(HttpSession session, Model model, Company c, String companyNewPwd) { 
 		if(pbkdf2.matches(c.getCompanyPwd(), companyService.getPassword(c.getCompanyId()))) { 
 			if(!companyNewPwd.equals("")) { c.setCompanyPwd(pbkdf2.encode(companyNewPwd)); }
 			else { c.setCompanyPwd(((Company)(session.getAttribute("loginCompany"))).getCompanyPwd()); }
 			int result = companyService.updateCompany(c); 
-			if(result > 0) { session.setAttribute("alertMsg", "성공적으로 변경에 성공함. 다시 로그인 해주세요."); session.removeAttribute("loginCompany"); return "redirect:/loginPage.co"; } 
-			else { session.setAttribute("alertMsg", "변경 실패."); return "redirect:/updateForm.co"; } }
+			if(result > 0) { session.setAttribute("alertMsg", "성공적으로 변경에 성공함. 다시 로그인 해주세요."); session.removeAttribute("loginCompany"); return "redirect:/loginPage.cp"; } 
+			else { session.setAttribute("alertMsg", "변경 실패."); return "redirect:/updateForm.cp"; } }
 		else { model.addAttribute("errorMsg","인증 실패"); return "common/errorPage"; } }
 	@GetMapping(value="deleteForm.cp") public String deleteForm(HttpSession session) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
-		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; }
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.cp"; }
 		else { return "company/companyDeleteForm"; }
 	}
 	@PostMapping(value="delete.cp") public String deleteCompany(HttpSession session, Model model, String companyPwd) { 
@@ -178,7 +180,7 @@ public class CompanyController {
 	}
 	@GetMapping(value="myPage.hb") public String myBoard(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) { 
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
-		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.co"; } 
+		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.cp"; } 
 		int listCount = hboardService.selectListCount(((Company)session.getAttribute("loginCompany")).getCompanyNo());
 		int pageLimit = 5; int boardLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
@@ -197,5 +199,15 @@ public class CompanyController {
 			
 			return "company/myBoard";
 		}
+	}
+	@PostMapping(value="/uploadSummernoteImageFile.cp", produces="text/html; charset=UTF-8") @ResponseBody
+	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest req) {
+		String path = req.getRealPath("resources\\file_upload\\company\\content\\");
+		UUID uuid = UUID.randomUUID();
+		
+		File file = new File(path, uuid + "_" + multipartFile.getOriginalFilename());
+		try { multipartFile.transferTo(file); return "resources\\file_upload\\company\\content\\" + uuid + "_" + multipartFile.getOriginalFilename(); }
+		catch (IOException e) { FileUtils.deleteQuietly(file); e.printStackTrace(); }
+		return null;
 	}
 }

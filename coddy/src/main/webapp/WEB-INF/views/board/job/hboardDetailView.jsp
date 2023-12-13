@@ -21,7 +21,7 @@
 		.boardContentBar { width: 100%; height: 95%; display: flex; }
 		.boardContentArea { width: 75%; height: 100%; }
 		.boardMiniArea { width: 25%; height: 600px; top: 20%; position: sticky; overflow: auto; }
-		.boardMiniCard { width: 100%; height: 550px; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #92d7f1; margin:0 auto; }
+		.boardMiniCard { width: 100%; height: 550px; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #92d7f1; margin:0 auto; overflow: auto; }
 		.boardMiniAttach { width: 100%; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #92d7f1; }
 		.boardContentThumb { width: 100%; height: 420px; padding: 4%; }
 		.boardContentTag { width: 100%; height: 120px; }
@@ -133,6 +133,10 @@
 									<tr>
 										<th>찜수</th>
 										<td>${sessionScope.wish}명</td>
+									</tr>
+									<tr>
+										<th>개요</th>
+										<td>${sessionScope.co.companyInfo}</td>
 									</tr>
 								</tbody>
 							</table>

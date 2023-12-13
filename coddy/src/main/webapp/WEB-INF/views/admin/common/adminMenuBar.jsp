@@ -48,6 +48,12 @@
         <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
         <!-- 도로명 주소 카카오 api -->
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+        <!-- prettify.js -->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/prettify.js"></script>
+        <!-- include summernote css/js -->
+        <script src="${ pageContext.request.contextPath }/resources/js/summernote/summernote-lite.js"></script>
+        <script src="${ pageContext.request.contextPath }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
+        <link rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/summernote/summernote-lite.css">
         <style>
             #layoutSidenav_content { background-color: white; }
         </style>
@@ -96,8 +102,26 @@
                             </a>
                             <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                                 <nav class="sb-sidenav-menu-nested nav">
-                                    <a class="nav-link" href="">Member</a>
-                                    <a class="nav-link" href="">Company</a>
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseMember" aria-expanded="false" aria-controls="pagesCollapseMember">
+                                        Member
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseMember" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="adminRegistForm.me">Create(임시)</a>
+                                            <a class="nav-link" href="">Read</a>
+                                        </nav>
+                                    </div>
+                                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseCompany" aria-expanded="false" aria-controls="pagesCollapseCompany">
+                                        Company
+                                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                                    </a>
+                                    <div class="collapse" id="pagesCollapseCompany" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
+                                        <nav class="sb-sidenav-menu-nested nav">
+                                            <a class="nav-link" href="adminRegistForm.cp">Create</a>
+                                            <a class="nav-link" href="adminList.cp">Read</a>
+                                        </nav>
+                                    </div>  
                                     <a class="nav-link" href="">Project</a>
                                     <a class="nav-link" href="">Chat</a>
                                     <a class="nav-link" href="">Tag</a>
@@ -222,5 +246,10 @@
             })();
         </script>
         <!--End of Tawk.to Script-->
+        <script>
+			$(document).ready(function() {
+				$("#contentMain").html($("#contentMain").html() + $("#readArea").html());
+			});
+		</script>
     </body>
 </html>

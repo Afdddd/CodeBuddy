@@ -37,7 +37,7 @@
             .card-image { background-color: rgb(236, 236, 236); width: 100%; height: 130px; border-radius: 6px 6px 0 0; text-align: center; line-height:130px; }
             .card-image:hover { cursor: pointer; transform: scale(0.98); }
             .location { text-transform: uppercase; font-size: 0.7em; font-weight: 600; color: #5271FF; padding: 10px 7px 0; width: 50%; }
-            .location:hover { cursor: pointer; transform: scale(1.24); background-color: darkgrey; color: yellow; }
+            .location:hover { cursor: pointer; transform: scale(1.12); background-color: #5271FF; color: whitesmoke; }
             .heading { font-weight: 600; color: rgb(88, 87, 87); padding: 7px; }
             .heading h5:hover { cursor: pointer; }
             .info { color: gray; font-weight: 400; font-size: 11px; padding-top: 20px; width: 90%; display: flex; }

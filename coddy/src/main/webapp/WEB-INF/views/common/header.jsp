@@ -67,6 +67,8 @@
     <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
     <!-- 도로명 주소 카카오 api -->
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <!-- prettify.js -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ink/3.1.10/js/prettify.js"></script>
     <!-- include summernote css/js -->
     <script src="${ pageContext.request.contextPath }/resources/js/summernote/summernote-lite.js"></script>
     <script src="${ pageContext.request.contextPath }/resources/js/summernote/lang/summernote-ko-KR.js"></script>
@@ -281,14 +283,14 @@
                                 <a id="loginA" data-toggle="modal" data-target="#loginModal">로그인</a> <!-- 모달의 원리 : 이 버튼 클릭시 data-target에 제시되어있는 해당 아이디의 div요소를 띄워줌 -->
                             </c:when>
                             <c:otherwise>
-                                <label><b style="color: #34974d; font-size: 13px;">${sessionScope.loginCompany.companyName}</b> 기업 로그인중</label> &nbsp;&nbsp;
+                                <label><b style="color: #5271FF; font-size: 13px;">${sessionScope.loginCompany.companyName}</b> 기업 로그인중</label> &nbsp;&nbsp;
                                 <a href="myPage.cp">마이페이지</a>
                                 <a href="logout.cp">로그아웃</a>
                             </c:otherwise>
                         </c:choose>
                     </c:when>
                	    <c:otherwise>
-                        <label><b style="color: #34974d; font-size: 16px;">${sessionScope.loginMember.memberName}</b>님 환영합니다</label> &nbsp;&nbsp;
+                        <label><b style="color: #5271FF; font-size: 16px;">${sessionScope.loginMember.memberName}</b>님 환영합니다</label> &nbsp;&nbsp;
                         <a href="myPage.se">마이페이지</a>
                         <c:choose>
                             <c:when test="${empty sessionScope.isKakao}">

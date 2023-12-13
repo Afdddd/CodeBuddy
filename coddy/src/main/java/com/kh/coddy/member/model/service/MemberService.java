@@ -9,7 +9,6 @@ import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
-import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 public interface MemberService {
@@ -54,9 +53,5 @@ public interface MemberService {
 	// iboard 카운트 조회
 	int selectListCounti();
 
-
-
-
-
-
+	int uploadFile(int memberNo);
 }

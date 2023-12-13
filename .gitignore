@@ -15,6 +15,7 @@ config.properties
 bnoKey.js
 twak.js
 kakaoMap.js
+coddy/src/main/webapp/resources/image/profile/*
 coddy/src/main/webapp/resources/file_upload/company/*
 coddy/src/main/webapp/resources/file_upload/company_bg/*
 coddy/src/main/webapp/resources/file_upload/hboard/*

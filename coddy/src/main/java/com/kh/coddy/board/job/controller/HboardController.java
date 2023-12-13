@@ -3,7 +3,6 @@ package com.kh.coddy.board.job.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
 import com.kh.coddy.board.job.model.service.HboardService;
 import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.board.job.model.vo.Hattachment;
@@ -37,6 +35,7 @@ import com.kh.coddy.board.job.model.vo.Hrelation;
 import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
+import com.kh.coddy.common.RemoveHTMLTag;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.Geo;
@@ -120,7 +119,7 @@ public class HboardController {
 		return "board/job/hboardInsertForm";
 	}
 	@PostMapping(value="insert.hb") public String insertBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb, List<MultipartFile> files) {
-		System.out.println(h);
+		h.setHboardTitle(RemoveHTMLTag.allow(h.getHboardTitle(), "h4, h5, h6"));
 		int result = hboardService.insertBoard(h);
 		if(result > 0) {
 			String path = request.getRealPath("resources\\file_upload\\hboard\\");

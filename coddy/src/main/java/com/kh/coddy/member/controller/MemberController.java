@@ -47,7 +47,6 @@ import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.MemberService;
-import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 @Controller
@@ -510,9 +509,5 @@ public class MemberController {
 		m.setMemberPwd(pbkdf2.encode(m.getMemberPwd()));
 		int result = memberService.insertMember(m);
 		if(result > 0) { return "성공"; } else { return "실패"; }
-
 	}
 }
-
-
-
