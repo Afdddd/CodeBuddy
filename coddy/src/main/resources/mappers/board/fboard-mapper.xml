@@ -11,8 +11,6 @@
 	    <result column="FBOARD_UPDATE" property="fboardUpdate"/>
 	    <result column="FBOARD_DELETE" property="fboardDelete"/>
 	    <result column="FBOARD_VIEWS" property="fboardViews"/>
-	    <result column="ORIGIN_NAME" property="originName"/>
-	    <result column="CHANGE_NAME" property="changeName"/>
 	</resultMap>
 	
 	<!-- FREPLY resultMap -->
@@ -39,13 +37,13 @@
 	</resultMap>
 	
 	<!-- FBOARD insert -->
-	<insert id="insertFboard" parameterType="fboard">
+	<insert id="insertBoard" parameterType="fboard">
 	    INSERT INTO FBOARD (FBOARD_NO, FBOARD_TITLE, FBOARD_CONTENT, FBOARD_WRITER, FBOARD_INSERT, FBOARD_UPDATE, FBOARD_DELETE, FBOARD_VIEWS)
 	    VALUES (SEQ_FBOARD.NEXTVAL, #{fboardTitle}, #{fboardContent}, #{fboardWriter}, #{fboardInsert}, #{fboardUpdate}, #{fboardDelete}, #{fboardViews})
 	</insert>
 	
 	<!-- FBOARD update -->
-	<update id="updateFboard" parameterType="fboard">
+	<update id="updateBoard" parameterType="fboard">
 	    UPDATE FBOARD
 	    SET FBOARD_TITLE = #{fboardTitle},
 	        FBOARD_CONTENT = #{fboardContent},
@@ -57,15 +55,51 @@
 	    WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
 	</update>
 	
+	<update id="increaseCount" parameterType="_int">
+		UPDATE FBOARD
+		   SET FBOARD_VIEWS = FBOARD_VIEWS + 1
+		 WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
+	</update>   
+	
 	<!-- FBOARD delete -->
-	<update id="deleteFboard" parameterType="_int">
+	<update id="deleteBoard" parameterType="_int">
 	    UPDATE FBOARD SET FBOARD_DELETE = SYSDATE WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
 	</update>
 	
 	<!-- FBOARD select -->
 	<select id="selectFboard" parameterType="_int" resultMap="fboardResultSet">
-	    SELECT * FROM FBOARD WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
+	    SELECT F.FBOARD_NO AS "FBOARD_NO", F.FBOARD_TITLE AS "FBOARD_TITLE", F.FBOARD_CONTENT AS "FBOARD_CONTENT",
+	    	M.MEMBER_NAME AS "FBOARD_WRITER", F.FBOARD_INSERT AS "FBOARD_INSERT", F.FBOARD_UPDATE AS "FBOARD_UPDATE",
+	    	F.FBOARD_VIEWS AS "FBOARD_VIEWS"
+	    	FROM FBOARD F, MEMBER M 
+	    	WHERE F.FBOARD_WRITER=M.MEMBER_NO AND F.FBOARD_NO = #{fboardNo} AND F.FBOARD_DELETE IS NULL
 	</select>
+	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM FBOARD WHERE FBOARD_DELETE IS NULL
+	</select>
+	
+	<select id="selectList" resultMap="fboardResultSet">
+		SELECT FBOARD_NO
+		     , FBOARD_TITLE
+		     , FBOARD_WRITER
+		     , FBOARD_VIEWS
+		     , TO_CHAR(FBOARD_INSERT, 'YYYY-MM-DD') AS "FBOARD_INSERT"
+		  FROM FBOARD 
+		  WHERE FBOARD_DELETE IS NULL
+		 ORDER BY FBOARD_NO DESC
+	</select>		
+	
+	<select id="selectBoard" parameterType="_int" resultMap="fboardResultSet">
+		SELECT FBOARD_NO
+		     , FBOARD_TITLE
+		     , FBOARD_CONTENT
+		     , FBOARD_WRITER
+		     , TO_CHAR(FBOARD_INSERT, 'YYYY-MM-DD') AS "FBOARD_INSERT"
+		  FROM FBOARD
+		 WHERE FBOARD_NO = #{fboardNo}
+	</select>    
 	
 	<!-- FREPLY insert -->
 	<insert id="insertFreply" parameterType="freply">
@@ -87,22 +121,22 @@
 	</update>
 	
 	<!-- FREPLY delete -->
-	<update id="deleteFreply" parameterType="_int">
+	<update id="deleteFreply" parameterType="int">
 	    UPDATE FREPLY SET FREPLY_DELETE = SYSDATE WHERE REPLY_NO = #{freplyNo} AND FREPLY_DELETE IS NULL
 	</update>
 	
 	<!-- FREPLY select -->
-	<select id="selectFreply" parameterType="_int" resultMap="freplyResultSet">
-	    SELECT * FROM FREPLY WHERE REPLY_NO = #{freplyNo} AND FREPLY_DELETE IS NULL
+	<select id="selectFreply" parameterType="int" resultMap="freplyResultSet">
+    	SELECT * FROM FREPLY WHERE REPLY_NO = #{freplyNo} AND FREPLY_DELETE IS NULL
 	</select>
 	
 	<!-- FATTACHMENT selectList -->
-	<select id="selectAttachmentList" parameterType="_int" resultMap="fattachmentResultMap">
+	<select id="selectAttachmentList" parameterType="int" resultMap="fattachmentResultMap">
 	    SELECT * FROM FATTACHMENT WHERE FBOARD_NO = #{fboardNo} AND FATTACHMENT_LEVEL = 0
 	</select>
 	
 	<!-- FATTACHMENT selectOne -->
-	<select id="selectOneAttachment" parameterType="_int" resultMap="fattachmentResultMap">
+	<select id="selectOneAttachment" parameterType="int" resultMap="fattachmentResultMap">
 	    SELECT * FROM FATTACHMENT WHERE FATTACHMENT_NO = #{fattachmentNo}
 	</select>
 	
@@ -119,13 +153,13 @@
 	        FATTACHMENT_ORIGIN = #{fattachmentOrigin},
 	        FATTACHMENT_CHANGE = #{fattachmentChange},
 	        FATTACHMENT_PATH = #{fattachmentPath},
-	        FATTACHMENT_INSERT = #{fattachmentInsert},  -- 변경: fattachmentInsert 추가
+	        FATTACHMENT_INSERT = #{fattachmentInsert}, 
 	        FATTACHMENT_LEVEL = #{fattachmentLevel}
 	    WHERE FATTACHMENT_NO = #{fattachmentNo}
 	</update>
 	
 	<!-- FATTACHMENT delete -->
-	<delete id="deleteAttachment" parameterType="_int">
+	<delete id="deleteAttachment" parameterType="int">
 	    DELETE FROM FATTACHMENT WHERE FATTACHMENT_NO = #{fattachmentNo}
 	</delete>
 		

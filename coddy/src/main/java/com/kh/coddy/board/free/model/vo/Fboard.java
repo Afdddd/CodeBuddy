@@ -19,7 +19,5 @@ public class Fboard {
 	private String fboardUpdate;	//	FBOARD_UPDATE   DATE
 	private String fboardDelte;		//	FBOARD_DELETE   DATE
 	private int fboardViews;		//	FBOARD_VIEWS    NUMBER
-	private String originName;		//	ORIGIN_NAME	VARCHAR2(100 BYTE)
-	private String changeName;		//	CHANGE_NAME	VARCHAR2(100 BYTE)
 	
 }

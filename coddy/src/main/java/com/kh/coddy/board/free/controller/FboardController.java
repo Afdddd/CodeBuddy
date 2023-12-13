@@ -158,46 +158,8 @@ public class FboardController {
 				
 			return "board/free/freeUpdateForm";
 			}   
-		    
-		
-		@PostMapping("update.fr")
-		public String updateBoard(Fboard f, 
-								  MultipartFile reupfile,
-								  HttpSession session,
-								  Model model) {
-			
-			System.out.println(f);
-			f.setFboardContent(String.valueOf(session.getAttribute("fboardContent")));
-			
-			if (reupfile != null && !reupfile.getOriginalFilename().equals("")) {
-				
-				if(f.getChangeName() != null) {
-					
-					String realPath = session.getServletContext()
-										.getRealPath(f.getChangeName());
-					
-					new File(realPath).delete();
-				}
-				String changeName = saveFile(reupfile, session);
-				
-				f.setOriginName(reupfile.getOriginalFilename());
-				f.setChangeName("/src/main/webapp/resources/file_upload/fboard/" + changeName);
-			}
-			int result = fboardService.updateBoard(f);
-			
-			if(result > 0) { 
-				session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
-				
-				return "redirect:/detail.fr?fno=" + f.getFboardNo();
-				
-			} else {
-				
-				model.addAttribute("errorMsg", "게시글 수정 실패");
-				
-				return "common/errorPage";
-			}   
-		    
-		}
+		   
+
 		
 		
 		public String saveFile(MultipartFile upfile,

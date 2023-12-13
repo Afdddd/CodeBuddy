@@ -88,7 +88,7 @@
             		
             		$("#freeBoardList>tbody>tr").click(function() {
             			
-            			let bno = $(this).children(".fno").text();
+            			let fno = $(this).children(".fno").text();
             			
             			location.href = "detail.fr?fno=" + bno;
             		});

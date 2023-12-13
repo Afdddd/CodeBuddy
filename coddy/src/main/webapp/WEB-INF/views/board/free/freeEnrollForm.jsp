@@ -28,7 +28,7 @@
             <p class="subtitle">무엇이든 작성해 보아요.</p>
             <br>
 
-            <form id="freeEnrollForm" method="post" action="freeInsert.bo" enctype="multipart/form-data">
+            <form id="freeEnrollForm" method="post" action="insert.fr" enctype="multipart/form-data">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>

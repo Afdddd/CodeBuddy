@@ -21,7 +21,7 @@
             <h3 style="color:#5271FF;">수정</h3>
             <br>
 
-            <form id="freeUpdateForm" method="post" action="freeUpdate.bo" enctype="multipart/form-data">
+            <form id="freeUpdateForm" method="post" action="freeUpdate.fr" enctype="multipart/form-data">
             	<input type="hidden" name="fBoardNo" value="${ requestScope.b.fBoardNo }">
                 <table align="center">
                     <tr>

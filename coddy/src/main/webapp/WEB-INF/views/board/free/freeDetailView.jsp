@@ -21,17 +21,17 @@
             <h3 style="color:#5271FF;">상세보기</h3>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="freeList.bo">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="freeList.fr">목록으로</a>
             <br><br>
 
             <table id="contentArea" align="center" class="table">
                 <tr>
-                    <th>${ requestScope.b.cboardTitle }</th>
+                    <th>${ requestScope.f.fboardTitle }</th>
                 </tr>
                 <tr>
-                    <th>${ requestScope.c.cboardWriter }</th>
-                    <th>${ requestScope.c.cboardDelte }</th>
-                    <th>${ requestScope.c.cboardViews }</th>
+                    <th>${ requestScope.f.fboardWriter }</th>
+                    <th>${ requestScope.f.fboardDelte }</th>
+                    <th>${ requestScope.f.fboardViews }</th>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
@@ -41,9 +41,9 @@
                     			첨부파일이 없습니다.
                     		</c:when>
                     		<c:otherwise>
-                        		<a href="${ requestScope.c.changeName }" 
-                        		   download="${ requestScope.c.originName }">
-                        			${ requestScope.c.originName }
+                        		<a href="${ requestScope.f.changeName }" 
+                        		   download="${ requestScope.f.originName }">
+                        			${ requestScope.f.originName }
                         		</a>
                         	</c:otherwise>
                     	</c:choose>
@@ -56,7 +56,7 @@
                 <tr>
                     <td colspan="4">
 	                    <p style="height:150px;">
-	                    	${ requestScope.c.cboardContent }
+	                    	${ requestScope.f.fboardContent }
 	                    </p>
                     </td>
                 </tr>
@@ -65,15 +65,15 @@
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-	            <c:if test="${ not empty sessionScope.loginUser and sessionScope.loginUser.userId eq requestScope.b.cboardWriter }">
+	            <c:if test="${ not empty sessionScope.loginUser and sessionScope.loginUser.userId eq requestScope.f.fboardWriter }">
 	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
 	                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
 	                
 	                <form id="postForm" action="" method="post">
-	                	<input type="hidden" name="bno" 
-	                				value="${ requestScope.c.cboardNo }">
+	                	<input type="hidden" name="fno" 
+	                				value="${ requestScope.f.fboardNo }">
 	                	<input type="hidden" name="filePath" 
-	                				value="${ requestScope.c.changeName }">
+	                				value="${ requestScope.f.changeName }">
 	                </form>
 	                
 	                <script>
@@ -85,12 +85,12 @@
 	                		if(num == 1) { 
 	                			// num == 1 일 경우 : 수정하기 버튼을 클릭한 상태
 	                			
-	                			$("#postForm").attr("action", "freeUpdateForm.bo").submit();
+	                			$("#postForm").attr("action", "freeUpdateForm.fr").submit();
 	                			
 	                		} else {
 	                			// num == 2 일 경우 : 삭제하기 버튼을 클릭한 상태
 	                			
-	                			$("#postForm").attr("action", "delete.bo").submit();
+	                			$("#postForm").attr("action", "delete.fr").submit();
 	                			
 	                			// jQuery 의 submit() 메소드 : 해당 form 의 submit 버튼을 누르는 효과
 	                		}
@@ -152,7 +152,7 @@
 			                url: "rinsert.bo",
 			                type: "post", // 변경: 댓글 등록은 POST 방식 사용
 			                data: { // Ajax 요청 또한 Spring 에서 커맨드 객체 방식 사용 가능
-			                    refBoardNo: ${ requestScope.c.cboardNo },
+			                    refBoardNo: ${ requestScope.f.fboardNo },
 			                    replyWriter: "${ sessionScope.loginUser.userId }",
 			                    replyContent: $("#content").val()
 			                },
@@ -181,9 +181,9 @@
 			    function selectReplyList() {
 			        // 해당 게시글에 딸린 댓글 조회 요청용 ajax 요청
 			        $.ajax({
-			            url: "rlist.bo",
+			            url: "rlist.fr",
 			            type: "get",
-			            data: { bno: ${ requestScope.c.cboardNo } },
+			            data: { bno: ${ requestScope.f.fboardNo } },
 			            success: function (result) {
 			                // console.log(result);
 			                let resultStr = "";
