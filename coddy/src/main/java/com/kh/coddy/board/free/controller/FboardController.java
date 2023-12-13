@@ -221,9 +221,7 @@ public class FboardController {
 				return "common/errorPage";
 			}
 		}
-		
-		
-		
+
 		
 		}
 		
