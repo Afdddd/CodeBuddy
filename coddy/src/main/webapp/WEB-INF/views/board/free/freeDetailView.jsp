@@ -30,14 +30,14 @@
                 </tr>
                 <tr>
                     <th>${ requestScope.f.fboardWriter }</th>
-                    <th>${ requestScope.f.fboardDelte }</th>
+                    <th>${ requestScope.f.fboardDelete }</th>
                     <th>${ requestScope.f.fboardViews }</th>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
                     <td colspan="3">
                     	<c:choose>
-                    		<c:when test="${ empty requestScope.c.originName }">
+                    		<c:when test="${ empty requestScope.f.originName }">
                     			첨부파일이 없습니다.
                     		</c:when>
                     		<c:otherwise>
@@ -149,7 +149,7 @@
 			        if ($("#content").val().trim().length != 0) {
 			
 			            $.ajax({
-			                url: "rinsert.bo",
+			                url: "rinsert.fr",
 			                type: "post", // 변경: 댓글 등록은 POST 방식 사용
 			                data: { // Ajax 요청 또한 Spring 에서 커맨드 객체 방식 사용 가능
 			                    refBoardNo: ${ requestScope.f.fboardNo },

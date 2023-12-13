@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,6 +57,9 @@ public class FboardController {
 			mv.addObject("list", list)
 			  .addObject("pi", pi)
 			  .setViewName("board/free/freeListView");
+			
+			System.out.println(list);
+			System.out.println(pi);
 			  
 			return mv;
 		}
@@ -131,8 +133,8 @@ public class FboardController {
 								  HttpSession session,
 								  Model model) {
 		  
-		    System.out.println(f);
 		    f.setFboardWriter(String.valueOf(((Member)(session.getAttribute("loginMember"))).getMemberNo()));
+		    System.out.println(f);
 		    int result = fboardService.insertBoard(f);
 
 		    if(result > 0) { // 게시글 작성 성공

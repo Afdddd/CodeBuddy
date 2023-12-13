@@ -38,8 +38,8 @@
 	
 	<!-- FBOARD insert -->
 	<insert id="insertBoard" parameterType="fboard">
-	    INSERT INTO FBOARD (FBOARD_NO, FBOARD_TITLE, FBOARD_CONTENT, FBOARD_WRITER, FBOARD_INSERT, FBOARD_UPDATE, FBOARD_DELETE, FBOARD_VIEWS)
-	    VALUES (SEQ_FBOARD.NEXTVAL, #{fboardTitle}, #{fboardContent}, #{fboardWriter}, #{fboardInsert}, #{fboardUpdate}, #{fboardDelete}, #{fboardViews})
+	    INSERT INTO FBOARD (FBOARD_NO, FBOARD_TITLE, FBOARD_CONTENT, FBOARD_WRITER, FBOARD_INSERT)
+	    VALUES (SEQ_FBOARD.NEXTVAL, #{fboardTitle}, #{fboardContent}, #{fboardWriter}, SYSDATE)
 	</insert>
 	
 	<!-- FBOARD update -->
@@ -54,6 +54,23 @@
 	        FBOARD_VIEWS = #{fboardViews}
 	    WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
 	</update>
+	
+	<!-- FBOARD selectList -->
+	<select id="selectList" resultMap="fboardResultSet">
+		SELECT FBOARD_NO
+		     , FBOARD_TITLE
+		     , FBOARD_WRITER
+		     , FBOARD_VIEWS
+		     , TO_CHAR(FBOARD_INSERT, 'YYYY-MM-DD') AS "FBOARD_INSERT"
+		  FROM FBOARD
+		 ORDER BY FBOARD_NO DESC
+	</select>
+	
+	<!-- FBOARD selectListCount -->	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM FBOARD WHERE FBOARD_DELETE IS NULL
+	</select>   
 	
 	<update id="increaseCount" parameterType="_int">
 		UPDATE FBOARD
@@ -74,23 +91,7 @@
 	    	FROM FBOARD F, MEMBER M 
 	    	WHERE F.FBOARD_WRITER=M.MEMBER_NO AND F.FBOARD_NO = #{fboardNo} AND F.FBOARD_DELETE IS NULL
 	</select>
-	
-	<select id="selectListCount" resultType="_int">
-		SELECT COUNT(*)
-		  FROM FBOARD WHERE FBOARD_DELETE IS NULL
-	</select>
-	
-	<select id="selectList" resultMap="fboardResultSet">
-		SELECT FBOARD_NO
-		     , FBOARD_TITLE
-		     , FBOARD_WRITER
-		     , FBOARD_VIEWS
-		     , TO_CHAR(FBOARD_INSERT, 'YYYY-MM-DD') AS "FBOARD_INSERT"
-		  FROM FBOARD 
-		  WHERE FBOARD_DELETE IS NULL
-		 ORDER BY FBOARD_NO DESC
-	</select>		
-	
+
 	<select id="selectBoard" parameterType="_int" resultMap="fboardResultSet">
 		SELECT FBOARD_NO
 		     , FBOARD_TITLE

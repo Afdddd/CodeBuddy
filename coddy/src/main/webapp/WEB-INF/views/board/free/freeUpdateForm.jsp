@@ -26,7 +26,7 @@
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" value="${ requestScope.b.fBoardTitle }" name="boardTitle" required></td>
+                        <td><input type="text" id="title" class="form-control" value="${ requestScope.b.fBoardTitle }" name="fboardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
@@ -51,7 +51,7 @@
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required>${ requestScope.b.boardContent }</textarea></td>
+                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="fboardContent" required>${ requestScope.b.boardContent }</textarea></td>
                     </tr>
                 </table>
                 <br>

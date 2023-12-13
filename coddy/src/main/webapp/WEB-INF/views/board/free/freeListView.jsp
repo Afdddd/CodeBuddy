@@ -1,14 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Coddy 자유게시판</title>
+<title>Insert title here</title>
 <style>
-	#freeBoardList {text-align:left;}
+	#fboardList {margin: 0 auto;}
 
     #pagingArea {width:fit-content; margin:auto;}
     
@@ -32,8 +31,9 @@
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
-            <h3 style="color:#5271FF;">자유게시판</h3>
-
+            <h3 style="color:#5271FF;">코드리뷰</h3>
+            
+           
             <br>
             <br>
             <thead>
@@ -41,7 +41,6 @@
 			    <a href="list.fr?cpage=${requestScope.pi.currentPage}&sort=createdAtDesc">• 최신순</a>
 			    <a href="list.fr?cpage=${requestScope.pi.currentPage}&sort=mostAnswers">• 답변많은순</a>
 			    <a href="list.fr?cpage=${requestScope.pi.currentPage}&sort=mostLikes">• 좋아요순</a>
-			    
 			     <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
             <c:if test="${ not empty sessionScope.loginMember }"> 
 	            <a class="btn" style="float:right; color:white; background:#5271FF; padding:6px;" 
@@ -50,47 +49,41 @@
 	            </a>
 	        </c:if>
 			</div>
-			
             <br>
-            
-			<table id="freeBoardList">
-			   <thead>
-			      <tr>
-			         <th>제목</th>
-			         <th>작성자</th>
-			         <th>조회수</th>
-			         <th>작성일</th>
-			      </tr>
-			   </thead>
-			   
-				<tbody>
-				   <c:forEach var="fboard" items="${requestScope.list}">
-				      <tr>
-				         <td class="fno">${ f.fboardNo }</td>
-				         <td>${ f.fboardTitle }</td>
-				         <td>${ f.fboardWriter }</td>
-				         <td>${ f.fboardViews }</td>
-				         <td>${ f.fboardInsert }</td>
-				         <c:if test="${ not empty f.originName }">
-	                        		★
-	                      </c:if>
-
-				      </tr>
-				   </c:forEach>
-				</tbody>
-
-			</table>
+                 
+            <table id="fboardList" class="table table-hover" align="center">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>조회수</th>
+                        <th>작성일</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<c:forEach var="f" items="${ requestScope.list }">
+	                    <tr>
+	                        <td class="fno">${ f.fboardNo }</td>
+	                        <td>${ f.fboardTitle }</td>
+	                        <td>${ f.fboardWriter }</td>
+	                        <td>${ f.fboardViews }</td>
+	                        <td>${ f.fboardInsert }</td>
+	                    </tr>
+	            	</c:forEach>
+                </tbody>
+            </table>
             
             <br>
             
             <script>
             	$(function() {
             		
-            		$("#freeBoardList>tbody>tr").click(function() {
+            		$("#fboardList>tbody>tr").click(function() {
             			
             			let fno = $(this).children(".fno").text();
             			
-            			location.href = "detail.fr?fno=" + bno;
+            			location.href = "detail.fr?fno=" + fno;
             		});
             	});
             </script>

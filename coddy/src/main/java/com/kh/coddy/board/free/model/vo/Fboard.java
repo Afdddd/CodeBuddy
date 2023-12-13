@@ -1,10 +1,12 @@
 package com.kh.coddy.board.free.model.vo;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -17,7 +19,7 @@ public class Fboard {
 	private String fboardWriter;		//	FBOARD_WRITER   NUMBER
 	private String fboardInsert;	//	FBOARD_INSERT   DATE
 	private String fboardUpdate;	//	FBOARD_UPDATE   DATE
-	private String fboardDelte;		//	FBOARD_DELETE   DATE
+	private String fboardDelete;		//	FBOARD_DELETE   DATE
 	private int fboardViews;		//	FBOARD_VIEWS    NUMBER
 	
 }
