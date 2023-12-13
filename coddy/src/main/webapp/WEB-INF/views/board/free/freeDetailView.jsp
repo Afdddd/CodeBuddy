@@ -33,22 +33,7 @@
                     <th>${ requestScope.f.fboardDelete }</th>
                     <th>${ requestScope.f.fboardViews }</th>
                 </tr>
-                <tr>
-                    <th>첨부파일</th>
-                    <td colspan="3">
-                    	<c:choose>
-                    		<c:when test="${ empty requestScope.f.originName }">
-                    			첨부파일이 없습니다.
-                    		</c:when>
-                    		<c:otherwise>
-                        		<a href="${ requestScope.f.changeName }" 
-                        		   download="${ requestScope.f.originName }">
-                        			${ requestScope.f.originName }
-                        		</a>
-                        	</c:otherwise>
-                    	</c:choose>
-                    </td>
-                </tr>
+
                 <tr>
                     <th>내용</th>
                     <td colspan="3"></td>
@@ -68,13 +53,6 @@
 	            <c:if test="${ not empty sessionScope.loginUser and sessionScope.loginUser.userId eq requestScope.f.fboardWriter }">
 	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
 	                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
-	                
-	                <form id="postForm" action="" method="post">
-	                	<input type="hidden" name="fno" 
-	                				value="${ requestScope.f.fboardNo }">
-	                	<input type="hidden" name="filePath" 
-	                				value="${ requestScope.f.changeName }">
-	                </form>
 	                
 	                <script>
 	                	function postFormSubmit(num) {
