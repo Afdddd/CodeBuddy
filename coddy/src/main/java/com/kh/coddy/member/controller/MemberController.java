@@ -484,8 +484,6 @@ public class MemberController {
 		return kakaoMember;
 	}
 	
-	
-
 	@RequestMapping("myRank.me")
 	public String myRank() {
 		
@@ -503,11 +501,5 @@ public class MemberController {
 	public String wroteReply() {
 		
 		return "member/wroteReply";
-	}
-	/* 나중에 지워주세요 */
-	@PostMapping(value="insertForce.me", produces="text/html; charset=UTF-8") @ResponseBody public String insertMemberForce(Member m) {
-		m.setMemberPwd(pbkdf2.encode(m.getMemberPwd()));
-		int result = memberService.insertMember(m);
-		if(result > 0) { return "성공"; } else { return "실패"; }
 	}
 }
