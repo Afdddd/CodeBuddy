@@ -273,6 +273,7 @@ INSERT INTO COMPANY(COMPANY_NO, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_
 성장하고 싶은 모든 사람들이 더 나아지는 과정에 인프런이 보탬이 되기를 바랍니다.
 당신의 성장을 늘 응원하겠습니다.', 51, 120000000, 'jpg');
 INSERT INTO COMPANY(COMPANY_NO, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_NAME, COMPANY_OWNER, COMPANY_BNO, COMPANY_INFO, COMPANY_WORKER, COMPANY_SALARY, COMPANY_PHOTO_EXTEND) VALUES(SEQ_COMPANY.NEXTVAL, 'flitto', '$2a$10$J1rPzY5.J8mb8DhHjnv4t.ncEytRQ2Y5ejOCU2Tdcrtv3mI30YR5q', 'flitto@coddy.com', '플리토', '이정수', 2158772878, '플리토는 유수의 글로벌 IT 기업들과 함께 언어 장벽 없는 세계를 만들어 가고 있는 언어 플랫폼 기업입니다.', 51, 120000000, 'jpg');
+INSERT INTO COMPANY(COMPANY_NO, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_NAME, COMPANY_OWNER, COMPANY_BNO, COMPANY_INFO, COMPANY_WORKER, COMPANY_SALARY, COMPANY_PHOTO_EXTEND) VALUES(SEQ_COMPANY.NEXTVAL, 'lottehealthcare', '$2a$10$J1rPzY5.J8mb8DhHjnv4t.ncEytRQ2Y5ejOCU2Tdcrtv3mI30YR5q', 'lottehealthcare@coddy.com', '롯데헬스케어 주식회사', '우웅조', 0000000005, '<p><span style="color: rgb(33, 37, 41); font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, " helvetica="" neue",="" "segoe="" ui",="" "apple="" sd="" gothic="" neo",="" "noto="" sans="" kr",="" "malgun="" gothic",="" sans-serif;="" text-align:="" start;="" white-space-collapse:="" preserve-breaks;"="">"Every Moment of your Healthy Life"</span></p><p><img src="resources\file_upload\company\content\778f3f02-6b5d-4633-965c-e9939711f8d9_qEMEoqnOTP3AWWoKgtP8y.jpg" style="width: 384px;"><span style="color: rgb(33, 37, 41); font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, " helvetica="" neue",="" "segoe="" ui",="" "apple="" sd="" gothic="" neo",="" "noto="" sans="" kr",="" "malgun="" gothic",="" sans-serif;="" text-align:="" start;="" white-space-collapse:="" preserve-breaks;"=""><br></span></p>', 51, 62000000, 'jpg');
 
 COMMIT;
 
@@ -779,6 +780,15 @@ INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_S
 언어의 장벽을 뛰어넘는 독보적 언어 데이터 전문 기업 플리토에서
 함께 성장하기 위한 즐거운 도전에 합류하실 많은 분들의 지원을 기다립니다.</p>', 7, TO_DATE('12-15-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('02-03-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 120000000, 'none', 'junior', '06173');
 
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, 'DevOps 엔지니어', '<div class="css-1dcto04" style="width: 722px; display: flex; flex-direction: row; -webkit-box-pack: start; justify-content: start; -webkit-box-align: center; align-items: center; gap: 0rem; margin: 0px 0px 8px; color: rgb(33, 37, 42); font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, " helvetica="" neue",="" "segoe="" ui",="" "apple="" sd="" gothic="" neo",="" "noto="" sans="" kr",="" "malgun="" gothic",="" color="" emoji",="" ui="" symbol",="" sans-serif;="" font-size:="" 15px;="" text-align:="" start;"=""><h3 class="css-l8sxp3" style="box-sizing: border-box; font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, " helvetica="" neue",="" "segoe="" ui",="" "apple="" sd="" gothic="" neo",="" "noto="" sans="" kr",="" "malgun="" gothic",="" sans-serif;="" font-size:="" 16px;="" font-stretch:="" normal;="" font-style:="" line-height:="" 1.38;="" letter-spacing:="" font-weight:="" bold;="" white-space:="" pre-line;="" word-break:="" break-all;="" margin:="" 0px;"=""><br></h3><h3 class="css-l8sxp3" style="box-sizing: border-box; font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, " helvetica="" neue",="" "segoe="" ui",="" "apple="" sd="" gothic="" neo",="" "noto="" sans="" kr",="" "malgun="" gothic",="" sans-serif;="" font-size:="" 16px;="" font-stretch:="" normal;="" font-style:="" line-height:="" 1.38;="" letter-spacing:="" font-weight:="" bold;="" white-space:="" pre-line;="" word-break:="" break-all;="" margin:="" 0px;"=""><div class="css-1dcto04" style="width: 722px; display: flex; flex-direction: row; -webkit-box-pack: start; justify-content: start; -webkit-box-align: center; align-items: center; gap: 0rem; margin: 0px 0px 8px; font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, " helvetica="" neue",="" "segoe="" ui",="" "apple="" sd="" gothic="" neo",="" "noto="" sans="" kr",="" "malgun="" gothic",="" color="" emoji",="" ui="" symbol",="" sans-serif;="" font-size:="" 15px;="" font-weight:="" 400;="" white-space-collapse:="" collapse;"=""></div><p class="css-19hzmb1" style="font-stretch: normal; line-height: 1.63; font-weight: 400; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">자격요건</p><p class="css-19hzmb1" style="font-stretch: normal; line-height: 1.63; font-weight: 400; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">? 컴퓨터 과학 또는 관련 분야의 학사 학위
+? DevOps 분야에서 2년 이상의 경험
+? 네트워크에 대한 깊은 이해
+? AWS, Container, Kubernetes 및 클라우드 인프라 전반에 대한 견고한 이해
+? Terraform IaC(Infrastructure as Code) 구축 및 유지 관리
+? Jenkins, Ansible 및 Chef와 같은 자동화 도구에 대한 경험
+? 뛰어난 문제 해결 및 문제 해결 기술
+? 뛰어난 의사 소통 및 팀워크 기술</p><p class="css-19hzmb1" style="font-stretch: normal; line-height: 1.63; font-weight: 400; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><br></p><p class="css-19hzmb1" style="font-stretch: normal; line-height: 1.63; font-weight: 400; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><a href="https://www.rallit.com/positions/1642/devops-%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4" target="_blank">지원하기</a><br></p></h3></div>', 8, TO_DATE('12-14-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('02-14-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 62000000, 'none', 'none', '05551');
+
 CREATE TABLE HWISHLIST (
 	HWISHLIST_MEMBER	NUMBER		NOT NULL,
 	HBOARD_NO	NUMBER		NOT NULL,
@@ -816,6 +826,7 @@ INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 2, 'TbAr4BVz11JIPt_jb_yD
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 4, 'ISJr977sDyqHcQBrKI5BQ.jpg', 'c18a5898-e0c6-4241-8df6-591b0f9a486d_ISJr977sDyqHcQBrKI5BQ.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 5, 'zWVCtXZfCDVujmzobblNq.png', '9cb81c12-ac1d-477f-8025-f30c0c5829bc_zWVCtXZfCDVujmzobblNq.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 6, '6l29t_z_gjiRjF6HdsuJm.png', '07dda43c-05da-46e1-9a73-2289aa995fab_6l29t_z_gjiRjF6HdsuJm.png', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 7, 'rk02vp1en9--LOR39kpEw.JPG', '941e639b-7349-4266-be04-8859a4292933_rk02vp1en9--LOR39kpEw.JPG', 'resources\file_upload\hboard\', SYSDATE, 1);
 
 CREATE TABLE HRELATION (
 	HBOARD_NO	NUMBER		NOT NULL,
@@ -851,6 +862,9 @@ INSERT INTO HRELATION VALUES(5, 43);
 INSERT INTO HRELATION VALUES(5, 44);
 INSERT INTO HRELATION VALUES(6, 17);
 INSERT INTO HRELATION VALUES(6, 67);
+INSERT INTO HRELATION VALUES(7, 40);
+INSERT INTO HRELATION VALUES(7, 42);
+INSERT INTO HRELATION VALUES(7, 93);
 
 COMMIT;
 
