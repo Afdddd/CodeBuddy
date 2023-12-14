@@ -6,16 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
-
-
-import org.apache.commons.io.FilenameUtils;
-
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
@@ -94,42 +87,22 @@ public class CboardController {
 			return "board/code/codeEnrollForm";
 		}
 		
-		@PostMapping(value = "/resources/file_upload/cboard/upload")
-		public ModelAndView image(MultipartHttpServletRequest request, HttpServletRequest req) throws Exception {
-		    ModelAndView mav = new ModelAndView("jsonView");
-
-		    try {
-		        MultipartFile uploadFile = request.getFile("uploadFile");
-
-		        if (uploadFile != null && !uploadFile.isEmpty()) {
-		            String originalFileName = uploadFile.getOriginalFilename();
-		            String ext = originalFileName.substring(originalFileName.indexOf("."));
-		            String newFileName = UUID.randomUUID() + ext;
-
-		            // String savePath = System.getProperty("user.dir") + "/src/main/webapp/resources/file_upload/cboard/upload/" + newFileName;
-		            String savePath = req.getRealPath("resources/file_upload/cboard/upload/" + "/" + newFileName);
-		            String uploadPath = "./cboard/upload/" + newFileName;
-
-		            
-		            File file = new File(savePath);
-
-		            uploadFile.transferTo(file);
-
-		            mav.addObject("uploaded", true);
-		            mav.addObject("url", uploadPath);
-		        } else {
-		            mav.addObject("uploaded", false);
-		            mav.addObject("message", "업로드된 파일이 없습니다.");
-		        }
-		    } catch (Exception e) {
-		        mav.addObject("uploaded", false);
-		        mav.addObject("message", "파일 업로드 중 오류가 발생했습니다.");
-		        e.printStackTrace();
-		    }
-
-		    return mav;
+		@ResponseBody
+		@PostMapping("uploadFile.co")
+	    public String fileUpload(MultipartHttpServletRequest multiRequest, 
+	    					   HttpServletRequest request,
+	    					   HttpServletResponse response) {
+		
+			final Map<String, MultipartFile> files = multiRequest.getFileMap();
+			MultipartFile fileload = (MultipartFile)files.get("upload");
+			
+			String changeName = saveFile(fileload, request.getSession());
+			
+			System.out.println("resources/file_upload/cboard/upload/" + changeName);
+			
+			return "resources/file_upload/cboard/upload/" + changeName;
 		}
-
+		
 		@PostMapping("insert.co")
 		public String insertBoard(Cboard c,
 								  MultipartFile upfile,
@@ -216,7 +189,6 @@ public class CboardController {
 		    
 		}
 		
-		
 		public String saveFile(MultipartFile upfile,
 				   HttpSession session) {
 
@@ -243,7 +215,7 @@ public class CboardController {
 			}
 			
 			return changeName;
-			}
+		}
 		
 		
 		@RequestMapping("delete.co")

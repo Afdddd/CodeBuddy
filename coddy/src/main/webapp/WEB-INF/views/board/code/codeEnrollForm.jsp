@@ -5,9 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://cdn.jsdelivr.net/npm/ckeditor5-classic-plus@36.0.1/build/ckeditor.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/ckeditor5-upload-adapter@1.0.3/src/uploadadapter.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/ckeditor5-classic-plus@36.0.1/build/ckeditor.min.js"></script>
+<!-- 				   
+<script src="https://cdn.jsdelivr.net/npm/ckeditor5-upload-adapter@1.0.3/src/uploadadapter.min.js"></script>
+ -->
+<script src="resources/js/UploadAdapter.js"></script>
 <title>Insert title here</title>
 <style>
 
@@ -85,16 +89,22 @@
 					        	<p id="">내용을 입력하세요.</p>
 					    	</div>
 
-					    <script>
+
+						<script>
+						    function MyCustomUploadAdapterPlugin(editor) {
+						        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+						            return new UploadAdapter(loader)
+						        }
+						    }
+					    
 					        ClassicEditor
 					            .create( document.querySelector( '#editor' ), {
-					            	ckfinder: {
-					            		uploadUrl: '${pageContext.request.contextPath}resources/file_upload/cboard/upload/'
-					            	}
+					            	language:'ko',
+					            	extraPlugins: [MyCustomUploadAdapterPlugin]
 					            })
-					            .then( newEditor => {
-							        editor = newEditor;
-							    } )
+					            .then(editor => {
+					                window.editor = editor;
+					            })
 					            .catch( error => {
 					                console.error( error );
 					            } );
