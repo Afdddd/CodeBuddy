@@ -33,6 +33,7 @@ import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.PageInfo;
+import com.kh.coddy.member.model.vo.Company;
 import com.kh.coddy.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,8 @@ public class RecruitmentController {
 	
 	@GetMapping("detail.rec")
 	public String recruitmentDetail(int rno, HttpSession session, Model model) {
+		if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "기업은 이용 불가능한 서비스입니다."); return "redirect:/"; }
+		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인부터 해주세요."); return "redirect:/"; }
 		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
 		Recruitment r = rService.selectRecruitment(rno);
 		ArrayList<Prelation> tags = rService.getTagInfo(r); // 태그정보
@@ -68,7 +71,9 @@ public class RecruitmentController {
 		return "board/recruitment/recruitmentDetailView";
 	}
 	@GetMapping("enrollForm.rec")
-	public String enrollForm(Model model){
+	public String enrollForm(HttpSession session, Model model){
+		if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "기업은 이용 불가능한 서비스입니다."); return "redirect:/"; }
+		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인부터 해주세요."); return "redirect:/"; }
 		model.addAttribute("tagTech", tagsController.getTagsNameList(0));
 		return "board/recruitment/recruitmentEnrollForm";
 	}

@@ -537,6 +537,22 @@ INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_S
 ? 뛰어난 문제 해결 및 문제 해결 기술
 ? 뛰어난 의사 소통 및 팀워크 기술</p><p class="css-19hzmb1" style="font-stretch: normal; line-height: 1.63; font-weight: 400; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><br></p><p class="css-19hzmb1" style="font-stretch: normal; line-height: 1.63; font-weight: 400; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;"><a href="https://www.rallit.com/positions/1642/devops-%EC%97%94%EC%A7%80%EB%8B%88%EC%96%B4" target="_blank">지원하기</a><br></p></h3></div>', 8, TO_DATE('12-14-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('02-14-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 62000000, 'none', 'none', '05551');
 
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, 'Enterprise IT서비스 영업 전문가 영입', '<div class="css-1dcto04" style="width: 722px; display: flex; flex-direction: row; -webkit-box-pack: start; justify-content: start; -webkit-box-align: center; align-items: center; gap: 0rem; margin: 0px 0px 8px; color: rgb(33, 37, 42); font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, sans-serif; font-size: 15px; text-align: start;"><h3 class="css-l8sxp3" style="font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, sans-serif; font-size: 16px; font-stretch: normal; line-height: 1.38; font-weight: bold; white-space-collapse: preserve-breaks; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">주요업무</h3></div><p class="css-19hzmb1" style="font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, sans-serif; font-stretch: normal; line-height: 1.63; white-space-collapse: preserve-breaks; text-align: start; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgb(33, 37, 42);">- 대외 Account 영업 (엔터프라이즈 영역)
+- 고객 사업현황, 산업에 대한 Needs 분석을 통한 사업발굴 전략 수립
+- 신규 영업기회 발굴을 위한 전략 수립 및 파이프라인 관리
+- 사업수주를 위한 고객사/경쟁현황/당사역량 파악 등을 통한 수주전략 수립
+- 파트너와의 협업을 통한 신규 사업창출</p>', 9, TO_DATE('12-25-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('01-11-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 80000000, 'none', 'middle', '13558');
+
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, '백엔드 개발자 (Python)', '<section class="css-15i1vgz" style="margin-bottom: 28px; color: rgb(33, 37, 42); font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, sans-serif; font-size: 15px; text-align: start;"><p class="css-19hzmb1" style="font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, sans-serif; font-size: 16px; font-stretch: normal; line-height: 1.63; white-space-collapse: preserve-breaks; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">＜솔루션퀀트 백엔드를 구성하는 기술＞
+*개발환경 : Python, Django Rest Framework, Gunicorn, Celery
+* DB : Redis, MySQL
+* OS : Ubuntu
+* 인프라 : AWS
+* 운영도구 : Gitlab, Sentry, Slack
+* 주요 활용 라이브러리 : pandas, requests, redis-py</p></section><section class="css-15i1vgz" style="margin-bottom: 28px; color: rgb(33, 37, 42); font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, sans-serif; font-size: 15px; text-align: start;"><div class="css-1dcto04" style="width: 722px; display: flex; flex-direction: row; -webkit-box-pack: start; justify-content: start; -webkit-box-align: center; align-items: center; gap: 0rem; margin: 0px 0px 8px;"><span class="css-12z0wuy" style="margin-right: 8px;"><svg width="18" height="18" fill="none" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12.057 3.692a.657.657 0 0 1 0 .928l-6.343 6.344a.657.657 0 0 1-.928 0L1.942 8.12a.656.656 0 0 1 .928-.927l2.38 2.38 5.88-5.88a.656.656 0 0 1 .927 0z" fill="#21252a"></path></svg></span><h3 class="css-l8sxp3" style="font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, sans-serif; font-size: 16px; font-stretch: normal; line-height: 1.38; font-weight: bold; white-space-collapse: preserve-breaks; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">자격요건</h3></div><p class="css-19hzmb1" style="font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, sans-serif; font-size: 16px; font-stretch: normal; line-height: 1.63; white-space-collapse: preserve-breaks; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">? Python, Django Rest Framework를 사용하여 1년 이상 개발 경험이 있으신 분
+? ＜솔루션퀀트 백엔드를 구성하는 기술＞의 기술분야에 대해 3가지 이상의 항목에 대한 경험
+? 주도적으로 일을 찾아 문제를 해결하고 개선하는 분</p></section>', 10, TO_DATE('01-16-2024 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('03-14-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 28000000, 'none', 'junior', '06155');
+
 DROP TABLE HWISHLIST;
 
 CREATE TABLE HWISHLIST (
@@ -578,6 +594,8 @@ INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 4, 'ISJr977sDyqHcQBrKI5B
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 5, 'zWVCtXZfCDVujmzobblNq.png', '9cb81c12-ac1d-477f-8025-f30c0c5829bc_zWVCtXZfCDVujmzobblNq.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 6, '6l29t_z_gjiRjF6HdsuJm.png', '07dda43c-05da-46e1-9a73-2289aa995fab_6l29t_z_gjiRjF6HdsuJm.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 7, 'rk02vp1en9--LOR39kpEw.JPG', '941e639b-7349-4266-be04-8859a4292933_rk02vp1en9--LOR39kpEw.JPG', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 8, 'BbXDtD2Ifcq2krqTZiepz.png', 'f2be478c-10e0-4511-a5a9-80ea0c9371e9_BbXDtD2Ifcq2krqTZiepz.png', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 9, 'iHWiBK8K6mb-C3Dm7PHXh.jpg', '3b82204b-575b-48ce-aa00-c9bae0095ded_iHWiBK8K6mb-C3Dm7PHXh.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
 
 DROP TABLE HRELATION;
 
@@ -618,5 +636,14 @@ INSERT INTO HRELATION VALUES(6, 67);
 INSERT INTO HRELATION VALUES(7, 40);
 INSERT INTO HRELATION VALUES(7, 42);
 INSERT INTO HRELATION VALUES(7, 93);
+INSERT INTO HRELATION VALUES(8, 77);
+INSERT INTO HRELATION VALUES(9, 17);
+INSERT INTO HRELATION VALUES(9, 18);
+INSERT INTO HRELATION VALUES(9, 21);
+INSERT INTO HRELATION VALUES(9, 40);
+INSERT INTO HRELATION VALUES(9, 43);
+INSERT INTO HRELATION VALUES(9, 47);
+INSERT INTO HRELATION VALUES(9, 50);
+INSERT INTO HRELATION VALUES(9, 95);
 
 COMMIT;

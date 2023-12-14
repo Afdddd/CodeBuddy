@@ -188,7 +188,7 @@
 					if (status === kakao.maps.services.Status.OK) {
 						var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 						var marker = new kakao.maps.Marker({map: map, position: coords});
-						var infowindow = new kakao.maps.InfoWindow({content: '<div style="width:150px;text-align:center;padding:6px 0;">찾아오는길</div>'});
+						var infowindow = new kakao.maps.InfoWindow({content: '<div style="width:150px;text-align:center;padding:6px 0;"><b style="color: #5271FF">${sessionScope.co.companyName}</b></div>'});
 						infowindow.open(map, marker);
 						map.setCenter(coords);
 					} 
