@@ -205,17 +205,18 @@ public class MemberController {
 			
 			return "common/errorPage";
 		}
-		
-	
-		
 }
-	
+
 	
 	// 비밀번호 페이지만 보여주는거
 	@RequestMapping("pwdChange.me")
 	public String PwdChange(HttpSession session){
 		if(session.getAttribute("loginMember") == null) {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
 			return "redirect:/";
 		}
 		return "member/PwdChange";

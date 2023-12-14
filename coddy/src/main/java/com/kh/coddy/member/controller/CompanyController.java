@@ -125,7 +125,7 @@ public class CompanyController {
 		session.setAttribute("alertMsg", "요청 성공");
 		return "redirect:/loginPage.cp";
 	}
-	@GetMapping(value="myPage.cp") public String myPage(HttpSession session) { if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업전용 메뉴입니다."); return "redirect:/"; } if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "비로그인 상태입니다."); return "redirect:/"; } return "company/myPage"; }
+	@GetMapping(value="myPage.cp") public String myPage(HttpSession session) { if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "기업전용 메뉴입니다."); return "redirect:/"; } if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "비로그인 상태입니다."); return "redirect:/"; } int result = companyService.countWritten(((Company)(session.getAttribute("loginCompany"))).getCompanyNo()); session.setAttribute("howManyWritten", result); return "company/myPage"; }
 	@PostMapping(value="uploadFile.cp", produces="text/html; charset=UTF-8") @ResponseBody public String uploadFile(HttpSession session, HttpServletRequest req, MultipartFile uploadFiles) {
 		String path = req.getRealPath("resources\\file_upload\\company\\");
 		File file = new File(path, String.format("%08d", ((Company)(session.getAttribute("loginCompany"))).getCompanyNo()) + ".jpg");
