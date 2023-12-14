@@ -98,8 +98,6 @@ public class CboardController {
 			
 			String changeName = saveFile(fileload, request.getSession());
 			
-			System.out.println("resources/file_upload/cboard/upload/" + changeName);
-			
 			return "resources/file_upload/cboard/upload/" + changeName;
 		}
 		
@@ -108,13 +106,15 @@ public class CboardController {
 								  MultipartFile upfile,
 								  HttpSession session,
 								  Model model) {
+			
+			System.out.println(c.getCboardContent());
 		   
 			if(!upfile.getOriginalFilename().equals("")) {
 				
 				String changeName = saveFile(upfile, session);
 				
 				c.setOriginName(upfile.getOriginalFilename());
-				c.setChangeName("/resources/file_upload/cboard/upload/" + changeName);	
+				c.setChangeName("resources/file_upload/cboard/upload/" + changeName);	
 			}
 			
 		    // c.setCboardContent("ss");

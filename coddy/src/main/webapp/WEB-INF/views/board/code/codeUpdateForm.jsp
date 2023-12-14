@@ -5,9 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://cdn.jsdelivr.net/npm/ckeditor5-classic-plus@36.0.1/build/ckeditor.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/ckeditor5-upload-adapter@1.0.3/src/uploadadapter.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/ckeditor5-classic-plus@36.0.1/build/ckeditor.min.js"></script>
+<!-- 				   
+<script src="https://cdn.jsdelivr.net/npm/ckeditor5-upload-adapter@1.0.3/src/uploadadapter.min.js"></script>
+ -->
+<script src="resources/js/UploadAdapter.js"></script>
 <title>Insert title here</title>
 <style>
 
@@ -99,18 +103,23 @@
 					    	</div>
 
 					    <script>
-					    ClassicEditor
-				            .create( document.querySelector( '#editor' ), {
-				            	ckfinder: {
-				            		uploadUrl: '${pageContext.request.contextPath}resources/file_upload/cboard/upload/'
-				            	}
-				            })
-				            .then( newEditor => {
-						        editor = newEditor;
-						    } )
-				            .catch( error => {
-				                console.error( error );
-				            } );
+						    function MyCustomUploadAdapterPlugin(editor) {
+						        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+						            return new UploadAdapter(loader)
+						        }
+						    }
+					    
+					        ClassicEditor
+					            .create( document.querySelector( '#editor' ), {
+					            	language:'ko',
+					            	extraPlugins: [MyCustomUploadAdapterPlugin]
+					            })
+					            .then(editor => {
+					                window.editor = editor;
+					            })
+					            .catch( error => {
+					                console.error( error );
+					            } );
 					    </script>
 					    </td>
                     </tr>
@@ -125,16 +134,18 @@
             </form>
             
             <script>
-	            function setContent() {
-	        		
-	        		let value = editor.getData();
-	        		
-	        		console.log(value);
-	        		
-	        		$("#cboardContent").val(value);
-	        		
-	        		console.log($("#cboardContent").val());
-	        	}
+            function setContent() {
+        		
+        		
+        		let value = editor.getData();
+        	
+        	    editor.setData(value);
+        		
+        		
+        		$("#cboardContent").val(value);
+        		
+        		console.log($("#cboardContent").val());
+        	}
             </script>
         </div>
         </div>

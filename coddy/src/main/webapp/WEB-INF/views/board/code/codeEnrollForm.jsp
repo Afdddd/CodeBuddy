@@ -93,14 +93,18 @@
 						<script>
 						    function MyCustomUploadAdapterPlugin(editor) {
 						        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
-						            return new UploadAdapter(loader)
-						        }
+						            return new UploadAdapter(loader);
+						        };
+						        
+						        console.log(editor.plugins.get('FileRepository'));
 						    }
+						    
 					    
 					        ClassicEditor
 					            .create( document.querySelector( '#editor' ), {
 					            	language:'ko',
-					            	extraPlugins: [MyCustomUploadAdapterPlugin]
+					            	extraPlugins: [MyCustomUploadAdapterPlugin],
+					            	
 					            })
 					            .then(editor => {
 					                window.editor = editor;
@@ -124,9 +128,11 @@
             <script>
             	function setContent() {
             		
-            		let value = editor.getData();
             		
-            		console.log(value);
+            		let value = editor.getData();
+            	
+            	    editor.setData(value);
+            		
             		
             		$("#cboardContent").val(value);
             		
