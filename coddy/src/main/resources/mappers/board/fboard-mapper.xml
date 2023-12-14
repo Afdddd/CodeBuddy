@@ -128,8 +128,11 @@
 	
 	<!-- FREPLY select -->
 	<select id="selectFreply" parameterType="int" resultMap="freplyResultSet">
-    	SELECT * FROM FREPLY WHERE REPLY_NO = #{freplyNo} AND FREPLY_DELETE IS NULL
+    	SELECT * 
+    	  FROM FREPLY 
+    	 WHERE REPLY_NO = #{freplyNo} AND FREPLY_DELETE IS NULL
 	</select>
+
 	
 	<!-- FATTACHMENT selectList -->
 	<select id="selectAttachmentList" parameterType="int" resultMap="fattachmentResultMap">

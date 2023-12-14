@@ -51,6 +51,28 @@
 	    SELECT * FROM NBOARD WHERE NBOARD_NO = #{nboardNo} AND NBOARD_DELETE IS NULL
 	</select>
 	
+	<!-- NBOARD selectList -->
+	<select id="selectList" resultMap="nboardResultSet">
+		SELECT NBOARD_NO
+		     , NBOARD_TITLE
+		     , NBOARD_VIEWS
+		     , TO_CHAR(NBOARD_INSERT, 'YYYY-MM-DD') AS "NBOARD_INSERT"
+		  FROM NBOARD
+		 ORDER BY NBOARD_NO DESC
+	</select>
+	
+	<!-- NBOARD selectListCount -->	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM NBOARD WHERE NBOARD_DELETE IS NULL
+	</select>   
+	
+	<update id="increaseCount" parameterType="_int">
+		UPDATE NBOARD
+		   SET NBOARD_VIEWS = NBOARD_VIEWS + 1
+		 WHERE NBOARD_NO = #{nboardNo} AND NBOARD_DELETE IS NULL
+	</update> 
+	
 	<!-- NATTACHMENT selectList -->
 	<select id="selectNattachmentList" parameterType="_int" resultMap="nattachmentResultMap">
 	    SELECT * FROM NATTACHMENT WHERE NBOARD_NO = #{nboardNo} AND NATTACHMENT_LEVEL = 0

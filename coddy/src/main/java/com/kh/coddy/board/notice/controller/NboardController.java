@@ -144,8 +144,13 @@ public class NboardController {
 	}
 	
 	@GetMapping("update.no")
-	public String nBoardUpdate() {
+	public String updateForm(int nno, Model model) {
+		
+		Nboard n = nboardService.selectBoard(nno);
+			
+		model.addAttribute("n", n);
+			
 		return "board/notice/noticeUpdateForm";
-	}
+		}   
 	
 }

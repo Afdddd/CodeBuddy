@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -29,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.coddy.board.free.model.service.FboardService;
 import com.kh.coddy.board.free.model.vo.Fboard;
+import com.kh.coddy.board.free.model.vo.Freply;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.vo.Member;
@@ -151,7 +153,7 @@ public class FboardController {
 		    }
 		}
 		    
-		@PostMapping("updateForm.fr")
+		@PostMapping("update.fr")
 		public String updateForm(int fno, Model model) {
 				
 			Fboard f = fboardService.selectBoard(fno);
@@ -162,8 +164,6 @@ public class FboardController {
 			}   
 		   
 
-		
-		
 		public String saveFile(MultipartFile upfile,
 				   HttpSession session) {
 
@@ -222,7 +222,14 @@ public class FboardController {
 			}
 		}
 
-		
+		@GetMapping("rlist.fr")
+		@ResponseBody
+		public ArrayList<Freply> getReplyList(int fno) {
+		    // fno에 해당하는 게시글의 댓글 목록 조회
+			ArrayList<Freply> replyList = fboardService.selectReplyList(fno);
+		    return replyList;
 		}
+		
+}
 		
 		

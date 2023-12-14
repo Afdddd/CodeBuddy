@@ -1,12 +1,15 @@
 package com.kh.coddy.board.notice.model.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.kh.coddy.board.notice.model.vo.Nboard;
+import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.board.notice.model.vo.Nattachment;
 
 @Repository
@@ -14,59 +17,91 @@ public class NboardDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	
+	public int selectListCount(SqlSessionTemplate sqlSession) {
 
-	// 게시글 등록
-	public int insertNboard(Nboard n) {
-		return sqlSession.insert("nboardMapper.insertNboard", n);
+		return sqlSession.selectOne("nboardMapper.selectListCount");
+	}
+	
+	public ArrayList<Nboard> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+
+		return (ArrayList)sqlSession.selectList("nboardMapper.selectList", null, rowBounds);
 	}
 
-	// 게시글 수정
-	public int updateNboard(Nboard n) {
-		return sqlSession.update("nboardMapper.updateNboard", n);
+	public int insertBoard(SqlSessionTemplate sqlSession, Nboard n) {
+
+		return sqlSession.insert("nboardMapper.insertBoard", n);
+	}
+	
+	public int increaseCount(SqlSessionTemplate sqlSession, int nboardNo) {
+		
+		return sqlSession.update("nboardMapper.increaseCount", nboardNo);
 	}
 
-	// 게시글 삭제
-	public int deleteNboard(int nboardNo) {
-		return sqlSession.update("nboardMapper.deleteNboard", nboardNo);
+	public Nboard selectBoard(SqlSessionTemplate sqlSession, int nboardNo) {
+
+		return sqlSession.selectOne("nboardMapper.selectBoard", nboardNo);
+	}
+	
+	public int deleteBoard(SqlSessionTemplate sqlSession, int nboardNo) {
+
+		return sqlSession.update("nboardMapper.deleteBoard", nboardNo);
+	}
+	
+	public int updateBoard(SqlSessionTemplate sqlSession, Nboard n) {
+
+		return sqlSession.update("nboardMapper.updateBoard", n);
+	}
+	
+	public ArrayList<Nboard> selectTopBoardList(SqlSessionTemplate sqlSession) {
+
+		return (ArrayList)sqlSession.selectList("nboardMapper.selectTopBoardList");
 	}
 
-	// 게시글 상세 조회
-	public Nboard selectNboard(int nboardNo) {
-		return sqlSession.selectOne("nboardMapper.selectNboard", nboardNo);
+	public ArrayList<Nattachment> selectAttachmentList(SqlSessionTemplate sqlSession, int nboardNo) {
+		
+	    return (ArrayList)sqlSession.selectList("nboardMapper.selectAttachmentList", nboardNo);
 	}
 
-	// 게시글 목록 조회
-	public List<Nboard> selectNboardList() {
-		return sqlSession.selectList("nboardMapper.selectNboardList");
+	public Nattachment selectOneAttachment(SqlSessionTemplate sqlSession, int nattachmentNo) {
+		
+	    return sqlSession.selectOne("nboardMapper.selectOneAttachment", nattachmentNo);
 	}
 
-	// 게시글 조회수 증가
-	public int increaseNboardViews(int nboardNo) {
-		return sqlSession.update("nboardMapper.increaseNboardViews", nboardNo);
-	}
-
-	// 첨부파일 등록
-	public int insertNattachment(Nattachment na) {
-		return sqlSession.insert("nboardMapper.insertNattachment", na);
-	}
-
-	// 첨부파일 수정
-	public int updateNattachment(Nattachment na) {
-		return sqlSession.update("nboardMapper.updateNattachment", na);
-	}
-
-	// 첨부파일 삭제
-	public int deleteNattachment(int nattachmentNo) {
-		return sqlSession.delete("nboardMapper.deleteNattachment", nattachmentNo);
+	public int deleteAttachment(SqlSessionTemplate sqlSession, int nattachmentNo) {
+		
+	    return sqlSession.delete("nboardMapper.deleteAttachment", nattachmentNo);
 	}
 
 	// 첨부파일 목록 조회
-	public List<Nattachment> selectNattachmentList(int nboardNo) {
+	public List<Nattachment> selectAttachmentList(int nboardNo) {
 		return sqlSession.selectList("nboardMapper.selectNattachmentList", nboardNo);
 	}
-
+	
 	// 첨부파일 상세 조회
 	public Nattachment selectOneNattachment(int nattachmentNo) {
-		return sqlSession.selectOne("nboardMapper.selectOneNattachment", nattachmentNo);
+	    return sqlSession.selectOne("nboardMapper.selectOneNattachment", nattachmentNo);
 	}
+	
+	// 첨부파일 목록 조회
+	public List<Nattachment> selectNattachmentList(int nboardNo) {
+	    return sqlSession.selectList("nboardMapper.selectNattachmentList", nboardNo);
+	}
+	
+	// 첨부파일 추가
+	public int insertAttachment(SqlSessionTemplate sqlSession, Nattachment nattachment) {
+	    return sqlSession.insert("nboardMapper.insertAttachment", nattachment);
+	}
+	
+	// 첨부파일 수정
+	public int updateAttachment(SqlSessionTemplate sqlSession, Nattachment nattachment) {
+	    return sqlSession.update("nboardMapper.updateAttachment", nattachment);
+	}
+
+
 }

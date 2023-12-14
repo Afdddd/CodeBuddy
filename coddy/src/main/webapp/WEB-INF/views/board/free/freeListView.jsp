@@ -31,7 +31,7 @@
     <div class="content">
         <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
-            <h3 style="color:#5271FF;">코드리뷰</h3>
+            <h3 style="color:#5271FF;">자유게시판</h3>
             
            
             <br>

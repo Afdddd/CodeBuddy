@@ -69,8 +69,8 @@ public class FboardServiceImpl implements FboardService{
 
 	@Override
 	public ArrayList<Freply> selectReplyList(int fboardNo) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return fboardDao.selectReplyList(sqlSession, fboardNo);
 	}
 
 	@Override

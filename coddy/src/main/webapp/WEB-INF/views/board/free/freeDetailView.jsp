@@ -10,6 +10,7 @@
     table * {margin:5px;}
     table {width:100%;}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
 </head>
 <body>
         
@@ -21,17 +22,17 @@
             <h3 style="color:#5271FF;">상세보기</h3>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="freeList.fr">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="list.fr">목록으로</a>
             <br><br>
 
-            <table id="contentArea" align="center" class="table">
+            <table id="contentArea" align="center" class="table" style="color:#5271FF;">
+
                 <tr>
-                    <th>${ requestScope.f.fboardTitle }</th>
+                    <th>제목 ${ requestScope.f.fboardTitle }</th>
                 </tr>
                 <tr>
-                    <th>${ requestScope.f.fboardWriter }</th>
-                    <th>${ requestScope.f.fboardDelete }</th>
-                    <th>${ requestScope.f.fboardViews }</th>
+                    <th>작성자 ${ requestScope.f.fboardWriter }</th>
+                    <th>조회수 ${ requestScope.f.fboardViews }</th>
                 </tr>
 
                 <tr>
@@ -54,26 +55,27 @@
 	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
 	                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
 	                
-	                <script>
-	                	function postFormSubmit(num) {
-	                		
-	                		// num 값에 따라 위의 form 태그에 action 속성을 부여한 후
-	                		// submit 시키기
-	                		
-	                		if(num == 1) { 
-	                			// num == 1 일 경우 : 수정하기 버튼을 클릭한 상태
-	                			
-	                			$("#postForm").attr("action", "freeUpdateForm.fr").submit();
-	                			
-	                		} else {
-	                			// num == 2 일 경우 : 삭제하기 버튼을 클릭한 상태
-	                			
-	                			$("#postForm").attr("action", "delete.fr").submit();
-	                			
-	                			// jQuery 의 submit() 메소드 : 해당 form 의 submit 버튼을 누르는 효과
-	                		}
-	                	}
-	                </script>
+	                <form id="postForm" action="update.fr" method="post">
+	                	<input type="hidden" name="fno" 
+	                				value="${ requestScope.f.fboardNo }">
+	                </form>
+						                
+					<script>
+					    function postFormSubmit(num) {
+					       if (num == 1) {
+					       $("#postForm").attr("action", "update.fr").submit();
+				          } else if (num == 2) {
+				              deletePost();
+				          }
+					    }
+					
+					    function deletePost() {
+					      var confirmDelete = confirm("어디 삭제 해 보시던가?");
+					      if (confirmDelete) {
+					          $("#postForm").attr("action", "delete.fr").submit();
+					      }
+					    }
+        			</script>
             	</c:if>
             </div>
             <br><br>
@@ -105,6 +107,19 @@
 			    </thead>
 			    <tbody id="replyArea">
 			        <!-- 댓글 목록이 들어갈 자리 -->
+			            <c:forEach var="reply" items="${replyList}">
+				        <tr>
+				            <th>${reply.replyWriter}</th>
+				            <td>${reply.replyContent}</td>
+				            <td>${reply.createDate}</td>
+				        </tr>
+				    	</c:forEach>
+				    <!-- 댓글이 없는 경우 -->
+				    <c:if test="${empty replyList}">
+				        <tr>
+				            <td colspan="3">댓글이 없습니다.</td>
+				        </tr>
+				    </c:if>
 			    </tbody>
 			</table>
 			
@@ -161,7 +176,7 @@
 			        $.ajax({
 			            url: "rlist.fr",
 			            type: "get",
-			            data: { bno: ${ requestScope.f.fboardNo } },
+			            data: { fno: ${ requestScope.f.fboardNo } },
 			            success: function (result) {
 			                // console.log(result);
 			                let resultStr = "";
