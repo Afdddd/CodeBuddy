@@ -1,16 +1,15 @@
 package com.kh.coddy.board.code.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.coddy.board.code.model.vo.Cboard;
+import com.kh.coddy.board.code.model.vo.Crelation;
 import com.kh.coddy.board.code.model.vo.Creply;
-import com.kh.coddy.board.intro.model.vo.IBoard;
-import com.kh.coddy.board.intro.model.vo.Iattachment;
-import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Repository
@@ -28,7 +27,22 @@ public class CboardDao {
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
-		return (ArrayList)sqlSession.selectList("cboardMapper.selectList", null, rowBounds);
+		// 1. 일단 전체 게시글 목록 조회 (최신순)
+		ArrayList<Cboard> list = (ArrayList)sqlSession.selectList("cboardMapper.selectList", null, rowBounds);
+		
+		// 2. 조회된 게시글 목록으로부터 반복적으로 해당 게시글에 딸린 태그들만 또 조회
+		for(int i = 0; i < list.size(); i++) {
+			
+			int cboardNo = list.get(i).getCboardNo();
+			
+			ArrayList<String> tags = (ArrayList)sqlSession.selectList("cboardMapper.selectTagList", cboardNo);
+		
+			// System.out.println(tags);
+			
+			list.get(i).setTags(tags); // 게시글별 태그 목록 매칭
+		}
+		
+		return list; // 태그목록이 포함된 리스트 리턴 ^0^
 	}
 	
 	public int insertBoard(SqlSessionTemplate sqlSession, Cboard c) {
@@ -71,9 +85,14 @@ public class CboardDao {
 		return (ArrayList)sqlSession.selectList("cboardMapper.selectTopBoardList");
 	}
 
-	public ArrayList<Prelation> getTagInfo(SqlSessionTemplate sqlSession, Cboard c) {
+	public ArrayList<Crelation> getTagInfo(SqlSessionTemplate sqlSession, Cboard c) {
 		
 		return (ArrayList)sqlSession.selectList("cboardMapper.getTagInfo", c);
+	}
+
+	public int insertTag(SqlSessionTemplate sqlSession, String tag) {
+		
+		return sqlSession.insert("cboardMapper.insertTag", tag);
 	}
 	
 }

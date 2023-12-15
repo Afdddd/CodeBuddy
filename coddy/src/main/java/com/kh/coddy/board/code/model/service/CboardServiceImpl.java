@@ -10,10 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kh.coddy.board.code.model.dao.CboardDao;
 import com.kh.coddy.board.code.model.vo.Cboard;
+import com.kh.coddy.board.code.model.vo.Crelation;
 import com.kh.coddy.board.code.model.vo.Creply;
-import com.kh.coddy.board.intro.model.vo.IBoard;
-import com.kh.coddy.board.intro.model.vo.Iattachment;
-import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.common.vo.PageInfo;
 @Service
 public class CboardServiceImpl implements CboardService {
@@ -79,8 +77,14 @@ public class CboardServiceImpl implements CboardService {
 	}
 	
 	@Override
-	public ArrayList<Prelation> getTagInfo(Cboard c) {
+	public ArrayList<Crelation> getTagInfo(Cboard c) {
 		
 		return boardDao.getTagInfo(sqlSession, c);
+	}
+
+	@Override
+	public int insertTag(String tag) {
+		
+		return boardDao.insertTag(sqlSession, tag);
 	}
 }

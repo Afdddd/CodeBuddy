@@ -1,5 +1,7 @@
 package com.kh.coddy.board.code.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +23,8 @@ public class Cboard {
 	private int cboardViews;		//	CBOARD_VIEWS    NUMBER
 	private String originName;		//	ORIGIN_NAME	VARCHAR2(100)
 	private String changeName;		//	CHANGE_NAME	VARCHAR2(100)
+	
+	private ArrayList<String> tags;
 	
 }
 
