@@ -51,6 +51,7 @@ public class HboardController {
 	@Autowired private HboardService hboardService;
 	@Autowired private CompanyService companyService;
 	@Autowired private PasswordEncoder pbkdf2;
+	private String allowTags = "h4, h5, h6";
 
 	@GetMapping(value="listView.hb") public String listView(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage, 
 			@RequestParam(value="search", defaultValue="") String search, @RequestParam(value="education", defaultValue="none") String education, 
@@ -119,11 +120,11 @@ public class HboardController {
 		return "board/job/hboardInsertForm";
 	}
 	@PostMapping(value="insert.hb") public String insertBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb, List<MultipartFile> files) {
-		h.setHboardTitle(RemoveHTMLTag.allow(h.getHboardTitle(), "h4, h5, h6"));
-		int result = hboardService.insertBoard(h);
+		h.setHboardTitle(RemoveHTMLTag.allow(h.getHboardTitle(), allowTags));
+		int result = 0;
+		try { result = hboardService.insertBoard(h); } catch (Exception e) { model.addAttribute("errorMsg", "4000자를 넘겨버림"); return "common/errorPage"; }
 		if(result > 0) {
 			String path = request.getRealPath("resources\\file_upload\\hboard\\");
-			// String path = "resources\\file_upload\\hboard\\";
 			if(!thumb.isEmpty()) {
 				UUID uuid = UUID.randomUUID();
 				File file = new File(path + "\\" + uuid + "_" + thumb.getOriginalFilename());
@@ -236,7 +237,10 @@ public class HboardController {
 			session.setAttribute("errorMsg", "잘못된 접근");
 			return "common/errorPage";
 		}
-		if(hboardService.updateBoard(h) <= 0) { model.addAttribute("errorMsg", "게시글 수정 실패"); return "common/errorPage"; }
+		h.setHboardTitle(RemoveHTMLTag.allow(h.getHboardTitle(), allowTags));
+		int result = 0;
+		try { result = hboardService.updateBoard(h); } catch (Exception e) { model.addAttribute("errorMsg", "4000자를 넘겨버림"); return "common/errorPage"; }
+		if(result <= 0) { model.addAttribute("errorMsg", "게시글 수정 실패"); return "common/errorPage"; }
 		if(hboardService.initTag(h.getHboardNo()) <= 0) { model.addAttribute("errorMsg", "태그 초기화 실패"); return "common/errorPage"; }
 		if(tagAllName.equals("")) { log.info("hboardUpdateNoTag={}, ip={}", (Company)(session.getAttribute("loginCompany")), request.getRemoteAddr()); }
 		else { 

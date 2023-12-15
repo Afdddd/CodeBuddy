@@ -87,7 +87,8 @@ public class CompanyController {
 	@PostMapping(value="signup.cp") public String signup(Company c, HttpSession session, Model model) {
 		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; } 
 		else { c.setCompanyPwd(pbkdf2.encode(c.getCompanyPwd()));
-			int result = companyService.insertCompany(c); 
+			int result = 0;
+			try { result = companyService.insertCompany(c); } catch (Exception e) { model.addAttribute("errorMsg", "설명이 2000자를 넘음"); return "common/errorPage"; }
 			if(result > 0) { log.info("insertCompanyId={}", c.getCompanyId()); session.setAttribute("alertMsg", "성공적으로 회원가입이 완료되었습니다. 로그인을 진행해주세요."); return "redirect:/loginPage.cp"; } 
 			else { model.addAttribute("errorMsg", "회원가입 실패"); return "common/errorPage"; } } }
 	@PostMapping(value="login.cp") public String login(Company c, HttpSession session, Model model, HttpServletRequest request) {
@@ -161,7 +162,8 @@ public class CompanyController {
 		if(pbkdf2.matches(c.getCompanyPwd(), companyService.getPassword(c.getCompanyId()))) { 
 			if(!companyNewPwd.equals("")) { c.setCompanyPwd(pbkdf2.encode(companyNewPwd)); }
 			else { c.setCompanyPwd(((Company)(session.getAttribute("loginCompany"))).getCompanyPwd()); }
-			int result = companyService.updateCompany(c); 
+			int result = 0;
+			try { result = companyService.updateCompany(c); } catch (Exception e) { model.addAttribute("errorMsg", "설명이 2000자를 넘음"); return "common/errorPage"; }
 			if(result > 0) { session.setAttribute("alertMsg", "성공적으로 변경에 성공함. 다시 로그인 해주세요."); session.removeAttribute("loginCompany"); return "redirect:/loginPage.cp"; } 
 			else { session.setAttribute("alertMsg", "변경 실패."); return "redirect:/updateForm.cp"; } }
 		else { model.addAttribute("errorMsg","인증 실패"); return "common/errorPage"; } }
