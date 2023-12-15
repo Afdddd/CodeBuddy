@@ -111,6 +111,7 @@ public class MemberController {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
 			return "redirect:/";
 		}
+		
 		return "member/myPage1";
 	}
 	
@@ -322,9 +323,11 @@ public class MemberController {
 		return "member/writtenBoard";
 	}
 	
+
 	@GetMapping(value="written.io")
-	public String WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+	public ModelAndView WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
 			ModelAndView mv)  {
+
 		if(session.getAttribute("loginMember") == null) {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
 			return "redirect:/";
@@ -333,19 +336,94 @@ public class MemberController {
 			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
 			return "redirect:/";
 		}
-		int listCount = memberService.selectListCounti();
+
+
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		int listCount = memberService.selectListCounti(m.getMemberNo());
 		
 		int pageLimit = 5;
-		int boardLimit = 9;
+		int boardLimit = 15;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
-		ArrayList<IBoard> list = memberService.selectList(pi);
+			ArrayList<IBoard> list = memberService.selectListi(pi,m.getMemberNo());
+			
+			mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardI");
+			
+			return mv;
 		
-		mv.addObject("list", list).addObject("pi", pi).setViewName("member/boardListView");
+	}
+	
+	@GetMapping(value="written.ro")
+	public ModelAndView WrittenForm1(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv) {
+		
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		
+		int listCount = memberService.selectListCountr(m.getMemberNo());
+		
+		int pageLimit = 5;
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Recruitment> list = memberService.selectListr(pi, m.getMemberNo());
+	
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardR");
 		
 		return mv;
 	}
+	
+	@GetMapping(value="written.co")
+	public ModelAndView WrittenForm2(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv) {
+		
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		
+		int listCount = memberService.selectListCountc(m.getMemberNo());
+		
+		int pageLimit = 5;
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Recruitment> list = memberService.selectListc(pi, m.getMemberNo());
+	
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardR");
+		
+		return mv;
+	}
+	
+	@GetMapping(value="written.fo")
+	public ModelAndView WrittenForm3(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv) {
+		
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		
+		int listCount = memberService.selectListCountf(m.getMemberNo());
+		
+		int pageLimit = 5;
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Recruitment> list = memberService.selectListf(pi, m.getMemberNo());
+	
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardR");
+		
+		return mv;
+	}
+	
+	@GetMapping(value="project.at")
+	public String projectAttend() {
+		
+		
+		
+		
+		
+		return null;
+	}
+	
 	
 	
 	@GetMapping(value="signup.me") public String signup(HttpSession session) {

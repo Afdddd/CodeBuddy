@@ -53,4 +53,6 @@ public interface FboardService {
 	// 첨부파일 삭제 서비스 (ajax)
 	int deleteAttachment(int fattachmentNo);
 
+
+
 }

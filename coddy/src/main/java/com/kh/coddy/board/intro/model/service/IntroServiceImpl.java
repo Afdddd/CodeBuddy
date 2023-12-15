@@ -10,6 +10,7 @@ import com.kh.coddy.board.intro.model.dao.IntroDao;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
+import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.job.model.vo.Hattachment;
@@ -89,12 +90,6 @@ public class IntroServiceImpl implements IntroService {
 	}
 
 	@Override
-	public int insertReply(Ireply r) {
-
-		return introDao.insertReply(sqlSession, r);
-	}
-
-	@Override
 	public int plusView(int ino) {
 	
 		return introDao.plusView(sqlSession, ino);
@@ -123,5 +118,37 @@ public class IntroServiceImpl implements IntroService {
 		
 		return introDao.deleteForm(sqlSession, iboardNo);
 	}
+
+	@Override
+	public ArrayList<IreplyImage> selectReplyList(int iboardNo) {
+		
+		return introDao.selectReplyList(sqlSession, iboardNo);
+	}
+	
+	@Override
+	public int insertReply(Ireply r) {
+
+		return introDao.insertReply(sqlSession, r);
+	}
+
+	@Override
+	public int deletereply(int ireplyNo) {
+		
+		return introDao.deletereply(sqlSession, ireplyNo);
+	}
+
+	@Override
+	public int updatereply(Ireply r) {
+		
+		return introDao.updatereply(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<IBoard> selectTopList() {
+		
+		return introDao.selectTopList(sqlSession);
+	}
+	
+	
 
 }

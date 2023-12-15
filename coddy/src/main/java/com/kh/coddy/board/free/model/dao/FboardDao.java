@@ -26,48 +26,63 @@ public class FboardDao {
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
-//		(ArrayList)sqlSession.selectList("fboardMapper.selectList", null, rowBounds);
-		return null;
+
+		return (ArrayList)sqlSession.selectList("fboardMapper.selectList", null, rowBounds);
 	}
 	
-	public int insertBoard(SqlSessionTemplate sqlSession, Fboard f, Fattachment attachment) {
-//		sqlSession.insert("fboardMapper.insertBoard", f);
-		return 0;
+	public int insertBoard(SqlSessionTemplate sqlSession, Fboard f) {
+
+		return sqlSession.insert("fboardMapper.insertBoard", f);
 	}
 	
 	public int increaseCount(SqlSessionTemplate sqlSession, int fboardNo) {
-//		sqlSession.update("fboardMapper.increaseCount", cboardNo);
-		return 0;
+	
+		return sqlSession.update("fboardMapper.increaseCount", fboardNo);
 	}
 	
 	public Fboard selectBoard(SqlSessionTemplate sqlSession, int fboardNo) {
-//		sqlSession.selectOne("fboardMapper.selectBoard", fboardNo);
-		return null;
+
+		return sqlSession.selectOne("fboardMapper.selectBoard", fboardNo);
 	}
 	
 	public int deleteBoard(SqlSessionTemplate sqlSession, int fboardNo) {
-//		sqlSession.update("fboardMapper.deleteBoard", fboardNo);
-		return 0;
+
+		return sqlSession.update("fboardMapper.deleteBoard", fboardNo);
 	}
 	
 	public int updateBoard(SqlSessionTemplate sqlSession, Fboard f) {
-//		sqlSession.update("fboardMapper.updateBoard", f);
-		return 0;
+
+		return sqlSession.update("fboardMapper.updateBoard", f);
 	}
 	
 	public ArrayList<Freply> selectReplyList(SqlSessionTemplate sqlSession, int fboardNo) {
-//		(ArrayList)sqlSession.selectList("fboardMapper.selectReplyList", fboardNo);
-		return null;
+
+		return (ArrayList)sqlSession.selectList("fboardMapper.selectReplyList", fboardNo);
 	}
 	
 	public int insertReply(SqlSessionTemplate sqlSession, Freply fr) {
-//		sqlSession.insert("boardMapper.insertReply", fr);
-		return 0;
+
+		return sqlSession.insert("fboardMapper.insertReply", fr);
 	}
 	
 	public ArrayList<Fboard> selectTopBoardList(SqlSessionTemplate sqlSession) {
-//		(ArrayList)sqlSession.selectList("boardMapper.selectTopBoardList");
-		return null;
+
+		return (ArrayList)sqlSession.selectList("fboardMapper.selectTopBoardList");
+	}
+
+	public ArrayList<Fattachment> selectAttachmentList(SqlSessionTemplate sqlSession, int fboardNo) {
+		
+	    return (ArrayList)sqlSession.selectList("fboardMapper.selectAttachmentList", fboardNo);
+	}
+
+	public Fattachment selectOneAttachment(SqlSessionTemplate sqlSession, int fattachmentNo) {
+		
+	    return sqlSession.selectOne("fboardMapper.selectOneAttachment", fattachmentNo);
+	}
+
+	public int deleteAttachment(SqlSessionTemplate sqlSession, int fattachmentNo) {
+		
+	    return sqlSession.delete("fboardMapper.deleteAttachment", fattachmentNo);
 	}
 	
 }

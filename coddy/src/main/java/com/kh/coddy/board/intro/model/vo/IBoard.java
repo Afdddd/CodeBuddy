@@ -24,4 +24,5 @@ public class IBoard {
 	
 	// 필요한 정보들
 	private int recruitMentNo;
+	private int memberNo;
 }

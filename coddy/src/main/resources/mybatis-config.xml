@@ -10,34 +10,45 @@
      
     <typeAliases>
      	<typeAlias type="com.kh.coddy.member.model.vo.Member" alias="member"/>
+
      	<typeAlias type="com.kh.coddy.member.model.vo.Company" alias="company"/>    	
+
      	<typeAlias type="com.kh.coddy.common.auth.model.vo.Auth" alias="auth"/>
      	<typeAlias type="com.kh.coddy.common.tag.model.vo.Tags" alias="tags"/>
+     	
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hboard" alias="hboard"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hrelation" alias="hrelation"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hattachment"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.Hattachment" alias="hwishlist"/>
      	<typeAlias type="com.kh.coddy.board.job.model.vo.HSearch" alias="hsearch"/>
+     	
      	<typeAlias type="com.kh.coddy.board.intro.model.vo.IBoard" alias="intro"/>
      	<typeAlias type="com.kh.coddy.board.intro.model.vo.Iattachment" alias="introAttachment"/>
      	<typeAlias type="com.kh.coddy.board.intro.model.vo.Likes" alias="likes"/>
      	<typeAlias type="com.kh.coddy.board.intro.model.vo.Ireply" alias="ireply"/>
+     	<typeAlias type="com.kh.coddy.board.intro.model.vo.IreplyImage" alias="ireplyImage"/>
      	<typeAlias type="com.kh.coddy.board.intro.model.vo.Isearch" alias="isearch"/>
+     	
       	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Recruitment" alias="recruitment"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Rattachment" alias="rAttachment"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
 		<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList" alias="rWishList"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RSearch" alias="rSearch"/>
+     	
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Prelation" alias="pRelation"/>
-     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Project" alias="project"/>     	     
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Project" alias="project"/>     
+     		     
      	<typeAlias type="com.kh.coddy.board.notice.model.vo.Nboard" alias="nboard"/>
      	<typeAlias type="com.kh.coddy.board.notice.model.vo.Nattachment" alias="nattachment"/>
+     	
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Fboard" alias="fboard"/>
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Freply" alias="freply"/>
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Fattachment" alias="Fattachment"/>
+     	
      	<typeAlias type="com.kh.coddy.board.code.model.vo.Cboard" alias="cboard"/>
      	<typeAlias type="com.kh.coddy.board.code.model.vo.Creply" alias="creply"/>
+     	
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatRoom" alias="chatRoom" />
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMessage" alias="chatMessage" />
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMember" alias="chatMember" />
