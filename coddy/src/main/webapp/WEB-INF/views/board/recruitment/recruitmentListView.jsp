@@ -563,6 +563,8 @@
 </body>
 <script>
 
+ 
+
   function onSearch() {
     let rpage = 1;
     let search = $("#projectSearch").val();

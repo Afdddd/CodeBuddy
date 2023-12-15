@@ -10,7 +10,6 @@
      
     <typeAliases>
      	<typeAlias type="com.kh.coddy.member.model.vo.Member" alias="member"/>
-
      	<typeAlias type="com.kh.coddy.member.model.vo.Company" alias="company"/>    	
      	<typeAlias type="com.kh.coddy.common.auth.model.vo.Auth" alias="auth"/>
      	<typeAlias type="com.kh.coddy.common.tag.model.vo.Tags" alias="tags"/>
@@ -41,7 +40,8 @@
      	<typeAlias type="com.kh.coddy.board.code.model.vo.Creply" alias="creply"/>
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatRoom" alias="chatRoom" />
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMessage" alias="chatMessage" />
-     	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMember" alias="chatMember"/>
+     	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMember" alias="chatMember" />
+     	<typeAlias type="com.kh.coddy.common.calendar.model.vo.Schedule" alias="schedule" />
     </typeAliases>
       
     <!-- environments 영역은 제외 

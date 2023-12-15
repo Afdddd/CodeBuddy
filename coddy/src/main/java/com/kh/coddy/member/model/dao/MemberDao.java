@@ -14,7 +14,6 @@ import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
-import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 import lombok.AllArgsConstructor;
@@ -57,7 +56,7 @@ public class MemberDao {
 	}
 	public ArrayList<IBoard> selectListCount(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
-		return sqlSession.selectOne("memberMapper.selectListCount", );
+		return sqlSession.selectOne("memberMapper.selectListCount", pi);
 	}
 	public int selectListCounti(SqlSessionTemplate sqlSession) {
 		

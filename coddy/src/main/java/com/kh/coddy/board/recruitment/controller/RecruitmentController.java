@@ -264,24 +264,6 @@ public class RecruitmentController {
 		return new Gson().toJson(list);
 	}
 	
-	@ResponseBody
-	@GetMapping("getApply.rec")
-	public String getApply(int projectNo, String position) {
-		int result = rService.getApply(new ChatMember(projectNo,0,position));
-		return String.valueOf(result);		
-	}
 	
-	@GetMapping("insertApply.rec")
-	@ResponseBody
-	public String insertApply(int projectNo, int memberNo, String position, int maxPersonnel, HttpSession session) {		
-		ChatMember cm = new ChatMember(projectNo,memberNo, position);		
-		session.setAttribute("chatMember", cm);
-		return String.valueOf(rService.insertApply(cm, maxPersonnel)); 
-	}
-	
-	@GetMapping("room.rec")
-	public String room() {	
-		return "project/room";
-	}	
 	
 }
