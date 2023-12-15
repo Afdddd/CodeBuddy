@@ -265,6 +265,10 @@ public class MemberController {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
 			return "redirect:/";
 		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		return "member/deleteForm";
 	}
 	
@@ -306,15 +310,29 @@ public class MemberController {
 	
 	
 	@RequestMapping("written.me")
-	public String Written() {
-		
+	public String Written(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		return "member/writtenBoard";
 	}
 	
 	@GetMapping(value="written.io")
 	public String WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
 			ModelAndView mv)  {
-
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		int listCount = memberService.selectListCounti();
 		
 		int pageLimit = 5;
@@ -486,20 +504,43 @@ public class MemberController {
 	}
 	
 	@RequestMapping("myRank.me")
-	public String myRank() {
-		
+	public String myRank(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		return "member/myRank";
 	}
 	
 	@RequestMapping("likedRecruit.me")
-	public String likedRecruit() {
+	public String likedRecruit(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		
 		return "member/likedRecruit";
 		
 	}
 	
 	@RequestMapping("wroteReply.me")
-	public String wroteReply() {
+	public String wroteReply(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		
 		return "member/wroteReply";
 	}

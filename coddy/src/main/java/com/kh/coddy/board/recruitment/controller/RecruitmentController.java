@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -33,7 +32,6 @@ import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.PageInfo;
-import com.kh.coddy.member.model.vo.Company;
 import com.kh.coddy.member.model.vo.Member;
 
 import lombok.extern.slf4j.Slf4j;
