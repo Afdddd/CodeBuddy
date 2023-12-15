@@ -19,6 +19,7 @@
 <div id="map" style="width:100%;height:350px;"></div>
 <input type="search" id="replaceKeyword">
 <button type="button" onclick="search()">검색</button>
+<div id="result"></div>
 
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%= kakaoMapKey%>&libraries=services"></script>
 <script>
@@ -38,15 +39,11 @@ var map = new kakao.maps.Map(mapContainer, mapOption);
 var ps = new kakao.maps.services.Places(); 
 
 
-
-function search(){
-    var el = document.getElementById("replaceKeyword").value;
-    ps.keywordSearch(el, placesSearchCB); 
-}
-
-
 // 키워드로 장소를 검색합니다
-
+function search(){
+    var keyword = document.getElementById("replaceKeyword").value;
+    ps.keywordSearch(keyword3, placesSearchCB); 
+}
 
 // 키워드 검색 완료 시 호출되는 콜백함수 입니다
 function placesSearchCB (data, status, pagination) {
@@ -69,6 +66,7 @@ function placesSearchCB (data, status, pagination) {
 // 지도에 마커를 표시하는 함수입니다
 function displayMarker(place) {
     
+    console.dir(place);
     // 마커를 생성하고 지도에 표시합니다
     var marker = new kakao.maps.Marker({
         map: map,
@@ -80,6 +78,11 @@ function displayMarker(place) {
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
         infowindow.open(map, marker);
+
+        // 검색한 결과를 result에 뿌리기
+        var result = document.getElementById("result");
+        result.innerText = place.address_name;
+
     });
 }
 </script>
