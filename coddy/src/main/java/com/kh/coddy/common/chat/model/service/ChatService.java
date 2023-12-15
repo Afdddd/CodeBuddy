@@ -1,7 +1,9 @@
 package com.kh.coddy.common.chat.model.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.chat.model.vo.ChatMessage;
 import com.kh.coddy.common.chat.model.vo.ChatRoom;
@@ -27,7 +29,7 @@ public interface ChatService {
      * @param roomId
      * @return
      */
-    List<ChatMessage> messageList(int roomId);
+    ArrayList<ChatMessage> messageList(int roomId);
 
     /**
      * 채팅 방 DB 저장
@@ -70,6 +72,8 @@ public interface ChatService {
      * @return
      */
     int outCaht(ChatMember cm);
-
-
+    int getApply(ChatMember cm);
+	int insertApply(ChatMember cm, int maxPersonnel);
+	ArrayList<ChatMember> chatMemberList(int projectNo);
+	Project getProject(int projectNo);
 }

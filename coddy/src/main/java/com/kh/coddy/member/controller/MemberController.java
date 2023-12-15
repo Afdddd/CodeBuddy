@@ -47,7 +47,6 @@ import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.MemberService;
-import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 @Controller
@@ -206,17 +205,18 @@ public class MemberController {
 			
 			return "common/errorPage";
 		}
-		
-	
-		
 }
-	
+
 	
 	// 비밀번호 페이지만 보여주는거
 	@RequestMapping("pwdChange.me")
 	public String PwdChange(HttpSession session){
 		if(session.getAttribute("loginMember") == null) {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
 			return "redirect:/";
 		}
 		return "member/PwdChange";
@@ -265,6 +265,10 @@ public class MemberController {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
 			return "redirect:/";
 		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		return "member/deleteForm";
 	}
 	
@@ -306,15 +310,29 @@ public class MemberController {
 	
 	
 	@RequestMapping("written.me")
-	public String Written() {
-		
+	public String Written(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		return "member/writtenBoard";
 	}
 	
 	@GetMapping(value="written.io")
 	public String WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
 			ModelAndView mv)  {
-
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		int listCount = memberService.selectListCounti();
 		
 		int pageLimit = 5;
@@ -485,34 +503,45 @@ public class MemberController {
 		return kakaoMember;
 	}
 	
-	
-
 	@RequestMapping("myRank.me")
-	public String myRank() {
-		
+	public String myRank(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		return "member/myRank";
 	}
 	
 	@RequestMapping("likedRecruit.me")
-	public String likedRecruit() {
+	public String likedRecruit(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		
 		return "member/likedRecruit";
 		
 	}
 	
 	@RequestMapping("wroteReply.me")
-	public String wroteReply() {
+	public String wroteReply(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		
 		return "member/wroteReply";
 	}
-	/* 나중에 지워주세요 */
-	@PostMapping(value="insertForce.me", produces="text/html; charset=UTF-8") @ResponseBody public String insertMemberForce(Member m) {
-		m.setMemberPwd(pbkdf2.encode(m.getMemberPwd()));
-		int result = memberService.insertMember(m);
-		if(result > 0) { return "성공"; } else { return "실패"; }
-
-	}
 }
-
-
-

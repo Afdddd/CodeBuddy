@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -296,24 +297,72 @@
 <script>
   
     function open_fc() {
-    var calendarEl = document.getElementById('calendar');
-  
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        headerToolbar: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-        },
-        locale: 'ko', // 한국어 설정
-        timeZone: 'Asia/Seoul',
-        selectable: true,
-        droppable : true,
-        editable : true,
-        dateClick:function(info){
-          console.log(info.dateStr);
-          console.dir(info);
-        }
-  
+        var calendarEl = document.getElementById('calendar');
+    
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          },
+          locale: 'ko', // 한국어 설정
+          timeZone: 'Asia/Seoul',
+          navLinks: true,
+          selectable: true,
+          droppable : true,
+          editable : true,
+      
+          // 드래그로 일정 투가
+          select:function(info){
+            console.dir(info);
+            var title = prompt('추가할 일정:');
+
+            // title 값이 있을때, 화면에 calendar.addEvent() json형식으로 일정을 추가
+            if (title) {
+              calendar.addEvent({
+                title: title,
+                start: info.start,
+                end: info.end,
+                allDay: info.allDay,
+                backgroundColor:"blue",
+                textColor:"white",
+                projectNo : "${requestScope.p.projectNo}"
+              }) 
+            }
+            var allEvent = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다
+
+            var events = new Array(); // Json 데이터를 받기위한 배열 선언
+            for(var i = 0; i < allEvent.length; i++){
+              var obj = new Object(); // Json을 담기 위해 Object 선언
+              obj.title = allEvent[i]._def.title;  // 이벤트 이름
+              obj.start = allEvent[i]._instance.range.start; // 이벤트 시작 날짜
+              obj.end = allEvent[i]._instance.range.end; // 이벤트 끝 날짜
+              obj.pno = allEvent[i]._def.extendedProps.projectNo; // 프로젝트 번호
+              events.push(obj);
+            }
+
+            var jsondata= JSON.stringify(events);
+            console.log("data : "+jsondata);
+
+            $(function saveData(jsondata) {
+                $.ajax({
+                    url: "insertSchedule.cal",
+                    method: "POST",
+                    dataType: "json",
+                    data: JSON.stringify(events),
+                    contentType: 'application/json',
+                })
+                    .done(function (result) {
+                      alert(result);
+                    })
+                    .fail(function (request, status, error) {
+                          alert("에러 발생" + error);
+                    });
+                calendar.unselect()
+            });
+           },
+           
+           
       });
   
     calendar.render();
@@ -335,61 +384,11 @@
 <body>
     <header>
         <div>
-            <button onclick="onClose()">나가기</button>
+            <button onclick="onClose();">나가기</button>
 
         </div>
     </header>
     <div class="sidebar_left">
-        <div class="card">
-            <div class="img"></div>
-            <div class="textBox">
-              <div class="textContent">
-                <p class="h1">김인엽</p>
-                <span class="span">방장</span>
-              </div>
-                <p class="p">PM</p>               
-            </div>
-        </div>
-        <div class="card">
-            <div class="img"></div>
-            <div class="textBox">
-              <div class="textContent">
-                <p class="h1">봉영훈</p>
-                <span class="span"></span>
-              </div>
-                <p class="p">Back-End</p>               
-            </div>
-        </div>
-        <div class="card">
-            <div class="img"></div>
-            <div class="textBox">
-              <div class="textContent">
-                <p class="h1">김효중</p>
-                <span class="span"></span>
-              </div>
-                <p class="p">Back-End</p>               
-            </div>
-        </div>
-        <div class="card">
-            <div class="img"></div>
-            <div class="textBox">
-              <div class="textContent">
-                <p class="h1">정은지</p>
-                <span class="span"></span>
-              </div>
-                <p class="p">Front-End</p>               
-            </div>
-        </div>
-        <div class="card">
-            <div class="img"></div>
-            <div class="textBox">
-              <div class="textContent">
-                <p class="h1">한영욱</p>
-                <span class="span"></span>
-              </div>
-                <p class="p">Designer</p>               
-            </div>
-        </div>
     </div>
 
     <div class="chat_area">
@@ -416,7 +415,6 @@
         <button id="team_info" class="button">팀원 정보</button>
         <button id="project_info" class="button">프로젝트 소개</button>
         <button id="start" class="button">시작하기</button>  
-
     </div>
 
     <!-- 달력 모달 -->
@@ -447,158 +445,212 @@
 
       <script>
 
-        // 메세지 입력해서 전송
-      $(document).on("keydown", ".chat-footer>input", function(e){
-          if(e.keyCode == 13 && !e.shiftKey){
-            e.preventDefault();
-            const message = $(this).val();
+        let roomId = '${sessionScope.chatMember.projectNo}'; 
 
-            let search3 = $('.chat-footer>input').val();
-                
-            if(search3.replace(/\s|  /gi, "").length == 0){ // 문자 공백 확인
-                  return false;
-                  $('.chat-footer>input').focus();
-            }
-            
-            sendMessage(message);
-            clearText();
-          }
-      });
+        let webSocket;
+      
+        function connect(){
+          // 웹소켓 주소
+          var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat.do";
+          
+          // 소켓 객체 생성
+          webSocket = new WebSocket(wsUri);
 
-      function clearText() {
-            $('.chat-footer>input').val('');
-            return false;
-      };
+          // 웹소켓에 이벤트가 발생했을때 호출될 함수
+          webSocket.onopen = onOpen;
+          webSocket.onmessage = onMessage;
+          webSocket.onclose = onClose;
 
+          return "true";
+        }
 
-      $(function(){
-          connect();         
-          window.onpopstate = function(){
-            console.log("뒤로가기");
-            onClose();
-          }
+        // 웹소켓에 연결되었을 때 호출될 함수
+        function onOpen(){
+          // ENTER-CHAT 이라는 메세지를 보내고 채팅방이 존재하지 않는다면 채팅방을 생성, 존재한다면 채팅방 입장
+          const data = {
+            "roomId" : roomId,
+            "memberNo" : "${sessionScope.loginMember.memberNo}",
+            "memberName" : "${sessionScope.loginMember.memberName}",
+            "message": "ENTER-CHAT"
+          };
 
+          let jsonData = JSON.stringify(data);
+          webSocket.send(jsonData);
+        }
 
-          $.ajax({
-              url:"room.rec",
-              type:"get",
-              data: {
-                roomId : roomId
-              },
-              success : function(data){
-                console.log("메세지 불러오기 성공");
-                console.log(data);
-              
-                for(var i=0; i<data.length; i++){
-                  console.log(data);
-                  checkLR(data[i]);
-                }
-                $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
-              },
-              error : function(){
-                console.log("메세지 불러오기 실패");
-              }
+        //  메세지 전송 함수
+        function sendMessage(message){
 
-            });
-        });
+          const data={
+            "roomId" : roomId,
+            "memberNo" : "${sessionScope.loginMember.memberNo}",
+            "memberName" : "${sessionScope.loginMember.memberName}",
+            "message" : message 
+          };
+          
+          let jsonData = JSON.stringify(data);
+          webSocket.send(jsonData);
+        }
 
-          let roomId = 1; //${requestScope.projectNo}; 프로젝트 번호
+        // 메세지 수신
+        function onMessage(evt){
 
-          let webSocket;
+          let receive = evt.data.split(",");
+          const data = {
+            "memberNo" : receive[0],
+            "memberName" : receive[1],
+            "message" : receive[2]
+          };
+          
+          checkLR(data);
+          $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
+        }
 
-          function connect(){
+        // 채팅방 나가기
+        function onClose(){
+          location.href='detail.rec?rno='+'${sessionScope.chatMember.projectNo}'
+          console.log("연결 끊기");
+          const data = {
+            "roomId" : roomId,
+            "memberNo" : "${sessionScope.loginMember.memberNo}",
+            "memberName" : "${sessionScope.loginMember.memberName}",
+            "role" : "${sessionScope.chatMember.role}",
+            "message": "END-CHAT"
+          };
 
-            
-            // 웹소켓 주소
-            var wsUri = "ws://localhost:8082/coddy/chat.do";
-
-            // 소켓 객체 생성
-            webSocket = new WebSocket(wsUri);
-
-            // 웹소켓에 이벤트가 발생했을때 호출될 함수
-            webSocket.onopen = onOpen;
-            webSocket.onmessage = onMessage;
-            webSocket.onclose = onClose;
+          let jsonData = JSON.stringify(data);
+          webSocket.send(jsonData);
 
           
-          }
+        }
 
-
-          // 웹소켓에 연결되었을 때 호출될 함수
-          function onOpen(){
-            // ENTER-CHAT 이라는 메세지를 보내고 채팅방이 존재하지 않는다면 채팅방을 생성, 존재한다면 채팅방 입장
-            const data = {
-              "roomId" : roomId,
-              "memberNo" : "${sessionScope.loginMember.memberNo}",
-              "memberName" : "${sessionScope.loginMember.memberName}",
-              "message": "ENTER-CHAT"
-            };
-
-            let jsonData = JSON.stringify(data);
-            webSocket.send(jsonData);
-          }
-
-          //  메세지 전송 함수
-          function sendMessage(message){
-
-            const data={
-              "roomId" : roomId,
-              "memberNo" : "${sessionScope.loginMember.memberNo}",
-              "memberName" : "${sessionScope.loginMember.memberName}",
-              "message" : message 
-            };
-            
-            let jsonData = JSON.stringify(data);
-            webSocket.send(jsonData);
-          }
-
-          // 메세지 수신
-          function onMessage(evt){
-
-            let receive = evt.data.split(",");
-            const data = {
-              "memberNo" : receive[0],
-              "memberName" : receive[1],
-              "message" : receive[2]
-            };
-            
-            checkLR(data);
-            $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
-          }
-
-          // 내가 보낸 메세지인지 확인
-          function checkLR(data){ 
-            let div;
-            if("${loginMember.memberNo}" != data.memberNo){
-            div = $("<div class='message incoming'>"
+        // 내가 보낸 메세지인지 확인
+        function checkLR(data){ 
+          let div;
+          if("${loginMember.memberNo}" != data.memberNo){
+          div = $("<div class='message incoming'>"
+                + "<div>"+ data.memberName + "</div>"
+                    +"<p>"+ data.message +"</p>"
+                  +"</div>");
+          }else{
+            div = $("<div class='message outgoing'>"
                   + "<div>"+ data.memberName + "</div>"
-                      +"<p>"+ data.message +"</p>"
-                    +"</div>");
-            }else{
-              div = $("<div class='message outgoing'>"
-                    + "<div>"+ data.memberName + "</div>"
-                            +"<p>"+ data.message +"</p>"
-                          +"</div>");
+                          +"<p>"+ data.message +"</p>"
+                        +"</div>");
+          }
+          $("#chat_body").append(div);
+        }     
+        
+        // 메세지 입력해서 전송
+        $(document).on("keydown", ".chat-footer>input", function(e){
+            if(e.keyCode == 13 && !e.shiftKey){
+              e.preventDefault();
+              const message = $(this).val();
+
+              let search3 = $('.chat-footer>input').val();
+                  
+              if(search3.replace(/\s|  /gi, "").length == 0){ // 문자 공백 확인
+                    return false;
+                    $('.chat-footer>input').focus();
+              }
+              
+              sendMessage(message);
+              clearText();
             }
-            $("#chat_body").append(div);
-          }
+        });
+        
+        // 메세지 지우기
+        function clearText() {
+              $('.chat-footer>input').val('');
+              return false;
+        };
 
-          function onClose(){
+        $(function(){
 
-            location.href = 'detail.rec?rno='+'${sessionScope.chatMember.projectNo}';
-            const data = {
-              "roomId" : roomId,
-              "memberNo" : "${sessionScope.loginMember.memberNo}",
-              "memberName" : "${sessionScope.loginMember.memberName}",
-              "role" : "${sessionScope.chatMember.role}",
-              "message": "END-CHAT"
-            };
+            
+            
+            if(connect()){
+            
+            updateMemberList();
+            // 메세지 불러오기
+            $.ajax({
+                url:"room.rec",
+                type:"get",
+                data: {
+                  roomId : roomId
+                },
+                success : function(data){
+                  console.log("메세지 불러오기 성공");
+                  console.log(data);
+                
+                  for(var i=0; i<data.length; i++){
+                    checkLR(data[i]);
+                  }
+                  $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
 
-            let jsonData = JSON.stringify(data);
-            webSocket.send(jsonData);
-          }
+                    
+
+                },
+                error : function(){
+                  console.log("메세지 불러오기 실패");
+                }
+
+              });  
+
+            }
+          });
 
           
+          function updateMemberList() {
+          $.ajax({
+              url: "getMember.rec",
+              data: {
+                  roomId: roomId
+              },
+            success: function (result) {
+                console.log(result);
+
+            // Create a container to hold the new content
+            let newContent = $("<div></div>");
+
+            for (let i = 0; i < result.length; i++) {
+                let div = "";
+                if (result[i].memberNo == ${requestScope.p.projectOwner}) {
+                    div = "<div class='card'>" +
+                        "<div class='textBox'>" +
+                        "<div class='textContent'>" +
+                        "<p class='h1'>" + result[i].memberName + "</p>" +
+                        "<span class='span'>방장</span>" +
+                        "</div>" +
+                        "<p class='p'>" + result[i].role + "</p>" +
+                        "</div>" +
+                        "</div>";
+                } else {
+                    div = "<div class='card'>" +
+                        "<div class='textBox'>" +
+                        "<div class='textContent'>" +
+                        "<p class='h1'>" + result[i].memberName + "</p>" +
+                        "<span class='span'></span>" +
+                        "</div>" +
+                        "<p class='p'>" + result[i].role + "</p>" +
+                        "</div>" +
+                        "</div>";
+                }
+                // Append the new content to the container
+                newContent.append(div);
+            }
+
+            // Replace the existing content with the new content
+            $(".sidebar_left").html(newContent.html());
+        },
+        error: function () {}
+    });
+}
+            
+
+setInterval(function () {
+    updateMemberList();
+}, 1000);
       </script>
 </body>
 </html>

@@ -10,7 +10,7 @@
         <title>취업 공고 게시판</title>
         <style>
             .outerForm { width: 100%; height: 100%; padding-top: 3%; padding-bottom: 3%; }
-            .searchForm { width: 100%; height: 15%; padding: 3%; background: linear-gradient(white, #a2c6f5); color: black; }
+            .searchForm { width: 100%; height: 15%; padding: 3%; background: linear-gradient(white, rgb(181, 211, 250)); color: black; }
             .searchForm1 { width: 100%; height: 100%; border-radius: 20px; color: black; }
             .searchForm1 div { width: 100%; border-radius: 20px; }
             .searchForm2 { width: 100%; height: 0%; border-radius: 12px; border: 2.2px solid khaki; }
@@ -33,11 +33,11 @@
             .pageForm { width: 100%; height: 15%; }
 
             /* 카드 css */
-            .card { width: 250px; height: 520px; background: white; padding: .4em; border-radius: 6px; margin: 15px; margin-bottom: 20px; }
+            .card { width: 250px; height: 540px; background: white; padding: .4em; border-radius: 6px; margin: 15px; margin-bottom: 20px; }
             .card-image { background-color: rgb(236, 236, 236); width: 100%; height: 130px; border-radius: 6px 6px 0 0; text-align: center; line-height:130px; }
             .card-image:hover { cursor: pointer; transform: scale(0.98); }
             .location { text-transform: uppercase; font-size: 0.7em; font-weight: 600; color: #5271FF; padding: 10px 7px 0; width: 50%; }
-            .location:hover { cursor: pointer; transform: scale(1.24); background-color: darkgrey; color: yellow; }
+            .location:hover { cursor: pointer; transform: scale(1.12); background-color: #5271FF; color: whitesmoke; }
             .heading { font-weight: 600; color: rgb(88, 87, 87); padding: 7px; }
             .heading h5:hover { cursor: pointer; }
             .info { color: gray; font-weight: 400; font-size: 11px; padding-top: 20px; width: 90%; display: flex; }
@@ -63,7 +63,8 @@
             @keyframes dislike_effect { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
             /* 인엽이 페이지 네이션 맞추기 */
-            .pageForm { width:fit-content; margin:auto; }
+            .pageForm { width: fit-content; margin: auto; }
+            .page-link:hover { cursor: pointer; }
 
             /* 인엽이 툴팁 */
             .text { color: #5271FF; font-size: 14px; }

@@ -6,9 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -82,8 +81,15 @@ public class CboardController {
 		}
 	
 		@GetMapping("enrollForm.co")
-		public String enrollForm() {
-			
+		public String enrollForm(HttpSession session) {
+			if(session.getAttribute("loginMember") == null) {
+				session.setAttribute("alertMsg", "로그인부터 해주세요.");
+				return "redirect:/";
+			}
+			if(session.getAttribute("loginCompany") != null) {
+				session.setAttribute("alertMsg", "기업회원은 이용 불가능합니다.");
+				return "redirect:/";
+			}
 			return "board/code/codeEnrollForm";
 		}
 		

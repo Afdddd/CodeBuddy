@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -47,6 +46,8 @@ public class RecruitmentController {
 	
 	@GetMapping("detail.rec")
 	public String recruitmentDetail(int rno, HttpSession session, Model model) {
+		if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "기업은 이용 불가능한 서비스입니다."); return "redirect:/"; }
+		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인부터 해주세요."); return "redirect:/"; }
 		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
 		Recruitment r = rService.selectRecruitment(rno);
 		ArrayList<Prelation> tags = rService.getTagInfo(r); // 태그정보
@@ -68,7 +69,9 @@ public class RecruitmentController {
 		return "board/recruitment/recruitmentDetailView";
 	}
 	@GetMapping("enrollForm.rec")
-	public String enrollForm(Model model){
+	public String enrollForm(HttpSession session, Model model){
+		if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "기업은 이용 불가능한 서비스입니다."); return "redirect:/"; }
+		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인부터 해주세요."); return "redirect:/"; }
 		model.addAttribute("tagTech", tagsController.getTagsNameList(0));
 		return "board/recruitment/recruitmentEnrollForm";
 	}
@@ -264,24 +267,6 @@ public class RecruitmentController {
 		return new Gson().toJson(list);
 	}
 	
-	@ResponseBody
-	@GetMapping("getApply.rec")
-	public String getApply(int projectNo, String position) {
-		int result = rService.getApply(new ChatMember(projectNo,0,position));
-		return String.valueOf(result);		
-	}
 	
-	@GetMapping("insertApply.rec")
-	@ResponseBody
-	public String insertApply(int projectNo, int memberNo, String position, int maxPersonnel, HttpSession session) {		
-		ChatMember cm = new ChatMember(projectNo,memberNo, position);		
-		session.setAttribute("chatMember", cm);
-		return String.valueOf(rService.insertApply(cm, maxPersonnel)); 
-	}
-	
-	@GetMapping("room.rec")
-	public String room() {	
-		return "project/room";
-	}	
 	
 }

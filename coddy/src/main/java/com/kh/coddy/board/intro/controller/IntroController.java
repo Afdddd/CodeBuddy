@@ -1,7 +1,6 @@
 package com.kh.coddy.board.intro.controller;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystemNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,11 +8,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.coddy.board.intro.model.service.IntroService;
 import com.kh.coddy.board.intro.model.vo.IBoard;
@@ -30,16 +26,10 @@ import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
-import com.kh.coddy.board.job.model.vo.Hattachment;
-import com.kh.coddy.board.job.model.vo.Hboard;
-import com.kh.coddy.board.job.model.vo.Hrelation;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
-import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.controller.TagsController;
-import com.kh.coddy.common.vo.Geo;
 import com.kh.coddy.common.vo.PageInfo;
-import com.kh.coddy.member.model.vo.Company;
 import com.kh.coddy.member.model.vo.Member;
 
 
@@ -73,10 +63,10 @@ public class IntroController {
 	
 	@GetMapping("introlist.bo")	
 	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage,
-	@RequestParam(value="search", defaultValue="") String search,
-	@RequestParam(value="tag", defaultValue="") String tag,
-	@RequestParam(value="sort", defaultValue="new") String sort,
-	Model model, HttpSession session) {
+		@RequestParam(value="search", defaultValue="") String search,
+		@RequestParam(value="tag", defaultValue="") String tag,
+		@RequestParam(value="sort", defaultValue="new") String sort,
+		Model model, HttpSession session) {
 		
 		// 검색창 태그
 		String tags = "";
@@ -147,7 +137,10 @@ public class IntroController {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
 			return "redirect:/introlist.bo";
 		}
-		
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용 불가능합니다.");
+			return "redirect:/introlist.bo";
+		}
 		return "board/intro/introEnrollForm";
 	
 	}

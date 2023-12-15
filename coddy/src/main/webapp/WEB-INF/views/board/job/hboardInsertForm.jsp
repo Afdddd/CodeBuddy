@@ -186,6 +186,7 @@
 					maxHeight: null,
 					focus: false,
 					lang: "ko-KR",
+					prettifyHtml:true,
 					toolbar: [
 						// [groupName, [list of button]]
 						['fontname', ['fontname']],

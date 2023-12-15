@@ -3,7 +3,6 @@ package com.kh.coddy.board.job.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.gson.JsonObject;
 import com.kh.coddy.board.job.model.service.HboardService;
 import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.board.job.model.vo.Hattachment;
@@ -37,6 +35,7 @@ import com.kh.coddy.board.job.model.vo.Hrelation;
 import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
+import com.kh.coddy.common.RemoveHTMLTag;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.Geo;
@@ -52,6 +51,7 @@ public class HboardController {
 	@Autowired private HboardService hboardService;
 	@Autowired private CompanyService companyService;
 	@Autowired private PasswordEncoder pbkdf2;
+	private String allowTags = "h4, h5, h6";
 
 	@GetMapping(value="listView.hb") public String listView(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage, 
 			@RequestParam(value="search", defaultValue="") String search, @RequestParam(value="education", defaultValue="none") String education, 
@@ -120,11 +120,11 @@ public class HboardController {
 		return "board/job/hboardInsertForm";
 	}
 	@PostMapping(value="insert.hb") public String insertBoard(HttpSession session, Model model, HttpServletRequest request, Hboard h, String tagAllName, MultipartFile thumb, List<MultipartFile> files) {
-		System.out.println(h);
-		int result = hboardService.insertBoard(h);
+		h.setHboardTitle(RemoveHTMLTag.allow(h.getHboardTitle(), allowTags));
+		int result = 0;
+		try { result = hboardService.insertBoard(h); } catch (Exception e) { model.addAttribute("errorMsg", "4000자를 넘겨버림"); return "common/errorPage"; }
 		if(result > 0) {
 			String path = request.getRealPath("resources\\file_upload\\hboard\\");
-			// String path = "resources\\file_upload\\hboard\\";
 			if(!thumb.isEmpty()) {
 				UUID uuid = UUID.randomUUID();
 				File file = new File(path + "\\" + uuid + "_" + thumb.getOriginalFilename());
@@ -237,7 +237,10 @@ public class HboardController {
 			session.setAttribute("errorMsg", "잘못된 접근");
 			return "common/errorPage";
 		}
-		if(hboardService.updateBoard(h) <= 0) { model.addAttribute("errorMsg", "게시글 수정 실패"); return "common/errorPage"; }
+		h.setHboardTitle(RemoveHTMLTag.allow(h.getHboardTitle(), allowTags));
+		int result = 0;
+		try { result = hboardService.updateBoard(h); } catch (Exception e) { model.addAttribute("errorMsg", "4000자를 넘겨버림"); return "common/errorPage"; }
+		if(result <= 0) { model.addAttribute("errorMsg", "게시글 수정 실패"); return "common/errorPage"; }
 		if(hboardService.initTag(h.getHboardNo()) <= 0) { model.addAttribute("errorMsg", "태그 초기화 실패"); return "common/errorPage"; }
 		if(tagAllName.equals("")) { log.info("hboardUpdateNoTag={}, ip={}", (Company)(session.getAttribute("loginCompany")), request.getRemoteAddr()); }
 		else { 

@@ -16,6 +16,25 @@
 		<result column="CHATR_MSG" property="message" />		
 	</resultMap>
 	
+	<resultMap id="chatMemberResultMap" type="chatMember">
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="ROLE" property="role" />
+		<result column="MEMBER_NAME" property="memberName" />
+		<result column="MEMBER_PHOTO_EXTEND" property="memberPhotoExtend" />
+	</resultMap>
+	
+	<resultMap id="projectResultSet" type="project">
+		<result column="PROJECT_NO" property="projectNo" />
+		<result column="PROJECT_OWNER" property="projectOwner" />
+		<result column="RECRUITMENT_NO" property="recruitmentNo" />
+		<result column="PROJECT_NAME" property="projectName" />
+		<result column="PROJECT_INFO" property="projectInfo" />
+		<result column="PROJECT_INSERT" property="projectInsert" />
+		<result column="PROJECT_START" property="projectStart" />
+		<result column="PROJECT_END" property="projectEnd" />
+		<result column="PROJECT_LOCATION" property="projectLocation" />
+		<result column="PROJECT_READY" property="projectReady" />
+	</resultMap>
 		
 	<select id="selectChatRoom" parameterType="string" resultMap="chatRoomResultSet">
 		SELECT *
@@ -53,5 +72,30 @@
 		AND MEMBER_NO = #{memberNo}
 		AND ROLE = #{role}
 	</delete>
+	
+	<select id="getApply" parameterType="chatMember" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM CHAT_MEMBER 
+		 WHERE PROJECT_NO = #{projectNo} 
+		   AND ROLE = #{role}
+	</select>
+	
+	<insert id="insertApply" parameterType="chatMember">
+		INSERT INTO CHAT_MEMBER
+		VALUES(#{projectNo},#{memberNo},#{role})
+	</insert>
+	
+	<select id="chatMemberList" parameterType="_int" resultMap="chatMemberResultMap">
+		SELECT C.MEMBER_NO, C.ROLE, M.MEMBER_NAME, M.MEMBER_PHOTO_EXTEND
+		FROM CHAT_MEMBER C, MEMBER M
+		WHERE C.MEMBER_NO = M.MEMBER_NO
+		AND C.PROJECT_NO = #{projectNo}
+	</select>
+	
+	<select id="getProject" parameterType="_int" resultMap="projectResultSet">
+		SELECT *
+		FROM PROJECT
+		WHERE PROJECT_NO = #{projectNo}
+	</select>
 	
 </mapper>

@@ -11,4 +11,6 @@ public class ChatMember {
 	private int projectNo;
 	private int memberNo;
 	private String role;
+	private String memberName;
+	private String memberPhotoExtend;
 }
