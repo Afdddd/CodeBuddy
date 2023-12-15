@@ -127,33 +127,14 @@
 	   	float : left;
 	   	display : flex;
 	   }
-	   
-	  .wrap {
-	  width : 100%;
-      min-width: 500px;
-    }
-    
-    .menu2 {
-      display: table;
-      table-layout: fixed;
-      width: 100%;  /* 부모 요소의 너비 상속받음 */
-      background-color: yellow;
-      height : 50px;
-      padding-top : 15px;
-      text-align: center;
-    }
+	   				
 
-    .menu_item {
-      display: table-cell;
-      width: 25%;
-      height: 100%;
-    }
     
-    .menu_item a { 
-    display:block; 
-    width:100%;
-    height : 100%;
-    }
+
+
+
+    
+
      
    #pagingArea{
    width:fit-content; 
@@ -180,7 +161,7 @@
             <hr>
             <li><a href="#">나의 평가</a></li>
             <hr>
-            <li><a href="#">참여한 프로젝트</a></li>
+            <li><a href="written.io">참여한 프로젝트</a></li>
             <li><a href="#">찜한 프로젝트</a></li>
             <li><a href="#">찜한 채용공고</a></li>
             <hr>
@@ -191,17 +172,9 @@
           <div class="modal-body">
 
 
-				<div class="wrap">
-				      <div class="menu2">
-				        <div class="menu_item"><a href="written.ro">모집게시판</a></div>
-				        <div class="menu_item"><a href="written.co">코드리뷰게시판</a></div>
-				        <div class="menu_item"><a href="written.fo">자유게시판</a></div>
-				        <div class="menu_item"><a href="written.io">소개게시판</a></div>
-				      </div>
-				    </div>
-				    <br><br>
+
 		
-		
+		<h3>참여한 프로젝트 목록</h3><br>
 		<span> ▷ 총 ${requestScope.listCount}개의 게시물이 있습니다. </span>
 		<!-- 
 		<span class="right";> 

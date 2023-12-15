@@ -29,12 +29,12 @@ import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.vo.Member;
-
-import lombok.extern.slf4j.Slf4j;
 
 
 @Controller 
@@ -72,10 +72,25 @@ public class IntroController {
 		@RequestParam(value="sort", defaultValue="new") String sort,
 		Model model, HttpSession session) {
 		
+		
+		ArrayList<Project> projectlist = new ArrayList<Project>();
+		ArrayList<Recruitment> rlist = new ArrayList<Recruitment>();
+		ArrayList<Project> mylist = new ArrayList<Project>();
+		
+		projectlist = introService.selectProject();
+		rlist = introService.selectRecruitment();
+		project
+		
+		
+		model.addAttribute("projectlist", projectlist);
+		model.addAttribute("rlist", rlist);
+		
 		// 검색창 태그
 		String tags = "";
 		if(tag.equals("")) { 
-			tags=tagsController.getTagsNameString(); } 
+			tags=tagsController.getTagsNameString(); 
+		} 
+		
 		else { 
 			tags = tag; 
 		}
@@ -100,7 +115,8 @@ public class IntroController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
 		if(pi.getMaxPage() == 0) {
-			return "board/intro/introListView";		
+			return "board/intro/introListView";
+		
 
 		}
 		else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) {
@@ -114,12 +130,14 @@ public class IntroController {
 		ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
 		ArrayList<Boolean>ws_list = new ArrayList<Boolean>();
 
+		
 		for(IBoard ib : list) { 
 			listi.add(introService.selectattachment(ib));
 			tg_list.add(introService.getTagInfo(ib));
-			if(session.getAttribute("loginMember") != null) { ws_list.add(introService.getWishList(ib, ((Member)(session.getAttribute("loginMember"))).getMemberNo())); }
-		}
-		
+			if(session.getAttribute("loginMember") != null) { ws_list.add(introService.getWishList(ib, ((Member)(session.getAttribute("loginMember"))).getMemberNo()));
+			
+			}
+			 
 		model.addAttribute("is", is);
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
@@ -127,13 +145,12 @@ public class IntroController {
 		model.addAttribute("tg_list", tg_list);
 		model.addAttribute("ws_list", ws_list);
 		model.addAttribute("tagAll", tagsController.getTagsNameList());
-		System.out.println(listi);
-		System.out.println(tg_list);
-		System.out.println(ws_list);
-		return "board/intro/introListView";
-	}
+		}
 		
-}
+
+		return "board/intro/introListView";
+		}	
+	}
 		
 	@GetMapping("introForm.bo")
 	public String selectEnrollForm(HttpSession session) {

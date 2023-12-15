@@ -15,6 +15,8 @@ import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.job.model.vo.Hattachment;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Service
@@ -148,6 +150,21 @@ public class IntroServiceImpl implements IntroService {
 		
 		return introDao.selectTopList(sqlSession);
 	}
+
+	@Override
+	public Project selectProject(IBoard ib) {
+		
+		return introDao.selectProject(sqlSession, ib);
+	}
+
+	@Override
+	public Recruitment selectRecruitment(Project p) {
+		
+		return introDao.selectRecruitment(sqlSession, p);
+	}
+
+	
+
 	
 	
 

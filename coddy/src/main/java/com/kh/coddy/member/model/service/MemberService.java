@@ -74,7 +74,7 @@ public interface MemberService {
 	int selectListCountf(int memberNo);
 
 	// fboard 전체 조회
-	ArrayList<Recruitment> selectListf(PageInfo pi, int memberNo);
+	ArrayList<Fboard> selectListf(PageInfo pi, int memberNo);
 
-	int uploadFile(int memberNo);
+
 }

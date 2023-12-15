@@ -137,7 +137,7 @@
       display: table;
       table-layout: fixed;
       width: 100%;  /* 부모 요소의 너비 상속받음 */
-      background-color: yellow;
+      background-color: #f3f7fe;
       height : 50px;
       padding-top : 15px;
       text-align: center;
@@ -159,6 +159,9 @@
    width:fit-content; 
    margin:auto;
   }
+  
+
+
     </style>
   </head>
   <body>
@@ -179,7 +182,7 @@
             <hr>
             <li><a href="#">나의 평가</a></li>
             <hr>
-            <li><a href="#">참여한 프로젝트</a></li>
+            <li><a href="written.io">참여한 프로젝트</a></li>
             <li><a href="#">찜한 프로젝트</a></li>
             <li><a href="#">찜한 채용공고</a></li>
             <hr>
@@ -195,12 +198,13 @@
 				         <div class="menu_item"><a href="written.ro">모집게시판</a></div>
 				        <div class="menu_item"><a href="written.co">코드리뷰게시판</a></div>
 				        <div class="menu_item"><a href="written.fo">자유게시판</a></div>
-				        <div class="menu_item"><a href="written.io">소개게시판</a></div>
 				      </div>
 				    </div>
 				    <br><br>
-		<form>
-		 
+				    
+		
+
+		 <h3>모집게시판</h3><br>
 		<span> ▷ 총 ${requestScope.listCount}개의 게시물이 있습니다. </span>
 		<!--
 		<span class="right";> 

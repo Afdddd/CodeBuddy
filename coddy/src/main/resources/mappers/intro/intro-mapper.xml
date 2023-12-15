@@ -57,6 +57,34 @@
 		<result column="IREPLY_DELETE" property="ireplyDelete"/>
 	</resultMap>
 	
+	<resultMap id="projectResultSet" type="project">
+		<result column="PROJECT_NO" property="projectNo" />
+		<result column="PROJECT_OWNER" property="projectOwner" />
+		<result column="RECRUITMENT_NO" property="recruitmentNo" />
+		<result column="PROJECT_NAME" property="projectName" />
+		<result column="PROJECT_INFO" property="projectInfo" />
+		<result column="PROJECT_INSERT" property="projectInsert" />
+		<result column="PROJECT_START" property="projectStart" />
+		<result column="PROJECT_END" property="projectEnd" />
+		<result column="PROJECT_LOCATION" property="projectLocation" />
+		<result column="PROJECT_READY" property="projectReady" />
+	</resultMap>
+
+	<resultMap id="recruitmentResultSet" type="recruitment">
+		<result column="RECRUITMENT_NO" property="recruitmentNo" />
+		<result column="RECRUITMENT_TITLE" property="recruitmentTitle" />
+		<result column="RECRUITMENT_CONTENT" property="recruitmentContent" />
+		<result column="RECRUITMENT_WRITER" property="recruitmentWriter" />
+		<result column="RECRUITMENT_INSERT" property="recruitmentInsert" />
+		<result column="RECRUITMENT_UPDATE" property="recruitmentUpdate" />
+		<result column="RECRUITMENT_DELETE" property="recruitmentDelete" />
+		<result column="RECRUITMENT_VIEWS" property="recruitmentView" />
+		<result column="RECRUITMENT_START" property="recruitmentStart" />
+		<result column="RECRUITMENT_END" property="recruitmentEnd" />
+		<result column="RECRUITMENT_LOCATION" property="recruitmentLocation" />
+		<result column="RECRUITMENT_INTRO" property="recruitmentIntro" />
+	</resultMap>
+		
 	<insert id="insertBoard" parameterType="intro">
 		INSERT INTO IBOARD(
 			IBOARD_NO,
@@ -109,8 +137,8 @@
 		SELECT DISTINCT I.IBOARD_NO AS "IBOARD_NO",
 		 	   I.IBOARD_TITLE AS "IBOARD_TITLE", 
 		 	   P.PROJECT_NO AS "PROJECT_NO",
-		 	   I.IBOARD_VIEWS AS "IBOARD_VIEWS",
-		 	   I.IBOARD_CONTENT AS "IBOARD_CONTENT",
+		 	   I.IBOARD_VIEWS,
+		 	   I.IBOARD_CONTENT,
 		 	   M.MEMBER_NAME AS "IBOARD_WRITER",
 		 	   TO_CHAR(I.IBOARD_INSERT, 'YYYY-MM-DD') AS "IBOARD_INSERT",
 		 	   P.PROJECT_START AS "PROJECT_START",
@@ -127,7 +155,7 @@
 		OR I.IBOARD_CONTENT LIKE '%'||#{keyword}||'%'
 		OR P.PROJECT_NAME LIKE '%'||#{keyword}||'%')
 		ORDER BY ${sort} DESC
-	</select>
+		</select>
 	
 	<select id="selectattachment" parameterType="introAttachment" resultMap="introAttachmentResultSet">
      SELECT IATTACHMENT_NO,
@@ -140,6 +168,22 @@
       FROM IATTACHMENT 
      WHERE IBOARD_NO = #{iboardNo} 
        AND IATTACHMENT_LEVEL = 1
+	</select>
+	
+	<select id="selectProject" parameterType="project" resultMap="projectResultSet">
+		SELECT *
+		  FROM PROJECT P, MEMBER M
+		 WHERE PROJECT_READY = 2
+		   AND P.PROJECT_OWNER = M.MEMBER_NO
+	</select>
+	
+
+	
+	<select id="selectRecruitment" parameterType="recruitment" resultMap="recruitmentResultSet">
+		SELECT *
+		  FROM RECRUITMENT R, PROJECT P
+		 WHERE P.RECRUITMENT_NO = R.RECRUITMENT_NO
+
 	</select>
 	
 	<update id="increaseCount" parameterType="_int">

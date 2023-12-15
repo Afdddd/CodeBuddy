@@ -15,6 +15,8 @@ import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.board.job.model.vo.Hattachment;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Repository
@@ -136,6 +138,17 @@ public class IntroDao {
 		
 		return (ArrayList)sqlSession.selectList("introMapper.selectTopList");
 	}
+
+	public Project selectProject(SqlSessionTemplate sqlSession, IBoard ib) {
+		
+		return sqlSession.selectOne("introMapper.selectProject", ib);
+	}
+
+	public Recruitment selectRecruitment(SqlSessionTemplate sqlSession, Project p) {
+		
+		return sqlSession.selectOne("introMapper.selectRecruitment", p);
+	}
+
 
 
 

@@ -9,6 +9,8 @@ import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.vo.PageInfo;
 
 public interface IntroService {
@@ -72,6 +74,15 @@ public interface IntroService {
 
 	// 인기게시글
 	ArrayList<IBoard> selectTopList();
+
+	// project list 조회
+	Project selectProject(IBoard ib);
+
+	// Recruitment list 조회
+	Recruitment selectRecruitment(Project p);
+
+	
+
 	
 	
 	

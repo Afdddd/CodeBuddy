@@ -276,7 +276,53 @@
 
   }
   
+  .modal-content1 {
+	  background-color: #fff;
+	  padding: 20px;
+	  border-radius: 10px; /* 둥근 테두리로 변경 */
+	  max-width: 400px;
+	  width: 100%;
+	  margin: 10% auto; /* 화면 중앙에 표시 */
+	  box-sizing: border-box;
+	  position: relative; /* 상대 위치 설정 */
+	}
   
+  	 .close-btn2 {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 10px;
+	  right: 10px;
+	  font-size: 24px; /* 조금 더 큰 크기로 변경 */
+	  color: #333; /* 닫기 버튼 색상 변경 */
+	}
+  
+  	    .comment-container {
+      max-width: 600px;
+      margin: 20px auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .comment {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .comment-author {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .comment-text {
+      margin-top: 5px;
+      color: #555;
+    }
+
+    .comment-date {
+      font-size: 0.8em;
+      color: #888;
+    }
   
 </style>
 </head>
@@ -352,7 +398,7 @@
     
     <div class="">
     <c:if test="${not empty sessionScope.loginMember}">
-      <button class="write_button" onclick="location.href='introForm.bo'">게시글 작성</button>
+      <button class="write_button" onclick="openModal()">게시글 작성</button>
     </c:if>
     </div>
     
@@ -366,9 +412,9 @@
               <img src="${requestScope.listi[status.index].getIAttachmentPath()}/${requestScope.listi[status.index].getIAttachmentChange()}" width="100%" height="100%"onerror="this.src='resources/image/white.jpg'">
               </div>
               <div>
-              	<div class="title"><h5><br>${i.iboardTitle}</h5></div>
+              	<div class="title" ><h5 style="width : 200px;"><br>${i.iboardTitle}</h5></div>
               	<br>
-              	<div class="title"><p style="font-size: 12px;"></p></div>
+              	<div class="title"><p style="font-size: 12px;">${i.iboardContent}</p></div>
               </div>
               </div>
             
@@ -493,9 +539,35 @@
    
    function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
    
+   function openModal() {
+	    document.getElementById('listModal').style.display = 'flex';
+   }
+   
+	function closeModal() {
+	    document.getElementById('listModal').style.display = 'none';
+	}
+	
 </script>
 	</div>
   <jsp:include page="../../common/footer.jsp" />	
-
+  
+  		<div id="listModal" class="modal">
+		  <div class="modal-content1">
+		    <span class="close-btn2" onclick="closeModal()">&times;</span>
+		    
+				<div class="comment-container">
+				<input type="text" value="${requestScope.projectlist }">
+				<c:forEach var="b" items="${requestScope.projectlist }">
+					  <div class="comment">
+					    <div class="comment-author">${b.projectName}</div>
+					    <div class="comment-text">${b.projectOwner}</div>
+					    <div class="comment-date">${b.projectStart}</div>
+					  </div>
+				</c:forEach>
+		    <div id="delete">
+		    </div>
+		  </div>
+		</div>
+	</div>
 </body>
 </html>

@@ -328,15 +328,6 @@ public class MemberController {
 	public ModelAndView WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
 			ModelAndView mv)  {
 
-		if(session.getAttribute("loginMember") == null) {
-			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
-			return "redirect:/";
-		}
-		if(session.getAttribute("loginCompany") != null) {
-			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
-			return "redirect:/";
-		}
-
 
 		Member m = ((Member)(session.getAttribute("loginMember")));
 		int listCount = memberService.selectListCounti(m.getMemberNo());
@@ -389,7 +380,7 @@ public class MemberController {
 		
 		ArrayList<Recruitment> list = memberService.selectListc(pi, m.getMemberNo());
 	
-		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardR");
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardC");
 		
 		return mv;
 	}
@@ -407,21 +398,11 @@ public class MemberController {
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 		
-		ArrayList<Recruitment> list = memberService.selectListf(pi, m.getMemberNo());
+		ArrayList<Fboard> list = memberService.selectListf(pi, m.getMemberNo());
 	
-		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardR");
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardF");
 		
 		return mv;
-	}
-	
-	@GetMapping(value="project.at")
-	public String projectAttend() {
-		
-		
-		
-		
-		
-		return null;
 	}
 	
 	
