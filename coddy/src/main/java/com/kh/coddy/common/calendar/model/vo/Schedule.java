@@ -1,6 +1,6 @@
 package com.kh.coddy.common.calendar.model.vo;
 
-import java.time.LocalDateTime;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,5 +13,5 @@ public class Schedule {
 	private String eventTitle;
 	private String startDate;
 	private String endDate;
-	private String projcetNo;
+	private int projectNo;
 }

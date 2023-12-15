@@ -72,6 +72,7 @@
       <mapper resource="/mappers/code/cboard-mapper.xml"/>
       <mapper resource="/mappers/chat/chat-mapper.xml"/>
       <mapper resource="/mappers/board/fboard-mapper.xml"/>
+      <mapper resource="/mappers/calendar/calendar-mapper.xml"/>
     </mappers>
   </configuration>
 

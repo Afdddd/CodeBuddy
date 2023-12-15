@@ -296,7 +296,9 @@
 </style>
 <script>
   
-    function open_fc() {
+    function open_fc(data) {
+        
+        console.log("넘어온 데이터 : "+data);
         var calendarEl = document.getElementById('calendar');
     
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -310,12 +312,11 @@
           navLinks: true,
           selectable: true,
           droppable : true,
-          editable : true,
       
-          // 드래그로 일정 투가
+          // 드래그로 일정 추가
           select:function(info){
             console.dir(info);
-            var title = prompt('추가할 일정:');
+            let title = prompt('추가할 일정:');
 
             // title 값이 있을때, 화면에 calendar.addEvent() json형식으로 일정을 추가
             if (title) {
@@ -324,22 +325,20 @@
                 start: info.start,
                 end: info.end,
                 allDay: info.allDay,
-                backgroundColor:"blue",
-                textColor:"white",
                 projectNo : "${requestScope.p.projectNo}"
-              }) 
+              }); 
             }
             var allEvent = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다
 
             var events = new Array(); // Json 데이터를 받기위한 배열 선언
-            for(var i = 0; i < allEvent.length; i++){
+          
               var obj = new Object(); // Json을 담기 위해 Object 선언
-              obj.title = allEvent[i]._def.title;  // 이벤트 이름
-              obj.start = allEvent[i]._instance.range.start; // 이벤트 시작 날짜
-              obj.end = allEvent[i]._instance.range.end; // 이벤트 끝 날짜
-              obj.pno = allEvent[i]._def.extendedProps.projectNo; // 프로젝트 번호
+              obj.title = title;  // 이벤트 이름
+              obj.start = info.start; // 이벤트 시작 날짜
+              obj.end = info.end; // 이벤트 끝 날짜
+              obj.pno = "${requestScope.p.projectNo}"; // 프로젝트 번호
               events.push(obj);
-            }
+            
 
             var jsondata= JSON.stringify(events);
             console.log("data : "+jsondata);
@@ -351,32 +350,63 @@
                     dataType: "json",
                     data: JSON.stringify(events),
                     contentType: 'application/json',
-                })
-                    .done(function (result) {
-                      alert(result);
-                    })
-                    .fail(function (request, status, error) {
-                          alert("에러 발생" + error);
-                    });
-                calendar.unselect()
+                });
+            
+                calendar.unselect();
             });
            },
            
-           
+           // 이벤트 클릭해서 삭제
+           eventClick: function (info){
+            
+            if(confirm("'"+info.event.title+ "'일정을 삭제하시겠습니까?'")){
+              info.event.remove();
+              console.dir(info.event);
+              var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+              var obj = new Object();
+                  obj.title = info.event._def.title;
+                  obj.start = info.event._instance.range.start;
+                  obj.end = info.event._instance.range.end;
+                  obj.pno = "${requestScope.p.projectNo}";
+                  events.push(obj);
+
+              console.log(events);
+              }
+              $(function deleteData(){
+                  $.ajax({
+                      url: "deleteSchedule.cal",
+                      method: "DELETE",
+                      dataType: "json",
+                      data: JSON.stringify(events),
+                      contentType: 'application/json'
+                  })
+              })
+            },
+           // 조회해온 일정이 data로 넘어옴
+           events : data
       });
   
-    calendar.render();
+      calendar.render();
+    
   };
   
   $(function(){
     $('#calendar_modal').click(function(){
       $("#myModal").modal();
-      open_fc();
+
+      // 달력 열면 해당 프로젝트 일정 불러오기
+      $.ajax({
+        url:"selectSchedule.cal",
+        type:"get",
+        data:{pno : "${requestScope.p.projectNo}"},
+        dataType:"json",
+        success : function(data){
+          open_fc(data);
+        }
+      });
+      
+      
     });
-  
-    
-    
-   
   });
   
     </script>
@@ -520,8 +550,6 @@
 
           let jsonData = JSON.stringify(data);
           webSocket.send(jsonData);
-
-          
         }
 
         // 내가 보낸 메세지인지 확인
@@ -608,7 +636,6 @@
                   roomId: roomId
               },
             success: function (result) {
-                console.log(result);
 
             // Create a container to hold the new content
             let newContent = $("<div></div>");
