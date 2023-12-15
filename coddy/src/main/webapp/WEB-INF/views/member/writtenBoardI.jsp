@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head> 
@@ -127,8 +128,8 @@
 	   	display : flex;
 	   }
 	   
-	    .wrap {
-		width : 100%;
+	  .wrap {
+	  width : 100%;
       min-width: 500px;
     }
     
@@ -147,11 +148,18 @@
       width: 25%;
       height: 100%;
     }
+    
     .menu_item a { 
     display:block; 
     width:100%;
     height : 100%;
-     }
+    }
+     
+   #pagingArea{
+   width:fit-content; 
+   margin:auto;
+  }
+  
     </style>
   </head>
   <body>
@@ -176,7 +184,7 @@
             <li><a href="#">찜한 프로젝트</a></li>
             <li><a href="#">찜한 채용공고</a></li>
             <hr>
-            <li><a href="written.me">작성한 게시글</a></li>
+            <li><a href="written.ro">작성한 게시글</a></li>
             <li><a href="#">작성한 댓글</a></li>
           </ul>
               
@@ -185,16 +193,17 @@
 
 				<div class="wrap">
 				      <div class="menu2">
-				        <div class="menu_item"><a href="">모집게시판</a></div>
-				        <div class="menu_item"><a href="#">코드리뷰게시판</a></div>
-				        <div class="menu_item"><a href="#">자유게시판</a></div>
-				        <div class="menu_item"><a href="#">소개게시판</a></div>
+				        <div class="menu_item"><a href="written.ro">모집게시판</a></div>
+				        <div class="menu_item"><a href="written.co">코드리뷰게시판</a></div>
+				        <div class="menu_item"><a href="written.fo">자유게시판</a></div>
+				        <div class="menu_item"><a href="written.io">소개게시판</a></div>
 				      </div>
 				    </div>
 				    <br><br>
-		<form>
+		
+		
+		<span> ▷ 총 ${requestScope.listCount}개의 게시물이 있습니다. </span>
 		<!-- 
-		<span> ▷ 총 3개의 게시물이 있습니다. </span>
 		<span class="right";> 
 		            <span class="grey"; id="strong";>SELECT</span>
 		    <select>
@@ -208,52 +217,93 @@
 		
 
 
-
+	
 		<br>
 		<table id="table">
+			<thead>
+		    	<tr>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">번호</th>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">제목</th>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">글쓴이</th>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">일시</th>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">조회수</th>
+		    	</tr>
+		    </thead>
+		    <tbody>
+		      <c:forEach var="i" items="${ requestScope.list }">
 		    <tr>
-		        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">번호</th>
-		        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">제목</th>
-		        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">글쓴이</th>
-		        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">일시</th>
-		        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">분류</th>
-		        
+		        <td class="center, ino" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardNo}</td>
+		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardTitle}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardWriter}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardInsert}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardViews}</td>   
 		    </tr>
-		    <tr>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">1</td>
-		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">게시글 1 입니다.</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">김준석</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">2022-05-18</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">프로젝트 소개</td>   
-		    </tr>
-		    <tr>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">2</td>
-		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">게시글 2 입니다.</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">김준석</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">2022-05-18</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">자유게시판</td>   
-		    </tr>
-		    <tr>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">3</td>
-		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">게시글 3 입니다.</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">김준석</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">2022-05-18</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">코드리뷰</td>   
-		    </tr>
+			  </c:forEach>
+			</tbody>
 		</table>
 		</br>
-		</form>
-		<div class="center">
-		    <a href  = "https://www.naver.com/">◀ 이전</a> 
-		    <a href  = "https://www.naver.com/">1</a>  
-		    <a href  = "https://www.naver.com/">다음 ▶</a>
+		
+		<script>
+			
+			$(function(){
+				
+				$("#table>tbody>tr").click(function(){
+					
+					let ino = $(this).children(".ino").text();
+					
+					location.href = "introDetail.bo?ino=" + ino;
+				
+				});
+				
+				
+			});
+		</script>
+		
+  <div id="pagingArea">
+            <ul class="pagination" style="margin: auto;">
+            
+              <c:choose>
+                <c:when test="${ requestScope.pi.currentPage eq 1 }">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Previous</a>
+                    </li>
+                </c:when>
+                  <c:otherwise>
+                    <li class="page-item">
+                      <a class="page-link" href="written.io?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                    </li>
+                  </c:otherwise>
+              </c:choose>
+                
+              <c:forEach var="p" begin="${ requestScope.pi.startPage }" 
+                          end="${ requestScope.pi.endPage }"
+                          step="1">
+                  <li class="page-item">
+                    <a class="page-link" href="written.io?cpage=${ p }">${ p }</a>
+                  </li>
+              </c:forEach>
+                
+                <c:choose>
+                  <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+                    <li class="page-item disabled">
+                      <a class="page-link">Next</a>
+                    </li>
+                  </c:when>
+                  <c:otherwise>
+                    <li class="page-item">
+                      <a class="page-link" href="written.io?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                    </li>
+                  </c:otherwise>
+                </c:choose>
+            
+            </ul>
+          </div>
 		</div>
-
 
            
           </div>
         </div>
-      </div>
+      
     <jsp:include page="../common/footer.jsp" />	
   </body>
 </html>

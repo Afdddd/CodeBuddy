@@ -336,14 +336,14 @@
       
     </div>
         <div style="float: right; display: flex; margin-top: 2%; margin-bottom: 2%;">
-          <select name="iboardSort" id="iboardSort">
+          <select name="introSort" id="introSort">
               <option value="new" selected>최신순</option>
               <option value="old">끝난순</option>
               <option value="view">조회순</option>
               <option value="like">좋아요순</option>
           </select>
           &nbsp;
-          <input type="search" class="form-control form-control-lg" id="hboardSearch" name="keyword">
+          <input type="search" class="form-control form-control-lg" id="introSearch" name="keyword">
           &nbsp;&nbsp;
           <span onclick="onSearch();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
     </div>
@@ -366,9 +366,9 @@
               <img src="${requestScope.listi[status.index].getIAttachmentPath()}/${requestScope.listi[status.index].getIAttachmentChange()}" width="100%" height="100%"onerror="this.src='resources/image/white.jpg'">
               </div>
               <div>
-              	<div class="title"><h5>[프로젝트]<br> ${i.iboardTitle}</h5></div>
+              	<div class="title"><h5><br>${i.iboardTitle}</h5></div>
               	<br>
-              	<div class="title"><p style="font-size: 12px;">${i.iboardContent}</p></div>
+              	<div class="title"><p style="font-size: 12px;"></p></div>
               </div>
               </div>
             
@@ -461,8 +461,8 @@
     });
     
     $(document).ready(function() {
-        $("#iboardSearch").val(getParameter("search"));
-        $("#iboardSort").val(getParameter("sort"));
+        $("#introSearch").val(getParameter("search"));
+        $("#introSort").val(getParameter("sort"));
         tagifyAll.addTags(getParameter("tag"));
     })
     
@@ -479,8 +479,8 @@
     
    function onSearch() {
         let cpage = 1;
-        let search = $("#iboardSearch").val();
-        let sort = $("#iboardSort").val();
+        let search = $("#introSearch").val();
+        let sort = $("#introSort").val();
         let tag = $("#tagAllName").val();
         tag = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tag, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
         location.href='introlist.bo?cpage='+cpage+'&search='+search+'&sort='+sort+'&tag='+tag;

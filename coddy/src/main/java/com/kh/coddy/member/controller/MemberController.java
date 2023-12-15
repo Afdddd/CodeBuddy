@@ -47,7 +47,6 @@ import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.MemberService;
-import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 @Controller
@@ -112,6 +111,7 @@ public class MemberController {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
 			return "redirect:/";
 		}
+		
 		return "member/myPage1";
 	}
 	
@@ -206,17 +206,18 @@ public class MemberController {
 			
 			return "common/errorPage";
 		}
-		
-	
-		
 }
-	
+
 	
 	// 비밀번호 페이지만 보여주는거
 	@RequestMapping("pwdChange.me")
 	public String PwdChange(HttpSession session){
 		if(session.getAttribute("loginMember") == null) {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
 			return "redirect:/";
 		}
 		return "member/PwdChange";
@@ -265,6 +266,10 @@ public class MemberController {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
 			return "redirect:/";
 		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		return "member/deleteForm";
 	}
 	
@@ -306,28 +311,119 @@ public class MemberController {
 	
 	
 	@RequestMapping("written.me")
-	public String Written() {
-		
+	public String Written(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		return "member/writtenBoard";
 	}
 	
+
 	@GetMapping(value="written.io")
-	public String WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+	public ModelAndView WrittenForm(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
 			ModelAndView mv)  {
 
-		int listCount = memberService.selectListCounti();
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
+
+
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		int listCount = memberService.selectListCounti(m.getMemberNo());
 		
 		int pageLimit = 5;
-		int boardLimit = 9;
+		int boardLimit = 15;
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
 
-		ArrayList<IBoard> list = memberService.selectList(pi);
+			ArrayList<IBoard> list = memberService.selectListi(pi,m.getMemberNo());
+			
+			mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardI");
+			
+			return mv;
 		
-		mv.addObject("list", list).addObject("pi", pi).setViewName("member/boardListView");
+	}
+	
+	@GetMapping(value="written.ro")
+	public ModelAndView WrittenForm1(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv) {
+		
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		
+		int listCount = memberService.selectListCountr(m.getMemberNo());
+		
+		int pageLimit = 5;
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Recruitment> list = memberService.selectListr(pi, m.getMemberNo());
+	
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardR");
 		
 		return mv;
 	}
+	
+	@GetMapping(value="written.co")
+	public ModelAndView WrittenForm2(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv) {
+		
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		
+		int listCount = memberService.selectListCountc(m.getMemberNo());
+		
+		int pageLimit = 5;
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Recruitment> list = memberService.selectListc(pi, m.getMemberNo());
+	
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardR");
+		
+		return mv;
+	}
+	
+	@GetMapping(value="written.fo")
+	public ModelAndView WrittenForm3(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv) {
+		
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		
+		int listCount = memberService.selectListCountf(m.getMemberNo());
+		
+		int pageLimit = 5;
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Recruitment> list = memberService.selectListf(pi, m.getMemberNo());
+	
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/writtenBoardR");
+		
+		return mv;
+	}
+	
+	@GetMapping(value="project.at")
+	public String projectAttend() {
+		
+		
+		
+		
+		
+		return null;
+	}
+	
 	
 	
 	@GetMapping(value="signup.me") public String signup(HttpSession session) {
@@ -485,34 +581,45 @@ public class MemberController {
 		return kakaoMember;
 	}
 	
-	
-
 	@RequestMapping("myRank.me")
-	public String myRank() {
-		
+	public String myRank(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		return "member/myRank";
 	}
 	
 	@RequestMapping("likedRecruit.me")
-	public String likedRecruit() {
+	public String likedRecruit(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		
 		return "member/likedRecruit";
 		
 	}
 	
 	@RequestMapping("wroteReply.me")
-	public String wroteReply() {
+	public String wroteReply(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
+			return "redirect:/";
+		}
 		
 		return "member/wroteReply";
 	}
-	/* 나중에 지워주세요 */
-	@PostMapping(value="insertForce.me", produces="text/html; charset=UTF-8") @ResponseBody public String insertMemberForce(Member m) {
-		m.setMemberPwd(pbkdf2.encode(m.getMemberPwd()));
-		int result = memberService.insertMember(m);
-		if(result > 0) { return "성공"; } else { return "실패"; }
-
-	}
 }
-
-
-

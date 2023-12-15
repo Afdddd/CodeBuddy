@@ -14,10 +14,10 @@ public class Creply {
 	private int creplyNo; 		 	//	REPLY_NO	NUMBER
 	private int memberNo;			//	MEMBER_NO  NUMBER
 	private int cboardNo;			//	CBOARD_NO  NUMBER
-	private int creplyParent;		//	CREPLY_PARENT  NUMBER
-	private String creplyContent;	//	CREPLY_CONTENT  VARCHAR2(2000)
-	private String creplyInsert;	//	CREPLY_INSERT  DATE
-	private String creplyUpdate;	//	CREPLY_UPDATE  DATE
-	private String creplyDelete;	//	CREPLY_DELETE  DATE
+	private int creplyParent;		//	REPLY_PARENT  NUMBER
+	private String creplyContent;	//	REPLY_CONTENT  VARCHAR2(2000)
+	private String creplyInsert;	//	REPLY_INSERT  DATE
+	private String creplyUpdate;	//	REPLY_UPDATE  DATE
+	private String creplyDelete;	//	REPLY_DELETE  DATE
 
 }

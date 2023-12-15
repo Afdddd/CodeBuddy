@@ -31,6 +31,25 @@
                     <tr>
                         <th><label for="writer">작성자</label></th>
                         <td><input type="text" id="writer" class="form-control" value="${ requestScope.f.fBoardWriter }" readonly></td>
+
+                    </tr>
+                    <tr>
+                        <th><label for="upfile">첨부파일</label></th>
+                        <td>
+                            <input type="file" id="upfile" class="form-control-file border" name="reupfile">
+                            
+                            <c:if test="${ not empty requestScope.b.originName }">
+	                            현재 업로드된 파일 : 
+	                            <a href="${ requestScope.b.changeName }" 
+	                               download="${ requestScope.b.originName }">
+									${ requestScope.b.originName }
+								</a>
+								<!-- 기존의 첨부파일이 있다라는 뜻 -->
+								<input type="hidden" name="originName" value="${ requestScope.b.originName }">
+								<input type="hidden" name="changeName" value="${ requestScope.b.changeName }">
+                            </c:if>
+                        </td>
+
                     </tr>
 
                     <tr>

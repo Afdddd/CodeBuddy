@@ -5,9 +5,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<script src="https://cdn.jsdelivr.net/npm/ckeditor5-classic-plus@36.0.1/build/ckeditor.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/ckeditor5-upload-adapter@1.0.3/src/uploadadapter.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/ckeditor5-classic-plus@36.0.1/build/ckeditor.min.js"></script>
+<!-- 				   
+<script src="https://cdn.jsdelivr.net/npm/ckeditor5-upload-adapter@1.0.3/src/uploadadapter.min.js"></script>
+ -->
+<script src="resources/js/UploadAdapter.js"></script>
 <title>Insert title here</title>
 <style>
 
@@ -63,8 +67,8 @@
         <div class="Outer">
         <div class="innerOuter">
         	<form id="updateForm" method="post" action="update.co" enctype="multipart/form-data">
-                
-                <input type="hidden" id="cboardNo" name="cboardNo" value="${ c.cboardNo }">
+                <input type="hidden" id="cboardContent" name="cboardContent" value="">
+				<input type="hidden" id="cboardNo" name="cboardNo" value="${ c.cboardNo }">
                 <table align="center">
                     <tr>
                         <th><label for="title"></label></th>
@@ -99,11 +103,19 @@
 					    	</div>
 
 					    <script>
+						    function MyCustomUploadAdapterPlugin(editor) {
+						        editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+						            return new UploadAdapter(loader)
+						        }
+						    }
+					    
 					        ClassicEditor
 					            .create( document.querySelector( '#editor' ), {
-					            	ckfinder: {
-					            		uploadUrl: '${pageContext.request.contextPath}/resources/file_upload/cboard/upload'
-					            	}
+					            	language:'ko',
+					            	extraPlugins: [MyCustomUploadAdapterPlugin]
+					            })
+					            .then(editor => {
+					                window.editor = editor;
 					            })
 					            .catch( error => {
 					                console.error( error );
@@ -116,20 +128,24 @@
                 <br>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-secondary">수정하기</button>
+                    <button type="submit" class="btn btn-secondary" onclick="setContent();">수정하기</button>
                     <button type="button" class="btn btn-secondary" onclick="javascript:history.go(-1);">이전으로</button>
                 </div>
             </form>
             
             <script>
-            	function setContent() {
-            		
-            		let value = $("#editor").html();
-            		
-            		$("#cboardContent").val(value);
-            		
-            		console.log($("#cboardContent").val());
-            	}
+            function setContent() {
+        		
+        		
+        		let value = editor.getData();
+        	
+        	    editor.setData(value);
+        		
+        		
+        		$("#cboardContent").val(value);
+        		
+        		console.log($("#cboardContent").val());
+        	}
             </script>
         </div>
         </div>

@@ -34,6 +34,29 @@
 		<result column="IBOARD_NO" property="iboardNo"/>
 	</resultMap>
 	
+	<resultMap id="ireplyResultSet" type="ireply">
+		<result column="IREPLY_NO" property="ireplyNo"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="IBOARD_NO" property="iboardNo"/>
+		<result column="IREPLY_PARENT" property="ireplyParent"/>
+		<result column="IREPLY_CONTENT" property="ireplyContent"/>
+		<result column="IREPLY_INSERT" property="ireplyInsert"/>
+		<result column="IREPLY_UPDATE" property="ireplyUpdate"/>
+		<result column="IREPLY_DELETE" property="ireplyDelete"/>
+	</resultMap>
+	
+	<resultMap id="ireplyImageResultSet" type="ireplyImage">
+		<result column="IREPLY_NO" property="ireplyNo"/>
+		<result column="MEMBER_NO" property="memberNo"/>
+		<result column="MEMBER_NAME" property="memberName"/>
+		<result column="IBOARD_NO" property="iboardNo"/>
+		<result column="IREPLY_PARENT" property="ireplyParent"/>
+		<result column="IREPLY_CONTENT" property="ireplyContent"/>
+		<result column="IREPLY_INSERT" property="ireplyInsert"/>
+		<result column="IREPLY_UPDATE" property="ireplyUpdate"/>
+		<result column="IREPLY_DELETE" property="ireplyDelete"/>
+	</resultMap>
+	
 	<insert id="insertBoard" parameterType="intro">
 		INSERT INTO IBOARD(
 			IBOARD_NO,
@@ -46,7 +69,7 @@
 				#{iboardTitle},
 				#{iboardContent},
 				#{iboardWriter},
-				#{projectNo}
+				2
 		)
 	</insert>
 	
@@ -193,33 +216,63 @@
     	 WHERE IBOARD_NO = #{iboardNo}
     </select>
     
-      <update id="deleteForm" parameterType="_int">
+     <update id="deleteForm" parameterType="_int">
   		UPDATE IBOARD
   		SET IBOARD_DELETE = SYSDATE
   		WHERE IBOARD_NO = #{iboardNo}
-  </update>
+  	</update>
     
-    <insert id="insertReply" parameterType="ireply">
-    	INSERT INTO IREPLY(IREPLY_NO,
-    					IBOARD_NO,
-    					MEMBER_NO,
-    					IREPLY_CONTENT,
-    					IREPLY_INSERT)
-    				VALUES(SEQ_IREPLY.NEXTVAL,
-    					#{iboardNo},
-    					#{memberNo},
-    					#{ireplyContent},
-    					SYSDATE)
-    </insert>
+   <select id="selectReplyList" parameterType="_int" resultMap="ireplyImageResultSet">
+  	SELECT I.IREPLY_NO AS "IREPLY_NO"
+  		, M.MEMBER_NO AS "MEMBER_NO"
+  		, M.MEMBER_NAME AS "MEMBER_NAME"
+  		, I.IREPLY_CONTENT AS "IREPLY_CONTENT"
+  		, TO_CHAR(I.IREPLY_INSERT, 'YYYY-MM-DD') AS "IREPLY_INSERT"
+  		FROM IREPLY I, MEMBER M
+  		WHERE M.MEMBER_NO = I.MEMBER_NO
+  		AND I.IREPLY_DELETE IS NULL
+  		AND I.IBOARD_NO = #{iboardNo}
+  		ORDER BY I.IREPLY_NO DESC
+   </select>
     
-    <insert id="insertReplies" parameterType="ireply">
-    	INSERT INTO REPLY(IREPLY_NO,
-    					IBOARD_NO,
-    					MEMBER_NO,
-    					IREPLY_CONTENT,
-    					IREPLY_INSERT,
-    					IREPLY_PARENT
-    	)
-    </insert>
+   <insert id="insertReply" parameterType="ireply">
+  	INSERT INTO IREPLY(IREPLY_NO
+  					, IREPLY_CONTENT
+  					, IBOARD_NO
+  					, MEMBER_NO
+  					, IREPLY_INSERT)
+  			VALUES(SEQ_IREPLY.NEXTVAL
+  					, #{ireplyContent}
+  					, #{iboardNo}
+  					, #{memberNo}
+  					, SYSDATE)
+  </insert>
+  
+     <update id="deletereply" parameterType="_int">
+  		UPDATE IREPLY
+  		   SET IREPLY_DELETE = SYSDATE
+  		 WHERE IREPLY_NO = #{ireplyNo}
+  	</update>
+  
+  	<update id="updatereply" parameterType="ireply">
+  		UPDATE IREPLY
+  		   SET IREPLY_CONTENT = #{ireplyContent},
+  		   	   IREPLY_INSERT = SYSDATE
+  		 WHERE IREPLY_NO = #{ireplyNo}
+  	</update>
+  	
+  	<select id="selectTopList" resultMap="introResultSet">
+  				SELECT ROWNUM, B.*
+		  FROM (SELECT IBOARD_NO
+		             , IBOARD_TITLE
+		             , IBOARD_WRITER
+		             , IBOARD_VIEWS
+		             , TO_CHAR(IBOARD_INSERT, 'YYYY-MM-DD') AS "IBOARD_INSERT"
+		          FROM IBOARD
+		         WHERE IBOARD_DELETE IS NULL
+		         ORDER BY COUNT DESC) B
+		 WHERE ROWNUM BETWEEN 1 AND 5
+  	</select>
+  	
 </mapper>
 	

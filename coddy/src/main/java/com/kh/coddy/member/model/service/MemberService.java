@@ -9,7 +9,6 @@ import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
-import com.kh.coddy.member.model.vo.BoardTable;
 import com.kh.coddy.member.model.vo.Member;
 
 public interface MemberService {
@@ -51,12 +50,31 @@ public interface MemberService {
 	// 이제 db에 등록된 이메일로 보내주기 위해 가져옴
 	String findEmail(Member findMember);
 
+	int uploadFile(int memberNo);
+	
 	// iboard 카운트 조회
-	int selectListCounti();
+	int selectListCounti(int memberNo);
 
+	// iboard 전체 조회
+	ArrayList<IBoard> selectListi(PageInfo pi, int memberNo);
 
+	// Recruitmet 카운트 조회
+	int selectListCountr(int memberNo);
 
+	// Recruitmet 전체 조회
+	ArrayList<Recruitment> selectListr(PageInfo pi, int memberNo);
 
+	// cboard 카운트 조회
+	int selectListCountc(int memberNo);
 
+	// cboard 전체 조회
+	ArrayList<Recruitment> selectListc(PageInfo pi, int memberNo);
 
+	// fboard 카운트 조회
+	int selectListCountf(int memberNo);
+
+	// fboard 전체 조회
+	ArrayList<Recruitment> selectListf(PageInfo pi, int memberNo);
+
+	int uploadFile(int memberNo);
 }

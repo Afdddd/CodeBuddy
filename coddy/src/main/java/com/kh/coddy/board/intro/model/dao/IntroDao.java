@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
+import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.job.model.vo.HSearch;
@@ -85,11 +86,6 @@ public class IntroDao {
 		
 	}
 
-	public int insertReply(SqlSessionTemplate sqlSession, Ireply r) {
-		
-		return sqlSession.insert("introMapper.insertWish", r);
-	}
-
 	public int plusView(SqlSessionTemplate sqlSession, int ino) {
 		
 		return sqlSession.update("introMapper.plusView", ino);
@@ -114,6 +110,31 @@ public class IntroDao {
 	public int deleteForm(SqlSessionTemplate sqlSession, int iboardNo) {
 		
 		return sqlSession.update("introMapper.deleteForm", iboardNo);
+	}
+
+	public ArrayList<IreplyImage> selectReplyList(SqlSessionTemplate sqlSession, int iboardNo) {
+		
+		return (ArrayList)sqlSession.selectList("introMapper.selectReplyList", iboardNo);
+	}
+	
+	public int insertReply(SqlSessionTemplate sqlSession, Ireply r) {
+		
+		return sqlSession.insert("introMapper.insertReply", r);
+	}
+
+	public int deletereply(SqlSessionTemplate sqlSession, int ireplyNo) {
+		
+		return sqlSession.update("introMapper.deletereply", ireplyNo);
+	}
+
+	public int updatereply(SqlSessionTemplate sqlSession, Ireply r) {
+		
+		return sqlSession.update("introMapper.updatereply", r);
+	}
+
+	public ArrayList<IBoard> selectTopList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("introMapper.selectTopList");
 	}
 
 

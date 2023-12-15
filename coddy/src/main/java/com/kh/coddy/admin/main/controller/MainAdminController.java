@@ -15,13 +15,4 @@ public class MainAdminController {
 		if(((Member)(session.getAttribute("loginMember"))).getMemberId().equals("admin")) { return "admin/adminMain"; }
 		else { session.setAttribute("alertMsg", "관리자만 접근 가능합니다."); return "redirect:/"; }
 	}
-	
-	/* 나중에 삭제할것 */
-	@GetMapping(value="adminRegist.me") public String adminRegistMember(HttpSession session) { 
-		if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "관리자만 접근가능합니다."); return "redirect:/"; }
-		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인 먼저 해주세요."); return "redirect:/"; }
-		if(((Member)(session.getAttribute("loginMember"))).getMemberId().equals("admin")) { return "admin/adminRegistMember"; }
-		else { session.setAttribute("alertMsg", "관리자만 접근 가능합니다."); return "redirect:/"; }
-	}
-	/* 여기까지 삭제할것 */
 }
