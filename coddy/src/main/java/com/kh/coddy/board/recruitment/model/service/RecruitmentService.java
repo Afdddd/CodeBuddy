@@ -33,8 +33,7 @@ public interface RecruitmentService {
 	ArrayList<Rattachment> selectRecent();
 	Recruitment selectRecruitment(int rno);
 	Project getProject(Recruitment r);	
-	int getApply(ChatMember cm);
-	int insertApply(ChatMember cm, int maxPersonnel);
+	
 	//프로젝트 생성
 	int createProject(Project p);
 }

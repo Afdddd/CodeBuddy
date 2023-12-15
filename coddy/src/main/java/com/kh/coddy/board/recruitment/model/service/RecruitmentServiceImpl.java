@@ -119,20 +119,7 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	public Project getProject(Recruitment r) {
 		return rDao.getProject(sqlSession, r);
 	}
-	@Override
-	public int getApply(ChatMember cm) {
-		return rDao.getApply(sqlSession, cm);
-	}
-	@Override
-	public int insertApply(ChatMember cm, int maxPersonnel) {
-		int apply = getApply(cm); 
-		int result = 0;
-		if(apply<maxPersonnel) {
-			result = rDao.insertApply(sqlSession, cm);
-			log.info("result={}",result);
-		}
-		return result;
-	}
+	
 	
 	
 	

@@ -52,6 +52,8 @@ public interface MemberService {
 
 	// iboard 카운트 조회
 	int selectListCounti();
+	
+	int uploadFile(int memberNo);
 
 	int uploadFile(int memberNo);
 }

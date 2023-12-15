@@ -87,12 +87,6 @@ public class RecruitmentDao {
 	public Project getProject(SqlSessionTemplate sqlSession,Recruitment r) {
 		return sqlSession.selectOne("recruitmentMapper.getProject",r);
 	}
-	public int getApply(SqlSessionTemplate sqlSession, ChatMember cm) {
-		return sqlSession.selectOne("recruitmentMapper.getApply",cm);
-	}
-	public int insertApply(SqlSessionTemplate sqlSession, ChatMember cm) {
-		return sqlSession.insert("recruitmentMapper.insertApply",cm);
-	}
 	
 		
 }
