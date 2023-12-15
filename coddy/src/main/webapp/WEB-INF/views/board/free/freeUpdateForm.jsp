@@ -13,7 +13,7 @@
 </head>
 <body>
         
-    <jsp:include page="../common/header.jsp" />
+<jsp:include page="../../common/header.jsp" />
 
     <div class="content">
         <br><br>
@@ -21,16 +21,16 @@
             <h3 style="color:#5271FF;">수정</h3>
             <br>
 
-            <form id="freeUpdateForm" method="post" action="freeUpdate.bo" enctype="multipart/form-data">
-            	<input type="hidden" name="fBoardNo" value="${ requestScope.b.fBoardNo }">
+            <form id="freeUpdateForm" method="post" action="update.fr" enctype="multipart/form-data">
+            	<input type="hidden" name="fBoardNo" value="${ requestScope.f.fBoardNo }">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" value="${ requestScope.b.fBoardTitle }" name="boardTitle" required></td>
+                        <td><input type="text" id="title" class="form-control" value="${ requestScope.f.fBoardTitle }" name="fboardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ requestScope.b.fBoardWriter }" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${ requestScope.f.fBoardWriter }" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
@@ -51,7 +51,7 @@
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required>${ requestScope.b.boardContent }</textarea></td>
+                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="fboardContent" required>${ requestScope.f.fboardContent }</textarea></td>
                     </tr>
                 </table>
                 <br>
@@ -66,7 +66,6 @@
 
     </div>
     
-    <jsp:include page="../common/footer.jsp" />
-    
+        <jsp:include page="../../common/footer.jsp" />    
 </body>
 </html>

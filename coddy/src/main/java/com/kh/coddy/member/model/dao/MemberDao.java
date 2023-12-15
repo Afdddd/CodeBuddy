@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.coddy.board.intro.model.vo.IBoard;
+import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.vo.Member;
@@ -44,7 +45,7 @@ public class MemberDao {
 
 	public int selectListCounti(SqlSessionTemplate sqlSession, int memberNo) {
 		
-		return sqlSession.selectOne("memberMapper.selectListCounti");
+		return sqlSession.selectOne("memberMapper.selectListCounti" ,memberNo);
 	}
 	
 	public ArrayList<IBoard> selectListi(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
@@ -56,9 +57,54 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectListi", memberNo, rowBounds);
 	}
+	
+	public int selectListCountr(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.selectOne("memberMapper.selectListCountr" ,memberNo);
+	}
+	
+	public ArrayList<Recruitment> selectListr(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+	
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectListr", memberNo, rowBounds);
+	}
+	
+	public int selectListCountc(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.selectOne("memberMapper.selectListCountc" ,memberNo);
+	}
+	
+	public ArrayList<Recruitment> selectListc(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectListc", memberNo, rowBounds);
+	}
+	
+	public int selectListCountf(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("memberMapper.selectListCountf" ,memberNo);
+	}
+	
+	public ArrayList<Recruitment> selectListf(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+		
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectListf", memberNo, rowBounds);
+		
+	}
 
 	
-
+	
 	
 
 	

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
+import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
@@ -42,9 +43,6 @@ public interface IntroService {
 	// 좋아요 넣기
 	String insertWish(Likes iw);
 
-	// 댓글 작성용
-	int insertReply(Ireply r);
-
 	// 상세조회 조회수 증가
 	int plusView(int ino);
 
@@ -60,10 +58,20 @@ public interface IntroService {
 	// 게시판 글 삭제
 	int deleteForm(int iboardNo);
 
-	
+	// 댓글 조회용
+	ArrayList<IreplyImage> selectReplyList(int iboardNo);
 
-	
+	// 댓글 작성용
+	int insertReply(Ireply r);
 
+	// 댓글 삭제용
+	int deletereply(int ireplyNo);
+	
+	// 댓글 수정용
+	int updatereply(Ireply r);
+
+	// 인기게시글
+	ArrayList<IBoard> selectTopList();
 	
 	
 	

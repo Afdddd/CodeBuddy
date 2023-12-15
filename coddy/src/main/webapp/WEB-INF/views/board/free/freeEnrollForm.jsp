@@ -28,15 +28,15 @@
             <p class="subtitle">무엇이든 작성해 보아요.</p>
             <br>
 
-            <form id="freeEnrollForm" method="post" action="freeInsert.bo" enctype="multipart/form-data">
+            <form id="freeEnrollForm" method="post" action="insert.fr" enctype="multipart/form-data">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" name="fBoardTitle" required></td>
+                        <td><input type="text" id="fboardTitle" class="form-control" name="fboardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginUser.userId }" name="fBoardWriter" readonly></td>
+                        <td><input type="text" id="fboardWriter" class="form-control" value="${ sessionScope.loginUser.userId }" name="fboardWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
@@ -44,7 +44,7 @@
                     </tr>
                     <tr>
                         <th><label for="content">내용</label></th>
-                        <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="boardContent" required></textarea></td>
+                        <td><textarea id="fboardContent" class="form-control" rows="10" style="resize:none;" name="fboardContent" required></textarea></td>
                     </tr>
                 </table>
                 <br>
@@ -57,7 +57,9 @@
         </div>
         <br><br>
 
-    </div>    
+    </div>  
+    
+    <jsp:include page="../../common/footer.jsp" />  
 
 </body>
 </html>

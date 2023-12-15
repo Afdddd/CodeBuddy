@@ -159,7 +159,6 @@
    width:fit-content; 
    margin:auto;
   }
-  
     </style>
   </head>
   <body>
@@ -221,22 +220,22 @@
 		<br>
 		<table id="table">
 			<thead>
-		    	<tr>
+			    <tr>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">번호</th>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">제목</th>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">글쓴이</th>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">일시</th>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">조회수</th>
-		    	</tr>
-		    </thead>
-		    <tbody>
+			    </tr>
+			</thead>
+			<tbody>
 		      <c:forEach var="i" items="${ requestScope.list }">
 		    <tr>
-		        <td class="center, ino" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardNo}</td>
-		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardTitle}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardWriter}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardInsert}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardViews}</td>   
+		        <td class="center, fno" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.fboardNo}</td>
+		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.fboardTitle}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.fboardWriter}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.fboardInsert}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.fboardViews}</td>   
 		    </tr>
 			  </c:forEach>
 			</tbody>
@@ -249,14 +248,15 @@
 				
 				$("#table>tbody>tr").click(function(){
 					
-					let ino = $(this).children(".ino").text();
+					let fno = $(this).children(".fno").text();
 					
-					location.href = "introDetail.bo?ino=" + ino;
+					location.href = "detail.fr?fno=" + fno;
 				
 				});
 				
 				
 			});
+			
 		</script>
 		
   <div id="pagingArea">
@@ -270,7 +270,7 @@
                 </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.io?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                      <a class="page-link" href="written.fo?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
                     </li>
                   </c:otherwise>
               </c:choose>
@@ -279,7 +279,7 @@
                           end="${ requestScope.pi.endPage }"
                           step="1">
                   <li class="page-item">
-                    <a class="page-link" href="written.io?cpage=${ p }">${ p }</a>
+                    <a class="page-link" href="written.fo?cpage=${ p }">${ p }</a>
                   </li>
               </c:forEach>
                 
@@ -291,7 +291,7 @@
                   </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.io?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                      <a class="page-link" href="written.fo?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
                     </li>
                   </c:otherwise>
                 </c:choose>

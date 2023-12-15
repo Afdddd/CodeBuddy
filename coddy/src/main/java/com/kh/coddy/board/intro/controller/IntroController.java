@@ -1,7 +1,6 @@
 package com.kh.coddy.board.intro.controller;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystemNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -9,11 +8,9 @@ import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,28 +19,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.coddy.board.intro.model.service.IntroService;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
+import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
-import com.kh.coddy.board.job.model.vo.Hattachment;
-import com.kh.coddy.board.job.model.vo.Hboard;
-import com.kh.coddy.board.job.model.vo.Hrelation;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
-import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.controller.TagsController;
-import com.kh.coddy.common.vo.Geo;
 import com.kh.coddy.common.vo.PageInfo;
-import com.kh.coddy.member.model.vo.Company;
 import com.kh.coddy.member.model.vo.Member;
 
+import lombok.extern.slf4j.Slf4j;
 
-@Controller
+
+@Controller 
 public class IntroController {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -218,7 +212,7 @@ public class IntroController {
 	}
 	
 	@PostMapping(value="deleteForm.ib")
-	public String deleteForm(HttpSession session, Model model, String filePath, int ino) {
+	public String deleteForm(HttpSession session, Model model, int ino) {
 		
 		if(session.getAttribute("loginMember") == null) { 
 			session.setAttribute("alertMsg", "로그인을 먼저해주세요."); 
@@ -249,13 +243,61 @@ public class IntroController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("insertReply.bo")
-	public String insertReply(Ireply r, Model model) {
+	@RequestMapping(value = "ilist.bo", produces = "application/json; charset=UTF-8")
+	public String ajaxSelectReplyList(int ino) {
+		
+		ArrayList<IreplyImage> list = introService.selectReplyList(ino);
+		for(IreplyImage ir: list) {
+			ir.setMemberNo(String.format("%08d" ,Integer.parseInt(ir.getMemberNo())));
+		}
+		
+		return new Gson().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "iinsert.bo", produces = "text/html; charset=UTF-8")
+	public String ajaxInsertReply(Ireply r) {
 		
 		int result = introService.insertReply(r);
-		return result > 0 ? "success" : "fail"; 
+		
+		return (result > 0)? "success" : "fail";
 		
 	}
 	
-
+	@ResponseBody
+	@RequestMapping(value = "idelete.bo", produces = "text/html; charset=UTF-8")
+	public String ajaxDeleteReply(int ireplyNo)	{
+		
+		
+		int result = introService.deletereply(ireplyNo);
+		
+		return (result > 0)? "success" : "error";
+	}
+	
+	
+	@RequestMapping(value = "iupdate.bo")
+	@ResponseBody
+	public String ajaxUpdateReply(int ireplyNo, String ireplyContent) {
+		log.info("sdsd");
+		Ireply r = new Ireply();
+		r.setIreplyNo(ireplyNo);
+		r.setIreplyContent(ireplyContent);
+		
+		int result = introService.updatereply(r);
+		log.info("result={}",result);
+		
+		return (result > 0)? "success" : "error";
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "topList.io", produces = "application/json; charset=UTF-8")
+	public String ajaxTopBoardList() {
+		
+		ArrayList<IBoard> list = introService.selectTopList();
+		
+		return new Gson().toJson(list);
+	}
+	
+	
 }

@@ -57,16 +57,50 @@ public class MemberServiceImpl implements MemberService{
 	@Override public int findPwd(Member findMember) { return memberDao.findPwd(sqlSession, findMember); }
 	@Override public int setNewPassword(Member newMember) { return memberDao.setNewPassword(sqlSession, newMember); }
 	@Override public String findEmail(Member findMember) { return memberDao.findEmail(sqlSession, findMember); }
+	
 	@Override
 	public int selectListCounti(int memberNo) {
 		
 		return memberDao.selectListCounti(sqlSession, memberNo);
 	}
 	@Override
-	public ArrayList<IBoard> selectListi(PageInfo pi,int memberNo) {
+	public ArrayList<IBoard> selectListi(PageInfo pi, int memberNo) {
 		
 		return memberDao.selectListi(sqlSession, pi, memberNo);
 	}
+	
+	@Override
+	public int selectListCountr(int memberNo) {
+		
+		return memberDao.selectListCountr(sqlSession, memberNo);
+	}
+	@Override
+	public ArrayList<Recruitment> selectListr(PageInfo pi, int memberNo) {
+		
+		return memberDao.selectListr(sqlSession, pi, memberNo);
+	}
+	@Override
+	public int selectListCountc(int memberNo) {
+		
+		return memberDao.selectListCountc(sqlSession, memberNo);
+	}
+	@Override
+	public ArrayList<Recruitment> selectListc(PageInfo pi, int memberNo) {
+		
+		return memberDao.selectListc(sqlSession, pi, memberNo);
+	}
+	@Override
+	public int selectListCountf(int memberNo) {
+		
+		return memberDao.selectListCountf(sqlSession, memberNo);
+	}
+	@Override
+	public ArrayList<Recruitment> selectListf(PageInfo pi, int memberNo) {
+		
+		return memberDao.selectListf(sqlSession, pi, memberNo);
+	}
+	
+	
 	
 
 	

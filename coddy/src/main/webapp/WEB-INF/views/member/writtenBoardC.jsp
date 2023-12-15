@@ -158,8 +158,9 @@
    #pagingArea{
    width:fit-content; 
    margin:auto;
-  }
+  	}
   
+  	
     </style>
   </head>
   <body>
@@ -193,17 +194,17 @@
 
 				<div class="wrap">
 				      <div class="menu2">
-				        <div class="menu_item"><a href="written.ro">모집게시판</a></div>
+				         <div class="menu_item"><a href="written.ro">모집게시판</a></div>
 				        <div class="menu_item"><a href="written.co">코드리뷰게시판</a></div>
 				        <div class="menu_item"><a href="written.fo">자유게시판</a></div>
 				        <div class="menu_item"><a href="written.io">소개게시판</a></div>
 				      </div>
 				    </div>
 				    <br><br>
-		
-		
+		<form>
+		 
 		<span> ▷ 총 ${requestScope.listCount}개의 게시물이 있습니다. </span>
-		<!-- 
+		<!--
 		<span class="right";> 
 		            <span class="grey"; id="strong";>SELECT</span>
 		    <select>
@@ -221,22 +222,22 @@
 		<br>
 		<table id="table">
 			<thead>
-		    	<tr>
+			    <tr>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">번호</th>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">제목</th>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">글쓴이</th>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">일시</th>
 			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">조회수</th>
-		    	</tr>
-		    </thead>
-		    <tbody>
+			    </tr>
+			</thead>
+			<tbody>
 		      <c:forEach var="i" items="${ requestScope.list }">
 		    <tr>
-		        <td class="center, ino" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardNo}</td>
-		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardTitle}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardWriter}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardInsert}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.iboardViews}</td>   
+		        <td class="center, cno" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardNo}</td>
+		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardTitle}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardWriter}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardInsert}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardViews}</td>   
 		    </tr>
 			  </c:forEach>
 			</tbody>
@@ -249,14 +250,15 @@
 				
 				$("#table>tbody>tr").click(function(){
 					
-					let ino = $(this).children(".ino").text();
+					let cno = $(this).children(".cno").text();
 					
-					location.href = "introDetail.bo?ino=" + ino;
+					location.href = "detail.co?cno=" + cno;
 				
 				});
 				
 				
 			});
+			
 		</script>
 		
   <div id="pagingArea">
@@ -270,7 +272,7 @@
                 </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.io?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                      <a class="page-link" href="written.co?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
                     </li>
                   </c:otherwise>
               </c:choose>
@@ -279,7 +281,7 @@
                           end="${ requestScope.pi.endPage }"
                           step="1">
                   <li class="page-item">
-                    <a class="page-link" href="written.io?cpage=${ p }">${ p }</a>
+                    <a class="page-link" href="written.co?cpage=${ p }">${ p }</a>
                   </li>
               </c:forEach>
                 
@@ -291,7 +293,7 @@
                   </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.io?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                      <a class="page-link" href="written.co?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
                     </li>
                   </c:otherwise>
                 </c:choose>
@@ -303,7 +305,7 @@
            
           </div>
         </div>
-      
+     
     <jsp:include page="../common/footer.jsp" />	
   </body>
 </html>
