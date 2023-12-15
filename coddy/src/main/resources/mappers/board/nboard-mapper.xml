@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="nboardMapper">
-	<!-- NBOARD resultMap -->
+	<!-- NBOARD resultMap 
 	<resultMap id="nboardResultSet" type="nboard">
 	    <result column="NBOARD_NO" property="nboardNo"/>
 	    <result column="NBOARD_TITLE" property="nboardTitle"/>
@@ -11,8 +11,8 @@
 	    <result column="NBOARD_DELETE" property="nboardDelete"/>
 	    <result column="NBOARD_VIEWS" property="nboardViews"/>
 	</resultMap>
-	
-	<!-- NATTACHMENT resultMap -->
+	-->
+	<!-- NATTACHMENT resultMap
 	<resultMap id="nattachmentResultMap" type="nattachment">
 	    <result column="NATTACHMENT_NO" property="nattachmentNo"/>
 	    <result column="NBOARD_NO" property="nboardNo"/>
@@ -22,15 +22,15 @@
 	    <result column="NATTACHMENT_INSERT" property="nattachmentInsert"/>
 	    <result column="NATTACHMENT_LEVEL" property="nattachmentLevel"/>
 	</resultMap>
-	
+	 -->
 	<!-- NBOARD insert -->
-	<insert id="insertNboard" parameterType="nboard">
+	<insert id="insertBoard" parameterType="nboard">
 	    INSERT INTO NBOARD (NBOARD_NO, NBOARD_TITLE, NBOARD_CONTENT, NBOARD_INSERT, NBOARD_UPDATE, NBOARD_DELETE, NBOARD_VIEWS)
 	    VALUES (SEQ_NBOARD.NEXTVAL, #{nboardTitle}, #{nboardContent}, #{nboardInsert}, #{nboardUpdate}, #{nboardDelete}, #{nboardViews})
 	</insert>
 	
 	<!-- NBOARD update -->
-	<update id="updateNboard" parameterType="nboard">
+	<update id="updateBoard" parameterType="nboard">
 	    UPDATE NBOARD
 	    SET NBOARD_TITLE = #{nboardTitle},
 	        NBOARD_CONTENT = #{nboardContent},
@@ -42,7 +42,7 @@
 	</update>
 	
 	<!-- NBOARD delete -->
-	<update id="deleteNboard" parameterType="_int">
+	<update id="deleteBoard" parameterType="_int">
 	    UPDATE NBOARD SET NBOARD_DELETE = SYSDATE WHERE NBOARD_NO = #{nboardNo} AND NBOARD_DELETE IS NULL
 	</update>
 	
@@ -50,6 +50,28 @@
 	<select id="selectNboard" parameterType="_int" resultMap="nboardResultSet">
 	    SELECT * FROM NBOARD WHERE NBOARD_NO = #{nboardNo} AND NBOARD_DELETE IS NULL
 	</select>
+	
+	<!-- NBOARD selectList -->
+	<select id="selectList" resultMap="nboardResultSet">
+		SELECT NBOARD_NO
+		     , NBOARD_TITLE
+		     , NBOARD_VIEWS
+		     , TO_CHAR(NBOARD_INSERT, 'YYYY-MM-DD') AS "NBOARD_INSERT"
+		  FROM NBOARD
+		 ORDER BY NBOARD_NO DESC
+	</select>
+	
+	<!-- NBOARD selectListCount -->	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM NBOARD WHERE NBOARD_DELETE IS NULL
+	</select>   
+	
+	<update id="increaseCount" parameterType="_int">
+		UPDATE NBOARD
+		   SET NBOARD_VIEWS = NBOARD_VIEWS + 1
+		 WHERE NBOARD_NO = #{nboardNo} AND NBOARD_DELETE IS NULL
+	</update> 
 	
 	<!-- NATTACHMENT selectList -->
 	<select id="selectNattachmentList" parameterType="_int" resultMap="nattachmentResultMap">

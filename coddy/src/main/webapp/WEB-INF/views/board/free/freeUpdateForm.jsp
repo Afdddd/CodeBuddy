@@ -31,6 +31,7 @@
                     <tr>
                         <th><label for="writer">작성자</label></th>
                         <td><input type="text" id="writer" class="form-control" value="${ requestScope.f.fBoardWriter }" readonly></td>
+
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>
@@ -48,7 +49,9 @@
 								<input type="hidden" name="changeName" value="${ requestScope.b.changeName }">
                             </c:if>
                         </td>
+
                     </tr>
+
                     <tr>
                         <th><label for="content">내용</label></th>
                         <td><textarea id="content" class="form-control" rows="10" style="resize:none;" name="fboardContent" required>${ requestScope.f.fboardContent }</textarea></td>
@@ -61,6 +64,8 @@
                     <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1);">이전으로</button>
                 </div>
             </form>
+            
+            
         </div>
         <br><br>
 
