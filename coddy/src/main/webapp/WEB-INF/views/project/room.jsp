@@ -441,7 +441,7 @@
             </button>            
         </div>
         <div id="map_area">인천광역시 계양구 계양2동 6-2 투썸플레이스</div>
-        <button id="map_button" class="button" >카카오맵</button>         
+        <button id="map_button" class="button" onclick="location.href='kakaoMap'">카카오맵</button>         
         <button id="team_info" class="button">팀원 정보</button>
         <button id="project_info" class="button">프로젝트 소개</button>
         <button id="start" class="button">시작하기</button>  

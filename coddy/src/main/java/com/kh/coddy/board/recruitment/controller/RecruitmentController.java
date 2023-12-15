@@ -44,6 +44,11 @@ public class RecruitmentController {
 	@Autowired
 	TagsController tagsController;
 	
+	@GetMapping("kakaoMap")
+	public String kakaoMap() {
+		return "project/kakaoMapTest";
+	}
+	
 	@GetMapping("detail.rec")
 	public String recruitmentDetail(int rno, HttpSession session, Model model) {
 		if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "기업은 이용 불가능한 서비스입니다."); return "redirect:/"; }
