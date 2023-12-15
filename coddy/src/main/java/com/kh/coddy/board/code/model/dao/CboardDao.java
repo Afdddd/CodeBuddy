@@ -10,6 +10,7 @@ import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Creply;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
+import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Repository
@@ -70,5 +71,9 @@ public class CboardDao {
 		return (ArrayList)sqlSession.selectList("cboardMapper.selectTopBoardList");
 	}
 
+	public ArrayList<Prelation> getTagInfo(SqlSessionTemplate sqlSession, Cboard c) {
+		
+		return (ArrayList)sqlSession.selectList("cboardMapper.getTagInfo", c);
+	}
 	
 }

@@ -13,6 +13,7 @@ import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Creply;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
+import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.common.vo.PageInfo;
 @Service
 public class CboardServiceImpl implements CboardService {
@@ -77,4 +78,9 @@ public class CboardServiceImpl implements CboardService {
 		return boardDao.selectTopBoardList(sqlSession);
 	}
 	
+	@Override
+	public ArrayList<Prelation> getTagInfo(Cboard c) {
+		
+		return boardDao.getTagInfo(sqlSession, c);
+	}
 }

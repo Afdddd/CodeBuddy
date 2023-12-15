@@ -29,19 +29,14 @@
 <jsp:include page="../../common/header.jsp" />
 
     <div class="content">
-        <br><br>
         <div class="innerOuter" style="padding:5% 10%;">
             <h3 style="color:#5271FF;">코드리뷰</h3>
             
-           
             <br>
             <br>
             <thead>
-            <div class="codeList" align="left">
-			    <a href="list.co?cpage=${requestScope.pi.currentPage}&sort=createdAtDesc">• 최신순</a>
-			    <a href="list.co?cpage=${requestScope.pi.currentPage}&sort=mostAnswers">• 답변많은순</a>
-			    <a href="list.co?cpage=${requestScope.pi.currentPage}&sort=mostLikes">• 좋아요순</a>
-			     <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+            <div>
+			   <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
             <c:if test="${ not empty sessionScope.loginMember }"> 
 	            <a class="btn" style="float:right; color:white; background:#5271FF; padding:6px;" 
 	            							href="enrollForm.co">
@@ -49,6 +44,7 @@
 	            </a>
 	        </c:if>
 			</div>
+            <br>
             <br>
                  
             <table id="cboardList" class="table table-hover" align="center">
@@ -136,23 +132,57 @@
             <br clear="both"><br>
 
             <form id="searchForm" action="" method="get" align="center">
-                <div class="select">
-                    <select class="custom-select" name="condition">
-                        <option value="writer">작성자</option>
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                    </select>
+                <div style="float: center; display: flex; margin-top: 2%; margin-bottom: 2%;">
+                            <select name="hboardSort" id="hboardSort">
+                                <option value="new" selected>최신순</option>
+                                <option value="old">댓글많은순</option>
+                                <option value="view">조회순</option>
+                                <option value="salary">좋아요순</option>
+                            </select>
+                            &nbsp;
+                            <input type="search" class="form-control form-control-lg" id="hboardSearch" name="keyword">
+                            &nbsp;&nbsp;
+                            <span onclick="onSearch(1);" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
                 </div>
-                <div class="text">
-                    <input type="text" class="form-control" name="keyword">
-                </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
             </form>
             <br><br>
         </div>
         <br><br>
 
     </div>
+
+	<script>
+	    $(function(){
+	      $(".card").css("display", "inline-block");
+	      $(".container").css("width","0%");
+	    });
+	    
+	    $(document).ready(function() {
+	        $("#cboardSearch").val(getParameter("search"));
+	        $("#cboardSort").val(getParameter("sort"));
+	        tagifyAll.addTags(getParameter("tag"));
+	    })
+	   
+	    
+	   function onSearch() {
+	        let cpage = 1;
+	        let search = $("#cboardSearch").val();
+	        let sort = $("#cboardSort").val();
+	        let tag = $("#tagAllName").val();
+	        tag = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tag, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+	        location.href='list.co?cpage='+cpage+'&search='+search+'&sort='+sort+'&tag='+tag;
+	   }
+	   function getParameter(name) {
+	       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+	       var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+	       return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+	   }
+	   
+	   function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
+	   
+	</script>
+
+<jsp:include page="../../common/footer.jsp" />
 
 </body>
 </html>
