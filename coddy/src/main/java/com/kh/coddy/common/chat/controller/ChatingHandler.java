@@ -39,6 +39,7 @@ public class ChatingHandler extends TextWebSocketHandler{
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		i++;
+		log.info("연결 성공! 현재인원 ={}",i);
 		ChatMember cm = (ChatMember)session.getAttributes().get("chatMember");
 		int maxPersonnel = (Integer)session.getAttributes().get("maxPersonnel");
 		cService.insertApply(cm, maxPersonnel);

@@ -307,16 +307,15 @@
           },
           locale: 'ko', // 한국어 설정
           timeZone: 'Asia/Seoul',
+          navLinks: true,
           selectable: true,
           droppable : true,
           editable : true,
-          dateClick:function(info){
-            console.log(info.dateStr);
-            console.dir(info);
-          },
+      
+          // 드래그로 일정 투가
           select:function(info){
-            console.log(info);
-            var title = prompt('입력할 일정:');
+            console.dir(info);
+            var title = prompt('추가할 일정:');
 
             // title 값이 있을때, 화면에 calendar.addEvent() json형식으로 일정을 추가
             if (title) {
@@ -326,7 +325,8 @@
                 end: info.end,
                 allDay: info.allDay,
                 backgroundColor:"blue",
-                textColor:"white"
+                textColor:"white",
+                projectNo : "${requestScope.p.projectNo}"
               }) 
             }
             var allEvent = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다
@@ -334,32 +334,35 @@
             var events = new Array(); // Json 데이터를 받기위한 배열 선언
             for(var i = 0; i < allEvent.length; i++){
               var obj = new Object(); // Json을 담기 위해 Object 선언
-              obj.title = allEvent[i]._def.title;  // 이벤트 명칭  ConsoleLog 로 확인 가능.
-              obj.start = allEvent[i]._instance.range.start; // 시작
-              obj.end = allEvent[i]._instance.range.end;
+              obj.title = allEvent[i]._def.title;  // 이벤트 이름
+              obj.start = allEvent[i]._instance.range.start; // 이벤트 시작 날짜
+              obj.end = allEvent[i]._instance.range.end; // 이벤트 끝 날짜
+              obj.pno = allEvent[i]._def.extendedProps.projectNo; // 프로젝트 번호
               events.push(obj);
             }
 
             var jsondata= JSON.stringify(events);
-            console.log(jsondata);
+            console.log("data : "+jsondata);
 
             $(function saveData(jsondata) {
-                  $.ajax({
-                      url: "/full-calendar/calendar-admin-update",
-                      method: "POST",
-                      dataType: "json",
-                      data: JSON.stringify(events),
-                      contentType: 'application/json',
-                  })
-                      .done(function (result) {
-                          // alert(result);
-                      })
-                      .fail(function (request, status, error) {
-                            alert("에러 발생" + error);
-                      });
-                  calendar.unselect()
-              });
-           },   
+                $.ajax({
+                    url: "insertSchedule.cal",
+                    method: "POST",
+                    dataType: "json",
+                    data: JSON.stringify(events),
+                    contentType: 'application/json',
+                })
+                    .done(function (result) {
+                      alert(result);
+                    })
+                    .fail(function (request, status, error) {
+                          alert("에러 발생" + error);
+                    });
+                calendar.unselect()
+            });
+           },
+           
+           
       });
   
     calendar.render();
@@ -448,8 +451,8 @@
       
         function connect(){
           // 웹소켓 주소
-          var wsUri = "ws://localhost:8082/coddy/chat.do";
-
+          var wsUri = "ws://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/chat.do";
+          
           // 소켓 객체 생성
           webSocket = new WebSocket(wsUri);
 
@@ -457,6 +460,8 @@
           webSocket.onopen = onOpen;
           webSocket.onmessage = onMessage;
           webSocket.onclose = onClose;
+
+          return "true";
         }
 
         // 웹소켓에 연결되었을 때 호출될 함수
@@ -561,7 +566,11 @@
         };
 
         $(function(){
-            connect();   
+
+            
+            
+            if(connect()){
+            
             updateMemberList();
             // 메세지 불러오기
             $.ajax({
@@ -588,18 +597,18 @@
 
               });  
 
-        
+            }
           });
 
           
           function updateMemberList() {
-    $.ajax({
-        url: "getMember.rec",
-        data: {
-            roomId: roomId
-        },
-        success: function (result) {
-            console.log(result);
+          $.ajax({
+              url: "getMember.rec",
+              data: {
+                  roomId: roomId
+              },
+            success: function (result) {
+                console.log(result);
 
             // Create a container to hold the new content
             let newContent = $("<div></div>");

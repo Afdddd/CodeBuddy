@@ -54,7 +54,6 @@ public class ChatController {
 	@GetMapping(value="getMember.rec", params="roomId")
 	public void getMember(@RequestParam(name="roomId") int roomId, HttpServletResponse response, HttpSession session) throws JsonIOException, IOException {
 		ArrayList<ChatMember> cList = cService.chatMemberList(roomId);
-		log.info("clist={}",cList);
 		response.setContentType("application/json; charset=utf-8");
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         gson.toJson(cList,response.getWriter());

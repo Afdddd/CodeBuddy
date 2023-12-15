@@ -576,7 +576,7 @@
               position : position,
               maxPersonnel : maxPersonnel
             },
-            success:function(result){
+            success:function(){
               location.href='room.rec?pno='+projectNo;
             },
             error:function(){
