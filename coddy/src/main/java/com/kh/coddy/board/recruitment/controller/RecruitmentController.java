@@ -80,7 +80,6 @@ public class RecruitmentController {
 	public String recruitmentInsert(Recruitment r, MultipartFile titleImg ,ArrayList<MultipartFile> img, HttpServletRequest request, Model model, String tagTechName, String[] position, int[] personnelMax) {		
 		// 게시글 insert
 		int result = rService.insertRecruitment(r);
-
 		
 		// 첨부파일 insert
 		if(result>0) {

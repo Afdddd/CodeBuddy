@@ -79,6 +79,10 @@
                         <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginMember.memberId }" name="cboardWriter" readonly></td>
                     </tr>
                     <tr>
+                        <th><label for="tag"></label></th>
+                        <td><jsp:include page="../../common/tagTech.jsp" /></td>
+                    </tr>
+                    <tr>
                         <th><label for="upfile"></label></th>
                         <td><input type="file" id="upfile" class="form-control-file border" name="upfile"></td>
                     </tr>

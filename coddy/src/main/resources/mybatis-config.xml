@@ -49,6 +49,10 @@
      	
      	<typeAlias type="com.kh.coddy.board.code.model.vo.Cboard" alias="cboard"/>
      	<typeAlias type="com.kh.coddy.board.code.model.vo.Creply" alias="creply"/>
+     	<typeAlias type="com.kh.coddy.board.code.model.vo.CLikes" alias="clikes"/>
+     	<typeAlias type="com.kh.coddy.board.code.model.vo.Csearch" alias="csearch"/>
+     	<typeAlias type="com.kh.coddy.board.code.model.vo.Crelation" alias="crelation"/>
+     	
      	
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatRoom" alias="chatRoom" />
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMessage" alias="chatMessage" />
