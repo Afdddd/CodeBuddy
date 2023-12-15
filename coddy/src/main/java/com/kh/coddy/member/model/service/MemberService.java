@@ -55,9 +55,5 @@ public interface MemberService {
 	
 	int uploadFile(int memberNo);
 
-
-
-
-
-
+	int uploadFile(int memberNo);
 }

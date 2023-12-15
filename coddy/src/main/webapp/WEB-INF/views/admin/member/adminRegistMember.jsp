@@ -6,12 +6,11 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
-	<!-- jQuery 라이브러리 -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<title>관리자 회원 추가</title>
 	</head>
-	<body>
-		<div>
+	<body class="sb-nav-fixed">
+		<jsp:include page="../common/adminMenuBar.jsp" />
+		<div id="readArea" style="display: none;">
 			<div>
 				<fieldset align="center">
 					<legend>임시 회원가입 페이지</legend>
@@ -22,10 +21,10 @@
 					설명 : <textarea name="memberInfo" id="memberInfo" cols="30" rows="10"></textarea>
 				</fieldset>
 			</div>
-			<div>
+			<div align="center">
 				<button type="button" onclick="onSign();">가입시키기</button>
+				<button type="button" onclick="location.href='/coddy'">집으로</button>
 			</div>
-			<button type="button" onclick="location.href='/coddy'">집으로</button>
 		</div>
 		<script>
 			function onSign() {
