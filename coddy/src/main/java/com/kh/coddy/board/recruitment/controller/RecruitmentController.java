@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
+import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
@@ -28,7 +29,6 @@ import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
 import com.kh.coddy.common.Pagination;
-import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.PageInfo;
@@ -270,6 +270,12 @@ public class RecruitmentController {
 	public String recentList(){
 		ArrayList<Rattachment> list = rService.selectRecent();
 		return new Gson().toJson(list);
+	}
+	
+	@GetMapping(value="updatePlace.rec")
+	@ResponseBody
+	public void updatePlace(int projectNo, String place) {
+		rService.updatePlace(new PlaceDto(projectNo, place));
 	}
 	
 	

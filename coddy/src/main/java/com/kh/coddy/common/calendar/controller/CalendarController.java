@@ -76,13 +76,12 @@ public class CalendarController {
 	        log.info("sc={}", sc);
 	        calService.insertSchedule(sc);
 	    }
-
-	    return "success";
+	    return "insertSchedule.cal";
 	}
 	
 	@DeleteMapping("deleteSchedule.cal")
 	@ResponseBody
-	public String deleteSchedule(@RequestBody List<Map<String, Object>> param){
+	public String  deleteSchedule(@RequestBody List<Map<String, Object>> param){
 		DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA);
 	    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm", Locale.KOREA);
 	    
@@ -103,7 +102,9 @@ public class CalendarController {
 	        log.info("sc={}", sc);
 	        calService.deleteSchedule(sc);
 	    }
-	    return "success";
+	    
+	    return "deleteSchedule.cal";
+
 	}
 }
 

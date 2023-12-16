@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.coddy.board.job.model.vo.Hwishlist;
+import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.RSearch;
@@ -87,6 +88,8 @@ public class RecruitmentDao {
 	public Project getProject(SqlSessionTemplate sqlSession,Recruitment r) {
 		return sqlSession.selectOne("recruitmentMapper.getProject",r);
 	}
-	
+	public int updatePlace(SqlSessionTemplate sqlSession, PlaceDto pDto) {
+		return sqlSession.update("recruitmentMapper.updatePlace",pDto);
+	}
 		
 }

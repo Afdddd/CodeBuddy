@@ -294,6 +294,12 @@
 		WHERE RECRUITMENT_NO = #{recruitmentNo}
 	</select>
 	
+	<update id="updatePlace" parameterType="pDto">
+		UPDATE PROJECT
+		SET PROJECT_LOCATION = #{place}
+		WHERE PROJECT_NO = #{projectNo}
+	</update>
+	
 	
 	
 	

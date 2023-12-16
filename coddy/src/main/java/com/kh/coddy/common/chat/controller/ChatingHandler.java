@@ -115,7 +115,7 @@ public class ChatingHandler extends TextWebSocketHandler{
 		// 메세지 입력 시 
 		else if(RoomList.get(chatRoom.getRoomId())!= null && !chatMessage.getMessage().equals("ENTER-CHAT") && !chatMessage.getMessage().equals("END-CHAT")&& chatRoom != null) {
 			// 메세지에 이름과 내용을 담는다.
-			TextMessage textMessage = new TextMessage(chatMessage.getMemberNo() + "," + chatMessage.getMemberName() + "," + chatMessage.getMessage());
+			TextMessage textMessage = new TextMessage(chatMessage.getMemberNo() + "," + chatMessage.getMemberName() + "," + chatMessage.getMessage() + "," + chatMessage.getMessageType());
 			
 			//현재 session 수
 			int sessionCount = 0;
@@ -131,6 +131,8 @@ public class ChatingHandler extends TextWebSocketHandler{
 			
 			// DB에 메세지 저장
 			int result =cService.insertMessage(chatMessage);
+			
+			
 			log.info("chatMessage = {}",chatMessage);
 			
 			if(result == 1) {

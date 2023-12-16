@@ -13,7 +13,8 @@
 		<result column="PROJECT_NO" property="roomId" />
 		<result column="MEMBER_NO" property="memberNo" />
 		<result column="MEMBER_NAME" property="memberName" />
-		<result column="CHATR_MSG" property="message" />		
+		<result column="CHATR_MSG" property="message" />	
+		<result column="CHATR_TYPE" property="messageType"/>	
 	</resultMap>
 	
 	<resultMap id="chatMemberResultMap" type="chatMember">
@@ -47,15 +48,17 @@
 		INSERT INTO CHAT_RECORD(CHATR_NO, 
 								PROJECT_NO, 
 								CHATR_SENDER, 
-								CHATR_MSG)
+								CHATR_MSG,
+								CHATR_TYPE)
 						 VALUES(SEQ_CHAT_RECORD.NEXTVAL, 
 						 		#{roomId},
 						 		#{memberNo},
-						 		#{message})
+						 		#{message},
+						 		#{messageType})
 	</insert>
 	
 	<select id="messageList" parameterType="_int" resultMap="chatMessageResultMap">
-		SELECT C.CHATR_NO, C.PROJECT_NO, M.MEMBER_NO , M.MEMBER_NAME, C.CHATR_MSG
+		SELECT C.CHATR_NO, C.PROJECT_NO, M.MEMBER_NO , M.MEMBER_NAME, C.CHATR_MSG, C.CHATR_TYPE
 		  FROM CHAT_RECORD C, MEMBER M
 		 WHERE C.CHATR_SENDER = M.MEMBER_NO
 	  	   AND C.PROJECT_NO = #{roomId}

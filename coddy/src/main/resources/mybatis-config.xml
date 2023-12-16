@@ -35,6 +35,7 @@
 		<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentState" alias="rState"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList" alias="rWishList"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RSearch" alias="rSearch"/>
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.PlaceDto" alias="pDto" />
      	
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Prelation" alias="pRelation"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Project" alias="project"/>     
@@ -54,6 +55,7 @@
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMessage" alias="chatMessage" />
      	<typeAlias type="com.kh.coddy.common.chat.model.vo.ChatMember" alias="chatMember" />
      	<typeAlias type="com.kh.coddy.common.calendar.model.vo.Schedule" alias="schedule" />
+     	
     </typeAliases>
       
     <!-- environments 영역은 제외 

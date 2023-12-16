@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.controller.RecruitmentController;
 import com.kh.coddy.board.recruitment.model.dao.RecruitmentDao;
+import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.RSearch;
@@ -118,6 +119,10 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	@Override
 	public Project getProject(Recruitment r) {
 		return rDao.getProject(sqlSession, r);
+	}
+	@Override
+	public int updatePlace(PlaceDto pDto) {
+		return rDao.updatePlace(sqlSession, pDto);
 	}
 	
 	
