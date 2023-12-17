@@ -22,15 +22,15 @@
             <br>
 
             <form id="freeUpdateForm" method="post" action="update.fr" enctype="multipart/form-data">
-            	<input type="hidden" name="fBoardNo" value="${ requestScope.f.fBoardNo }">
+            	<input type="hidden" name="fBoardNo" value="${ requestScope.f.fboardNo }">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>
-                        <td><input type="text" id="title" class="form-control" value="${ requestScope.f.fBoardTitle }" name="fboardTitle" required></td>
+                        <td><input type="text" id="title" class="form-control" value="${ requestScope.f.fboardTitle }" name="fboardTitle" required></td>
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ requestScope.f.fBoardWriter }" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${ requestScope.f.fboardWriter }" readonly></td>
 
                     </tr>
                     <tr>
@@ -38,15 +38,15 @@
                         <td>
                             <input type="file" id="upfile" class="form-control-file border" name="reupfile">
                             
-                            <c:if test="${ not empty requestScope.b.originName }">
+                            <c:if test="${ not empty requestScope.f.fboardOrigin }">
 	                            현재 업로드된 파일 : 
-	                            <a href="${ requestScope.b.changeName }" 
-	                               download="${ requestScope.b.originName }">
-									${ requestScope.b.originName }
+	                            <a href="${ requestScope.f.fboardChange }" 
+	                               download="${ requestScope.f.fboardOrigin }">
+									${ requestScope.f.fboardOrigin }
 								</a>
 								<!-- 기존의 첨부파일이 있다라는 뜻 -->
-								<input type="hidden" name="originName" value="${ requestScope.b.originName }">
-								<input type="hidden" name="changeName" value="${ requestScope.b.changeName }">
+								<input type="hidden" name="fboardOrigin" value="${ requestScope.f.fboardOrigin }">
+								<input type="hidden" name="fboardChange" value="${ requestScope.f.fboardChange }">
                             </c:if>
                         </td>
 
@@ -60,7 +60,7 @@
                 <br>
 
                 <div align="center">
-                    <button type="submit" class="btn btn-primary">수정하기</button>
+                    <button type="submit" class="btn btn-primary">수정완료</button>
                     <button type="button" class="btn btn-danger" onclick="javascript:history.go(-1);">이전으로</button>
                 </div>
             </form>

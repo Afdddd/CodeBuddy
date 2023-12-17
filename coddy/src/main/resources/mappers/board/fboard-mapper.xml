@@ -12,6 +12,8 @@
 	    <result column="FBOARD_INSERT" property="fboardInsert"/>
 	    <result column="FBOARD_UPDATE" property="fboardUpdate"/>
 	    <result column="FBOARD_DELETE" property="fboardDelete"/>
+	    <result column="FBOARD_ORIGIN" property="fboardorigin" />
+	    <result column="FBOARD_CHANGE" property="fboardchange" />
 	    <result column="FBOARD_VIEWS" property="fboardViews"/>
 	</resultMap>
 	
@@ -40,22 +42,37 @@
 	
 	<!-- FBOARD insert -->
 	<insert id="insertBoard" parameterType="fboard">
-	    INSERT INTO FBOARD (FBOARD_NO, FBOARD_TITLE, FBOARD_CONTENT, FBOARD_WRITER, FBOARD_INSERT)
-	    VALUES (SEQ_FBOARD.NEXTVAL, #{fboardTitle}, #{fboardContent}, #{fboardWriter}, SYSDATE)
+	    INSERT INTO FBOARD (FBOARD_NO, 
+	    					FBOARD_TITLE, 
+	    					FBOARD_CONTENT, 
+	    					FBOARD_WRITER, 
+	    					FBOARD_INSERT)
+	    VALUES (SEQ_FBOARD.NEXTVAL, 
+	    		#{fboardTitle}, 
+	    		#{fboardContent}, 
+	    		#{fboardWriter}, 
+	    		SYSDATE)
 	</insert>
 	
-	<!-- FBOARD update -->
-	<update id="updateBoard" parameterType="fboard">
-	    UPDATE FBOARD
-	    SET FBOARD_TITLE = #{fboardTitle},
-	        FBOARD_CONTENT = #{fboardContent},
-	        FBOARD_WRITER = #{fboardWriter},
-	        FBOARD_UPDATE = SYSDATE,
-	        FBOARD_INSERT = #{fboardInsert},
-	        FBOARD_DELETE = #{fboardDelete},
-	        FBOARD_VIEWS = #{fboardViews}
-	    WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
-	</update>
+	<!-- FBOARD select -->
+	<select id="selectBoard" parameterType="_int" resultMap="fboardResultSet">
+	    SELECT F.FBOARD_NO, 
+	           F.FBOARD_TITLE,
+	           F.FBOARD_CONTENT,
+	    	   M.MEMBER_NAME AS "FBOARD_WRITER",
+	    	   F.FBOARD_INSERT AS "FBOARD_INSERT"
+	    	FROM FBOARD F, MEMBER M 
+	       WHERE F.FBOARD_WRITER = M.MEMBER_NO 
+	         AND F.FBOARD_NO = #{fboardNo} 
+	         AND F.FBOARD_DELETE IS NULL
+	</select>
+			
+	<!-- FBOARD selectListCount -->	
+	<select id="selectListCount" resultType="_int">
+		SELECT COUNT(*)
+		  FROM FBOARD 
+		 WHERE FBOARD_DELETE IS NULL
+	</select>   
 	
 	<!-- FBOARD selectList -->
 	<select id="selectList" resultMap="fboardResultSet">
@@ -70,36 +87,62 @@
 		 ORDER BY FBOARD_NO DESC
 	</select>
 	
-	<!-- FBOARD selectListCount -->	
-	<select id="selectListCount" resultType="_int">
-		SELECT COUNT(*)
-		  FROM FBOARD 
-		 WHERE FBOARD_DELETE IS NULL
-	</select>   
-	
 	<update id="increaseCount" parameterType="_int">
 		UPDATE FBOARD
 		   SET FBOARD_VIEWS = FBOARD_VIEWS + 1
 		 WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
-	</update>   
+	</update> 
 	
+	<!-- FBOARD update -->
+	<update id="updateBoard" parameterType="fboard">
+	    UPDATE FBOARD
+	    SET FBOARD_TITLE = #{fboardTitle},
+	        FBOARD_CONTENT = #{fboardContent},
+	        FBOARD_WRITER = #{fboardWriter},
+	        FBOARD_UPDATE = SYSDATE,
+	        FBOARD_INSERT = #{fboardInsert},
+	        FBOARD_DELETE = #{fboardDelete},
+	        FBOARD_VIEWS = #{fboardViews}
+	    WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
+	</update>
+
 	<!-- FBOARD delete -->
 	<update id="deleteBoard" parameterType="_int">
 	    UPDATE FBOARD SET FBOARD_DELETE = SYSDATE WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
 	</update>
+
+	<!-- FREPLY insert -->
+	<insert id="insertReply" parameterType="freply">
+		INSERT INTO CREPLY(FREPLY_NO
+		                , FREPLY_CONTENT
+		                , FREF_FNO
+		                , FREPLY_WRITER)
+		           VALUES(SEQ_RNO.NEXTVAL
+		                , #{freplyContent}
+		                , #{frefBoardNo}
+		                , #{freplyWriter})
+	</insert>	
 	
-	<!-- FBOARD select -->
-	<select id="selectBoard" parameterType="_int" resultMap="fboardResultSet">
-	    SELECT F.FBOARD_NO, 
-	           F.FBOARD_TITLE,
-	           F.FBOARD_CONTENT,
-	    	   M.MEMBER_NAME AS "FBOARD_WRITER",
-	    	   F.FBOARD_INSERT AS "FBOARD_INSERT"
-	    	FROM FBOARD F, MEMBER M 
-	       WHERE F.FBOARD_WRITER = M.MEMBER_NO 
-	         AND F.FBOARD_NO = #{fboardNo} 
-	         AND F.FBOARD_DELETE IS NULL
+	<!-- FREPLY select -->
+	
+	<!-- FREPLY selectListCount -->
+	
+	<!-- FREPLY selectList -->
+	<select id="selectReplyList" parameterType="_int" resultMap="freplyResultSet">
+	    SELECT FREPLY_NO
+	         , FREPLY_WRITER
+	         , FREPLY_CONTENT
+	         , TO_CHAR(FBOARD_INSERT, 'YYYY-MM-DD') AS "FBOARD_INSERT"
+	      FROM FREPLY
+	     WHERE FREPLY_FNO = #{fboardNo}
+	     ORDER BY FREPLY_NO DESC
 	</select>
+		
+	<!-- FREPLY increaseCount -->
+	<!-- FBOARD update -->
+	<!-- FREPLY delete -->
+	
+	
 
 	
 		

@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <title>Insert title here</title>
 <style>
     table * {margin:5px;}
@@ -183,9 +184,8 @@
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
 
-	            <c:if test="${ not empty sessionScope.loginMember and sessionScope.loginMember.memberNo eq requestScope.f.fboardWriter }">
-	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-	                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+	                <button class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
+	                <button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
 	                
 	                <form id="postForm" action="update.fr" method="post">
 	                	<input type="hidden" name="fno" 
@@ -204,12 +204,12 @@
 					    function deletePost() {
 					      var confirmDelete = confirm("어디 삭제 해 보시던가?");
 					      if (confirmDelete) {
-					          $("#postForm").attr("action", "delete.fr").submit();
+					          document.getElementById("postForm").action = "delete.fr";
+					          document.getElementById("postForm").submit();
 					      }
 					    }
         			</script>
 
-            	</c:if>
             </div>
             <br><br>
 

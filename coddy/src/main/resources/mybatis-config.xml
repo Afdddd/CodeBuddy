@@ -45,7 +45,7 @@
 
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Fboard" alias="fboard"/>
      	<typeAlias type="com.kh.coddy.board.free.model.vo.Freply" alias="freply"/>
-     	<typeAlias type="com.kh.coddy.board.free.model.vo.Fattachment" alias="Fattachment"/>
+     	<typeAlias type="com.kh.coddy.board.free.model.vo.Fattachment" alias="fattachment"/>
      	
      	<typeAlias type="com.kh.coddy.board.code.model.vo.Cboard" alias="cboard"/>
      	<typeAlias type="com.kh.coddy.board.code.model.vo.Creply" alias="creply"/>
