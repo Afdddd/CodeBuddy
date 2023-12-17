@@ -291,7 +291,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
 
           // 참여한 인원 불러오기
           function updateMemberList() {
-            memberList
+            
             $.ajax({
               url: "getMember.rec",
               data: {
@@ -300,10 +300,12 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
             success: function (result) {
 
               memberList = [];
+              
             
             let newContent = $("<div></div>");
 
             for (let i = 0; i < result.length; i++) {
+              console.log(result[i]);
                 let div = "";
                 if (result[i].memberNo == ${requestScope.p.projectOwner}) {
                     div = "<div class='card'>" +
@@ -328,12 +330,11 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
                 }
                 
                 newContent.append(div);
-                memberList.push(result[i].memberNo);
+                memberList = result;
             }
 
             $(".sidebar_left").html(newContent.html());
-        },
-        error: function () {}
+        }
         });
       }
             
@@ -618,20 +619,20 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
     $("#start_button").click(function(){
       if(confirm("프로젝트를 시작하시겠습니까?")){
         console.log(memberList);
-        // $.ajax({
-        //   url:"startProject.rec",
-        //   type:"get",
-        //   data:{
-        //     memberList : memberList
-        //   }
-        // })
+        $.ajax({
+          url:"startProject.rec",
+          type:"get",
+          data:{
+            memberList : JSON.stringify(memberList)
+          },
+          success : function(result){
+            console.log("성공");
+          }
+        })
       }
       
       
     })
-
-
-
 
   </script>
 </body>

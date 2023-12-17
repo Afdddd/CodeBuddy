@@ -18,6 +18,7 @@
 	</resultMap>
 	
 	<resultMap id="chatMemberResultMap" type="chatMember">
+		<result column="PROJECT_NO" property="projectNo" /> 
 		<result column="MEMBER_NO" property="memberNo" />
 		<result column="ROLE" property="role" />
 		<result column="MEMBER_NAME" property="memberName" />
@@ -89,7 +90,7 @@
 	</insert>
 	
 	<select id="chatMemberList" parameterType="_int" resultMap="chatMemberResultMap">
-		SELECT C.MEMBER_NO, C.ROLE, M.MEMBER_NAME, M.MEMBER_PHOTO_EXTEND
+		SELECT C.PROJECT_NO ,C.MEMBER_NO, C.ROLE, M.MEMBER_NAME, M.MEMBER_PHOTO_EXTEND
 		FROM CHAT_MEMBER C, MEMBER M
 		WHERE C.MEMBER_NO = M.MEMBER_NO
 		AND C.PROJECT_NO = #{projectNo}

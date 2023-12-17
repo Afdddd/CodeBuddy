@@ -4,12 +4,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
 import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
@@ -29,6 +35,7 @@ import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
 import com.kh.coddy.common.Pagination;
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.PageInfo;
@@ -274,6 +281,17 @@ public class RecruitmentController {
 	@ResponseBody
 	public void updatePlace(int projectNo, String place) {
 		rService.updatePlace(new PlaceDto(projectNo, place));
+	}
+	
+	@GetMapping(value="startProject.rec", produces="application/json")
+	public int  startProject(@RequestParam Map<String, Object> paramMap) throws ParseException, JsonMappingException, JsonProcessingException {
+		log.info("paramMap = {}",paramMap);
+		String jsonData = paramMap.get("memberList").toString();
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayList<ChatMember> memberList = mapper.readValue(jsonData, new TypeReference<ArrayList<ChatMember>>(){});
+		
+		return rService.projectStart(memberList);
+		
 	}
 	
 	

@@ -537,7 +537,6 @@
       });
 
       function getApply(projectNo, position, i, maxPersonnel){
-          console.log("getApply");
           $.ajax({
             url:"getApply.rec",
             type:"get",
@@ -546,7 +545,6 @@
               position : position
             },
             success : function(result){
-              console.log(result);
               if(result >= maxPersonnel){
                 let btn = "#position_button_" + i ;
                 $(btn).prop("disabled", true);

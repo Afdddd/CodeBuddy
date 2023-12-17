@@ -91,5 +91,13 @@ public class RecruitmentDao {
 	public int updatePlace(SqlSessionTemplate sqlSession, PlaceDto pDto) {
 		return sqlSession.update("recruitmentMapper.updatePlace",pDto);
 	}
+	public int updateProjectState(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.update("recruitmentMapper.updateProjectState",pno);
+	}
+	public int insertJoin(SqlSessionTemplate sqlSession, ArrayList<ChatMember> memberList) {
+		return sqlSession.insert("recruitmentMapper.insertJoin",memberList);
+	}
+	
+	
 		
 }

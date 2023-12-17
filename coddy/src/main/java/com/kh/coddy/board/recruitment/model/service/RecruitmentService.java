@@ -10,6 +10,7 @@ import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
+import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.vo.PageInfo;
 
 public interface RecruitmentService {
@@ -35,4 +36,5 @@ public interface RecruitmentService {
 	Project getProject(Recruitment r);	
 	int createProject(Project p);
 	int updatePlace(PlaceDto pDto);
+	int projectStart(ArrayList<ChatMember> memberList);
 }

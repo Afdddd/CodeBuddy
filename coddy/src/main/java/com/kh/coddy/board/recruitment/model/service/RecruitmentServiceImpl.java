@@ -7,13 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.kh.coddy.board.job.model.vo.Hwishlist;
-import com.kh.coddy.board.recruitment.controller.RecruitmentController;
 import com.kh.coddy.board.recruitment.model.dao.RecruitmentDao;
 import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
-import com.kh.coddy.board.recruitment.model.vo.RSearch;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
@@ -123,6 +120,18 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	@Override
 	public int updatePlace(PlaceDto pDto) {
 		return rDao.updatePlace(sqlSession, pDto);
+	}
+	@Override
+	public int projectStart(ArrayList<ChatMember> memberList) {
+		int pno = memberList.get(0).getProjectNo();
+		log.info("pno = {}",pno);
+		int result = rDao.updateProjectState(sqlSession, pno);
+		log.info("service result = {}",result);
+		if(0<result) {
+			rDao.insertJoin(sqlSession, memberList);
+			return 1;
+		}
+		return 0;		
 	}
 	
 	

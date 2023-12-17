@@ -300,9 +300,27 @@
 		WHERE PROJECT_NO = #{projectNo}
 	</update>
 	
+	<update id="updateProjectState" parameterType="_int">
+		UPDATE PROJECT
+		SET PROJECT_READY = 1
+		WHERE PROJECT_NO = #{pno}	
+	</update>
 	
+	<insert id="insertJoin" parameterType="arraylist">
+		<foreach item="item" index="index" collection="list" open="INSERT">
+			INTO JOINS (
+				JOINS_NO, 
+				MEMBER_NO, 
+				PROJECT_NO, 
+				JOINS_ROLE
+			) VALUES (
+				SEQ_JOINS.NEXTVAL,
+				#{item.memberNo},
+				#{item.projectNo},
+				#{item.role}
+			)
+			
+		</foreach>
+	</insert>
 	
-	
-	
- 
 </mapper>
