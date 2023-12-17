@@ -16,13 +16,16 @@ import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.board.job.model.vo.Hattachment;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
+import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Repository
 public class IntroDao {
 
 	public int insertBoard(SqlSessionTemplate sqlSession, IBoard i) {
+		
 		
 		return sqlSession.insert("introMapper.insertBoard", i);
 		
@@ -38,29 +41,24 @@ public class IntroDao {
 		return (ArrayList)sqlSession.selectList("introMapper.selectattachment");
 	}
 
-	public ArrayList<Prelation> getTagInfo(SqlSessionTemplate sqlSession, IBoard ib) {
-		
-		return (ArrayList)sqlSession.selectList("introMapper.getTagInfo", ib);
-	}
-
 	public int getWishList(SqlSessionTemplate sqlSession, IBoard ib) {
 		
 		return sqlSession.selectOne("introMapper.getWishList", ib);
 	}
 
-	public int selectListCount(SqlSessionTemplate sqlSession, Isearch is) {
+	public int selectListCount(SqlSessionTemplate sqlSession) {
 		
-		return sqlSession.selectOne("introMapper.selectListCount", is);
+		return sqlSession.selectOne("introMapper.selectListCount");
 	}
 
-	public ArrayList<IBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi, Isearch is) {
+	public ArrayList<IBoard> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;
 		
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("introMapper.selectList", is, new RowBounds(offset, limit));
+		return (ArrayList)sqlSession.selectList("introMapper.selectList", null, new RowBounds(offset, limit));
 
 	}
 
@@ -99,11 +97,6 @@ public class IntroDao {
 		return sqlSession.selectOne("introMapper.selectBoard", ino);
 	}
 
-	public ArrayList<Iattachment> getAttachmentList(SqlSessionTemplate sqlSession, IBoard ib) {
-	
-		return (ArrayList)sqlSession.selectList("introMapper.getAttachmentList", ib);
-	}
-
 	public int getAllWish(SqlSessionTemplate sqlSession, int iboardNo) {
 		
 		return sqlSession.selectOne("introMapper.getAllWish", iboardNo);
@@ -139,15 +132,90 @@ public class IntroDao {
 		return (ArrayList)sqlSession.selectList("introMapper.selectTopList");
 	}
 
-	public Project selectProject(SqlSessionTemplate sqlSession, IBoard ib) {
+	public ArrayList<Project> selectProject(SqlSessionTemplate sqlSession, int memberNo) {
 		
-		return sqlSession.selectOne("introMapper.selectProject", ib);
+		return (ArrayList)sqlSession.selectList("introMapper.selectProject", memberNo);
 	}
 
-	public Recruitment selectRecruitment(SqlSessionTemplate sqlSession, Project p) {
+	public ArrayList<Recruitment> selectRecruitment(SqlSessionTemplate sqlSession, ArrayList<Project> projectlist) {
 		
-		return sqlSession.selectOne("introMapper.selectRecruitment", p);
+		return (ArrayList)sqlSession.selectList("introMapper.selectRecruitment", projectlist);
 	}
+
+
+	public Recruitment selectRecruitment2(SqlSessionTemplate sqlSession, int projectNo) {
+		
+		return sqlSession.selectOne("introMapper.selectRecruitment2", projectNo);
+	}
+
+	public ArrayList<Prelation> getTagInfo2(SqlSessionTemplate sqlSession, Recruitment r) {
+		
+		return (ArrayList)sqlSession.selectList("introMapper.getTagInfo2", r); 
+	}
+
+	public ArrayList<RecruitmentState> getState(SqlSessionTemplate sqlSession, Recruitment r) {
+		
+		return (ArrayList)sqlSession.selectList("introMapper.getState",r);
+	}
+
+	public Rattachment getThumbOne(SqlSessionTemplate sqlSession, Recruitment r) {
+		
+		return sqlSession.selectOne("introMapper.getThumbOne",r);
+	}
+
+	public ArrayList<Rattachment> getAttachmentList2(SqlSessionTemplate sqlSession, Recruitment r) {
+		
+		return (ArrayList)sqlSession.selectList("introMapper.getAttachmentList2",r);
+	}
+
+	public Project getProject(SqlSessionTemplate sqlSession, Recruitment r) {
+		
+		return sqlSession.selectOne("introMapper.getProject", r);
+	}
+
+	public int updateReady(SqlSessionTemplate sqlSession, IBoard i) {
+		
+		return sqlSession.update("introMapper.updateReady", i);
+	}
+
+	public ArrayList<Iattachment> selectRecent(SqlSessionTemplate sqlSession) {
+	
+		return (ArrayList)sqlSession.selectList("introMapper.selectRecent");
+	}
+
+	public Iattachment getThumb2(SqlSessionTemplate sqlSession, IBoard ib) {
+		
+		return sqlSession.selectOne("introMapper.getThumb2",ib);
+	}
+
+	public int insertImg(SqlSessionTemplate sqlSession, Iattachment ia2) {
+		
+		return sqlSession.insert("introMapper.insertImg",ia2);
+	}
+
+	public Project selectPro(SqlSessionTemplate sqlSession, IBoard ib) {
+		
+		return sqlSession.selectOne("introMapper.selectPro", ib);
+	}
+
+	public int countLike(SqlSessionTemplate sqlSession, IBoard ib) {
+		
+		return sqlSession.selectOne("introMapper.countLike", ib);
+	}
+
+	public ArrayList<Iattachment> getAttachmentList3(SqlSessionTemplate sqlSession, IBoard ib) {
+		
+		return (ArrayList)sqlSession.selectList("introMapper.getAttachmentList3",ib);
+	}
+
+	public Recruitment selectRecruitment3(SqlSessionTemplate sqlSession, int iboardNo) {
+		
+		return sqlSession.selectOne("introMapper.selectRecruitment3", iboardNo);
+	}
+
+
+
+
 
 
 

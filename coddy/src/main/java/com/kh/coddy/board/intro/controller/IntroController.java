@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,11 +27,12 @@ import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.IreplyImage;
-import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
+import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.PageInfo;
@@ -47,21 +49,44 @@ public class IntroController {
 	@Autowired private TagsController tagsController;
 	
 	@GetMapping("introDetail.bo")
-	public String selectBoard(HttpSession session, @RequestParam(value="ino") String iboardNo, Model model) {
+	public String selectBoard(HttpSession session,@RequestParam(value="ino") String iboardNo, Model model) {
+		
+		if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "기업은 이용 불가능한 서비스입니다."); return "redirect:/"; }
+		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인부터 해주세요."); return "redirect:/"; }
 		
 		if(introService.plusView(Integer.parseInt(iboardNo)) < 1) {
 			model.addAttribute("errorMsg", "페이지 찾기에 실패함"); return "common/errorPage"; 
 		}
-		IBoard ib = introService.selectBoard(Integer.parseInt(iboardNo));
-		Iattachment it = introService.selectattachment(ib);
-		ArrayList<Iattachment> ia = introService.getAttachmentList(ib);
-		ArrayList<Prelation> ir = introService.getTagInfo(ib);
 		
-		session.setAttribute("ib", ib);
-		session.setAttribute("it", it);
-		session.setAttribute("ia", ia);
-		session.setAttribute("ir", ir);
-		session.setAttribute("wish", introService.getAllWish(ib.getIboardNo()));
+		IBoard ib = introService.selectBoard(Integer.parseInt(iboardNo));
+		Iattachment it = introService.getThumb2(ib); // 대표 이미지
+		int like = introService.countLike(ib);
+		
+		ArrayList<Project> projectlist = new ArrayList<Project>();
+		projectlist.add(introService.selectPro(ib));
+		ArrayList<Iattachment> thumList2 = introService.getAttachmentList3(ib); // 이미지 목록
+		
+		Recruitment r = introService.selectRecruitment3(Integer.parseInt(iboardNo));
+		
+		ArrayList<Prelation> tags = introService.getTagInfo2(r); // 태그정보
+		ArrayList<RecruitmentState> state = introService.getState(r); // 지원 현황
+		Rattachment thumOne = introService.getThumbOne(r); // 대표이미지
+		ArrayList<Rattachment> thumList = introService.getAttachmentList2(r); // 이미지 목록
+		Project p = introService.getProject(r);
+		
+		model.addAttribute("r", r);
+		model.addAttribute("tags",tags);
+		model.addAttribute("state",state);
+		model.addAttribute("thumOne",thumOne);
+		model.addAttribute("thumList",thumList);
+		model.addAttribute("p",p);
+		
+		model.addAttribute("ib", ib);
+		model.addAttribute("it", it); // 대표 이미지
+		model.addAttribute("like", like);
+		model.addAttribute("thumList2", thumList2); // 이미지 목록
+		
+		
 		return "board/intro/introDetailView"; 
 	}
 	
@@ -75,39 +100,18 @@ public class IntroController {
 		
 		ArrayList<Project> projectlist = new ArrayList<Project>();
 		ArrayList<Recruitment> rlist = new ArrayList<Recruitment>();
-		ArrayList<Project> mylist = new ArrayList<Project>();
+		Member m = ((Member)(session.getAttribute("loginMember")));
 		
-		projectlist = introService.selectProject();
-		rlist = introService.selectRecruitment();
-		project
-		
+		projectlist = introService.selectProject(m.getMemberNo());
+		rlist = introService.selectRecruitment(projectlist);
 		
 		model.addAttribute("projectlist", projectlist);
 		model.addAttribute("rlist", rlist);
 		
-		// 검색창 태그
-		String tags = "";
-		if(tag.equals("")) { 
-			tags=tagsController.getTagsNameString(); 
-		} 
 		
-		else { 
-			tags = tag; 
-		}
 		
-		Isearch is = new Isearch(search, null, tags.split(","));
 		
-		if(sort.equals("new") || sort.equals("")) {
-			is.setSort("IBOARD_INSERT");
-		} else if(sort.equals("old")) {
-			is.setSort("IBOARD_END") ;
-		} else if(sort.equals("view")) {
-			is.setSort("IBOARD_VIEWS");
-		} else {
-			is.setSort("LIKES_MEMBER");
-		}
-		
-		int listCount = introService.selectListCount(is);
+		int listCount = introService.selectListCount();
 		
 		int pageLimit = 5;
 		int boardLimit = 9;
@@ -125,35 +129,56 @@ public class IntroController {
 		}
 	
 		else {
-		ArrayList<IBoard> list = introService.selectList(pi, is);
+		ArrayList<IBoard> list = introService.selectList(pi);
 		ArrayList<Iattachment> listi = new ArrayList<Iattachment>();
+		ArrayList<Project> listp = new ArrayList<Project>();
 		ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
 		ArrayList<Boolean>ws_list = new ArrayList<Boolean>();
-
+		
+		
 		
 		for(IBoard ib : list) { 
 			listi.add(introService.selectattachment(ib));
-			tg_list.add(introService.getTagInfo(ib));
+			listp.add(introService.selectPro(ib));
+			int like = introService.countLike(ib);
+			// tg_list.add(introService.getTagInfo(ib));
 			if(session.getAttribute("loginMember") != null) { ws_list.add(introService.getWishList(ib, ((Member)(session.getAttribute("loginMember"))).getMemberNo()));
 			
 			}
-			 
-		model.addAttribute("is", is);
+			
+		model.addAttribute("like", like);	
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
 		model.addAttribute("listi", listi);
-		model.addAttribute("tg_list", tg_list);
+		model.addAttribute("listp", listp);
 		model.addAttribute("ws_list", ws_list);
-		model.addAttribute("tagAll", tagsController.getTagsNameList());
 		}
-		
+
 
 		return "board/intro/introListView";
 		}	
 	}
 		
+		
 	@GetMapping("introForm.bo")
-	public String selectEnrollForm(HttpSession session) {
+	public String selectEnrollForm(HttpSession session,  @RequestParam(value="projectno") int projectNo, Model model) {
+		
+		Recruitment r = introService.selectRecruitment2(projectNo);
+		
+		ArrayList<Prelation> tags = introService.getTagInfo2(r); // 태그정보
+		ArrayList<RecruitmentState> state = introService.getState(r); // 지원 현황
+		Rattachment thumOne = introService.getThumbOne(r); // 대표이미지
+		ArrayList<Rattachment> thumList = introService.getAttachmentList2(r); // 이미지 목록
+		Project p = introService.getProject(r);
+		
+		model.addAttribute("tags",tags);
+		model.addAttribute("state",state);
+		model.addAttribute("thumOne",thumOne);
+		model.addAttribute("thumList",thumList);
+		model.addAttribute("p",p);
+		
+		model.addAttribute("projectNo", projectNo);
+		
 		if(session.getAttribute("loginMember") == null) {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
 			return "redirect:/introlist.bo";
@@ -166,38 +191,103 @@ public class IntroController {
 	
 	}
 	
-	@PostMapping(value="introinsert.bo")
-	public String insertBoard(IBoard i, Iattachment ia, MultipartFile[] upfile, HttpSession session, Model model, HttpServletRequest request) {
-		i.setIboardWriter(String.valueOf(((Member)(session.getAttribute("loginMember"))).getMemberNo()));
-		int result = introService.insertBoard(i);
+	@GetMapping("updateboard.io")
+	public String selectupdateForm(HttpSession session, @RequestParam(value="projectno") int projectNo, Model model) {
 		
-
-		if(upfile != null) {
-			for(int ie = 0; ie < upfile.length; ie++) {
-				if(!upfile[ie].getOriginalFilename().equals("")) {
-					ia.setIAttachmentPath("resources\\file_upload\\iboard\\");
-					if(ie == 0) {
-						ia.setIAttachmentLevel(1);
-					} else {
-						ia.setIAttachmentLevel(2);
-					}
-					
-					
-					// 게시글만 넣기 위한 것
-					String changeName = saveFile(upfile[ie], session, request);
-					ia.setIAttachmentOrigin(upfile[ie].getOriginalFilename());
-					ia.setIAttachmentChange(changeName);
-					
-	
-					
-					// 이미지 넣기 위한 것
-					introService.insertBoardImg(ia);
-					
-				}
-			}
+		Recruitment r = introService.selectRecruitment2(projectNo);
+		
+		ArrayList<Prelation> tags = introService.getTagInfo2(r); // 태그정보
+		ArrayList<RecruitmentState> state = introService.getState(r); // 지원 현황
+		Rattachment thumOne = introService.getThumbOne(r); // 대표이미지
+		ArrayList<Rattachment> thumList = introService.getAttachmentList2(r); // 이미지 목록
+		Project p = introService.getProject(r);
+		
+		model.addAttribute("tags",tags);
+		model.addAttribute("state",state);
+		model.addAttribute("thumOne",thumOne);
+		model.addAttribute("thumList",thumList);
+		model.addAttribute("p",p);
+		
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/introlist.bo";
 		}
+		if(session.getAttribute("loginCompany") != null) {
+			session.setAttribute("alertMsg", "기업회원은 이용 불가능합니다.");
+			return "redirect:/introlist.bo";
+		}
+		return "board/intro/introUpdate";
+		
+	}
+	
+	@RequestMapping(value="introinsert.bo")
+	public String insertBoard(IBoard i, MultipartFile titleImg , ArrayList<MultipartFile> img, HttpSession session, Model model, HttpServletRequest request
+			) {
+		
+		
+		
+		i.setIboardWriter(String.valueOf(((Member)(session.getAttribute("loginMember"))).getMemberNo()));
 
+		// 게시글 insert
+		int result = introService.insertBoard(i);
+		// 해당 프로젝트 update로 다음번 리스트 안뜨게 하기
+		int result2 = introService.updateReady(i);
+		
+		
+		// 첨부파일 insert
 		if(result > 0) {
+			String path = request.getRealPath("resources\\file_upload\\iboard\\");			
+			
+			if(titleImg != null) {
+				UUID uuid = UUID.randomUUID();
+				File file = new File(path + "\\" + uuid + "_" + titleImg.getOriginalFilename());
+				try { 
+					titleImg.transferTo(file);
+				}catch (IllegalStateException | IOException e) { 
+					e.printStackTrace();
+					model.addAttribute("errorMsg", "게시글은 작성하였으나 첨부파일이잘못됨"); 
+					return "common/errorPage";
+				}
+				Iattachment ia = new Iattachment();
+				ia.setIAttachmentOrigin(titleImg.getOriginalFilename()); 
+				ia.setIAttachmentLevel(0);
+				ia.setIAttachmentChange(uuid + "_" + titleImg.getOriginalFilename()); 
+				ia.setIAttachmentPath("resources\\file_upload\\iboard\\");
+				int result3 = introService.insertImg(ia);
+				session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
+				
+				
+				
+			}
+			if(img != null) {
+				for (MultipartFile mf: img) { 
+					
+					if(!mf.isEmpty()) {
+						UUID uuid = UUID.randomUUID();
+						File file = new File(path + "\\" + uuid + "_" + mf.getOriginalFilename());
+						try { 
+							mf.transferTo(file);
+						}catch (IllegalStateException | IOException e) { 
+							e.printStackTrace();
+							model.addAttribute("errorMsg", "게시글은 작성하였으나 첨부파일이 잘못됨"); 
+							return "common/errorPage";
+						}
+						Iattachment ia = new Iattachment();
+						ia.setIAttachmentOrigin(mf.getOriginalFilename()); 
+						ia.setIAttachmentLevel(1);
+						ia.setIAttachmentChange(uuid + "_" + mf.getOriginalFilename()); 
+						ia.setIAttachmentPath("resources\\file_upload\\iboard\\");
+						int result3 = introService.insertImg(ia);
+						session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
+					
+						
+						
+					}
+				}
+				return "redirect:/introlist.bo";
+			} 
+		} 
+		if(result > 0 && result2 > 0) {
 			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
 			return "redirect:/introlist.bo";
 			
@@ -205,8 +295,9 @@ public class IntroController {
 			model.addAttribute("errorMsg", "게시글 등록 실패");
 			return "common/errorPage";
 		}
-		
 	}
+	
+	
 	
 	public String saveFile(MultipartFile upfile, HttpSession session, HttpServletRequest request) {
 
@@ -298,13 +389,13 @@ public class IntroController {
 	@RequestMapping(value = "iupdate.bo")
 	@ResponseBody
 	public String ajaxUpdateReply(int ireplyNo, String ireplyContent) {
-		log.info("sdsd");
+
 		Ireply r = new Ireply();
 		r.setIreplyNo(ireplyNo);
 		r.setIreplyContent(ireplyContent);
 		
 		int result = introService.updatereply(r);
-		log.info("result={}",result);
+
 		
 		return (result > 0)? "success" : "error";
 		
@@ -318,6 +409,17 @@ public class IntroController {
 		
 		return new Gson().toJson(list);
 	}
+	
+	@GetMapping(value="recent.iec", produces = "application/json; charset=UTF-8")
+	@ResponseBody
+	public String recentList(){
+		ArrayList<Iattachment> list = introService.selectRecent();
+		return new Gson().toJson(list);
+	}
+	
+	
+	
+	
 	
 	
 }

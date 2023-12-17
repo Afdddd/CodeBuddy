@@ -137,7 +137,6 @@
       display: table;
       table-layout: fixed;
       width: 100%;  /* 부모 요소의 너비 상속받음 */
-      background-color: #f3f7fe;
       height : 50px;
       padding-top : 15px;
       text-align: center;
@@ -160,8 +159,16 @@
    margin:auto;
   }
   
-
-
+  #color {
+  	background-color: skyblue;
+  	padding : 15px;
+  }
+  #color1 {
+  	background-color: #f3f7fe;
+  }
+  #color2 {
+  	background-color: #f3f7fe;
+  }
     </style>
   </head>
   <body>
@@ -195,9 +202,9 @@
 
 				<div class="wrap">
 				      <div class="menu2">
-				         <div class="menu_item"><a href="written.ro">모집게시판</a></div>
-				        <div class="menu_item"><a href="written.co">코드리뷰게시판</a></div>
-				        <div class="menu_item"><a href="written.fo">자유게시판</a></div>
+				         <div class="menu_item" id="color"><a href="written.ro">모집게시판</a></div>
+				        <div class="menu_item" id="color1"><a href="written.co">코드리뷰게시판</a></div>
+				        <div class="menu_item" id="color2"><a href="written.fo">자유게시판</a></div>
 				      </div>
 				    </div>
 				    <br><br>

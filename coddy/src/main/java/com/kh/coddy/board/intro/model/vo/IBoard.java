@@ -1,6 +1,5 @@
 package com.kh.coddy.board.intro.model.vo;
 
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,12 +16,9 @@ public class IBoard {
 	private String iboardContent;		//	IBOARD_CONTENT	VARCHAR2(4000 BYTE)
 	private String iboardWriter;		//	IBOARD_WRITER	NUMBER
 	private String iboardInsert;		//	IBOARD_INSERT	DATE
-	private Date iboardUpade;		//	IBOARD_UPDATE	DATE
-	private Date iboardDelete;		//	IBOARD_DELETE	DATE
+	private String iboardUpade;		//	IBOARD_UPDATE	DATE
+	private String iboardDelete;		//	IBOARD_DELETE	DATE
 	private int projectNo;		//	PROJECT_NO	NUMBER
 	private int iboardViews;		//	IBOARD_VIEWS	NUMBER
 	
-	// 필요한 정보들
-	private int recruitMentNo;
-	private int memberNo;
 }

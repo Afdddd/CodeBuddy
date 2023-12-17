@@ -140,7 +140,7 @@
 	                            
 	                            <label for="memberInfo"> &nbsp; 자기소개 : </label>
 	                            <!-- <input type="text" class="form-control" id="memberInfo" value="${sessionScope.loginMember.memberInfo}" name="memberInfo" style="height : 280px;"> -->
-	                            <textarea name="memberInfo" id="memberInfo" style="width : 300px; height : 430px;">${sessionScope.loginMember.memberInfo}</textarea><br>
+	                            <textarea name="memberInfo" id="memberInfo" style="width : 300px; height : 430px; resize:none;">${sessionScope.loginMember.memberInfo}</textarea><br>
 	                        </div>
 	                     
 	                    </div> 

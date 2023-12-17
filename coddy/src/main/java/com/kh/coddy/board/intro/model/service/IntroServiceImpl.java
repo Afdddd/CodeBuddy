@@ -16,7 +16,9 @@ import com.kh.coddy.board.intro.model.vo.Likes;
 import com.kh.coddy.board.job.model.vo.Hattachment;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
+import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
+import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Service
@@ -31,6 +33,8 @@ public class IntroServiceImpl implements IntroService {
 	@Override
 	public int insertBoard(IBoard i) {
 		
+		System.out.println(i);
+		
 		return introDao.insertBoard(sqlSession , i);
 	}
 
@@ -41,17 +45,12 @@ public class IntroServiceImpl implements IntroService {
 	}
 
 	@Override
-	public ArrayList<IBoard> selectList(PageInfo pi, Isearch is) {
+	public ArrayList<IBoard> selectList(PageInfo pi) {
 
 
-		return introDao.selectList(sqlSession, pi, is);
+		return introDao.selectList(sqlSession, pi);
 	}
 
-	@Override
-	public ArrayList<Prelation> getTagInfo(IBoard ib) {
-		
-		return introDao.getTagInfo(sqlSession, ib);
-	}
 
 	@Override
 	public Boolean getWishList(IBoard ib, int mno) {
@@ -60,9 +59,9 @@ public class IntroServiceImpl implements IntroService {
 	}
 
 	@Override
-	public int selectListCount(Isearch is) {
+	public int selectListCount() {
 		
-		return introDao.selectListCount(sqlSession, is);
+		return introDao.selectListCount(sqlSession);
 	}
 
 	@Override
@@ -101,12 +100,6 @@ public class IntroServiceImpl implements IntroService {
 	public IBoard selectBoard(int ino) {
 		
 		return introDao.selectBoard(sqlSession, ino);
-	}
-
-	@Override
-	public ArrayList<Iattachment> getAttachmentList(IBoard ib) {
-		
-		return introDao.getAttachmentList(sqlSession, ib);
 	}
 
 	@Override
@@ -152,16 +145,104 @@ public class IntroServiceImpl implements IntroService {
 	}
 
 	@Override
-	public Project selectProject(IBoard ib) {
+	public ArrayList<Project> selectProject(int memberNo) {
 		
-		return introDao.selectProject(sqlSession, ib);
+		return introDao.selectProject(sqlSession, memberNo);
 	}
 
 	@Override
-	public Recruitment selectRecruitment(Project p) {
+	public ArrayList<Recruitment> selectRecruitment(ArrayList<Project> projectlist) {
 		
-		return introDao.selectRecruitment(sqlSession, p);
+		return introDao.selectRecruitment(sqlSession, projectlist);
 	}
+
+	@Override
+	public Recruitment selectRecruitment2(int projectNo) {
+		
+		return introDao.selectRecruitment2(sqlSession, projectNo);
+	}
+	
+	@Override
+	public ArrayList<RecruitmentState> getState(Recruitment r) {
+		
+		return introDao.getState(sqlSession, r);
+	}
+
+	@Override
+	public Rattachment getThumbOne(Recruitment r) {
+		
+		return introDao.getThumbOne(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<Rattachment> getAttachmentList2(Recruitment r) {
+		
+		return introDao.getAttachmentList2(sqlSession, r);
+	}
+
+	@Override
+	public Project getProject(Recruitment r) {
+	
+		return introDao.getProject(sqlSession, r);
+	}
+
+	@Override
+	public int updateReady(IBoard i) {
+		
+		return introDao.updateReady(sqlSession, i);
+	}
+
+	@Override
+	public ArrayList<Iattachment> selectRecent() {
+		
+		return introDao.selectRecent(sqlSession);
+	}
+
+	@Override
+	public Iattachment getThumb2(IBoard ib) {
+		
+		return introDao.getThumb2(sqlSession, ib);
+	}
+
+	@Override
+	public int insertImg(Iattachment ia2) {
+		
+		return introDao.insertImg(sqlSession, ia2);
+	}
+
+	@Override
+	public Project selectPro(IBoard ib) {
+		
+		return introDao.selectPro(sqlSession, ib);
+	}
+
+
+
+	@Override
+	public int countLike(IBoard ib) {
+		
+		return introDao.countLike(sqlSession, ib);
+	}
+
+	@Override
+	public ArrayList<Prelation> getTagInfo2(Recruitment r) {
+	
+		return introDao.getTagInfo2(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<Iattachment> getAttachmentList3(IBoard ib) {
+		
+		return introDao.getAttachmentList3(sqlSession, ib);
+	}
+
+	@Override
+	public Recruitment selectRecruitment3(int iboardNo) {
+	
+		return introDao.selectRecruitment3(sqlSession, iboardNo);
+	}
+
+
 
 	
 
