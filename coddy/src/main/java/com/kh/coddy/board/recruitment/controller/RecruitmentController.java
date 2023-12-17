@@ -86,7 +86,7 @@ public class RecruitmentController {
 		// 게시글 insert
 		int result = rService.insertRecruitment(r);
 
-		
+		log.info("img = {}",img);
 		// 첨부파일 insert
 		if(result>0) {
 			String path = request.getRealPath("resources\\file_upload\\recruitment\\");			
@@ -220,9 +220,7 @@ public class RecruitmentController {
 			ArrayList<Rattachment>at_list = new ArrayList<Rattachment>();	
 			ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
 			ArrayList<ArrayList<RecruitmentState>>pos_list = new ArrayList<>();
-			ArrayList<Boolean>ws_list = new ArrayList<Boolean>();
-			
-			
+			ArrayList<Boolean>ws_list = new ArrayList<Boolean>();			
 			
 			for(Recruitment r:list) {
 				

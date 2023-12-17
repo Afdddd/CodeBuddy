@@ -61,7 +61,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
         </div>
         <div id="meeting_place"></div>
         <button id="map_button" class="button">장소정하기</button>         
-        <button id="start" class="button">시작하기</button>  
+        <button id="start_button" class="button">시작하기</button>  
     </div>
 
     <!-- 달력 모달 -->
@@ -121,9 +121,16 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
         window.onpageshow = function(event) {
             if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
               location.reload();
+              onClose();
           }
         }
 
+        // 메세지 타입
+        // 1 : 일반메세지
+        // 2 : 일정변경 메세지
+        // 3 : 장소 변경 메세지
+        // 4 : 입장 메세지
+        // 5 : 퇴장 메세지
 
         let roomId = '${sessionScope.chatMember.projectNo}'; 
 
@@ -151,19 +158,16 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
             "roomId" : roomId,
             "memberNo" : "${sessionScope.loginMember.memberNo}",
             "memberName" : "${sessionScope.loginMember.memberName}",
-            "message": "ENTER-CHAT"
+            "message": "ENTER-CHAT",
+            "messageType" : 4
           };
-
           let jsonData = JSON.stringify(data);
           webSocket.send(jsonData);
+          
         }
 
         //  메세지 전송 함수
         function sendMessage(message){
-
-          // 메세지 타입이 1이라면 일반회원들
-          // 2라면 채팅방 공지
-
           const data={
             "roomId" : roomId,
             "memberNo" : "${sessionScope.loginMember.memberNo}",
@@ -171,7 +175,6 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
             "message" : message,
             "messageType" : 1
           };
-          
           let jsonData = JSON.stringify(data);
           webSocket.send(jsonData);
         }
@@ -189,24 +192,30 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
           };
           console.log("수신된 데이터 ="+receive[3]);
           checkLR(data);
+          updateMemberList();
           $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
         }
 
-        // 채팅방 나가기
-        function onClose(){
-          location.href='detail.rec?rno='+roomId
+        // 뒤로가기 클릭시 채팅방 나가기
+        window.addEventListener('beforeunload', function(event) {
+            const data = {
+                "roomId": roomId,
+                "memberNo": "${sessionScope.loginMember.memberNo}",
+                "memberName" : "${sessionScope.loginMember.memberName}",
+                "role": "${sessionScope.chatMember.role}",
+                "message": "END-CHAT",
+                "messageType": 5
+            };
 
-          const data = {
-            "roomId" : roomId,
-            "memberNo" : "${sessionScope.loginMember.memberNo}",
-            "memberName" : "${sessionScope.loginMember.memberName}",
-            "role" : "${sessionScope.chatMember.role}",
-            "message": "END-CHAT"
-          };
+            let jsonData = JSON.stringify(data);
+            webSocket.send(jsonData);
+        });
 
-          let jsonData = JSON.stringify(data);
-          webSocket.send(jsonData);
+        function onClose() {
+            location.href = 'detail.rec?rno=' + roomId;
         }
+
+
 
         // 내가 보낸 메세지인지 확인
         function checkLR(data){ 
@@ -222,9 +231,9 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
                           +"<p>"+ data.message +"</p>"
                         +"</div>");
           }else if(data.messageType == 2){ // 맵이 변경되었을때
-              let strArr = data.message.split("_");
-              div = $("<div> [공지] '"+strArr[1]+"' 으로 장소가 변경되었습니다.</div>");
-              $("#meeting_place").html(strArr[0]+" "+strArr[1]+"<a href='https://map.kakao.com/link/to/"+strArr[2]+"'>길찾기</a>");
+            let strArr = data.message.split("_");
+            div = $("<div> [공지] '"+strArr[1]+"' 으로 장소가 변경되었습니다.</div>");
+            $("#meeting_place").html(strArr[0]+" "+strArr[1]+"<a href='https://map.kakao.com/link/to/"+strArr[2]+"'>길찾기</a>");
           }else if(data.messageType == 3){
             div = $("<div> [공지] "+data.message+"</div>");
           }
@@ -278,16 +287,20 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
             }
           });
 
+          let memberList = new Array();
+
           // 참여한 인원 불러오기
           function updateMemberList() {
-          $.ajax({
+            memberList
+            $.ajax({
               url: "getMember.rec",
               data: {
                   roomId: roomId
               },
             success: function (result) {
 
-            // Create a container to hold the new content
+              memberList = [];
+            
             let newContent = $("<div></div>");
 
             for (let i = 0; i < result.length; i++) {
@@ -313,11 +326,11 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
                         "</div>" +
                         "</div>";
                 }
-                // Append the new content to the container
+                
                 newContent.append(div);
+                memberList.push(result[i].memberNo);
             }
 
-            // Replace the existing content with the new content
             $(".sidebar_left").html(newContent.html());
         },
         error: function () {}
@@ -325,9 +338,9 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
       }
             
   // 참여한 인원 1초마다 불러오기
-  setInterval(function () {
-      updateMemberList();
-  }, 1000);
+  // setInterval(function () {
+  //     updateMemberList();
+  // }, 1000);
 
   // 달력 오픈
   $(function(){
@@ -573,13 +586,14 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
       calendar.render();
     };
 
+
+    // 카운트다운
     var startTime = new Date("${requestScope.p.projectStart}").getTime();
     var endTime = new Date("${requestScope.p.projectEnd}").getTime();
     var countdownEl = document.getElementById('countdown')
     
     var countdownInterval = setInterval(function() {     
 
-        // Get the current date and time
         var currentDate = new Date().getTime();
 
         if(startTime > currentDate){
@@ -596,6 +610,25 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
           }
         }
     }, 1000); 
+
+
+    // 시작버튼 클릭
+
+    
+    $("#start_button").click(function(){
+      if(confirm("프로젝트를 시작하시겠습니까?")){
+        console.log(memberList);
+        // $.ajax({
+        //   url:"startProject.rec",
+        //   type:"get",
+        //   data:{
+        //     memberList : memberList
+        //   }
+        // })
+      }
+      
+      
+    })
 
 
 
