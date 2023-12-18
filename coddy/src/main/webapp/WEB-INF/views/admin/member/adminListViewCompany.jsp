@@ -39,9 +39,9 @@
 									<colgroup>
 										<col width="3%"/>
 										<col width="10%"/>
-										<col width="5%"/>
+										<col width="4%"/>
 										<col width="10%"/>
-										<col width="40%"/>
+										<col width="41%"/>
 										<col width="10%"/>
 										<col width="5%"/>
 										<col width="7%"/>
@@ -69,7 +69,7 @@
 									</tbody>
 								</table>
 								<br>
-								<button type="button" id="moreLoad" onclick="onLoad(page++);">더 불러오기</button>
+								<div style="text-align: center;"><button type="button" class="btn btn-primary" id="moreLoad" onclick="onLoad(page++);" style="background-color: #5271FF; color: yellow; width: 20%;"><span class="spinner-border spinner-border-sm"></span>&nbsp;더 불러오기</button></div>
 							</div>
 						</div>
 					</div>
@@ -87,30 +87,30 @@
 					type : "get",
 					url : "adminListLoad.cp",
 					success : function(col) {
-						if (col=="none") { $("#moreLoad").attr("disabled", true); $("#tb").html($("#tb").html() + "<tr><td colspan='9' style='border-top: 1px solid #5271FF;'>더 이상 표기할 정보가 없습니다.</td></tr>"); }
+						if (col=="none") { $("#moreLoad").attr("disabled", true); $("#tb").html($("#tb").html() + "<tr><td colspan='9' style='border-top: 1px solid #5271FF; border-bottom: 1px solid #5271FF;'>더 이상 표기할 정보가 없습니다.</td></tr>"); }
 						else { $("#tb").html($("#tb").html() + col); }
 					},
 					error: function() { alert("로딩에 실패함"); }
 				});
 			};
-			function onDelete(companyNo) {
+			function onDelete(e, companyNo) {
 				$.ajax({
 					data : {"companyNo": companyNo},
 					type : "post",
 					url : "adminDelete.cp",
 					success : function(result) {
-						console.log($(".card-table").children());
+						$(e).parent().html("<button type='button' class='btn btn-info' onclick='onRestore(this, " + companyNo + ");'>복원시키기</button>");
 					},
 					error: function() { alert("삭제에 실패함"); }
 				});
 			};
-			function onRestore(companyNo) {
+			function onRestore(e, companyNo) {
 				$.ajax({
 					data : {"companyNo": companyNo},
 					type : "post",
 					url : "adminRestore.cp",
 					success : function(result) {
-						
+						$(e).parent().html("<button type='button' class='btn btn-danger' onclick='onDelete(this, " + companyNo + ");'>탈퇴시키기</button>");
 					},
 					error: function() { alert("복원에 실패함"); }
 				});

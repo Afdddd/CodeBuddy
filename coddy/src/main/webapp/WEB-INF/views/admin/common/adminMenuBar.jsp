@@ -67,7 +67,7 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="검색 안됨 ㅅㄱ" aria-label="Search for..." aria-describedby="btnNavbarSearch" readonly />
+                    <input class="form-control" type="text" placeholder="추후 지원될 기능입니다." aria-label="Search for..." aria-describedby="btnNavbarSearch" readonly />
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
