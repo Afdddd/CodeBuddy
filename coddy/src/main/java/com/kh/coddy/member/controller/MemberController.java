@@ -405,6 +405,26 @@ public class MemberController {
 		return mv;
 	}
 	
+	@GetMapping(value="likedJob.me")
+	public ModelAndView WrittenForm4(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv) {
+		
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		
+		int listCount = memberService.selectListCountf(m.getMemberNo());
+		
+		int pageLimit = 5;
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Hboard> list = memberService.selectListl(pi, m.getMemberNo());
+	
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/likedJob");
+		
+		return mv;
+	}
+	
 	
 	
 	@GetMapping(value="signup.me") public String signup(HttpSession session) {
@@ -575,20 +595,7 @@ public class MemberController {
 		return "member/myRank";
 	}
 	
-	@RequestMapping("likedRecruit.me")
-	public String likedRecruit(HttpSession session) {
-		if(session.getAttribute("loginMember") == null) {
-			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
-			return "redirect:/";
-		}
-		if(session.getAttribute("loginCompany") != null) {
-			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
-			return "redirect:/";
-		}
-		
-		return "member/likedRecruit";
-		
-	}
+	
 	
 	@RequestMapping("wroteReply.me")
 	public String wroteReply(HttpSession session) {

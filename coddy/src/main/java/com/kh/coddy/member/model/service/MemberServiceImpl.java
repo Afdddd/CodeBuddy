@@ -100,5 +100,18 @@ public class MemberServiceImpl implements MemberService{
 		
 		return memberDao.selectListf(sqlSession, pi, memberNo);
 	}
+	
+	@Override
+	public int selectListCountl(int memberNo) {
+		
+		return memberDao.selectListCountl(sqlSession, memberNo);
+	}
+	@Override
+	public ArrayList<Hboard> selectListl(PageInfo pi, int memberNo) {
+		
+		return memberDao.selectListl(sqlSession, pi, memberNo);
+	}
+	
+	
 }
 

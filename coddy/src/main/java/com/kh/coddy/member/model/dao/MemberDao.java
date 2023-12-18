@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.coddy.board.free.model.vo.Fboard;
 import com.kh.coddy.board.intro.model.vo.IBoard;
+import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
@@ -73,6 +74,22 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectListr", memberNo, rowBounds);
 	}
+	
+		public int selectListCountl(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.selectOne("memberMapper.selectListCountl" ,memberNo);
+	}
+	
+	public ArrayList<Hboard> selectListl(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+	
+		int limit = pi.getBoardLimit();
+		int offset = (pi.getCurrentPage() - 1) * limit;
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectListl", memberNo, rowBounds);
+	}
+	
 	
 	public int selectListCountc(SqlSessionTemplate sqlSession, int memberNo) {
 		

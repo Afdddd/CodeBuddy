@@ -66,6 +66,23 @@
 	    <result column="CHANGE_NAME" property="changeName"/>
 	</resultMap>
 	
+	<resultMap id="hboardResultSet" type="hboard">
+		<result column="HBOARD_NO" property="hboardNo"/>
+		<result column="HBOARD_TITLE" property="hboardTitle"/>
+		<result column="HBOARD_CONTENT" property="hboardContent"/>
+		<result column="HBOARD_INSERT" property="hboardInsert"/>
+		<result column="HBOARD_UPDATE" property="hboardUpdate"/>
+		<result column="HBOARD_DELETE" property="hboardDelete"/>
+		<result column="HBOARD_VIEWS" property="hboardViews"/>
+		<result column="COMPANY_NO" property="companyNo"/>
+		<result column="HBOARD_START" property="hboardStart"/>
+		<result column="HBOARD_END" property="hboardEnd"/>
+		<result column="HBOARD_SALARY" property="hboardSalary"/>
+		<result column="HBOARD_EDUCATION" property="hboardEducation"/>
+		<result column="HBOARD_CAREER" property="hboardCareer"/>
+		<result column="HBOARD_LOCATION" property="hboardLocation"/>
+	</resultMap>
+	
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet"> SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId} AND MEMBER_DELETE IS NULL </select>
 	<select id="memberCheck" parameterType="string" resultType="_int">SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID=#{checkId}</select>
 
@@ -116,6 +133,26 @@
 		    AND IBOARD_DELETE IS NULL
 		    AND IBOARD_WRITER = #{memberNo}
 	</select>
+	
+	<select id="selectListCountl" resultType="_int">
+		  SELECT COUNT(*)
+		    FROM HBOARD
+		   WHERE HBOARD_DELETE IS NULL
+		     AND HBOARD_WRITER = #{memberNo}
+	</select>
+	
+	<select id="selectListl" parameterType="_int" resultMap="hboardResultSet">
+		 SELECT HBOARD_NO,
+		 		HBOARD_TITLE,
+		 		HBOARD_VIEWS,
+		 		M.MEMBER_NAME AS "COMPANY_NO",
+		 	    TO_CHAR(H.HBOARD_INSERT, 'YYYY-MM-DD') AS "HBOARD_INSERT"
+		   FROM HBOARD H, MEMBER M
+		  WHERE M.MEMBER_NO = H.COMPANY_NO
+		    AND HBOARD_DELETE IS NULL
+		    AND COMPANY_NO = #{memberNo}
+	</select>
+	
 	
 	<select id="selectListCountr" resultType="_int">
 		  SELECT COUNT(*)

@@ -75,6 +75,13 @@ public interface MemberService {
 
 	// fboard 전체 조회
 	ArrayList<Fboard> selectListf(PageInfo pi, int memberNo);
+	
+	// Hboard 카운트 조회
+	int selectListCountl(int memberNo);
+	
+	// Hboard 전체조회
+	ArrayList<Hboard> selectListl (PageInfo pi, int memberNo);
+	
 
 
 }

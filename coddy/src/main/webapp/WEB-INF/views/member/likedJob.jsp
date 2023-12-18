@@ -137,7 +137,6 @@
       display: table;
       table-layout: fixed;
       width: 100%;  /* 부모 요소의 너비 상속받음 */
-      background-color: yellow;
       height : 50px;
       padding-top : 15px;
       text-align: center;
@@ -158,9 +157,18 @@
    #pagingArea{
    width:fit-content; 
    margin:auto;
-  	}
+  }
   
-  	
+  #color {
+  	background-color: skyblue;
+  	padding : 15px;
+  }
+  #color1 {
+  	background-color: #f3f7fe;
+  }
+  #color2 {
+  	background-color: #f3f7fe;
+  }
     </style>
   </head>
   <body>
@@ -168,7 +176,7 @@
 
 
       <div class="innerOuter">
-        <h2>작성한 댓글</h2>
+        <h2>찜한 채용공고</h2>
         <br><hr><br>
         <div style="display: flex;">
           <ul class="menu" style="padding-left:0px; width : 230px;"><br>
@@ -179,21 +187,17 @@
               </ul>
             </li>
             <hr>
-            <li><a href="#">참여한 프로젝트</a></li>
+            <li><a href="written.io">참여한 프로젝트</a></li>
             <li><a href="#">찜한 프로젝트</a></li>
-            <li><a href="likedRecruit.me">찜한 채용공고</a></li>
+            <li><a href="likedJob.me">찜한 채용공고</a></li>
             <hr>
             <li><a href="written.ro">작성한 게시글</a></li>
-            <li><a href="wroteReply.me">작성한 댓글</a></li>
           </ul>
               
           <div class="modal-body">
 
 
-				<div class="wrap">
-				      
-		<form>
-		 
+		 <h3>채용공고</h3><br>
 		<span> ▷ 총 ${requestScope.listCount}개의 게시물이 있습니다. </span>
 		<!--
 		<span class="right";> 
@@ -206,10 +210,6 @@
 		</span>
 		 -->
 		
-		
-
-
-	
 		<br>
 		<table id="table">
 			<thead>
@@ -222,13 +222,13 @@
 			    </tr>
 			</thead>
 			<tbody>
-		      <c:forEach var="i" items="${ requestScope.list }">
+		      <c:forEach var="r" items="${ requestScope.list }">
 		    <tr>
-		        <td class="center, cno" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardNo}</td>
-		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardTitle}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardWriter}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardInsert}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardViews}</td>   
+		        <td class="center, hno" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${h.hboardNo}</td>
+		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${h.hboardTitle}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${h.companyNo}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${h.hboardInsert}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${h.hboardViews}</td> 
 		    </tr>
 			  </c:forEach>
 			</tbody>
@@ -241,15 +241,14 @@
 				
 				$("#table>tbody>tr").click(function(){
 					
-					let cno = $(this).children(".cno").text();
+					let rno = $(this).children(".rno").text();
 					
-					location.href = "detail.co?cno=" + cno;
+					location.href = "detail.rec?rno=" + rno;
 				
 				});
 				
 				
 			});
-			
 		</script>
 		
   <div id="pagingArea">
@@ -263,7 +262,7 @@
                 </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.co?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                      <a class="page-link" href="written.ro?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
                     </li>
                   </c:otherwise>
               </c:choose>
@@ -272,7 +271,7 @@
                           end="${ requestScope.pi.endPage }"
                           step="1">
                   <li class="page-item">
-                    <a class="page-link" href="written.co?cpage=${ p }">${ p }</a>
+                    <a class="page-link" href="written.ro?cpage=${ p }">${ p }</a>
                   </li>
               </c:forEach>
                 
@@ -284,7 +283,7 @@
                   </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.co?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                      <a class="page-link" href="written.ro?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
                     </li>
                   </c:otherwise>
                 </c:choose>

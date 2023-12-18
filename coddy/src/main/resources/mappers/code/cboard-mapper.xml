@@ -60,15 +60,16 @@
 	  -->
 	 
 	<select id="selectList" resultMap="cboardResultSet">
-		SELECT CBOARD_NO
-		     , CBOARD_TITLE
-		     , CBOARD_WRITER
-		     , CBOARD_VIEWS
-		     , TO_CHAR(CBOARD_INSERT, 'YYYY-MM-DD') AS "CBOARD_INSERT"
-		     , ORIGIN_NAME
-		  FROM CBOARD
-		 ORDER BY CBOARD_NO DESC
-	</select>	
+	  SELECT CBOARD_NO
+	       , CBOARD_TITLE
+	       , CBOARD_WRITER
+	       , CBOARD_VIEWS
+	       , TO_CHAR(CBOARD_INSERT, 'YYYY-MM-DD') AS "CBOARD_INSERT"
+	       , ORIGIN_NAME
+	    FROM CBOARD
+	   WHERE CBOARD_DELETE IS NULL
+	   ORDER BY CBOARD_NO DESC
+	</select>
 	
 	<select id="selectTagList" parameterType="_int" resultType="string">
 		select tags_name
@@ -123,12 +124,14 @@
 		 WHERE CBOARD_NO = #{cboardNo}
 	</select>    
  
+	
 	<update id="deleteBoard" parameterType="_int">
-		DELETE  
-		  FROM CBOARD 
+		UPDATE CBOARD
+		   SET CBOARD_DELETE = SYSDATE
 		 WHERE CBOARD_NO = #{cboardNo}
-	</update>    
-    
+	</update>  
+
+	
 	<update id="updateBoard" parameterType="cboard">
 		UPDATE CBOARD
 		   SET CBOARD_TITLE = #{cboardTitle}
