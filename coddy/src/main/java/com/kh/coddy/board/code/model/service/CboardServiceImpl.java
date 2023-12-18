@@ -1,6 +1,7 @@
 package com.kh.coddy.board.code.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -87,4 +88,16 @@ public class CboardServiceImpl implements CboardService {
 		
 		return boardDao.insertTag(sqlSession, tag);
 	}
+	
+	@Override
+	public int selectSearchCount(HashMap<String, String> map) {
+	     return boardDao.selectSearchCount(sqlSession, map);
+	}
+
+	@Override
+	public ArrayList<Cboard> selectSearchList(HashMap<String, String> map, PageInfo pi) {
+	     return boardDao.selectSearchList(sqlSession, map, pi);
+	    }
+	
+
 }

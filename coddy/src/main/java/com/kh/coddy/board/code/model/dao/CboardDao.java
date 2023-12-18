@@ -1,6 +1,7 @@
 package com.kh.coddy.board.code.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -15,6 +16,8 @@ import com.kh.coddy.common.vo.PageInfo;
 @Repository
 public class CboardDao {
 
+	private SqlSessionTemplate sqlSession;
+
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 
 		return sqlSession.selectOne("cboardMapper.selectListCount");
@@ -28,7 +31,7 @@ public class CboardDao {
 		RowBounds rowBounds = new RowBounds(offset, limit);
 
 		// 1. 일단 전체 게시글 목록 조회 (최신순)
-		ArrayList<Cboard> list = (ArrayList)sqlSession.selectList("cboardMapper.selectList", null, rowBounds);
+		ArrayList<Cboard> list =  new ArrayList<>(sqlSession.selectList("cboardMapper.selectList", null, rowBounds));
 		
 		// 2. 조회된 게시글 목록으로부터 반복적으로 해당 게시글에 딸린 태그들만 또 조회
 		for(int i = 0; i < list.size(); i++) {
@@ -94,5 +97,22 @@ public class CboardDao {
 		
 		return sqlSession.insert("cboardMapper.insertTag", tag);
 	}
+
+	public int selectSearchCount(SqlSessionTemplate sqlSession2, HashMap<String, String> map) {
+		
+		return sqlSession.selectOne("cboardMapper.selectSearchCount", map);
+	}
+
+	 public ArrayList<Cboard> selectSearchList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
+	        int limit = pi.getBoardLimit();
+	        int offset = (pi.getCurrentPage() - 1) * limit;
+
+	        RowBounds rowBounds = new RowBounds(offset, limit);
+
+	     return (ArrayList)sqlSession.selectList("cboardMapper.selectSearchList", map, rowBounds);
+	}
+	
+	
+	
 	
 }

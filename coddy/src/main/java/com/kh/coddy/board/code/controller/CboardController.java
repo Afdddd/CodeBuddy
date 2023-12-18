@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,43 +45,41 @@ public class CboardController {
 		@Autowired 
 		private TagsController tagsController;
 		
-		@GetMapping("search.co")
-		public void selectSearchList(
-				@RequestParam(value = "cpage", defaultValue = "1") int currentPage
-				//@RequestParam(value="search", defaultValue="") String search,
-				) {
-			// 검색용 요청 (마바에서 배운거 토대로 스프링에 로직 적용)
+		 @GetMapping("search.co")
+		    public String selectSearchList(
+		            @RequestParam("condition") String condition,
+		            @RequestParam("keyword") String keyword,
+		            @RequestParam(value = "cpage", defaultValue = "1") int currentPage,
+		            Model model) {
+
+		        // 검색용 요청
+		        HashMap<String, String> map = new HashMap<>();
+		        map.put("condition", condition);
+		        map.put("keyword", keyword);
+
+		        int searchCount = cboardService.selectSearchCount(map);
+		        int pageLimit = 10;
+		        int boardLimit = 5;
+
+		        PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, pageLimit, boardLimit);
+
+		        ArrayList<Cboard> list = cboardService.selectSearchList(map, pi);
+
+		        model.addAttribute("list", list);
+		        model.addAttribute("pi", pi);
+		        model.addAttribute("condition", condition);
+		        model.addAttribute("keyword", keyword);
+
+		        return "board/code/codeListView";
+		    }
 			
-			
-		}
+		
 		
 		@GetMapping("list.co")
 		public ModelAndView selectList(
 				@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
-				//@RequestParam(value="tag", defaultValue="") String tag,
-				//@RequestParam(value="sort", defaultValue="new") String sort,
 				ModelAndView mv) {
 			
-			// 검색창 태그
-			/*
-			String tags = "";
-			if(tag.equals("")) { 
-				tags=tagsController.getTagsNameString(); } 
-			else { 
-				tags = tag; 
-			}
-			System.out.println(tags);
-			
-			Csearch cs = new Csearch(search, null, tags.split(","));
-			
-			if(sort.equals("new") || sort.equals("")) {
-				cs.setSort("CBOARD_INSERT");
-			} else if(sort.equals("view")) {
-				cs.setSort("CBOARD_VIEWS");
-			} else {
-				cs.setSort("LIKES_MEMBER");
-			}
-			*/
 			
 			int listCount = cboardService.selectListCount();
 			

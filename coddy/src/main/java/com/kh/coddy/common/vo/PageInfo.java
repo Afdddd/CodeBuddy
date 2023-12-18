@@ -10,6 +10,8 @@ public class PageInfo {
 	private int maxPage;   //마지막 페이지
 	private int startPage; // 페이징바의 시작수
 	private int endPage;   // 페이징바의 끝수
+	
+	
 			
 	public PageInfo() {}
 			
@@ -73,4 +75,8 @@ public class PageInfo {
 				+ ", boardLimit=" + boardLimit + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage="
 				+ endPage + "]";
 	}
+
+	
+
+
 }

@@ -184,6 +184,43 @@
 		<result column="CBOARD_NO" property="cboardNo"/>
 	</resultMap>
 	
+
+    <select id="selectSearchCount" parameterType="java.util.HashMap" resultType="int">
+	    SELECT COUNT(*) FROM CBOARD
+	    WHERE 
+	    <if test="condition == 'title'">
+	        cboard_title LIKE '%' || #{keyword} || '%'
+	    </if>
+	    <if test="condition == 'writer'">
+	        cboard_writer LIKE '%' || #{keyword} || '%'
+	    </if>
+	    <if test="condition == 'content'">
+	        cboard_content LIKE '%' || #{keyword} || '%'
+	    </if>
+	</select>
+	
+	<select id="selectSearchList" parameterType="java.util.HashMap" resultType="com.kh.coddy.board.code.model.vo.Cboard">
+	    SELECT *
+	    FROM (
+	        SELECT ROWNUM RNUM, C.*
+	        FROM (
+	            SELECT * FROM CBOARD
+	            WHERE 
+	            <if test="condition == 'title'">
+	                cboard_title LIKE '%' || #{keyword} || '%'
+	            </if>
+	            <if test="condition == 'writer'">
+	                cboard_writer LIKE '%' || #{keyword} || '%'
+	            </if>
+	            <if test="condition == 'content'">
+	                cboard_content LIKE '%' || #{keyword} || '%'
+	            </if>
+	            ORDER BY CBOARD DESC
+	        ) CB
+	        WHERE ROWNUM <![CDATA[<=]]> #{pi.endRow}
+	    ) 
+	    WHERE RNUM <![CDATA[>]]> #{pi.startRow}
+	</select>
 	
     
 </mapper>
