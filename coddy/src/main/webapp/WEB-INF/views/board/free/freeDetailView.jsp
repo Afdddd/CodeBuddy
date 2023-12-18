@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <title>Insert title here</title>
 <style>
     table * {margin:5px;}
@@ -165,6 +166,22 @@
                     <th>작성자 ${ requestScope.f.fboardWriter }</th>
                     <th>조회수 ${ requestScope.f.fboardViews }</th>
                 </tr>
+                <tr>
+                    <th>첨부파일</th>
+                    <td colspan="3">
+                    	<c:choose>
+                    		<c:when test="${ empty requestScope.f.fboardOrigin }">
+                    			첨부파일이 없습니다.
+                    		</c:when>
+                    		<c:otherwise>
+                        		<a href="${ requestScope.f.fboardChange }" 
+                        		   download="${ requestScope.f.fboardOrigin }">
+                        			${ requestScope.f.fboardOrigin }
+                        		</a>
+                        	</c:otherwise>
+                    	</c:choose>
+                    </td>
+                </tr>                
 
                 <tr>
                     <th>내용</th>
@@ -182,34 +199,32 @@
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-
-	            <c:if test="${ not empty sessionScope.loginMember and sessionScope.loginMember.memberNo eq requestScope.f.fboardWriter }">
-	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-	                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+			
+	                <button class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
+	                <button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
 	                
 	                <form id="postForm" action="update.fr" method="post">
 	                	<input type="hidden" name="fno" 
 	                				value="${ requestScope.f.fboardNo }">
+	                	<input type="hidden" name="filePath" 
+	                				value="${ requestScope.f.fboardChange }">			
 	                </form>
-						                
-					<script>
+           
+					<script>				    
 					    function postFormSubmit(num) {
-					       if (num == 1) {
-					       $("#postForm").attr("action", "update.fr").submit();
-				          } else if (num == 2) {
-				              deletePost();
-				          }
+        					if(num == 1) { 
+	                			
+	                			$("#postForm").attr("action", "updateForm.fr").submit();
+	                			
+	                		} else {
+	                			
+	                			$("#postForm").attr("action", "delete.fr").submit();
+	                			
+	                		}
 					    }
-					
-					    function deletePost() {
-					      var confirmDelete = confirm("어디 삭제 해 보시던가?");
-					      if (confirmDelete) {
-					          $("#postForm").attr("action", "delete.fr").submit();
-					      }
-					    }
-        			</script>
 
-            	</c:if>
+        			</script>
+  
             </div>
             <br><br>
 
@@ -258,12 +273,12 @@
 				if($("#content").val().trim().length != 0){
 					
 					$.ajax({
-						url : "iinsert.bo",
+						url : "insert.fr",
 						type : "get",
 						data : {
-							iboardNo : "${sessionScope.ib.iboardNo}",
+							fboardNo : "${sessionScope.f.fboardNo}",
 							memberNo : "${sessionScope.loginMember.memberNo}",
-							ireplyContent : $("#content").val()
+							freplyContent : $("#content").val()
 						},
 						success : function(result){
 							
@@ -286,9 +301,9 @@
 			function selectReplyList(){
 			// 댓글 조회 요청용 ajax 요청
 			$.ajax({
-				url : "ilist.bo",
+				url : "list.fr",
 				type : "get",
-				data : { ino : "${ sessionScope.ib.iboardNo}"},
+				data : { fno : "${ sessionScope.f.fboardNo}"},
 				success : function(result){
 					
 					let resultStr = "";
@@ -304,14 +319,14 @@
 						if("${sessionScope.loginMember.memberNo}" ==  parseInt(result[i].memberNo)){
 						resultStr += "<a href='#' class='edit-link' onclick='openModal2()'>수정하기</a>"
 							+ "<a href='#' class='delete-link' onclick='openModal()'>삭제하기</a>"
-							+ "<input type='hidden' value='" + result[i].ireplyNo + "'>"
+							+ "<input type='hidden' value='" + result[i].freplyNo + "'>"
 							
 						} 		
 									
 						resultStr += "</div>"
 									+ "</div>"
-									+ "<div class='content'>" + result[i].ireplyContent + "</div>"
-									+ "<div class='timestamp'>" + result[i].ireplyInsert + "</div>"
+									+ "<div class='content'>" + result[i].freplyContent + "</div>"
+									+ "<div class='timestamp'>" + result[i].freplyInsert + "</div>"
 									+ "</div>"
 
 						}
@@ -349,9 +364,9 @@
 			function replydelete(){
 				
 				$.ajax({
-					url : "idelete.bo",
+					url : "delete.fr",
 					type : "get",
-					data : {ireplyNo:$("#ireplyNo").val()},
+					data : {freplyNo:$("#freplyNo").val()},
 					success : function(result){
 						
 						
@@ -388,10 +403,10 @@
 			function updateBtn() {
 				console.log( $("#updateContent").val());
 				$.ajax({
-					url : "iupdate.bo",
+					url : "update.fr",
 					type : "get",
-					data :  {ireplyNo : $("#ireplyNo").val(),
-							ireplyContent : $("#updateContent").val()},
+					data :  {freplyNo : $("#freplyNo").val(),
+							freplyContent : $("#updateContent").val()},
 					success : function(result){
 							
 							console.log(result);
@@ -423,7 +438,7 @@
 			  <div class="modal-content">
 			    <span class="close-btn" onclick="closeModal()">&times;</span>
 			    <p>삭제하시겠습니까?</p>
-			    <input type="hidden" id="ireplyNo" value="">
+			    <input type="hidden" id="freplyNo" value="">
 			    <div id="delete">
 			    <button class="btn btn-danger" onclick="replydelete()" style=" width : 100px;">확인</button>
 			    </div>
@@ -434,7 +449,7 @@
 			  <div class="modal-content1">
 			    <span class="close-btn2" onclick="closeModal2()">&times;</span>
 			    <textarea  id="updateContent" style="width : 95%; height : 80%;">${Scope.r.content}</textarea>
-			    <input type="hidden" id="ireplyNo" value="">
+			    <input type="hidden" id="freplyNo" value="">
 			    <div id="delete">
 
 			    <button class="btn btn-danger" onclick="updateBtn()" style=" width : 100px;">확인</button>

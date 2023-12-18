@@ -66,6 +66,7 @@
 	                    <tr>
 	                        <td class="nno">${ n.nboardNo }</td>
 	                        <td>${ n.nboardTitle }</td>
+	                        <td>${ n.nboardWriter}</td>
 	                        <td>${ n.nboardViews }</td>
 	                        <td>${ n.nboardInsert }</td>
 	                    </tr>
@@ -98,7 +99,7 @@
                     	</c:when>
                     	<c:otherwise>
 	                    	<li class="page-item">
-	                    		<a class="page-link" href="list.fr?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+	                    		<a class="page-link" href="list.no?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
 	                    	</li>
                     	</c:otherwise>
                     </c:choose>
