@@ -20,7 +20,139 @@
 			   padding: 10px;
 			   border : 1px solid lightgray;
 	}
-						
+	
+.comment {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-radius: 5px;
+  width: 950px;
+}
+
+.comment .author {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment .author-info {
+  display: flex;
+  align-items: center;
+}
+
+.comment .author img {
+  width: 30px; /* 이미지 크기 조절 */
+  height: 30px;
+  border-radius: 50%; /* 이미지를 동그랗게 만들기 위한 속성 */
+  margin-right: 10px;
+}
+
+.comment .author span {
+  font-weight: bold;
+  color: #333;
+}
+
+.comment .actions {
+  display: flex;
+}
+
+.comment .actions a {
+  margin-left: 10px;
+}
+
+.comment .content {
+  margin-top: 5px;
+  color: #555;
+}
+
+.comment .timestamp {
+  font-size: 12px;
+  color: #888;
+}
+
+ .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 400px; /* 모달 최대 너비 */
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* 닫기 버튼 스타일 */
+    .close-btn {
+      cursor: pointer;
+       position: absolute;	
+      top: 10px;
+      right: 10px;
+      font-size: 18px;
+    }
+    
+    #delete {
+    width : 100%;
+    text-align: center
+    }
+    
+	    .close-btn2 {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 10px;
+	  right: 10px;
+	  font-size: 24px; /* 조금 더 큰 크기로 변경 */
+	  color: #333; /* 닫기 버튼 색상 변경 */
+	}
+	
+	/* 모달 스타일 */
+	.modal {
+	  display: none; /* 초기에는 화면에 표시하지 않음 */
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background: rgba(0, 0, 0, 0.5); /* 반투명한 배경 */
+	}
+	
+	.modal-content1 {
+	  background-color: #fff;
+	  padding: 20px;
+	  border-radius: 10px; /* 둥근 테두리로 변경 */
+	  max-width: 400px;
+	  width: 100%;
+	  margin: 10% auto; /* 화면 중앙에 표시 */
+	  box-sizing: border-box;
+	  position: relative; /* 상대 위치 설정 */
+	}
+	
+	textarea {
+	  width: 80px;
+	  height: 100px; /* 조절 가능한 높이 */
+	  margin-bottom: 10px;
+	  resize: none; /* 크기 조절 비활성화 */
+	}
+	
+	/* 확인 버튼 스타일 */
+	.btn-danger {
+	  background-color: #d9534f;
+	  color: #fff;
+	  border: none;
+	  padding: 10px 20px;
+	  border-radius: 5px;
+	  cursor: pointer;
+	}				
     
 </style>
 </head>
@@ -123,7 +255,7 @@
 		                        <th colspan="2">
 		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
 		                        </th>
-		                        <th style="vertical-align:middle"><button class="btn" style="color:white; background:#5271FF; padding:6px;" onclick="addReply();">등록하기</button></th>
+		                        <th style="vertical-align:middle"><button class="btn" style="color:white; background:#5271FF; padding:6px; width:80px;" onclick="addReply();">등록하기</button></th>
                     		</c:otherwise>
                     	</c:choose>
                     </tr>
@@ -201,14 +333,14 @@
 						if("${sessionScope.loginMember.memberNo}" ==  parseInt(result[i].memberNo)){
 						resultStr += "<a href='#' class='edit-link' onclick='openModal2()'>수정하기</a>"
 							+ "<a href='#' class='delete-link' onclick='openModal()'>삭제하기</a>"
-							+ "<input type='hidden' value='" + result[i].ireplyNo + "'>"
+							+ "<input type='hidden' value='" + result[i].creplyNo + "'>"
 							
 						} 		
 									
 						resultStr += "</div>"
 									+ "</div>"
-									+ "<div class='content'>" + result[i].ireplyContent + "</div>"
-									+ "<div class='timestamp'>" + result[i].ireplyInsert + "</div>"
+									+ "<div class='content'>" + result[i].creplyContent + "</div>"
+									+ "<div class='timestamp'>" + result[i].creplyInsert + "</div>"
 									+ "</div>"
 		
 						}
@@ -233,7 +365,7 @@
 			
 				
 				
-				$("#creplyNo").val(ireplyNo); 
+				$("#creplyNo").val(creplyNo); 
 			    
 			}
 			
@@ -322,7 +454,7 @@
 			    <p>삭제하시겠습니까?</p>
 			    <input type="hidden" id="creplyNo" value="">
 			    <div id="delete">
-			    <button class="btn btn-danger" onclick="replydelete()" style=" width : 100px;">확인</button>
+			    <button class="btn" onclick="replydelete()" style="color:white; background:#5271FF; padding:6px; width : 100px;">확인</button>
 			    </div>
 			  </div>
 			</div>
@@ -330,11 +462,11 @@
 			<div id="updateModal" class="modal">
 			  <div class="modal-content1">
 			    <span class="close-btn2" onclick="closeModal2()">&times;</span>
-			    <textarea  id="updateContent" style="width : 95%; height : 80%;">${Scope.r.content}</textarea>
+			    <textarea  id="updateContent" style="width : 95%; height : 80%;">${Scope.cr.content}</textarea>
 			    <input type="hidden" id="creplyNo" value="">
 			    <div id="delete">
 		
-			    <button class="btn btn-danger" onclick="updateBtn()" style=" width : 100px;">확인</button>
+			    <button class="btn" onclick="updateBtn()" style="color:white; background:#5271FF; padding:6px; width : 100px;">확인</button>
 			    </div>
 			  </div>
 			</div>
