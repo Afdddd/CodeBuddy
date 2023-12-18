@@ -122,7 +122,7 @@ public class ChatingHandler extends TextWebSocketHandler{
 			  
 		}
 		// 메세지 입력 시 
-		else if(RoomList.get(chatRoom.getRoomId())!= null && !chatMessage.getMessage().equals("ENTER-CHAT") && !chatMessage.getMessage().equals("END-CHAT")&& chatRoom != null) {
+		else if(RoomList.get(chatRoom.getRoomId())!= null && !chatMessage.getMessage().equals("ENTER-CHAT") && !chatMessage.getMessage().equals("END-CHAT")&& chatRoom != null && !chatMessage.getMessage().equals("EXILE-CHAT")) {
 			
 			
 			//현재 session 수
@@ -163,14 +163,9 @@ public class ChatingHandler extends TextWebSocketHandler{
 			  for(WebSocketSession sess : RoomList.get(chatRoom.getRoomId())) {
 					sess.sendMessage(textMessage);
 				}
+			// 추방하기
 		}else if(RoomList.get(chatRoom.getRoomId())!= null && chatMessage.getMessage().equals("EXILE-CHAT") && chatRoom != null) {
-			ChatMember cm = new ChatMember(Integer.parseInt(chatMessage.getRoomId()),chatMessage.getMemberNo(),chatMessage.getRole(),"","");
-			cService.outCaht(cm);
-			log.info("sessionList = {}",sessionList);
-			log.info("RoomList = {}",RoomList);
-			RoomList.get(sessionList.get(session)).remove(session);
-			sessionList.remove(session);
-			
+			textMessage = new TextMessage(chatMessage.getMemberNo()+",,"+chatMessage.getMessage()+","+chatMessage.getMessageType());
 			  for(WebSocketSession sess : RoomList.get(chatRoom.getRoomId())) {
 					sess.sendMessage(textMessage);
 				}

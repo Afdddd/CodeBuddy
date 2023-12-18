@@ -364,120 +364,32 @@
         </div>
       </div>
 
-      <div class="content_5">  
-        <h2>멤버</h2>
-        <hr>
-       
-        <div class="swiper">
-          <!-- 보여지는 영역 -->
-          <div class="swiper-wrapper">
-
-              <div class="card swiper-slide">
-                <div class="card-border-top">
+      <c:choose>
+        <c:when test="${requestScope.p.projectReady ne 0}">
+        <div class="content_5">  
+          <h2>멤버</h2>
+          <hr>
+        
+          <div class="swiper">
+                <div class="swiper-wrapper">
+                  <c:forEach var="f" items="${requestScope.fList}" varStatus="tagStatus">   
+                    <div class="card swiper-slide">
+                      <div class="card-border-top">
+                      </div>
+                      <div class="img">
+                      </div>
+                      <span>${f.memberName}</span>
+                      <p class="job">${f.role}</p>
+                      <button onclick='location.href="profile.me?mno=" + ${f.memberNo}'>프로필</button>
+                    </div>  
+                  </c:forEach>    
                 </div>
-                <div class="img">
-                </div>
-                <span> 김제니</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-              <div class="card swiper-slide">
-                <div class="card-border-top">
-                </div>
-                <div class="img">
-                </div>
-                <span> 김인엽</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-              <div class="card swiper-slide">
-                <div class="card-border-top">
-                </div>
-                <div class="img">
-                </div>
-                <span> 김사나</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-              <div class="card swiper-slide">
-                <div class="card-border-top">
-                </div>
-                <div class="img">
-                </div>
-                <span> 전정국</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-              <div class="card swiper-slide">
-                <div class="card-border-top">
-                </div>
-                <div class="img">
-                </div>
-                <span> 김민정</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-              <div class="card swiper-slide">
-                <div class="card-border-top">
-                </div>
-                <div class="img">
-                </div>
-                <span> 유지민</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-              <div class="card swiper-slide">
-                <div class="card-border-top">
-                </div>
-                <div class="img">
-                </div>
-                <span> 문빈</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-              <div class="card swiper-slide">
-                <div class="card-border-top">
-                </div>
-                <div class="img">
-                </div>
-                <span> 차은우</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-              <div class="card swiper-slide">
-                <div class="card-border-top">
-                </div>
-                <div class="img">
-                </div>
-                <span> 닝닝</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-              <div class="card swiper-slide">
-                <div class="card-border-top">
-                </div>
-                <div class="img">
-                </div>
-                <span> 배수지</span>
-                <p class="job"> Back-End</p>
-                <button> 프로필
-                </button>
-              </div>      
-
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+            </div>
           </div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
-      </div>
+       </c:when>
+      </c:choose>
           <script>
             const swiper = new Swiper('.swiper', {
                 //기본 셋팅
@@ -526,8 +438,7 @@
           url: "boardWish.rec",
           type: "get",
           data: {recruitmentNo: e},
-          success: function(result) {  },
-          error: function() {  }
+          success: function(result) {  }
         });
       }
 
@@ -576,10 +487,7 @@
             },
             success:function(){
               location.href='room.rec?pno='+projectNo;
-            },
-            error:function(){
             }
-
           });
       }
 

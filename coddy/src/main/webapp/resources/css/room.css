@@ -32,7 +32,7 @@
 
     #map_button{
         width: 100%;
-        margin-top: 50px;
+        height: 86px;
     }
 
     #team_info{
@@ -204,13 +204,7 @@
     animation-delay: 0.3s;
     }
 
-    #countdown{
-        width: 80%;
-        height: 20%;
-        text-align: center;
-        line-height: 170px;
-        margin:auto;
-    }
+
     
     /* 버튼 */
     #calendar_area{
@@ -248,6 +242,7 @@
     -webkit-user-select: none;
     touch-action: manipulation;
     will-change: transform;
+    box-sizing: border-box;
     }
 
     .button:disabled {
@@ -261,16 +256,46 @@
     transform: translateY(-2px);
     }
 
-    #map_button:hover {
-    color: #191919;
-    background-color: #FEE500;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    transform: translateY(-2px);
-    }
-
     .button:active {
     box-shadow: none;
     transform: translateY(0);
     }
-        
-   
+
+    #countdown {
+        width: 100%;
+        height: 30%;
+        line-height: 200px;
+        text-align: center;
+        font-size: 3em;
+        font-weight: bold;
+        color: black;
+        padding: 20px;
+    }
+
+    #meeting_place{
+        width: 100%;
+        text-align: center;
+    }
+
+    #meeting_place a{
+        height: 86px;
+        width: 100%;
+        line-height: 35px;
+        text-decoration: none;
+    }
+
+    #map_place{
+        font-weight: bold;
+        line-height: 100px;
+        height: 120px;
+        display: block;
+    }
+
+    #directions{
+        width: 100%;
+    }
+
+    #start_button{
+        width: 100%;
+        height: 200px;
+    }

@@ -49,6 +49,14 @@
 		<result column="ROLE" property="position" />
 		<result column="MAX_PERSONNEL" property="maxPersonnel" />
 	</resultMap>
+	
+	<resultMap id="profileResultSet" type="profile">
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="MEMEBER_NAME" property="memberName" />
+		<result column="JOINS_ROLE" property="role" />
+		<result column="PROJECT_NO" property="projectNo" />
+		<result column="PROFILE_IMG" property="profileImg" />
+	</resultMap>
 
 
 
@@ -329,5 +337,12 @@
 		WHERE MEMBER_NO = #{memberNo}
 		AND PROJECT_NO = #{pno}
 	</delete>
+	
+	<select id="getJoinMember" parameterType="_int" resultMap="profileResultSet">
+		SELECT J.MEMBER_NO, M.MEMBER_NAME AS "MEMBER_NAME", J.JOINS_ROLE, J.PROJECT_NO, M.MEMBER_PHOTO_EXTEND AS "PROFILE_IMG"
+		FROM MEMBER M,JOINS J
+		WHERE J.MEMBER_NO = M.MEMBER_NO
+        AND J.PROJECT_NO = #{pno}
+	</select>
 	
 </mapper>

@@ -26,6 +26,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%= kakaoMapKey%>&libraries=services"></script>
 <link href="${ pageContext.request.contextPath }/resources/css/room.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 <script>
   
     </script>
@@ -52,14 +53,17 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
     </div>
     
     <div class="sidebar_right">
-        <div id="countdown"></div>
+        <div id="countdown">
+          
+        </div>
         <div id="calendar_area">
             <button  id="calendar_modal" class="button">
-                일정관리
+              <i class="fa fa-calendar"></i>  
+              일정관리
             </button>            
         </div>
         <div id="meeting_place"></div>
-        <button id="map_button" class="button">장소정하기</button>         
+        <button id="map_button" class="button"><i class="fa fa-map"></i> 장소정하기</button>         
         <button id="start_button" class="button">시작하기</button>  
     </div>
 
@@ -188,10 +192,16 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
             "message" : receive[2],
             "messageType" : receive[3]
           };
-          console.log("수신된 데이터 ="+receive[3]);
           checkLR(data);
           updateMemberList();
           $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
+
+          if(receive[0] == "${sessionScope.loginMember.memberNo}" && receive[2] == "EXILE-CHAT" && receive[3]==5){
+            onClose();
+            alert("추방당하셨습니다.");
+          }
+
+
         }
 
         // 뒤로가기 클릭시 채팅방 나가기
@@ -231,7 +241,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
           }else if(data.messageType == 2){ // 맵이 변경되었을때
             let strArr = data.message.split("_");
             div = $("<div> [공지] '"+strArr[1]+"' 으로 장소가 변경되었습니다.</div>");
-            $("#meeting_place").html(strArr[0]+" "+strArr[1]+"<a href='https://map.kakao.com/link/to/"+strArr[2]+"'>길찾기</a>");
+            $("#meeting_place").html("<div id='map_place'>"+strArr[0]+" "+strArr[1]+"</div> <a class='button' id='directions' href='https://map.kakao.com/link/to/"+strArr[2]+"'>길찾기</a>");
           }else if(data.messageType == 3){
             div = $("<div> [공지] "+data.message+"</div>");
           }
@@ -289,7 +299,6 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
 
           // 참여한 인원 불러오기
           function updateMemberList() {
-            
             $.ajax({
               url: "getMember.rec",
               data: {
@@ -298,12 +307,10 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
             success: function (result) {
 
               memberList = [];
-              
             
               let newContent = $("<div></div>");
 
             for (let i = 0; i < result.length; i++) {
-              console.log(result[i]);
                 let div = "";
                 if (result[i].memberNo == ${requestScope.p.projectOwner}) {
                     div = "<div class='card'>" +
@@ -338,10 +345,6 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
         });
       }
             
-  // 참여한 인원 1초마다 불러오기
-  // setInterval(function () {
-  //     updateMemberList();
-  // }, 1000);
 
   // 달력 오픈
   $(function(){
@@ -596,14 +599,14 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
 
 
     // 카운트다운
+
     var startTime = new Date("${requestScope.p.projectStart}").getTime();
     var endTime = new Date("${requestScope.p.projectEnd}").getTime();
-    var countdownEl = document.getElementById('countdown')
+    var countdownEl = document.getElementById('countdown');
     
-    var countdownInterval = setInterval(function() {     
-
-        var currentDate = new Date().getTime();
-
+    
+    var countdownInterval = setInterval(function(){ 
+      var currentDate = new Date().getTime();
         if(startTime > currentDate){
           var timeDiff = (startTime - currentDate) / 1000;
           var days = Math.floor(timeDiff / (24 * 60 * 60));
@@ -612,14 +615,16 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
           var timeDiff = (endTime - startTime) / 1000;
           var days = Math.floor(timeDiff / (24 * 60 * 60));
           countdownEl.innerHTML =  "D - "+days;
+          
+     
           if (timeDiff < 0) {
               clearInterval(countdownInterval);
               countdownEl.innerHTML = "Expired";
           }
+
         }
-    }, 1000); 
-
-
+      }, 1000); 
+     
     // 시작버튼 클릭
     $("#start_button").click(function(){
       if(confirm("프로젝트를 시작하시겠습니까?")){

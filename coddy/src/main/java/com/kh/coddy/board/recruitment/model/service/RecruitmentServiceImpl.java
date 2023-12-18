@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.kh.coddy.board.recruitment.model.dao.RecruitmentDao;
 import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
@@ -137,6 +138,10 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 	@Override
 	public int memberExile(HashMap<String, Integer> map) {
 		return rDao.memberExile(sqlSession, map);
+	}
+	@Override
+	public ArrayList<Profile> getJoinMember(int pno) {
+		return rDao.getJoinMember(sqlSession, pno);
 	}
 	
 	

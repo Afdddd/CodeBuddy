@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.RSearch;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
@@ -101,5 +102,7 @@ public class RecruitmentDao {
 	public int memberExile(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.delete("recruitmentMapper.memberExile",map);
 	}
-		
+	public ArrayList<Profile> getJoinMember(SqlSessionTemplate sqlSession, int pno) {
+		return (ArrayList)sqlSession.selectList("recruitmentMapper.getJoinMember",pno);
+	}
 }

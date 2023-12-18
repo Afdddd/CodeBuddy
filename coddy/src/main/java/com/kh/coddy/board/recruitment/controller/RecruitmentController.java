@@ -28,12 +28,14 @@ import com.google.gson.Gson;
 import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
 import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
 import com.kh.coddy.common.Pagination;
+import com.kh.coddy.common.chat.model.service.ChatService;
 import com.kh.coddy.common.chat.model.vo.ChatMember;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.tag.controller.TagsController;
@@ -47,6 +49,10 @@ public class RecruitmentController {
 	
 	@Autowired
 	RecruitmentService rService;
+	
+	@Autowired
+	ChatService cService;
+	
 	@Autowired
 	TagsController tagsController;
 	
@@ -66,9 +72,9 @@ public class RecruitmentController {
 		Rattachment thumOne = rService.getThumbOne(r); // 대표이미지
 		ArrayList<Rattachment> thumList = rService.getAttachmentList(r); // 이미지 목록
 		int wish = rService.getWish(new RecruitmentWishList(memberNo,rno)); // 좋아요 여부
-		Project p = rService.getProject(r);
+		Project p = rService.getProject(r); // 프로젝트 정보
+		ArrayList<Profile> fList = rService.getJoinMember(p.getProjectNo());
 		
-		log.info("thumList={}",thumList);
 		
 		model.addAttribute("r",r);
 		model.addAttribute("tags",tags);
@@ -77,6 +83,8 @@ public class RecruitmentController {
 		model.addAttribute("thumList",thumList);
 		model.addAttribute("wish",wish);
 		model.addAttribute("p",p);
+		model.addAttribute("fList",fList);
+		log.info("fList={}",fList);
 		return "board/recruitment/recruitmentDetailView";
 	}
 	@GetMapping("enrollForm.rec")
@@ -282,7 +290,7 @@ public class RecruitmentController {
 	}
 	
 	@GetMapping(value="startProject.rec", produces="application/json")
-	public int  startProject(@RequestParam Map<String, Object> paramMap) throws ParseException, JsonMappingException, JsonProcessingException {
+	public Integer  startProject(@RequestParam Map<String, Object> paramMap) throws ParseException, JsonMappingException, JsonProcessingException {
 		log.info("paramMap = {}",paramMap);
 		String jsonData = paramMap.get("memberList").toString();
 		ObjectMapper mapper = new ObjectMapper();
