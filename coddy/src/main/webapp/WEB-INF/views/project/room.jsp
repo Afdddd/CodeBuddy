@@ -34,7 +34,6 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
     <header>
         <div>
             <button onclick="onClose();">나가기</button>
-
         </div>
     </header>
     <div class="sidebar_left">
@@ -121,7 +120,6 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
         window.onpageshow = function(event) {
             if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
               location.reload();
-              onClose();
           }
         }
 
@@ -212,7 +210,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
         });
 
         function onClose() {
-            location.href = 'detail.rec?rno=' + roomId;
+           location.href = 'detail.rec?rno=' + roomId;
         }
 
 
@@ -302,7 +300,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
               memberList = [];
               
             
-            let newContent = $("<div></div>");
+              let newContent = $("<div></div>");
 
             for (let i = 0; i < result.length; i++) {
               console.log(result[i]);
@@ -319,13 +317,15 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
                         "</div>";
                 } else {
                     div = "<div class='card'>" +
-                        "<div class='textBox'>" +
+                        "<div style='float:left' class='textBox'>" +
                         "<div class='textContent'>" +
                         "<p class='h1'>" + result[i].memberName + "</p>" +
                         "<span class='span'></span>" +
                         "</div>" +
                         "<p class='p'>" + result[i].role + "</p>" +
                         "</div>" +
+                        "<button id='exile'>추방</button>"+
+                        "<div id='chatMemberNo'>"+result[i].memberNo+"</div>"
                         "</div>";
                 }
                 
@@ -433,18 +433,14 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
               // 검색한 결과를 result에 뿌리기
               var result = document.getElementById("search_result");
               result.innerHTML = full_place;
-              
-      
           });
-      }
-
-      
+      }    
     });
   });
 
   // 장소 변경
   function updatePlace(){
-
+    if("${sessionScope.loginMember.memberNo}" == "${requestScope.p.projectOwner}"){
     let place = document.getElementById("search_result").innerText;
     console.log("place = "+place);
 
@@ -465,7 +461,11 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
           let jsonData = JSON.stringify(data);
           webSocket.send(jsonData);
         }
+        
       })
+    }else{
+      alert("방장만 장소를 정할수있습니다.");
+    }
   }
 
 
@@ -489,6 +489,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
           // 드래그로 일정 추가
           select:function(info){
            
+          if("${sessionScope.loginMember.memberNo}" == "${requestScope.p.projectOwner}"){
           let title = prompt('추가할 일정:');
 
           // title 값이 있을때, 화면에 calendar.addEvent() json형식으로 일정을 추가
@@ -540,11 +541,14 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
               });
               calendar.unselect();
           });
-          },
+          }else{
+            alert("방장만 일정을 추가할수있습니다.")
+          }
+        },
            
           // 이벤트 클릭해서 삭제
           eventClick: function (info){
-          
+          if("${sessionScope.loginMember.memberNo}" == "${requestScope.p.projectOwner}"){
           if(confirm("'"+info.event.title+ "'일정을 삭제하시겠습니까?'")){
             info.event.remove();
         
@@ -580,6 +584,9 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
                       alert("에러 발생" + error);
                 });
             })
+          }else{
+            alert("방장만 일정을 삭제할수있습니다.")
+          }
           },
           // 조회해온 일정이 data로 넘어옴
           events : data
@@ -614,8 +621,6 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
 
 
     // 시작버튼 클릭
-
-    
     $("#start_button").click(function(){
       if(confirm("프로젝트를 시작하시겠습니까?")){
         console.log(memberList);
@@ -630,9 +635,27 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
           }
         })
       }
-      
-      
-    })
+    });
+
+    // 추방하기
+    
+    $(document).on("click","#exile",function(e){
+      let memberNo = $(this).next("#chatMemberNo").text();
+     
+        updateMemberList();
+        const data={
+                "roomId" : roomId,
+                "memberNo" : memberNo,
+                "memberName" : "",
+                "message" : "EXILE-CHAT",
+                "messageType" : 5
+              };
+              
+              let jsonData = JSON.stringify(data);
+              webSocket.send(jsonData);
+  
+    });
+    
 
   </script>
 </body>

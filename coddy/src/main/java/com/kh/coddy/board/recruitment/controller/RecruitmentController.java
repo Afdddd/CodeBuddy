@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -292,6 +291,16 @@ public class RecruitmentController {
 		
 		return rService.projectStart(memberList);
 		
+	}
+	
+	@GetMapping(value="exile.rec")
+	@ResponseBody
+	public int memberExile(int memberNo, int pno) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("memberNo", memberNo);
+		map.put("pno", pno);
+		
+		return rService.memberExile(map);
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.kh.coddy.board.recruitment.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
@@ -37,4 +38,5 @@ public interface RecruitmentService {
 	int createProject(Project p);
 	int updatePlace(PlaceDto pDto);
 	int projectStart(ArrayList<ChatMember> memberList);
+	int memberExile(HashMap<String, Integer> map);
 }

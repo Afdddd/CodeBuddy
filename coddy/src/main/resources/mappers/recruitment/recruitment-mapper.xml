@@ -323,4 +323,11 @@
 		</foreach>
 	</insert>
 	
+	<delete id="memberExile" parameterType="hashmap">
+		DELETE FROM 
+		CHAT_MEMBER
+		WHERE MEMBER_NO = #{memberNo}
+		AND PROJECT_NO = #{pno}
+	</delete>
+	
 </mapper>

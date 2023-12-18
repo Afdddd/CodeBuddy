@@ -1,6 +1,7 @@
 package com.kh.coddy.board.recruitment.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -132,6 +133,10 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 			return 1;
 		}
 		return 0;		
+	}
+	@Override
+	public int memberExile(HashMap<String, Integer> map) {
+		return rDao.memberExile(sqlSession, map);
 	}
 	
 	

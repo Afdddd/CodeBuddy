@@ -1,6 +1,7 @@
 package com.kh.coddy.board.recruitment.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -97,7 +98,8 @@ public class RecruitmentDao {
 	public int insertJoin(SqlSessionTemplate sqlSession, ArrayList<ChatMember> memberList) {
 		return sqlSession.insert("recruitmentMapper.insertJoin",memberList);
 	}
-	
-	
+	public int memberExile(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.delete("recruitmentMapper.memberExile",map);
+	}
 		
 }
