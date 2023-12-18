@@ -213,6 +213,11 @@ public class IntroDao {
 		return sqlSession.selectOne("introMapper.selectRecruitment3", iboardNo);
 	}
 
+	public int updateBoard(SqlSessionTemplate sqlSession, IBoard i) {
+		
+		return sqlSession.update("introMapper.updateBoard", i);
+	}
+
 
 
 

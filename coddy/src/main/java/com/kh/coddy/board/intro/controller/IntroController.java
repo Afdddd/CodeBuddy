@@ -195,6 +195,8 @@ public class IntroController {
 	public String selectupdateForm(HttpSession session, @RequestParam(value="projectno") int projectNo, Model model) {
 		
 		Recruitment r = introService.selectRecruitment2(projectNo);
+		IBoard i = introService.iBoardUpdate(projectNo);
+		
 		
 		ArrayList<Prelation> tags = introService.getTagInfo2(r); // 태그정보
 		ArrayList<RecruitmentState> state = introService.getState(r); // 지원 현황
@@ -207,6 +209,9 @@ public class IntroController {
 		model.addAttribute("thumOne",thumOne);
 		model.addAttribute("thumList",thumList);
 		model.addAttribute("p",p);
+		model.addAttribute("i", i);
+		
+		int result = introService.updateBoard(i);
 		
 		if(session.getAttribute("loginMember") == null) {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");

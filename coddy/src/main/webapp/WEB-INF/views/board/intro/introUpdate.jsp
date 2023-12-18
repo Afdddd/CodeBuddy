@@ -267,12 +267,12 @@
                 <tbody>
                  	<tr>
 	                        <th><label for="title"></label></th>
-	                        <td style="width : 500px; padding-bottom : 30px;"><input type="text" id="iboardTitle" class="form-control" name="iboardTitle" placeholder="제목을 입력하세요" required></td>
+	                        <td style="width : 500px; padding-bottom : 30px;"><input type="text" id="iboardTitle" value="${i.iboardTitle}" class="form-control" name="iboardTitle" placeholder="제목을 입력하세요" required></td>
 	                    </tr>
 	             
 	                    <tr>
 	                        <th><label for="content"></label></th>
-	                        <td><textarea id="iboardContent" class="form-control" rows="10" style="resize:none;" name="iboardContent" placeholder="내용을 입력하세요" required></textarea></td>
+	                        <td><textarea id="iboardContent" class="form-control" rows="10" value="${i.iboardContent}" style="resize:none;" name="iboardContent" placeholder="내용을 입력하세요" required></textarea></td>
 	                    </tr>
 	                    	<input type="hidden" name="projectNo" value="${projectNo}" id="projectNo">
                 </tbody>

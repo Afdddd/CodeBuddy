@@ -118,6 +118,9 @@ public interface IntroService {
 	// 상세조회용 Recruitment
 	Recruitment selectRecruitment3(int iboardNo);
 
+	// update하는 것
+	int updateBoard(IBoard i);
+
 
 	
 

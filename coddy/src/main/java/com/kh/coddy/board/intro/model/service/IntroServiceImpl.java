@@ -242,6 +242,12 @@ public class IntroServiceImpl implements IntroService {
 		return introDao.selectRecruitment3(sqlSession, iboardNo);
 	}
 
+	@Override
+	public int updateBoard(IBoard i) {
+		
+		return introDao.updateBoard(sqlSession , i);
+	}
+
 
 
 	

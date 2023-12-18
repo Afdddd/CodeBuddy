@@ -345,9 +345,13 @@
             	<div class="btn-group">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
 	        
-	        		
+	        	<form id="updateForm" method="post" action="introForm.bo">
 	                <a class="btn btn-primary" onclick="location.href='introForm.bo?projectno=${p.projectNo}'">수정</a>
-	                
+	            	<input type="hidden" name="ino" value="${ib.iboardNo}">
+	            	<input type="hidden" name="origin" value="${it.iAttachmentNo}">
+	            	<input type="hidden" name="change" value="${it.iAttachmentChange}">
+	       			<input type="hidden" name="path" value="${it.iAttachmentPath}">
+	            </form>
 	                
 	                <form action="deleteForm.ib" method="post">
 	                

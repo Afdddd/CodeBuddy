@@ -458,5 +458,16 @@
            AND P.PROJECT_NO = I.PROJECT_NO
            AND I.IBOARD_NO = #{iboardNo}
 	</select>
+	
+	<update id="updateBoard" parameterType="intro">
+		UPDATE IBOARD
+		   SET IBOARD_TITLE = #{iboardTitle}
+		     , IBOARD_CONTENT = #{iboardContent}
+		     , IBOARD_UPDATE = SYSDATE
+		 WHERE IBOARD_NO = #{iboardNo}
+		   AND IBOARD_DELETE IS NULL     
+	</update>
+	
+	
 </mapper>
 	
