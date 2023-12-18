@@ -1,6 +1,7 @@
 package com.kh.coddy.board.recruitment.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
@@ -8,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.coddy.board.job.model.vo.Hwishlist;
+import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.RSearch;
@@ -87,6 +89,17 @@ public class RecruitmentDao {
 	public Project getProject(SqlSessionTemplate sqlSession,Recruitment r) {
 		return sqlSession.selectOne("recruitmentMapper.getProject",r);
 	}
-	
+	public int updatePlace(SqlSessionTemplate sqlSession, PlaceDto pDto) {
+		return sqlSession.update("recruitmentMapper.updatePlace",pDto);
+	}
+	public int updateProjectState(SqlSessionTemplate sqlSession, int pno) {
+		return sqlSession.update("recruitmentMapper.updateProjectState",pno);
+	}
+	public int insertJoin(SqlSessionTemplate sqlSession, ArrayList<ChatMember> memberList) {
+		return sqlSession.insert("recruitmentMapper.insertJoin",memberList);
+	}
+	public int memberExile(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.delete("recruitmentMapper.memberExile",map);
+	}
 		
 }

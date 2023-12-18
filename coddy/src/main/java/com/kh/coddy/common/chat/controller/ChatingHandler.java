@@ -51,15 +51,12 @@ public class ChatingHandler extends TextWebSocketHandler{
 		i--;
 		log.info("연결 종료! 현재인원 = {}",i);
 		if(sessionList.get(session) != null) {
-			RoomList.get(sessionList.get(session)).remove(session);
+			RoomList.get(sessionList.get(session)).remove(session); 
 			sessionList.remove(session);
 		}
 		log.info("session={}",session.getAttributes());
 		ChatMember cm = (ChatMember)session.getAttributes().get("chatMember");
-		int result = cService.outCaht(cm);
-		if(result>0) {
-			log.info("채팅방 나가짐");
-		}
+		cService.outCaht(cm);
 	}
 	
 	@Override
@@ -75,6 +72,8 @@ public class ChatingHandler extends TextWebSocketHandler{
 		ChatRoom chatRoom = cService.selectChatRoom(chatMessage.getRoomId());
 		log.info("chatRoom = {}",chatRoom);
 		
+		TextMessage textMessage = new TextMessage(chatMessage.getMemberNo() + "," + chatMessage.getMemberName() + "," + chatMessage.getMessage() + "," + chatMessage.getMessageType());
+		
 		if(chatRoom == null && chatMessage.getMessage().equals("ENTER-CHAT")) {
 			chatRoom = new ChatRoom(Integer.parseInt(chatMessage.getRoomId()),chatMessage.getMemberNo());
 			int result = cService.createChat(chatRoom);
@@ -89,6 +88,9 @@ public class ChatingHandler extends TextWebSocketHandler{
 				RoomList.put(chatRoom.getRoomId(), sessionTwo);
 				
 				log.info("채팅방 생성");
+				  for(WebSocketSession sess : RoomList.get(chatRoom.getRoomId())) {
+						sess.sendMessage(textMessage);
+					}
 			}
 			
 			// 채팅 세션 목록에 채팅방이 존재하지 않고, 처음 들어왔고, DB에서의 채팅방이 있을 때	
@@ -101,7 +103,11 @@ public class ChatingHandler extends TextWebSocketHandler{
 			// 해당 채팅방에 참여한 세션들 추가
 			RoomList.put(chatRoom.getRoomId(), sessionTwo);
 			
-			log.info("채팅방 생성");
+			 for(WebSocketSession sess : RoomList.get(chatRoom.getRoomId())) {
+					sess.sendMessage(textMessage);
+				}
+			
+			log.info("채팅방 입장");
 		// 채팅방이 존재할때
 		}else if(RoomList.get(chatRoom.getRoomId()) != null && chatMessage.getMessage().equals("ENTER-CHAT") && chatRoom != null){
 				// RoomList에서 해당 방번호를 가진 방이 있는지 확인.
@@ -109,13 +115,15 @@ public class ChatingHandler extends TextWebSocketHandler{
 			  // sessionList에 추가
 			  sessionList.put(session, chatRoom.getRoomId());
 
-			  // 확인용
-			  System.out.println("생성된 채팅방으로 입장");
-			}
+			  
+			  for(WebSocketSession sess : RoomList.get(chatRoom.getRoomId())) {
+					sess.sendMessage(textMessage);
+				}
+			  
+		}
 		// 메세지 입력 시 
 		else if(RoomList.get(chatRoom.getRoomId())!= null && !chatMessage.getMessage().equals("ENTER-CHAT") && !chatMessage.getMessage().equals("END-CHAT")&& chatRoom != null) {
-			// 메세지에 이름과 내용을 담는다.
-			TextMessage textMessage = new TextMessage(chatMessage.getMemberNo() + "," + chatMessage.getMemberName() + "," + chatMessage.getMessage());
+			
 			
 			//현재 session 수
 			int sessionCount = 0;
@@ -126,11 +134,15 @@ public class ChatingHandler extends TextWebSocketHandler{
 				sessionCount++;
 			}
 			
+			
+			
 			// 메세지를 읽었는지 안읽었는지 확인을 위해
 			chatMessage.setSessionCount(sessionCount);
 			
 			// DB에 메세지 저장
 			int result =cService.insertMessage(chatMessage);
+			
+			
 			log.info("chatMessage = {}",chatMessage);
 			
 			if(result == 1) {
@@ -142,12 +154,26 @@ public class ChatingHandler extends TextWebSocketHandler{
 			// 채팅방 나가기
 		}else if(RoomList.get(chatRoom.getRoomId())!= null && chatMessage.getMessage().equals("END-CHAT") && chatRoom != null) {
 			ChatMember cm = new ChatMember(Integer.parseInt(chatMessage.getRoomId()),chatMessage.getMemberNo(),chatMessage.getRole(),"","");
-			int result = cService.outCaht(cm);
-			if(result>0) {
-				log.info("채팅방 나가짐");
-			}
+			cService.outCaht(cm);
+			log.info("sessionList = {}",sessionList);
+			log.info("RoomList = {}",RoomList);
 			RoomList.get(sessionList.get(session)).remove(session);
 			sessionList.remove(session);
+			
+			  for(WebSocketSession sess : RoomList.get(chatRoom.getRoomId())) {
+					sess.sendMessage(textMessage);
+				}
+		}else if(RoomList.get(chatRoom.getRoomId())!= null && chatMessage.getMessage().equals("EXILE-CHAT") && chatRoom != null) {
+			ChatMember cm = new ChatMember(Integer.parseInt(chatMessage.getRoomId()),chatMessage.getMemberNo(),chatMessage.getRole(),"","");
+			cService.outCaht(cm);
+			log.info("sessionList = {}",sessionList);
+			log.info("RoomList = {}",RoomList);
+			RoomList.get(sessionList.get(session)).remove(session);
+			sessionList.remove(session);
+			
+			  for(WebSocketSession sess : RoomList.get(chatRoom.getRoomId())) {
+					sess.sendMessage(textMessage);
+				}
 		}
 	}
 		

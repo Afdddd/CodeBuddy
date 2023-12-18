@@ -17,4 +17,5 @@ public class ChatMessage {
 	private String message;   // 메세지 내용	
 	private int unReadCount;  // 안읽은 메세지 수
 	private int sessionCount; // 현재 세션 수
+	private String messageType; // 메세지 타입(1: 채팅참여자, 2: 공지)
 }

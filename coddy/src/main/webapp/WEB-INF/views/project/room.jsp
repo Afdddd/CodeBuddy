@@ -1,7 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@page import="com.kh.coddy.common.Keys"%>
+<%@page import="org.springframework.core.io.ClassPathResource"%>
+<%@page import="org.springframework.core.io.Resource"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<% 
+Resource resource = new ClassPathResource("keys/kakaoMap.json");
+String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");  
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,367 +24,9 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<style>
-    html, body{     
-        margin: 0;
-        height: 100%;
-    }
-    header{
-        width: 100%;
-        height: 8%;
-        background-color: #4285f4;
-    }
-    .sidebar_left{
-        height: 92%;
-        width: 15%;
-        background-color: #f2f2f2;
-        float: left;
-    }
-    .chat_area{
-        float: left;
-        width: 60%;
-        height: 92%;
-    }
-    .sidebar_right{
-        height: 92%;
-        width: 25%;     
-        float: left;
-    }
-
-    #map_area{
-        margin-top: 60px;
-        text-align: center;
-    }
-
-    #map_button{
-        width: 100%;
-        margin-top: 50px;
-    }
-
-    #team_info{
-        width: 50%;
-    }
-    #project_info{
-        width: 49%;
-    }
-    #start{     
-        width : 100%;
-        height: 20%;
-    }
-
-
-    /* 카드1 */
-    .card {
-    width: 95%;
-    height: 70px;
-    background: #d7cfcf;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-    backdrop-filter: blur(10px);
-    transition: 0.5s ease-in-out;
-    margin: 7px;
-    
-    }
-
-    .card:hover {
-    cursor: pointer;
-    transform: scale(1.05);
-    }
-
-    .img {
-    width: 50px;
-    height: 50px;
-    margin-left: 10px;
-    border-radius: 10px;
-    background: linear-gradient(#d7cfcf, #9198e5);
-    }
-
-    .card:hover > .img {
-    transition: 0.5s ease-in-out;
-    background: linear-gradient(#9198e5, #712020);
-    }
-
-    .textBox {
-    width: calc(100% - 90px);
-    margin-left: 10px;
-    color: black;
-    font-family: 'Poppins' sans-serif;
-    }
-
-    .textContent {
-    margin-top: 5px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    }
-
-    .span {
-    font-size: 10px;
-    }
-
-    .h1 {
-    font-size: 16px;
-    font-weight: bold;
-    }
-
-    .p {
-    margin-top: 5px;
-    font-size: 14px;
-    font-weight: lighter;
-    }
-
-   
-
-
-
-    /* 채팅 */
-    .chat-card {
-    width: 100%px;
-    height: 100%;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    }
-
-    .chat-body {
-    overflow: auto;
-    padding: 20px;
-    height: 90%;
-    }
-
-    .message {
-    margin-bottom: 10px;
-    padding: 10px;
-    border-radius: 5px;
-    }
-
-    .incoming {
-    background-color: #e1e1e1;
-    }
-
-    .outgoing {
-    background-color: #f2f2f2;
-    text-align: right;
-    }
-
-    .message p {
-    font-size: 14px;
-    color: #333;
-    margin: 0;
-    }
-
-    .chat-footer {
-    padding: 10px;
-    background-color: #f2f2f2;
-    display: flex;
-    }
-
-    .chat-footer input[type="text"] {
-    flex-grow: 1;
-    padding: 5px;
-    border: none;
-    border-radius: 3px;
-    }
-
-    .chat-footer button {
-    padding: 5px 10px;
-    border: none;
-    background-color: #4285f4;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    }
-
-    .chat-footer button:hover {
-    background-color: #0f9d58;
-    }
-
-    @keyframes chatAnimation {
-    0% {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    }
-
-    .chat-card .message {
-    animation: chatAnimation 0.3s ease-in-out;
-    animation-fill-mode: both;
-    animation-delay: 0.1s;
-    }
-
-    .chat-card .message:nth-child(even) {
-    animation-delay: 0.2s;
-    }
-
-    .chat-card .message:nth-child(odd) {
-    animation-delay: 0.3s;
-    }
-
-    #countdown{
-        width: 80%;
-        height: 20%;
-        text-align: center;
-        line-height: 170px;
-        margin:auto;
-    }
-    
-    /* 버튼 */
-    #calendar_area{
-        width: 100%;
-        height: 10%;
-    }
-    #calendar_area button{
-        width: 100%;
-        height: 100%;
-        text-align: center;
-    }
-
-    .button {
-    appearance: none;
-    background-color: transparent;
-    border: 1px solid lightgray;
-    border-radius: 0.9375em;
-    box-sizing: border-box;
-    color: #3B3B3B;
-    cursor: pointer;
-    display: inline-block;
-    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
-    font-size: 16px;
-    font-weight: 600;
-    line-height: normal;
-    margin: 0;
-    min-height: 3.75em;
-    min-width: 0;
-    outline: none;
-    padding: 1em 2.3em;
-    text-align: center;
-    text-decoration: none;
-    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    will-change: transform;
-    }
-
-    .button:disabled {
-    pointer-events: none;
-    }
-
-    .button:hover {
-    color: #fff;
-    background-color: #5271FF;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    transform: translateY(-2px);
-    }
-
-    #map_button:hover {
-    color: #191919;
-    background-color: #FEE500;
-    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
-    transform: translateY(-2px);
-    }
-
-    .button:active {
-    box-shadow: none;
-    transform: translateY(0);
-    }
-        
-   
-</style>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=<%= kakaoMapKey%>&libraries=services"></script>
+<link href="${ pageContext.request.contextPath }/resources/css/room.css" rel="stylesheet" />
 <script>
-  
-    function open_fc() {
-        var calendarEl = document.getElementById('calendar');
-    
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-          headerToolbar: {
-            left: 'prev,next today',
-            center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
-          },
-          locale: 'ko', // 한국어 설정
-          timeZone: 'Asia/Seoul',
-          navLinks: true,
-          selectable: true,
-          droppable : true,
-          editable : true,
-      
-          // 드래그로 일정 투가
-          select:function(info){
-            console.dir(info);
-            var title = prompt('추가할 일정:');
-
-            // title 값이 있을때, 화면에 calendar.addEvent() json형식으로 일정을 추가
-            if (title) {
-              calendar.addEvent({
-                title: title,
-                start: info.start,
-                end: info.end,
-                allDay: info.allDay,
-                backgroundColor:"blue",
-                textColor:"white",
-                projectNo : "${requestScope.p.projectNo}"
-              }) 
-            }
-            var allEvent = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다
-
-            var events = new Array(); // Json 데이터를 받기위한 배열 선언
-            for(var i = 0; i < allEvent.length; i++){
-              var obj = new Object(); // Json을 담기 위해 Object 선언
-              obj.title = allEvent[i]._def.title;  // 이벤트 이름
-              obj.start = allEvent[i]._instance.range.start; // 이벤트 시작 날짜
-              obj.end = allEvent[i]._instance.range.end; // 이벤트 끝 날짜
-              obj.pno = allEvent[i]._def.extendedProps.projectNo; // 프로젝트 번호
-              events.push(obj);
-            }
-
-            var jsondata= JSON.stringify(events);
-            console.log("data : "+jsondata);
-
-            $(function saveData(jsondata) {
-                $.ajax({
-                    url: "insertSchedule.cal",
-                    method: "POST",
-                    dataType: "json",
-                    data: JSON.stringify(events),
-                    contentType: 'application/json',
-                })
-                    .done(function (result) {
-                      alert(result);
-                    })
-                    .fail(function (request, status, error) {
-                          alert("에러 발생" + error);
-                    });
-                calendar.unselect()
-            });
-           },
-           
-           
-      });
-  
-    calendar.render();
-  };
-  
-  $(function(){
-    $('#calendar_modal').click(function(){
-      $("#myModal").modal();
-      open_fc();
-    });
-  
-    
-    
-   
-  });
   
     </script>
 </head>
@@ -385,7 +34,6 @@
     <header>
         <div>
             <button onclick="onClose();">나가기</button>
-
         </div>
     </header>
     <div class="sidebar_left">
@@ -404,22 +52,20 @@
     </div>
     
     <div class="sidebar_right">
-        <div id="countdown">D-12</div>
+        <div id="countdown"></div>
         <div id="calendar_area">
             <button  id="calendar_modal" class="button">
                 일정관리
             </button>            
         </div>
-        <div id="map_area">인천광역시 계양구 계양2동 6-2 투썸플레이스</div>
-        <button id="map_button" class="button" >카카오맵</button>         
-        <button id="team_info" class="button">팀원 정보</button>
-        <button id="project_info" class="button">프로젝트 소개</button>
-        <button id="start" class="button">시작하기</button>  
+        <div id="meeting_place"></div>
+        <button id="map_button" class="button">장소정하기</button>         
+        <button id="start_button" class="button">시작하기</button>  
     </div>
 
     <!-- 달력 모달 -->
 
-    <div class="modal" id="myModal">
+    <div class="modal" id="calendarModal">
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
       
@@ -442,8 +88,47 @@
           </div>
         </div>
       </div>
+ 
+      <!-- 카카오맵 모달 -->
+      <div class="modal" id="mapModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <input type="search" id="searchBar">
+              <button type="button" id="searchBtn">검색</button>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+              <div id="map" style="width:100%; height:500px;"></div>
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <div id="search_result"></div>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="updatePlace()">장소 확정</button>
+            </div>
+      
+          </div>
+        </div>
+      </div>
 
       <script>
+        window.onpageshow = function(event) {
+            if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+              location.reload();
+          }
+        }
+
+        // 메세지 타입
+        // 1 : 일반메세지
+        // 2 : 일정변경 메세지
+        // 3 : 장소 변경 메세지
+        // 4 : 입장 메세지
+        // 5 : 퇴장 메세지
 
         let roomId = '${sessionScope.chatMember.projectNo}'; 
 
@@ -471,23 +156,23 @@
             "roomId" : roomId,
             "memberNo" : "${sessionScope.loginMember.memberNo}",
             "memberName" : "${sessionScope.loginMember.memberName}",
-            "message": "ENTER-CHAT"
+            "message": "ENTER-CHAT",
+            "messageType" : 4
           };
-
           let jsonData = JSON.stringify(data);
           webSocket.send(jsonData);
+          
         }
 
         //  메세지 전송 함수
         function sendMessage(message){
-
           const data={
             "roomId" : roomId,
             "memberNo" : "${sessionScope.loginMember.memberNo}",
             "memberName" : "${sessionScope.loginMember.memberName}",
-            "message" : message 
+            "message" : message,
+            "messageType" : 1
           };
-          
           let jsonData = JSON.stringify(data);
           webSocket.send(jsonData);
         }
@@ -496,47 +181,59 @@
         function onMessage(evt){
 
           let receive = evt.data.split(",");
+          
           const data = {
             "memberNo" : receive[0],
             "memberName" : receive[1],
-            "message" : receive[2]
+            "message" : receive[2],
+            "messageType" : receive[3]
           };
-          
+          console.log("수신된 데이터 ="+receive[3]);
           checkLR(data);
+          updateMemberList();
           $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
         }
 
-        // 채팅방 나가기
-        function onClose(){
-          location.href='detail.rec?rno='+'${sessionScope.chatMember.projectNo}'
-          console.log("연결 끊기");
-          const data = {
-            "roomId" : roomId,
-            "memberNo" : "${sessionScope.loginMember.memberNo}",
-            "memberName" : "${sessionScope.loginMember.memberName}",
-            "role" : "${sessionScope.chatMember.role}",
-            "message": "END-CHAT"
-          };
+        // 뒤로가기 클릭시 채팅방 나가기
+        window.addEventListener('beforeunload', function(event) {
+            const data = {
+                "roomId": roomId,
+                "memberNo": "${sessionScope.loginMember.memberNo}",
+                "memberName" : "${sessionScope.loginMember.memberName}",
+                "role": "${sessionScope.chatMember.role}",
+                "message": "END-CHAT",
+                "messageType": 5
+            };
 
-          let jsonData = JSON.stringify(data);
-          webSocket.send(jsonData);
+            let jsonData = JSON.stringify(data);
+            webSocket.send(jsonData);
+        });
 
-          
+        function onClose() {
+           location.href = 'detail.rec?rno=' + roomId;
         }
+
+
 
         // 내가 보낸 메세지인지 확인
         function checkLR(data){ 
           let div;
-          if("${loginMember.memberNo}" != data.memberNo){
+          if("${loginMember.memberNo}" != data.memberNo && data.messageType == 1){ // 상대가 보낸 메세지
           div = $("<div class='message incoming'>"
                 + "<div>"+ data.memberName + "</div>"
                     +"<p>"+ data.message +"</p>"
                   +"</div>");
-          }else{
+          }else if("${loginMember.memberNo}" == data.memberNo && data.messageType == 1){ // 내가 보낸 메세지
             div = $("<div class='message outgoing'>"
                   + "<div>"+ data.memberName + "</div>"
                           +"<p>"+ data.message +"</p>"
                         +"</div>");
+          }else if(data.messageType == 2){ // 맵이 변경되었을때
+            let strArr = data.message.split("_");
+            div = $("<div> [공지] '"+strArr[1]+"' 으로 장소가 변경되었습니다.</div>");
+            $("#meeting_place").html(strArr[0]+" "+strArr[1]+"<a href='https://map.kakao.com/link/to/"+strArr[2]+"'>길찾기</a>");
+          }else if(data.messageType == 3){
+            div = $("<div> [공지] "+data.message+"</div>");
           }
           $("#chat_body").append(div);
         }     
@@ -564,11 +261,7 @@
               $('.chat-footer>input').val('');
               return false;
         };
-
         $(function(){
-
-            
-            
             if(connect()){
             
             updateMemberList();
@@ -580,40 +273,37 @@
                   roomId : roomId
                 },
                 success : function(data){
-                  console.log("메세지 불러오기 성공");
-                  console.log(data);
-                
                   for(var i=0; i<data.length; i++){
                     checkLR(data[i]);
                   }
                   $('.chat-body').scrollTop($('.chat-body').prop('scrollHeight')); // 스크롤 아래로
-
-                    
-
                 },
                 error : function(){
                   console.log("메세지 불러오기 실패");
                 }
-
               });  
-
             }
           });
 
-          
+          let memberList = new Array();
+
+          // 참여한 인원 불러오기
           function updateMemberList() {
-          $.ajax({
+            
+            $.ajax({
               url: "getMember.rec",
               data: {
                   roomId: roomId
               },
             success: function (result) {
-                console.log(result);
 
-            // Create a container to hold the new content
-            let newContent = $("<div></div>");
+              memberList = [];
+              
+            
+              let newContent = $("<div></div>");
 
             for (let i = 0; i < result.length; i++) {
+              console.log(result[i]);
                 let div = "";
                 if (result[i].memberNo == ${requestScope.p.projectOwner}) {
                     div = "<div class='card'>" +
@@ -627,30 +317,346 @@
                         "</div>";
                 } else {
                     div = "<div class='card'>" +
-                        "<div class='textBox'>" +
+                        "<div style='float:left' class='textBox'>" +
                         "<div class='textContent'>" +
                         "<p class='h1'>" + result[i].memberName + "</p>" +
                         "<span class='span'></span>" +
                         "</div>" +
                         "<p class='p'>" + result[i].role + "</p>" +
                         "</div>" +
+                        "<button id='exile'>추방</button>"+
+                        "<div id='chatMemberNo'>"+result[i].memberNo+"</div>"
                         "</div>";
                 }
-                // Append the new content to the container
+                
                 newContent.append(div);
+                memberList = result;
             }
 
-            // Replace the existing content with the new content
             $(".sidebar_left").html(newContent.html());
-        },
-        error: function () {}
-    });
-}
+        }
+        });
+      }
             
+  // 참여한 인원 1초마다 불러오기
+  // setInterval(function () {
+  //     updateMemberList();
+  // }, 1000);
 
-setInterval(function () {
-    updateMemberList();
-}, 1000);
-      </script>
+  // 달력 오픈
+  $(function(){
+    $('#calendar_modal').click(function(){
+      $("#calendarModal").modal();
+
+      // 달력 열면 해당 프로젝트 일정 불러오기
+      $.ajax({
+        url:"selectSchedule.cal",
+        type:"get",
+        data:{pno : roomId},
+        dataType:"json",
+        success : function(data){
+          open_fc(data);
+        }
+      });
+    });
+
+    // 카카오맵
+    $('#map_button').click(function(){
+      $('#mapModal').modal();
+
+      // 마커리스트
+      var markers = [];
+
+      // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
+      var infowindow = new kakao.maps.InfoWindow({zIndex:1});
+      var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+      mapOption = {
+          center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+          level: 3 // 지도의 확대 레벨
+      };  
+      // 지도를 생성합니다    
+      var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+      // 장소 검색 객체를 생성합니다
+      var ps = new kakao.maps.services.Places(); 
+
+      // 키워드로 장소를 검색합니다
+      $("#searchBtn").click(function search(){
+          var keyword = document.getElementById("searchBar").value;
+          ps.keywordSearch(keyword, placesSearchCB); 
+          
+          // 마커 초기화
+          if(markers.length>0){
+            for(let i =0; i<markers.length; i++){
+              markers[i].setMap(null);
+            }
+          }
+      });
+    
+    
+      // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+      function placesSearchCB (data, status, pagination) {
+          if (status === kakao.maps.services.Status.OK) {
+      
+              // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+              // LatLngBounds 객체에 좌표를 추가합니다
+              var bounds = new kakao.maps.LatLngBounds();
+      
+              for (var i=0; i<data.length; i++) {
+                  displayMarker(data[i]);    
+                  bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+              }       
+      
+              // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+              map.setBounds(bounds);
+          } 
+      }
+    
+      // 지도에 마커를 표시하는 함수입니다
+      function displayMarker(place) {
+          // 마커를 생성하고 지도에 표시합니다
+          var marker = new kakao.maps.Marker({
+              map: map,
+              position: new kakao.maps.LatLng(place.y, place.x) 
+          });
+
+          markers.push(marker);
+      
+          // 마커에 클릭이벤트를 등록합니다
+          kakao.maps.event.addListener(marker, 'click', function() {
+              // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+
+              var full_place = (place.address_name +"_"+ place.place_name +"_"+place.id);
+              infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name+ '</div>');
+              infowindow.open(map, marker);
+      
+              // 검색한 결과를 result에 뿌리기
+              var result = document.getElementById("search_result");
+              result.innerHTML = full_place;
+          });
+      }    
+    });
+  });
+
+  // 장소 변경
+  function updatePlace(){
+    if("${sessionScope.loginMember.memberNo}" == "${requestScope.p.projectOwner}"){
+    let place = document.getElementById("search_result").innerText;
+    console.log("place = "+place);
+
+      $.ajax({
+        url:"updatePlace.rec",
+        type:"get",
+        data:{
+          projectNo : roomId,
+          place : place
+        },
+        success : function(){
+          const data={
+            "roomId" : roomId,
+            "memberNo" : "${sessionScope.loginMember.memberNo}",
+            "message" : place,
+            "messageType" : 2
+          };
+          let jsonData = JSON.stringify(data);
+          webSocket.send(jsonData);
+        }
+        
+      })
+    }else{
+      alert("방장만 장소를 정할수있습니다.");
+    }
+  }
+
+
+  // 일정 조회, 추가, 삭제
+  function open_fc(data) {
+        
+        var calendarEl = document.getElementById('calendar');
+    
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+          headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+          },
+          locale: 'ko', // 한국어 설정
+          timeZone: 'Asia/Seoul',
+          navLinks: true,
+          selectable: true,
+          droppable : true,
+      
+          // 드래그로 일정 추가
+          select:function(info){
+           
+          if("${sessionScope.loginMember.memberNo}" == "${requestScope.p.projectOwner}"){
+          let title = prompt('추가할 일정:');
+
+          // title 값이 있을때, 화면에 calendar.addEvent() json형식으로 일정을 추가
+          if (title) {
+            calendar.addEvent({
+              title: title,
+              start: info.start,
+              end: info.end,
+              allDay: info.allDay,
+              projectNo : roomId
+            }); 
+          }
+          var allEvent = calendar.getEvents(); // .getEvents() 함수로 모든 이벤트를 Array 형식으로 가져온다
+
+          var events = new Array(); // Json 데이터를 받기위한 배열 선언
+        
+            var obj = new Object(); // Json을 담기 위해 Object 선언
+            obj.title = title;  // 이벤트 이름
+            obj.start = info.start; // 이벤트 시작 날짜
+            obj.end = info.end; // 이벤트 끝 날짜
+            obj.pno = roomId; // 프로젝트 번호
+            events.push(obj);
+          
+
+          var jsondata= JSON.stringify(events);
+    
+
+          $(function saveData(jsondata) {
+              $.ajax({
+                  url: "insertSchedule.cal",
+                  method: "POST",
+                  data: JSON.stringify(events),
+                  contentType: 'application/json'
+              })
+              .done(function(){
+                  console.log("sds");
+                  const data={
+                      "roomId" : roomId,
+                      "memberNo" : "${sessionScope.loginMember.memberNo}",
+                      "message" : "일정이 추가되었습니다.",
+                      "messageType" : 3
+                    };
+                    
+                    let jsonData = JSON.stringify(data);
+                    webSocket.send(jsonData);
+                })
+              .fail(function (request, status, error) {
+                    alert("에러 발생" + error);
+              });
+              calendar.unselect();
+          });
+          }else{
+            alert("방장만 일정을 추가할수있습니다.")
+          }
+        },
+           
+          // 이벤트 클릭해서 삭제
+          eventClick: function (info){
+          if("${sessionScope.loginMember.memberNo}" == "${requestScope.p.projectOwner}"){
+          if(confirm("'"+info.event.title+ "'일정을 삭제하시겠습니까?'")){
+            info.event.remove();
+        
+            var events = new Array(); // Json 데이터를 받기 위한 배열 선언
+            var obj = new Object();
+                obj.title = info.event._def.title;
+                obj.start = info.event._instance.range.start;
+                obj.end = info.event._instance.range.end;
+                obj.pno = roomId
+                events.push(obj);
+            }
+            $(function deleteData(){
+                $.ajax({
+                    url: "deleteSchedule.cal",
+                    method: "DELETE",
+                    data: JSON.stringify(events),
+                    contentType: 'application/json'
+
+                })
+                .done(function(){
+                  const data={
+                          "roomId" : roomId,
+                          "memberNo" : "${sessionScope.loginMember.memberNo}",
+                          "memberName" : "${sessionScope.loginMember.memberName}",
+                          "message" : "일정이 변경되었습니다.",
+                          "messageType" : 3
+                        };
+                        
+                        let jsonData = JSON.stringify(data);
+                        webSocket.send(jsonData);
+                })
+                .fail(function (request, status, error) {
+                      alert("에러 발생" + error);
+                });
+            })
+          }else{
+            alert("방장만 일정을 삭제할수있습니다.")
+          }
+          },
+          // 조회해온 일정이 data로 넘어옴
+          events : data
+      });
+      calendar.render();
+    };
+
+
+    // 카운트다운
+    var startTime = new Date("${requestScope.p.projectStart}").getTime();
+    var endTime = new Date("${requestScope.p.projectEnd}").getTime();
+    var countdownEl = document.getElementById('countdown')
+    
+    var countdownInterval = setInterval(function() {     
+
+        var currentDate = new Date().getTime();
+
+        if(startTime > currentDate){
+          var timeDiff = (startTime - currentDate) / 1000;
+          var days = Math.floor(timeDiff / (24 * 60 * 60));
+          countdownEl.innerHTML = days+"일 후에 프로젝트가 시작됩니다!"
+        }else{
+          var timeDiff = (endTime - startTime) / 1000;
+          var days = Math.floor(timeDiff / (24 * 60 * 60));
+          countdownEl.innerHTML =  "D - "+days;
+          if (timeDiff < 0) {
+              clearInterval(countdownInterval);
+              countdownEl.innerHTML = "Expired";
+          }
+        }
+    }, 1000); 
+
+
+    // 시작버튼 클릭
+    $("#start_button").click(function(){
+      if(confirm("프로젝트를 시작하시겠습니까?")){
+        console.log(memberList);
+        $.ajax({
+          url:"startProject.rec",
+          type:"get",
+          data:{
+            memberList : JSON.stringify(memberList)
+          },
+          success : function(result){
+            console.log("성공");
+          }
+        })
+      }
+    });
+
+    // 추방하기
+    
+    $(document).on("click","#exile",function(e){
+      let memberNo = $(this).next("#chatMemberNo").text();
+     
+        updateMemberList();
+        const data={
+                "roomId" : roomId,
+                "memberNo" : memberNo,
+                "memberName" : "",
+                "message" : "EXILE-CHAT",
+                "messageType" : 5
+              };
+              
+              let jsonData = JSON.stringify(data);
+              webSocket.send(jsonData);
+  
+    });
+    
+
+  </script>
 </body>
 </html>

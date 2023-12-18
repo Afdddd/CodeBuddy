@@ -1,8 +1,10 @@
 package com.kh.coddy.board.recruitment.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
+import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
@@ -33,7 +35,8 @@ public interface RecruitmentService {
 	ArrayList<Rattachment> selectRecent();
 	Recruitment selectRecruitment(int rno);
 	Project getProject(Recruitment r);	
-	
-	//프로젝트 생성
 	int createProject(Project p);
+	int updatePlace(PlaceDto pDto);
+	int projectStart(ArrayList<ChatMember> memberList);
+	int memberExile(HashMap<String, Integer> map);
 }
