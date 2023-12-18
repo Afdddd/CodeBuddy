@@ -57,11 +57,6 @@ public class MemberServiceImpl implements MemberService{
 	@Override public int findPwd(Member findMember) { return memberDao.findPwd(sqlSession, findMember); }
 	@Override public int setNewPassword(Member newMember) { return memberDao.setNewPassword(sqlSession, newMember); }
 	@Override public String findEmail(Member findMember) { return memberDao.findEmail(sqlSession, findMember); }
-	@Override
-	public int selectListCounti() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 	
 
 	@Override
@@ -101,7 +96,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectListCountf(sqlSession, memberNo);
 	}
 	@Override
-	public ArrayList<Recruitment> selectListf(PageInfo pi, int memberNo) {
+	public ArrayList<Fboard> selectListf(PageInfo pi, int memberNo) {
 		
 		return memberDao.selectListf(sqlSession, pi, memberNo);
 	}

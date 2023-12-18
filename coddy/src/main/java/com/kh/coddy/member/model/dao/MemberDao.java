@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.coddy.board.free.model.vo.Fboard;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
@@ -92,7 +93,7 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectListCountf" ,memberNo);
 	}
 	
-	public ArrayList<Recruitment> selectListf(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+	public ArrayList<Fboard> selectListf(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
 		
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() - 1) * limit;

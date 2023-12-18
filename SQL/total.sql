@@ -946,3 +946,56 @@ CREATE TABLE CHAT_MEMBER(
     	FOREIGN KEY (MEMBER_NO) REFERENCES MEMBER(MEMBER_NO)
 );
 COMMIT;
+
+INSERT INTO PROJECT VALUES(SEQ_PROJECT.NEXTVAL,
+                    2,
+                    1,
+                    'Code Buddy',
+                    '개발을 위한 팀원 모집 사이트 입니다.',
+                    '2023-12-15',
+                    '2023-12-01',
+                    '2024-01-20',
+                    '서울특별시',
+                    2);
+INSERT INTO PROJECT VALUES(SEQ_PROJECT.NEXTVAL,
+                    3,
+                    2,
+                    '일대일 데이팅 서비스',
+                    '20-30대 솔로남여를 타겟으로 한 1:1 매칭 서비스입니다',
+                    '2023-12-15',
+                    '2023-11-09',
+                    '2024-05-09',
+                    '서울특별시',
+                    2);
+INSERT INTO PROJECT VALUES(SEQ_PROJECT.NEXTVAL,
+                    3,
+                    3,
+                    '맛집 큐레이팅 서비스',
+                    '맛집 소개팅 어플',
+                    '2023-12-15',
+                    '2023-12-07',
+                    '2024-06-07',
+                    '경기도',
+                    2);
+INSERT INTO PROJECT VALUES(SEQ_PROJECT.NEXTVAL,
+                    4,
+                    4,
+                    '커플/친구들 간의 추억 공유기록서비스',
+                    '커플 또는 친구들이 서로에 대해 조금 더 알아갈 수 있는 공유기록 서비스',
+                    '2023-12-15',
+                    '2023-12-11',
+                    '2024-06-11',
+                    '경기도',
+                    2);
+INSERT INTO PROJECT VALUES(SEQ_PROJECT.NEXTVAL,
+                    5,
+                    5,
+                    '감정으로 요리되는 ai 음악일기 앱',
+                    '날것의 감정으로 요리되는 그날의 ai 음악 일기',
+                    '2023-12-15',
+                    '2023-11-28',
+                    '2024-05-28',
+                    '서울특별시',
+                    2);
+                    
+COMMIT;          

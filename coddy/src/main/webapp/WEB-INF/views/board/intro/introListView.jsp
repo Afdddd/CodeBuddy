@@ -276,7 +276,54 @@
 
   }
   
+  .modal-content1 {
+	  background-color: #fff;
+	  padding: 20px;
+	  border-radius: 10px; /* 둥근 테두리로 변경 */
+	  max-width: 400px;
+	  width: 100%;
+	  margin: 10% auto; /* 화면 중앙에 표시 */
+	  box-sizing: border-box;
+	  position: relative; /* 상대 위치 설정 */
+	  border: 1px solid #888;
+	}
   
+  	 .close-btn2 {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 10px;
+	  right: 10px;
+	  font-size: 24px; /* 조금 더 큰 크기로 변경 */
+	  color: #333; /* 닫기 버튼 색상 변경 */
+	}
+  
+  	    .comment-container {
+      max-width: 600px;
+      margin: 20px auto;
+      font-family: Arial, sans-serif;
+    }
+
+    .comment {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+
+    .comment-author {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .comment-text {
+      margin-top: 5px;
+      color: #555;
+    }
+
+    .comment-date {
+      font-size: 0.8em;
+      color: #888;
+    }
   
 </style>
 </head>
@@ -294,9 +341,9 @@
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
               <!-- Slides -->
-              <div class="swiper-slide"><img src="resources/image/001.png"></div>
-              <div class="swiper-slide"><img src="resources/image/002.png"></div>
-              <div class="swiper-slide"><img src="resources/image/003.png"></div>
+              <div class="swiper-slide" id="slide0"></div>
+              <div class="swiper-slide" id="slide1"></div>
+              <div class="swiper-slide" id="slide2"></div>
             </div>
             
             <!-- If we need pagination -->
@@ -307,24 +354,7 @@
             <div class="swiper-button-next"></div>
           </div>
         </div>
-        <script>
-          // 슬라이더 동작 정의
-          const swiper = new Swiper('.swiper', {
-            autoplay : {
-                delay : 3000 // 3초마다 이미지 변경
-            },
-            loop : true, //반복 재생 여부
-            slidesPerView : 1, // 이전, 이후 사진 미리보기 갯수
-            pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
-                el: '.swiper-pagination',
-                clickable: true
-            },
-            navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
-                prevEl: '.swiper-button-prev',
-                nextEl: '.swiper-button-next'
-            }
-          }); 
-        </script>
+
       </div>
     </div>
 
@@ -352,7 +382,7 @@
     
     <div class="">
     <c:if test="${not empty sessionScope.loginMember}">
-      <button class="write_button" onclick="location.href='introForm.bo'">게시글 작성</button>
+      <button class="write_button" onclick="openModal()">게시글 작성</button>
     </c:if>
     </div>
     
@@ -362,13 +392,16 @@
         <div class="card">
         <div class="cardTop">
         <div class="heading" onclick="location.href='introDetail.bo?ino=${i.iboardNo}'">
+
               <div class="card-image">
               <img src="${requestScope.listi[status.index].getIAttachmentPath()}/${requestScope.listi[status.index].getIAttachmentChange()}" width="100%" height="100%"onerror="this.src='resources/image/white.jpg'">
               </div>
               <div>
-              	<div class="title"><h5><br>${i.iboardTitle}</h5></div>
+              	<div class="title" ><h5 style="width : 200px;"><b>[프로젝트]</b><br>${i.iboardTitle}</h5></div>
               	<br>
-              	<div class="title"><p style="font-size: 12px;"></p></div>
+              	<c:forEach var="tag" items="${requestScope.tags}" varStatus="status">
+              	<div class="title"><p style="font-size: 12px;">${tag.tagsNo}</p></div>
+              	</c:forEach>
               </div>
               </div>
             
@@ -377,7 +410,11 @@
             <div class="notHeading">
 
               <div class="author"> By <span class="name"><b>${i.iboardWriter}</b></span>
-              <br><i class="fas fa-eye" style="line-height: 18px; margin-left: 3px;"></i>&nbsp; ${i.iboardViews}<br>	 작성일 :  ${i.iboardInsert}</div>
+              <br> ♥ : ${requestScope.like} 
+              <br><i class="fas fa-eye" style="line-height: 18px; margin-left: 3px;"></i>&nbsp; ${i.iboardViews}<br>	 작성일 :  ${i.iboardInsert}
+              
+              </div>
+			           
             <c:if test="${not empty sessionScope.loginMember}">
 	         	<c:choose>
 	            	<c:when test="${requestScope.ws_list[status.index]}">
@@ -425,7 +462,7 @@
                   </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                      <a class="page-link" href="introlist.bo?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
                     </li>
                   </c:otherwise>
                 </c:choose>
@@ -493,9 +530,71 @@
    
    function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
    
+   function openModal() {
+	    document.getElementById('listModal').style.display = 'flex';
+   }
+   
+	function closeModal() {
+	    document.getElementById('listModal').style.display = 'none';
+	}
+	
 </script>
 	</div>
   <jsp:include page="../../common/footer.jsp" />	
+  
+  		<div id="listModal" class="modal">
+		  <div class="modal-content1">
+		    <span class="close-btn2" onclick="closeModal()">&times;</span>
+		    
+				<div class="comment-container">
+				<c:forEach var="b" items="${requestScope.projectlist}">
+					  <div class="comment" onclick="location.href='introForm.bo?projectno=${b.projectNo}'">
+					    <div class="comment-author">${b.projectName}</div>
+					    <div class="comment-text">${b.projectOwner}</div>
+					    <div class="comment-date">${b.projectStart} ~ ${b.projectEnd}</div>
+					  </div>
+				</c:forEach>
+		    <div id="delete">
+		    </div>
+		  </div>
+		</div>
+	</div>
+	
+	<script>
+	   $.ajax({
+      url:"recent.iec",
+      type:"get",
+      data:{},
+      success:function(result){
 
+        let resultStr = "";
+        for(let i = 0; i < result.length; i++) {
+          let path = result[i].iAttachmentPath+ "/"+ result[i].iAttachmentChange;
+          let el = "#slide"+i;
+          resultStr="<img src='"+path+"'>";
+          $(".swiper-wrapper>"+el).html(resultStr);
+        } 
+       
+      }
+    });
+    // 슬라이더 동작 정의
+    const swiper = new Swiper('.swiper', {
+                  autoplay : {
+                      delay : 3000 // 3초마다 이미지 변경
+                  },
+                  loop : true, //반복 재생 여부
+                  slidesPerView : 1, // 이전, 이후 사진 미리보기 갯수
+                  pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
+                      el: '.swiper-pagination',
+                      clickable: true
+                  },
+                  navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
+                      prevEl: '.swiper-button-prev',
+                      nextEl: '.swiper-button-next'
+                  }
+              });
+              
+      
+    </script>
 </body>
 </html>

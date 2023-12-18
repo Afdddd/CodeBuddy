@@ -160,6 +160,7 @@
             <br>
             <div style="display: flex;">
 					
+
                 <ul class="menu" style="padding-left:0px; width : 230px;">
                     <br>
                     <li><a href="myPage.se">마이페이지</a>
@@ -176,6 +177,7 @@
                     <li><a href="written.ro">작성한 게시글</a></li>
                     <li><a href="wroteReply.me">작성한 댓글</a></li>
                 </ul>
+
       </ul>
 
 	       <div id="board-list">

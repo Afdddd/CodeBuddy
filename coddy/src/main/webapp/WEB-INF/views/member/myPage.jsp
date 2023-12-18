@@ -71,7 +71,10 @@
                         </ul>
                     </li>
                     <hr>
-                    <li><a href="#">참여한 프로젝트</a></li>
+                    <li><a href="#">나의 평가</a></li>
+                    <hr>
+                    <li><a href="written.io">참여한 프로젝트</a></li>
+
                     <li><a href="#">찜한 프로젝트</a></li>
                     <li><a href="likedRecruit.me">찜한 채용공고</a></li>
                     <hr>
@@ -138,7 +141,7 @@
 	                            
 	                            <label for="memberInfo"> &nbsp; 자기소개 : </label>
 	                            <!-- <input type="text" class="form-control" id="memberInfo" value="${sessionScope.loginMember.memberInfo}" name="memberInfo" style="height : 280px;"> -->
-	                            <textarea name="memberInfo" id="memberInfo" style="width : 300px; height : 430px;">${sessionScope.loginMember.memberInfo}</textarea><br>
+	                            <textarea name="memberInfo" id="memberInfo" style="width : 300px; height : 430px; resize:none;">${sessionScope.loginMember.memberInfo}</textarea><br>
 	                        </div>
 	                     
 	                    </div> 

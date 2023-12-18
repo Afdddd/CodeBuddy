@@ -140,6 +140,116 @@
 	  cursor: pointer;
 	}
 
+	/* 프로젝트 사진 스크롤 */
+.photo-scroll {
+  margin-top: 80px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+.photo-scroll-image {
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  margin: 0 12px;
+  border: 1px solid lightgray;
+}
+
+/* 포지션 현황 */
+.position_status td{
+    text-align: left;
+}
+.position_status{
+    margin-left: 30px;
+    margin-top: 30px;
+}
+
+.position_button {
+    font-family: monospace;
+    background-color: #f3f7fe;
+    color: #3b82f6;
+    border: none;
+    border-radius: 8px;
+    width: 80px;
+    height: 32px;
+    transition: .3s;
+  }
+  
+  .position_button:hover {
+    background-color: #3b82f6;
+    box-shadow: 0 0 0 5px #3b83f65f;
+    color: #fff;
+  }
+
+	.tag_card {
+    width: 80%;
+    height: 250px;
+    margin: 30px;
+    background: #EEF5FF;
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    color: #5271FF;
+    border-radius: 15px;
+    box-shadow: -20px 20px 0px -5px #5271FF;
+  }
+  .card__tags {
+    overflow: auto;
+    height: 80%;
+  }
+  .title {
+    font-weight: 900;
+    font-size: 1.7em;
+  }
+
+  .tag__name {
+    display: inline-block;
+    color: #fff;
+    font-size: 1.1em;
+    background-color: #5271FF;
+    padding: 6px 23px 9px;
+    border-radius: 70em;
+    margin: 8px 6px 8px 0;
+    margin-left: 0px;
+    position: relative;
+    text-transform: lowercase;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .tag__name::before,
+  .tag__name::after {
+    content: "";
+    display: inline-block;
+    position: absolute;
+    top: 40%;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #fff;
+  }
+
+  .tag__name::before {
+    left: 7px;
+  }
+
+  .tag__name::after {
+    right: 7px;
+  }
+
+  .tag__name:hover {
+    transform: scale(1.1);
+    background-color: #51572c;
+  }
+
+  .btn-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+    .btn-container .btn {
+         margin-right: 5px;
+    }
 </style>
 </head>
 <body>
@@ -169,10 +279,6 @@
                      <td></td>
                 </tr>
                 <tr>
-                	<th>사용기술 / 언어</th>
-                	 <td></td>
-                </tr>
-                <tr>
                 	<th style="height:150px;">내용 :
 	                    	${ib.iboardContent}
 	                    </th>
@@ -185,24 +291,77 @@
                 </tr>
                 
             </table>
-            <a class="btn btn-secondary" style="float:center;" href="list.bo">목록으로</a>
+
+				<br><br><br>
+				<h1>프로젝트 : ${p.projectName} </h1>
+
+				<br><br>
+      			<h4>프로젝트 기간 : ${p.projectStart} ~ ${p.projectEnd}</h4><hr>
+      			<h4>위치 : ${r.recruitmentLocation}</h4><hr>
+
+			<br><br><br>
+            
+             <div class="content_right">
+            <h2>기술/언어</h2>
+
+            <div class="tag_card">
+              <span class="title">All tags</span>
+              <div class="card__tags">
+                <ul class="tag">
+                  <c:forEach var="tag" items="${requestScope.tags}" varStatus="status">
+                    <li class="tag__name">${tag.tagsNo}</li>
+                  </c:forEach>
+                </ul>
+              </div>
+            </div>
+            
+      <div clas="content_3">
+      	<br><br>
+      	<h2>프로젝트 소개 스크린샷</h2>
+          <div class="photo-scroll">
+              <image class="photo-scroll-image" src="${requestScope.it.getIAttachmentPath()}/${requestScope.it.getIAttachmentChange()}"/>
+              
+              <c:forEach var="img" items="${requestScope.thumList2}" varStatus="status">
+                <image class="photo-scroll-image" src="${img.getIAttachmentPath()}/${img.getIAttachmentChange()}"/>
+              </c:forEach>
+          </div>
+          <br><br>
+          <h2>기존 프로젝트 사진</h2>
+           <div class="photo-scroll">
+              <image class="photo-scroll-image" src="${requestScope.thumOne.getRAttachmentPath()}/${requestScope.thumOne.getRAttachmentChange()}"/>
+              
+              <c:forEach var="img" items="${requestScope.thumList}" varStatus="status">
+                <image class="photo-scroll-image" src="${img.getRAttachmentPath()}/${img.getRAttachmentChange()}"/>
+              </c:forEach>
+          </div>
+          <br>
+      </div>
+      		<div style="width : 100%; text-align : right;">
+            <a class="btn btn-secondary"href="list.bo">목록으로</a>
+            </div>
             <br>
 
-            <div align="center">
+            <div align="right" class="btn1" ">
+            	<div class="btn-group">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
 	        
-	        		
-	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정</a>
-	                
+	        	<form id="updateForm" method="post" action="introForm.bo">
+	                <a class="btn btn-primary" onclick="location.href='introForm.bo?projectno=${p.projectNo}'">수정</a>
+	            	<input type="hidden" name="ino" value="${ib.iboardNo}">
+	            	<input type="hidden" name="origin" value="${it.iAttachmentNo}">
+	            	<input type="hidden" name="change" value="${it.iAttachmentChange}">
+	       			<input type="hidden" name="path" value="${it.iAttachmentPath}">
+	            </form>
 	                
 	                <form action="deleteForm.ib" method="post">
 	                
 	                		<input type="hidden" name="ino" value="${sessionScope.ib.iboardNo}">
-							<input type="hidden" name="iboardWriter" value="${sessionScope.ib.iboardWriter}">
+							<input type="hidden" name="iboardWriter" value="${sessionScope.ib.iboardWriter}">	                	
 	                	<button type="submit" class="btn btn-danger">삭제</button>
             		</form>
+            	</div>	
             </div>
-            <br><br>
+            <br><br><br><br>
 
             <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
             <table id="replyArea" class="table" align="center">
@@ -247,7 +406,7 @@
 			// 댓글리스트 조회용 선언적 함수 호출
 			selectReplyList();
 			// 댓글 실시간
-			setInterval(selectReplyList, 10000);
+			// setInterval(selectReplyList, 10000);
 			
 		});
 
