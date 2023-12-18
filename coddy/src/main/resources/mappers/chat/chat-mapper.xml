@@ -84,6 +84,13 @@
 		   AND ROLE = #{role}
 	</select>
 	
+	<select id="getFixApply" parameterType="chatMember" resultType="_int">
+		SELECT MEMBER_NO
+		FROM JOINS 
+		WHERE PROJECT_NO = #{projectNo} 
+		AND JOINS_ROLE = #{role}
+	</select>
+	
 	<insert id="insertApply" parameterType="chatMember">
 		INSERT INTO CHAT_MEMBER
 		VALUES(#{projectNo},#{memberNo},#{role})

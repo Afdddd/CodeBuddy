@@ -73,6 +73,7 @@ public interface ChatService {
      */
     int outCaht(ChatMember cm);
     int getApply(ChatMember cm);
+    ArrayList<Integer> getFixApply(ChatMember cm);
 	int insertApply(ChatMember cm, int maxPersonnel);
 	ArrayList<ChatMember> chatMemberList(int projectNo);
 	Project getProject(int projectNo);

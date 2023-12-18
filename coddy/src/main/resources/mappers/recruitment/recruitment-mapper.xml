@@ -52,7 +52,7 @@
 	
 	<resultMap id="profileResultSet" type="profile">
 		<result column="MEMBER_NO" property="memberNo" />
-		<result column="MEMEBER_NAME" property="memberName" />
+		<result column="MEMBER_NAME" property="memberName" />
 		<result column="JOINS_ROLE" property="role" />
 		<result column="PROJECT_NO" property="projectNo" />
 		<result column="PROFILE_IMG" property="profileImg" />
@@ -153,33 +153,7 @@
 	</select>			
 	
 	
-	<select id="selectList" resultMap="recruitmentResultSet" parameterType="rSearch">
-		SELECT DISTINCT 
-			   R.RECRUITMENT_NO,
-			   R.RECRUITMENT_TITLE,
-			   R.RECRUITMENT_CONTENT,
-			   M.MEMBER_NAME AS "RECRUITMENT_WRITER",
-			   TO_CHAR(RECRUITMENT_INSERT, 'YYYY-MM-DD') AS "RECRUITMENT_INSERT", 
-			   TO_CHAR(RECRUITMENT_START, 'YYYY-MM-DD') AS "RECRUITMENT_START", 
-			   TO_CHAR(RECRUITMENT_END, 'YYYY-MM-DD') AS "RECRUITMENT_END", 			   
-			   R.RECRUITMENT_VIEWS,			 
-			   R.RECRUITMENT_LOCATION,
-			   R.RECRUITMENT_INTRO
-		FROM RECRUITMENT R, PRELATION PR, TAGS TG, PROJECT P, MEMBER M
-		WHERE R.RECRUITMENT_NO = PR.RECRUITMENT_NO
-		AND PR.TAGS_NO = TG.TAGS_NO
-		AND R.RECRUITMENT_NO = P.RECRUITMENT_NO 
-		AND M.MEMBER_NO = R.RECRUITMENT_WRITER
-		AND TG.TAGS_NAME IN
-		<foreach collection="tagCareers" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
-		AND TG.TAGS_NAME IN
-		<foreach collection="tagTechs" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
-		AND R.RECRUITMENT_DELETE IS NULL
-		<if test="recruiting==1">
-		AND P.PROJECT_READY == 0
-		</if>
-		AND (R.RECRUITMENT_TITLE LIKE '%'||#{keyword}||'%' OR M.MEMBER_NAME LIKE '%'||#{keyword}||'%') ORDER BY R.RECRUITMENT_INSERT DESC
-	</select> 
+	
  -->
 
 	<select id="getThumbOne" parameterType="recruitment" resultMap="rAttachmentResultSet">
@@ -314,22 +288,21 @@
 		WHERE PROJECT_NO = #{pno}	
 	</update>
 	
-	<insert id="insertJoin" parameterType="arraylist">
-		<foreach item="item" index="index" collection="list" open="INSERT">
-			INTO JOINS (
-				JOINS_NO, 
-				MEMBER_NO, 
-				PROJECT_NO, 
-				JOINS_ROLE
-			) VALUES (
-				SEQ_JOINS.NEXTVAL,
-				#{item.memberNo},
-				#{item.projectNo},
-				#{item.role}
-			)
-			
-		</foreach>
-	</insert>
+	<insert id="insertJoin" parameterType="chatMember">
+   
+        INSERT INTO JOINS (
+            JOINS_NO, 
+            MEMBER_NO, 
+            PROJECT_NO, 
+            JOINS_ROLE
+        ) VALUES (
+            SEQ_JOINS.NEXTVAL,
+            #{memberNo},
+            #{projectNo},
+            #{role}
+        )
+   
+</insert>
 	
 	<delete id="memberExile" parameterType="hashmap">
 		DELETE FROM 
@@ -344,5 +317,84 @@
 		WHERE J.MEMBER_NO = M.MEMBER_NO
         AND J.PROJECT_NO = #{pno}
 	</select>
+	
+	<select id="getLikeCount" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		FROM RECRUITMENT_WISHLIST
+		WHERE RECRUITMENT_NO = #{rno}
+	</select>
+	
+	<select id="getViewCount" parameterType="_int" resultType="_int">
+		SELECT RECRUITMENT_VIEWS
+		FROM RECRUITMENT
+		WHERE RECRUITMENT_NO = #{rno}
+	</select>
+	
+	<update id="insertViewCount" parameterType="_int">
+		UPDATE RECRUITMENT
+		SET RECRUITMENT_VIEWS = RECRUITMENT_VIEWS+1
+		WHERE RECRUITMENT_NO = #{rno}
+	</update>
+	
+	
+	
+	
+	<select id="selectSearchCount" parameterType="rSearch" resultType="_int">
+		SELECT COUNT(DISTINCT(R.RECRUITMENT_NO)) 
+		FROM RECRUITMENT R, PRELATION PR, TAGS TG, PROJECT P
+		WHERE R.RECRUITMENT_NO = PR.RECRUITMENT_NO
+		AND PR.TAGS_NO = TG.TAGS_NO 
+		AND R.RECRUITMENT_NO = P.RECRUITMENT_NO
+		AND TG.TAGS_NAME IN
+		<foreach collection="careers" item="item" index="index" open="(" close=")" separator=",">
+		#{item}
+		</foreach>
+		AND TG.TAGS_NAME IN
+		<foreach collection="techs" item="item" index="index" open="(" close=")" separator=",">
+		#{item}
+		</foreach>
+		AND RECRUITMENT_DELETE IS NULL
+		<if test=recruit>
+		AND P.PROJECT_READY == 0
+		</if>
+		AND (R.RECRUITMENT_TITLE LIKE '%'||#{keyword}||'%' OR R.RECRUITMENT_CONTENT LIKE '%'||#{keyword}||'%')
+	</select>
+	
+	
+	
+	<select id="selectList" resultMap="recruitmentResultSet" parameterType="rSearch">
+		SELECT DISTINCT 
+			   R.RECRUITMENT_NO,
+			   R.RECRUITMENT_TITLE,
+			   R.RECRUITMENT_CONTENT,
+			   M.MEMBER_NAME AS "RECRUITMENT_WRITER",
+			   TO_CHAR(RECRUITMENT_INSERT, 'YYYY-MM-DD') AS "RECRUITMENT_INSERT", 
+			   TO_CHAR(RECRUITMENT_START, 'YYYY-MM-DD') AS "RECRUITMENT_START", 
+			   TO_CHAR(RECRUITMENT_END, 'YYYY-MM-DD') AS "RECRUITMENT_END", 			   
+			   R.RECRUITMENT_VIEWS,			 
+			   R.RECRUITMENT_LOCATION,
+			   R.RECRUITMENT_INTRO
+		FROM RECRUITMENT R, PRELATION PR, TAGS TG, PROJECT P, MEMBER M
+		WHERE R.RECRUITMENT_NO = PR.RECRUITMENT_NO
+		AND PR.TAGS_NO = TG.TAGS_NO
+		AND R.RECRUITMENT_NO = P.RECRUITMENT_NO 
+		AND M.MEMBER_NO = R.RECRUITMENT_WRITER
+		AND TG.TAGS_NAME IN
+		<foreach collection="careers" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND TG.TAGS_NAME IN
+		<foreach collection="techs" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND R.RECRUITMENT_DELETE IS NULL
+		<if test="recruit">
+		AND P.PROJECT_READY == 0
+		</if>
+		AND (R.RECRUITMENT_TITLE LIKE '%'||#{keyword}||'%' OR M.MEMBER_NAME LIKE '%'||#{keyword}||'%') ORDER BY R.RECRUITMENT_INSERT DESC
+	</select> 
+	
+	
+	
+		 
+		 
+		
+	
 	
 </mapper>

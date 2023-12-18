@@ -70,6 +70,13 @@ public class ChatController {
 		return String.valueOf(result);		
 	}
 	
+	@ResponseBody
+	@GetMapping("getFixApply.rec")
+	public ArrayList<Integer> getFixApply(int projectNo, String position) {
+		ArrayList<Integer> memberNoList = cService.getFixApply(new ChatMember(projectNo,0,position,"",""));
+		return memberNoList;		
+	}
+	
 	@GetMapping("insertApply.rec")
 	@ResponseBody
 	public String insertApply(int projectNo, int memberNo, String position, int maxPersonnel, HttpSession session, Model model) {		

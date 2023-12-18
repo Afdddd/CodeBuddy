@@ -3,6 +3,7 @@ package com.kh.coddy.board.recruitment.controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -31,7 +32,9 @@ import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
+import com.kh.coddy.board.recruitment.model.vo.RecruitSearch;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
+import com.kh.coddy.board.recruitment.model.vo.RecruitmentSearchDto;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
 import com.kh.coddy.common.Pagination;
@@ -56,16 +59,13 @@ public class RecruitmentController {
 	@Autowired
 	TagsController tagsController;
 	
-	@GetMapping("kakaoMap")
-	public String kakaoMap() {
-		return "project/kakaoMapTest";
-	}
-	
 	@GetMapping("detail.rec")
 	public String recruitmentDetail(int rno, HttpSession session, Model model) {
 		if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "기업은 이용 불가능한 서비스입니다."); return "redirect:/"; }
 		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인부터 해주세요."); return "redirect:/"; }
 		int memberNo = ((Member)session.getAttribute("loginMember")).getMemberNo();
+		if(rService.insertViewCount(rno)>0){	// 	조회수 증가	
+		
 		Recruitment r = rService.selectRecruitment(rno);
 		ArrayList<Prelation> tags = rService.getTagInfo(r); // 태그정보
 		ArrayList<RecruitmentState> state = rService.getState(r); // 지원 현황
@@ -73,7 +73,10 @@ public class RecruitmentController {
 		ArrayList<Rattachment> thumList = rService.getAttachmentList(r); // 이미지 목록
 		int wish = rService.getWish(new RecruitmentWishList(memberNo,rno)); // 좋아요 여부
 		Project p = rService.getProject(r); // 프로젝트 정보
-		ArrayList<Profile> fList = rService.getJoinMember(p.getProjectNo());
+		ArrayList<Profile> fList = rService.getJoinMember(p.getProjectNo()); // 참여한 프로필
+		int likeCount = rService.getLikeCount(rno); // 좋아요 조회
+		int viewCount = rService.getViewCount(rno); // 조회수 조회
+		log.info("viewCount={}",viewCount);
 		
 		
 		model.addAttribute("r",r);
@@ -83,8 +86,14 @@ public class RecruitmentController {
 		model.addAttribute("thumList",thumList);
 		model.addAttribute("wish",wish);
 		model.addAttribute("p",p);
+		log.info("p={}",p);
 		model.addAttribute("fList",fList);
-		log.info("fList={}",fList);
+		model.addAttribute("likeCount",likeCount);
+		model.addAttribute("viewCount",viewCount);
+		}else {
+			model.addAttribute("errorMsg", "게시글 조회 실패"); 
+			return "common/errorPage";
+		}
 		return "board/recruitment/recruitmentDetailView";
 	}
 	@GetMapping("enrollForm.rec")
@@ -187,34 +196,10 @@ public class RecruitmentController {
 		}
 	}
 	
-//	@GetMapping("list.rec")
-//	public String recruitmentList(@RequestParam(value="rpage", defaultValue="1") int currentPage, Model model, HttpSession session,
-//								  @RequestParam(value="tagCareer", defaultValue="")String tagCareer,  @RequestParam(value="tagTech", defaultValue="") String tagTech,@RequestParam(value="search", defaultValue="") String search,@RequestParam(value="recruiting", defaultValue="1")String recruiting ){
+
 	@GetMapping("list.rec")
 	public String recruitmentList(@RequestParam(value="rpage", defaultValue="1") int currentPage, Model model, HttpSession session){	
-//		String tagTechs = "";
-//		String tagCareers = "";
-//		
-//		if(tagCareer.equals("")) { 
-//			tagCareers="PM,기획,프론트엔드,백엔드,CDN,디자인,네트워크/서버,IOS 앱 개발,AOS 앱 개발,AI학습,게임개발";  
-//		}else {
-//			tagCareers = tagCareer; 
-//		}
-//		
-//		if(tagTech.equals("")) { 
-//			tagTechs="C언어,C++,C#,GO,Java,JavaScript,Spring,React,Node.js,Vue,Swift,Kotlin,Python,Django," +
-//				"Php,Flutter,MySql,MarianDB,MongoDB,OracleDB,Unity,AWS,Docker,Kubernetes,Git,Figma,Window,Linux,";
-//		}else {
-//			tagTechs = tagTech; 
-//		}
-//	
-//		log.info("tagTechs={}",tagTechs);
-//		log.info("tagCareers={}",tagCareers);
-//		log.info("recruiting={}",recruiting);
-//		log.info("search={}",search);
-//		RSearch rSearch = new RSearch(search,tagTechs.split(","),tagCareers.split(","),(recruiting.equals("t"))?1:0);
-		
-//		int listCount = rService.selectListCount(rSearch);
+
 		int listCount = rService.selectListCount();
 		int pageLimit = 5;
 		int boardLimit = 20;
@@ -228,7 +213,7 @@ public class RecruitmentController {
 			model.addAttribute("errorMsg", "잘못된 페이지"); 
 			return "common/errorPage"; 
 		}else {
-//			ArrayList<Recruitment> list = rService.selectList(pi,rSearch);
+
 			ArrayList<Recruitment> list = rService.selectList(pi);
 			ArrayList<Rattachment>at_list = new ArrayList<Rattachment>();	
 			ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
@@ -250,7 +235,9 @@ public class RecruitmentController {
 					ws_list.add(rService.getWishList(wishMap));
 					wishMap.clear();					
 				}				
-			}						
+			}					
+			model.addAttribute("tagTech", tagsController.getTagsNameList(0));
+			model.addAttribute("tagCareer", tagsController.getTagsNameList(1));
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
 			model.addAttribute("at_list", at_list);
@@ -290,13 +277,16 @@ public class RecruitmentController {
 	}
 	
 	@GetMapping(value="startProject.rec", produces="application/json")
-	public Integer  startProject(@RequestParam Map<String, Object> paramMap) throws ParseException, JsonMappingException, JsonProcessingException {
+	@ResponseBody
+	public int  startProject(@RequestParam Map<String, Object> paramMap, Model model) throws ParseException, JsonMappingException, JsonProcessingException {
 		log.info("paramMap = {}",paramMap);
 		String jsonData = paramMap.get("memberList").toString();
 		ObjectMapper mapper = new ObjectMapper();
-		ArrayList<ChatMember> memberList = mapper.readValue(jsonData, new TypeReference<ArrayList<ChatMember>>(){});
 		
-		return rService.projectStart(memberList);
+		ArrayList<ChatMember> memberList = mapper.readValue(jsonData, new TypeReference<ArrayList<ChatMember>>(){});
+		log.info("memberList={}",memberList);
+		
+		return  rService.projectStart(memberList);
 		
 	}
 	
@@ -311,5 +301,55 @@ public class RecruitmentController {
 	}
 	
 	
+	@GetMapping(value="search.rec")
 	
+	public RecruitmentSearchDto searchList(@RequestParam(value="rpage", defaultValue="1") int currentPage, String keyword, String career, String tech, boolean recruit, HttpSession session) {
+		
+		String careers = "";
+		if(career.equals("")) {
+			careers = tagsController.getTagsNameString(0); 
+		}else {
+			careers = career;
+		}
+	
+		String techs = "";
+		if(tech.equals("")) { 
+			techs = tagsController.getTagsNameString(1); 
+		}else {
+			techs = tech;
+		}
+		
+		RecruitSearch rSearch = new RecruitSearch(keyword, Arrays.stream(careers.split(",")).distinct().toArray(String[]::new),Arrays.stream(techs.split(",")).distinct().toArray(String[]::new), recruit);
+		
+		int listCount = rService.selectSearchCount(rSearch);
+		int pageLimit = 5;
+		int boardLimit = 20;
+		Map<String,Integer> wishMap = new HashMap<>(); 	
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		if(pi.getMaxPage() == 0) { 
+			ArrayList<Recruitment>list = rService.selectSearchList(pi, rSearch);
+			ArrayList<Rattachment>at_list = new ArrayList<Rattachment>();	
+			ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
+			ArrayList<ArrayList<RecruitmentState>>pos_list = new ArrayList<>();
+			ArrayList<Boolean>ws_list = new ArrayList<Boolean>();			
+			
+			for(Recruitment r:list) {
+				
+				Rattachment ra = rService.getThumbOne(r);
+				at_list.add(ra);				
+				ArrayList<Prelation> pr = rService.getTagInfo(r);
+				tg_list.add(pr);
+				ArrayList<RecruitmentState> rs = rService.getState(r);
+				pos_list.add(rs);
+				
+				if(session.getAttribute("loginMember")!=null) {					
+					wishMap.put("mno",((Member)session.getAttribute("loginMember")).getMemberNo());
+					wishMap.put("rno",r.getRecruitmentNo());
+					ws_list.add(rService.getWishList(wishMap));
+					wishMap.clear();					
+				}				
+			}	
+			return  new RecruitmentSearchDto(pi,list,at_list,tg_list,pos_list,ws_list);
+		}
+	}
 }

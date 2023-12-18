@@ -38,14 +38,19 @@
     border-radius: 100px;
 }
 /* 프로젝트 좋아요 */
-
 .project_like{
     margin-top: 10px;
 }
-.project_like span{
-    margin-left: 30px;
-    font-size: 15px;
-    color: gray;
+.like_count{
+  margin-left: 30px;
+  margin-right: 30px;
+  font-size: 15px;
+  color: gray;
+}
+.view_count{
+  margin-left: 12px;
+  font-size: 15px;
+  color: gray;
 }
 .container input {
   position: absolute;
@@ -228,7 +233,9 @@
     margin-top: 50px;
   }
 
-
+  .fas{
+    margin-left: 30px;
+  }
 
 
 /* 멤버 프로필 */
@@ -246,7 +253,7 @@
 </head>
 <body>
     <jsp:include page="../../common/header.jsp" />	
-    <div class="content" style="height: 2000px;">
+    <div class="content" style="height: 1500px;">
         <div class="content_title">
             <h2 style="margin-bottom: 10px;">${requestScope.r.recruitmentTitle}<span class="project_status"></span></h2>
             <span>${requestScope.r.recruitmentWriter}</span><br>
@@ -262,7 +269,9 @@
                         <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
                         </div>
                     </label>
-                    <span class="like_count">223</span>
+                    <span class="like_count">${requestScope.likeCount}</span>
+                    <i class="fas fa-eye" style="line-height: 30px; margin-left: 3px;"></i>
+                    <span class="view_count">${r.recruitmentView}</span>
                   </c:when>
                   <c:otherwise>
                     <label class="container">
@@ -273,8 +282,10 @@
                       <path d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z" stroke-width="20px" stroke="#d0d0d0" fill="none"></path></svg>
                       </div>
                   </label>
-                  <span class="like_count">223</span>
-                  </c:otherwise>
+                    <span class="like_count">${requestScope.likeCount}</span>
+                    <i class="fas fa-eye" style="line-height: 30px; margin-left: 3px;"></i>
+                    <span class="view_count">${r.recruitmentView}</span>
+                  </c:otherwise>  
                </c:choose>
               </c:if>
             </div>
@@ -292,11 +303,13 @@
                     </tr>
                     <script>
                         $(function(){
-                          
-                          getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}')
 
-                        setInterval(function(){
-                          getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}')},500);
+                          if(${requestScope.p.projectReady} == 0){ // 프로젝트가 모집중이라면 실시간 채팅방 인원 조회
+                            getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}');
+                            setInterval(function(){getApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}')},500);
+                          }else{ // 프로젝트가 진행중이거나 완료되었다면 해당 프로젝트에 참여한 인원만 조회
+                            getFixApply('${p.projectNo}','${state.position}','${status.index}','${state.maxPersonnel}');
+                          } 
                       });
                       </script>
                     <div class="modal" id="apply_${status.index}">
@@ -305,18 +318,27 @@
 
                           <!-- Modal Header -->
                           <div class="modal-header">
+                            <c:if test="${requestScope.p.projectReady}==0">
                             <h4 class="modal-title">지원하기</h4>
+                          </c:if>
+                          <h4 class="modal-title">입장하기</h4>
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                           </div>
 
                           <!-- Modal body -->
                           <div class="modal-body">
+                            <c:if test="${requestScope.p.projectReady}==0">
                             <b>${state.position}</b> 에 지원하시겠습니까?
+                            </c:if>
+                            <b>${state.position}</b> 에 입장하시겠습니까?
                           </div>
 
                           <!-- Modal footer -->
                           <div class="modal-footer">
+                            <c:if test="${requestScope.p.projectReady}==0">
                             <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="insertApply('${p.projectNo}','${sessionScope.loginMember.memberNo}','${state.position}','${state.maxPersonnel}');">지원하기</button>
+                            </c:if>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="insertApply('${p.projectNo}','${sessionScope.loginMember.memberNo}','${state.position}','${state.maxPersonnel}');">입장하기</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                           </div>
 
@@ -369,10 +391,10 @@
         <div class="content_5">  
           <h2>멤버</h2>
           <hr>
-        
+          
           <div class="swiper">
                 <div class="swiper-wrapper">
-                  <c:forEach var="f" items="${requestScope.fList}" varStatus="tagStatus">   
+                  <c:forEach var="f" items="${requestScope.fList}" varStatus="tagStatus">           
                     <div class="card swiper-slide">
                       <div class="card-border-top">
                       </div>
@@ -426,6 +448,8 @@
         let state = "";
         if(${requestScope.p.projectReady}>0){
           state = "진행중";
+          $(".project_status").css("backgroundColor","#FF5353");
+          $(".project_status").css("color","white");
         }else{
           state = "모집중";
         }
@@ -459,6 +483,8 @@
               if(result >= maxPersonnel){
                 let btn = "#position_button_" + i ;
                 $(btn).prop("disabled", true);
+                $(btn).css("backgroundColor","lightgray");
+                $(btn).text("완료");
                 $("#applyState_"+i).text(result);
               }else{
                 let applyStateEl = "#applyState_"+ i;
@@ -467,6 +493,51 @@
                 $(applyStateEl).text(result);
                 $("#applyState_"+i).text(result);
               }
+            },
+            error : function(){
+              console.log("지원 현황 불러오기 실패");
+            }
+          });
+        }
+
+        function getFixApply(projectNo, position, i, maxPersonnel){
+          $.ajax({
+            url:"getFixApply.rec",
+            type:"get",
+            data:{
+              projectNo : projectNo,
+              position : position
+            },
+            success : function(result){
+              console.log(result);
+              
+              let btn = "#position_button_" + i ;
+              
+              for(let j=0; j<result.length; j++){
+
+                if( result.length != 0){
+                  if(result[j] == '${sessionScope.loginMember.memberNo}'){
+                    $(btn).text("입장하기");
+                    $(btn).prop("disabled", false);
+                    $("#applyState_"+i).text(result.length);
+                    break;
+                  }else {
+                    $(btn).prop("disabled", true);
+                    $(btn).css("backgroundColor","lightgray");
+                    $(btn).text("완료");
+                    $("#applyState_"+i).text(result.length);
+                  }
+                }
+                
+              }
+              if(result.length == 0){
+                $(btn).prop("disabled", true);
+                    $(btn).css("backgroundColor","lightgray");
+                    $(btn).text("완료");
+                    $("#applyState_"+i).text(result.length);
+              }
+              
+
             },
             error : function(){
               console.log("지원 현황 불러오기 실패");

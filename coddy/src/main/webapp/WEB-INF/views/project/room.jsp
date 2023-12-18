@@ -64,7 +64,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
         </div>
         <div id="meeting_place"></div>
         <button id="map_button" class="button"><i class="fa fa-map"></i> 장소정하기</button>         
-        <button id="start_button" class="button">시작하기</button>  
+        <button id="start_button" class="button"><i class="fa fa-play"></i> 시작하기</button>  
     </div>
 
     <!-- 달력 모달 -->
@@ -272,10 +272,12 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
               return false;
         };
         $(function(){
+
             if(connect()){
             
             updateMemberList();
             // 메세지 불러오기
+            countDown();
             $.ajax({
                 url:"room.rec",
                 type:"get",
@@ -599,14 +601,17 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
 
 
     // 카운트다운
-
+   
+    
     var startTime = new Date("${requestScope.p.projectStart}").getTime();
     var endTime = new Date("${requestScope.p.projectEnd}").getTime();
     var countdownEl = document.getElementById('countdown');
     
-    
-    var countdownInterval = setInterval(function(){ 
-      var currentDate = new Date().getTime();
+   
+
+    function countDown(){ 
+        
+        var currentDate = new Date().getTime();
         if(startTime > currentDate){
           var timeDiff = (startTime - currentDate) / 1000;
           var days = Math.floor(timeDiff / (24 * 60 * 60));
@@ -623,7 +628,9 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
           }
 
         }
-      }, 1000); 
+      }
+
+    var countdownInterval = setInterval( countDown(), 1000000); 
      
     // 시작버튼 클릭
     $("#start_button").click(function(){

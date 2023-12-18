@@ -8,6 +8,7 @@
 <title>모집</title>
 <style>
 
+
   .content_1{
     width: 1200px;
     height: 250px;
@@ -24,6 +25,8 @@
     float: right;
   }
   .popular-project-list{
+    width: 50%;
+    float: right;
     height: 220px;
     padding: 13px 24px;
     border: 1px lightgray solid;
@@ -443,17 +446,16 @@
         <div class="search-bar">
             <jsp:include page="../../common/tagCareer.jsp" />
             <jsp:include page="../../common/tagTech.jsp" />
-            <input class="search-input" name="projectTitle" placeholder="프로젝트 이름" id="projectSearch">    
+            <input class="search-input" id="keywordSearch" name="projectTitle" placeholder="프로젝트 이름" id="projectSearch">    
             <label class="checkbox-container" style="text-align: center;">
               <span style="vertical-align: auto;">모집중</span>
-               <input class="custom-checkbox" type="checkbox" name="recruiting" id="recruiting">
-              <span class="search-checkmark"></span>
-            </label>
-            <button >검색</button>          
+               <input id="recruitCheck" class="custom-checkbox" type="checkbox" name="recruiting" id="recruiting">
+              <span class="search-checkmark" ></span>
+            </label>      
         </div>
 
         <c:if test="${not empty sessionScope.loginMember}">
-         <button class="write_button" onclick="location.href='enrollForm.rec'">게시글 작성</button>
+         <button class="write_button" onclick="location.href='enrollForm.rec'">작성하기</button>
         </c:if>
         <div class="content_2">
           <div class="card-list">
@@ -462,6 +464,9 @@
                 <div class="card-image" onclick="location.href='detail.rec?rno=${rl.recruitmentNo}'">
                   <img src="${requestScope.at_list[status.index].getRAttachmentPath()}/${requestScope.at_list[status.index].getRAttachmentChange()}" width="100%" height="100%" style="vertical-align:middle;" onerror="this.src='resources/image/003.png'">
                 </div>
+                <c:if test="">
+                <div class="category"></div>
+                </c:if>
                 <div class="category"></div>
                 <div class="heading"> 
                   <h5 onclick="location.href='detail.rec?rno=${rl.recruitmentNo}'">${rl.recruitmentTitle}</h5>
@@ -653,6 +658,55 @@
       error: function() {  }
     });
   }
+
+
+   
+
+  // 검색
+  $("#tagCareerName").change(function(){
+  
+    let career = $("#tagCareerName").val();
+    career = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(career, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+    console.log(career);
+    let tech = $("#tagTechName").val();
+    tech = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tech, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+
+    let keyword = $("#keywordSearch").val();
+
+    let recruit = $('#recruitCheck').is(':checked');
+
+    $.ajax({
+      url:"search.rec",
+      type : "get",
+      data : {
+        career : career,
+        tech : tech,
+        keyword : keyword,
+        recruit : recruit
+      },
+      success :function(result){
+
+      }
+
+    })
+
+  });
+
+  $("#tagTechName").change(function(){
+   
+    console.log(tech);
+  });
+
+  $(".search-input").change(function(){
+    console.log($("#keywordSearch").val());
+  })
+
+  $("#recruitCheck").change(function(){
+    console.log($('#recruitCheck').is(':checked'));
+
+  })
+
+  
 
   
 </script>
