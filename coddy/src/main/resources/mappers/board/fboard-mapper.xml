@@ -30,7 +30,7 @@
 	</resultMap>
 	
 	<!-- FATTACHMENT resultMap -->
-	<resultMap id="fattachmentResultMap" type="fattachment">
+	<resultMap id="fattachmentResultSet" type="fattachment">
 	    <result column="FATTACHMENT_NO" property="fattachmentNo"/>
 	    <result column="FBOARD_NO" property="fboardNo"/>
 	    <result column="FATTACHMENT_ORIGIN" property="fattachmentOrigin"/>
@@ -81,6 +81,7 @@
 		     , M.MEMBER_NAME AS "FBOARD_WRITER"
 		     , FBOARD_VIEWS
 		     , TO_CHAR(FBOARD_INSERT, 'YYYY-MM-DD') AS "FBOARD_INSERT"
+		     , FBOARD_ORIGIN
 		  FROM FBOARD F, MEMBER M
 		 WHERE F.FBOARD_DELETE IS NULL
 		   AND M.MEMBER_NO = F.FBOARD_WRITER
@@ -108,7 +109,10 @@
 
 	<!-- FBOARD delete -->
 	<update id="deleteBoard" parameterType="_int">
-	    UPDATE FBOARD SET FBOARD_DELETE = SYSDATE WHERE FBOARD_NO = #{fboardNo} AND FBOARD_DELETE IS NULL
+	    UPDATE FBOARD 
+	       SET FBOARD_DELETE = SYSDATE 
+	     WHERE FBOARD_NO = #{fboardNo} 
+	       AND FBOARD_DELETE IS NULL
 	</update>
 
 	<!-- FREPLY insert -->
@@ -142,8 +146,43 @@
 	<!-- FBOARD update -->
 	<!-- FREPLY delete -->
 	
+	<insert id="insertBoardImg" parameterType="fattachment">
+		INSERT INTO FATTACHMENT(
+			FATTACHMENT_NO,
+			FBOARD_NO,
+			FATTACHMENT_ORIGIN,
+			FATTACHMENT_PATH,
+			FATTACHMENT_CHANGE,
+			FATTACHMENT_LEVEL
+		) VALUES (
+			SEQ_IATTACHMENT.NEXTVAL,
+			SEQ_FBOARD.CURRVAL,
+			#{fAttachmentOrigin},
+			#{fAttachmentPath},
+			#{fAttachmentChange},
+			#{fAttachmentLevel}
+		)
+		
+	</insert>	
 	
-
+	<select id="selectAttachment" parameterType="fattachment" resultMap="fattachmentResultSet">
+     SELECT FATTACHMENT_NO,
+            FBOARD_NO, 
+            FATTACHMENT_ORIGIN, 
+            FATTACHMENT_CHANGE, 
+            FATTACHMENT_PATH,
+            FATTACHMENT_INSERT, 
+            FATTACHMENT_LEVEL 
+      FROM FATTACHMENT 
+     WHERE FBOARD_NO = #{fboardNo} 
+       AND FATTACHMENT_LEVEL = 1
+	</select>
 	
+    <select id="getAttachmentList" parameterType="fattachment" resultMap="fattachmentResultSet">
+    SELECT * 
+      FROM FATTACHMENT 
+     WHERE FBOARD_NO = #{fboardNo} 
+       AND FATTACHMENT_LEVEL = 0
+    </select>		
 		
 </mapper>

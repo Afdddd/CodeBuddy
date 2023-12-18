@@ -84,5 +84,5 @@ public class FboardDao {
 		
 	    return sqlSession.delete("fboardMapper.deleteAttachment", fattachmentNo);
 	}
-	
+
 }

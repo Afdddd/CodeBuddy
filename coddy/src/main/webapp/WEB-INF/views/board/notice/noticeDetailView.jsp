@@ -5,11 +5,144 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Coddy 공지사항 상세보기</title>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<title>Insert title here</title>
 <style>
     table * {margin:5px;}
     table {width:100%;}
+    
+     .comment {
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.comment .author {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.comment .author-info {
+  display: flex;
+  align-items: center;
+}
+
+.comment .author img {
+  width: 30px; /* 이미지 크기 조절 */
+  height: 30px;
+  border-radius: 50%; /* 이미지를 동그랗게 만들기 위한 속성 */
+  margin-right: 10px;
+}
+
+.comment .author span {
+  font-weight: bold;
+  color: #333;
+}
+
+.comment .actions {
+  display: flex;
+}
+
+.comment .actions a {
+  margin-left: 10px;
+}
+
+.comment .content {
+  margin-top: 5px;
+  color: #555;
+}
+
+.comment .timestamp {
+  font-size: 12px;
+  color: #888;
+}
+
+ .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 400px; /* 모달 최대 너비 */
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    /* 닫기 버튼 스타일 */
+    .close-btn {
+      cursor: pointer;
+       position: absolute;	
+      top: 10px;
+      right: 10px;
+      font-size: 18px;
+    }
+    
+    #delete {
+    width : 100%;
+    text-align: center
+    }
+    
+	    .close-btn2 {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 10px;
+	  right: 10px;
+	  font-size: 24px; /* 조금 더 큰 크기로 변경 */
+	  color: #333; /* 닫기 버튼 색상 변경 */
+	}
+	
+	/* 모달 스타일 */
+	.modal {
+	  display: none; /* 초기에는 화면에 표시하지 않음 */
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  width: 100%;
+	  height: 100%;
+	  background: rgba(0, 0, 0, 0.5); /* 반투명한 배경 */
+	}
+	
+	.modal-content1 {
+	  background-color: #fff;
+	  padding: 20px;
+	  border-radius: 10px; /* 둥근 테두리로 변경 */
+	  max-width: 400px;
+	  width: 100%;
+	  margin: 10% auto; /* 화면 중앙에 표시 */
+	  box-sizing: border-box;
+	  position: relative; /* 상대 위치 설정 */
+	}
+	
+	textarea {
+	  width: 100%;
+	  height: 100px; /* 조절 가능한 높이 */
+	  margin-bottom: 10px;
+	  resize: none; /* 크기 조절 비활성화 */
+	}
+	
+	/* 확인 버튼 스타일 */
+	.btn-danger {
+	  background-color: #d9534f;
+	  color: #fff;
+	  border: none;
+	  padding: 10px 20px;
+	  border-radius: 5px;
+	  cursor: pointer;
+	}
 </style>
+<script src="https://cdn.jsdelivr.net/npm/alertifyjs/build/alertify.min.js"></script>
 </head>
 <body>
         
@@ -21,34 +154,35 @@
             <h3 style="color:#5271FF;">상세보기</h3>
             <br>
 
-            <a class="btn btn-secondary" style="float:right;" href="noticeList.bo">목록으로</a>
+            <a class="btn btn-secondary" style="float:right;" href="list.no">목록으로</a>
             <br><br>
 
-            <table id="contentArea" align="center" class="table">
+            <table id="contentArea" align="center" class="table" style="color:#5271FF;">
+
                 <tr>
-                    <th>${ requestScope.b.cboardTitle }</th>
+                    <th>제목 ${ requestScope.n.nboardTitle }</th>
                 </tr>
                 <tr>
-                    <th>${ requestScope.c.cboardWriter }</th>
-                    <th>${ requestScope.c.cboardDelte }</th>
-                    <th>${ requestScope.c.cboardViews }</th>
+                    <th>작성자 ${ requestScope.n.nboardWriter }</th>
+                    <th>조회수 ${ requestScope.n.nboardViews }</th>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
                     <td colspan="3">
                     	<c:choose>
-                    		<c:when test="${ empty requestScope.c.originName }">
+                    		<c:when test="${ empty requestScope.n.fboardOrigin }">
                     			첨부파일이 없습니다.
                     		</c:when>
                     		<c:otherwise>
-                        		<a href="${ requestScope.c.changeName }" 
-                        		   download="${ requestScope.c.originName }">
-                        			${ requestScope.c.originName }
+                        		<a href="${ requestScope.n.nboardChange }" 
+                        		   download="${ requestScope.n.nboardOrigin }">
+                        			${ requestScope.n.nboardOrigin }
                         		</a>
                         	</c:otherwise>
                     	</c:choose>
                     </td>
-                </tr>
+                </tr>                
+
                 <tr>
                     <th>내용</th>
                     <td colspan="3"></td>
@@ -56,7 +190,7 @@
                 <tr>
                     <td colspan="4">
 	                    <p style="height:150px;">
-	                    	${ requestScope.c.cboardContent }
+	                    	${ requestScope.n.nboardContent }
 	                    </p>
                     </td>
                 </tr>
@@ -65,157 +199,35 @@
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-	            <c:if test="${ not empty sessionScope.loginUser and sessionScope.loginUser.userId eq requestScope.b.cboardWriter }">
-	                <a class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-	                <a class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
+			
+	                <button class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
+	                <button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
 	                
-	                <form id="postForm" action="" method="post">
-	                	<input type="hidden" name="bno" 
-	                				value="${ requestScope.c.cboardNo }">
+	                <form id="postForm" action="update.fr" method="post">
+	                	<input type="hidden" name="fno" 
+	                				value="${ requestScope.n.nboardNo }">
 	                	<input type="hidden" name="filePath" 
-	                				value="${ requestScope.c.changeName }">
+	                				value="${ requestScope.n.nboardChange }">			
 	                </form>
-	                
-	                <script>
-	                	function postFormSubmit(num) {
-	                		
-	                		// num 값에 따라 위의 form 태그에 action 속성을 부여한 후
-	                		// submit 시키기
-	                		
-	                		if(num == 1) { 
-	                			// num == 1 일 경우 : 수정하기 버튼을 클릭한 상태
+           
+					<script>				    
+					    function postFormSubmit(num) {
+        					if(num == 1) { 
 	                			
-	                			$("#postForm").attr("action", "noticeUpdateForm.bo").submit();
+	                			$("#postForm").attr("action", "updateForm.no").submit();
 	                			
 	                		} else {
-	                			// num == 2 일 경우 : 삭제하기 버튼을 클릭한 상태
 	                			
-	                			$("#postForm").attr("action", "delete.bo").submit();
+	                			$("#postForm").attr("action", "delete.no").submit();
 	                			
-	                			// jQuery 의 submit() 메소드 : 해당 form 의 submit 버튼을 누르는 효과
 	                		}
-	                	}
-	                </script>
-            	</c:if>
+					    }
+
+        			</script>
+  
             </div>
             <br><br>
 
-            <table id="freeReplyArea" class="table" align="center">
-                <thead>
-                    <tr>
-                    	<c:choose>
-                    		<c:when test="${ empty sessionScope.loginUser }">
-                    			<!-- 로그인 전 : 댓글창 막기 -->
-                    			<th colspan="2">
-		                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용 바랍니다.</textarea>
-		                        </th>
-		                        <th style="vertical-align:middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
-                    		</c:when>
-                    		<c:otherwise>
-		                        <th colspan="2">
-		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-		                        </th>
-		                        <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
-                    		</c:otherwise>
-                    	</c:choose>
-                    </tr>
-                    <tr>
-                        <td colspan="3">댓글(<span id="rcount">0</span>)</td>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-        <br><br>
-
-    </div>
-    
-
-    <script>
-    	$(function() {
-    		
-    		// 댓글리스트 조회용 선언적 함수 호출
-    		selectNoticeReplyList();
-    		
-    		// 만약, 댓글이 실시간으로 달리는걸 보고싶다면?
-    		setInterval(selectNoticeReplyList, 1000);
-    		
-    	});
-    	
-    	function addReply() {
-    		
-    		// 댓글 작성 요청용 ajax 요청
-    		
-    		// 댓글내용이 있는지 먼저 검사 후
-    		// 댓글 내용 중 공백 제거 후 길이가 0 이 아닌 경우
-    		// => textarea 가 form 태그 내부에 있지 않음
-    		//    (required 속성으로 필수 입력값임을 나타낼 수 없음)
-    		if($("#content").val().trim().length != 0) {
-    			
-    			$.ajax({
-    				url : "noticeInsert.bo",
-    				type : "get",
-    				data : { // Ajax 요청 또한 Spring 에서 커맨드 객체 방식 사용 가능
-    					refBoardNo : ${ requestScope.c.cboardNo }, 
-    					replyWriter : "${ sessionScope.loginUser.userId }", 
-    					replyContent : $("#content").val()
-    				},
-    				success : function(result) { 
-    					
-    					if(result == "success") {
-    						
-    						// 댓글 작성 성공 시
-    						selectReplyList();
-    						$("#content").val("");
-    						
-    					}
-    					
-    				},
-    				error : function() {
-    					console.log("댓글 작성용 ajax 통신 실패!");
-    				}
-    			});
-    			
-    		} else {
-    			
-    			alertify.alert("Alert", "댓글 작성 후 등록을 요청해주세요.", function(){ alertify.success('Ok'); });	
-    		}
-    	}
-    	
-    	function selectReplyList() {
-    		
-    		// 해당 게시글에 딸린 댓글 조회 요청용 ajax 요청
-    		$.ajax({
-    			url : "rlist.bo",
-    			type : "get",
-    			data : {bno : ${ requestScope.c.cboardNo }},
-    			success : function(result) {
-    				
-    				// console.log(result);
-    				
-    				let resultStr = "";
-    				
-    				for(let i = 0; i < result.length; i++) {
-    					
-    					resultStr += "<tr>"
-    							   + 	"<th>" + result[i].replyWriter + "</th>"
-    							   + 	"<td>" + result[i].replyContent + "</td>"
-    							   +	"<td>" + result[i].createDate + "</td>"
-    							   + "</tr>";
-    				}
-    				
-    				$("#replyArea>tbody").html(resultStr);
-    				$("#rcount").text(result.length);
-    				
-    			},
-    			error : function() {
-    				console.log("댓글리스트 조회용 ajax 통신 실패!");
-    			}
-    		});
-    	}
-    </script>
-    
     
 </body>
 </html>

@@ -11,9 +11,9 @@ import lombok.ToString;
 @ToString
 public class Fattachment {
 			
-    private int fattachmentNo;
-    private int fboardNo;
-    private String fattachmentOrigin;
+    private int fattachmentNo;			// 파일번호
+    private int fboardNo;				// 게시글 번호
+    private String fattachmentOrigin;	// 원본 파일명
     private String fattachmentChange;
     private String fattachmentPath;
     private String fattachmentInsert;
