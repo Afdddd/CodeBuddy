@@ -3,334 +3,300 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-
-	.menu {
-	  list-style-type: none;
-	  margin-right: 10px;
-	  margin-left: 0px;
-	  padding-left: 0px;
-	  width: 15%;
-	  height: 100%;
-	  overflow: auto;
-	}
-	
-	.menu li a {
-	  display: block;
-	  color: #000;
-	  padding: 8px 16px;
-	  text-decoration: none;
-	}
-	
-	.menu li a.active {
-	  background-color: #5271FF;
-	  color: white;
-	}
-	
-	.menu li a:hover:not(.active) {
-	  background-color: #5271FF;
-	  color: white;
-	}
-	
-
-	
-	#pagingArea {width:fit-content; margin:auto;}	
-	
-	
-	
-	.container input {
-	  position: absolute;
-	  opacity: 0;
-	  cursor: pointer;
-	  height: 0;
-	  width: 0;
-	}
-	
-	.container {
-	  display: block;
-	  position: relative;
-	  cursor: pointer;
-	  user-select: none;
-	  transition: 100ms;
-	}
-	
-	.checkmark {
-	  top: 0;
-	  left: 0;
-	  height: 2em;
-	  width: 2em;
-	  transition: 100ms;
-	  animation: dislike_effect 400ms ease;
-	}
-	
-	.container input:checked ~ .checkmark path {
-	  fill: #FF5353;
-	  stroke-width: 0;
-	}
-	
-	.container input:checked ~ .checkmark {
-	  animation: like_effect 400ms ease;
-	}
-	
-
-	
-	@keyframes like_effect {
-	  0% {
-	    transform: scale(0);
-	  }
-	
-	  50% {
-	    transform: scale(1.2);
-	  }
-	
-	  100% {
-	    transform: scale(1);
-	  }
-	}
-	
-	@keyframes dislike_effect {
-	  0% {
-	    transform: scale(0);
-	  }
-	
-	  50% {
-	    transform: scale(1.2);
-	  }
-	
-	  100% {
-	    transform: scale(1);
+  <head> 
+    <meta charset="UTF-8">
+    <title>Insert title here</title>
+    <style>
+      .innerOuter { 
+        width:80%; 
+        margin:auto; 
+        padding:5% 10%; 
+        background-color:white; 
+      }
+          
+      .menu { 
+        list-style-type: none;
+        margin-right: 10px;
+        margin-left: 0px;
+        padding-left: 0px;
+        width: 15%;
+        height: 100%;
+        overflow: auto;
+      }
+      
+      .menu li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+      }
+      
+      .menu li a.active {
+        background-color: #5271FF;
+        color: white;
+      }
+      
+      .menu li a:hover:not(.active) {
+        background-color: #5271FF;
+        color: white;
+      }
+      
+      ul {
+        list-style:none;
+      }
+     
+	  h2 { 
+			font-weight: border; 
 	  }
 	  
-	}
-	
-	/* Hide the default checkbox */
-	.container input {
-	  display: none;
-	}
-	
-	.container {
-	  display: block;
-	  position: relative;
-	  cursor: pointer;
-	  user-select: none;
-	  -webkit-tap-highlight-color: transparent;
-	}
-	
-	/* Create a custom checkbox */
-	.checkmark {
-	  position: relative;
-	  top: 0;
-	  left: 0;
-	  right: 0;
-	  height: 1.3em;
-	  width: 1.3em;
-	  background-color: #2196F300;
-	  border-radius: 0.25em;
-	  transition: all 0.25s;
-	}
-	
-	/* When the checkbox is checked, add a blue background */
-	.container input:checked ~ .checkmark {
-	  background-color: #5271FF;
-	}
-	
-	/* Create the checkmark/indicator (hidden when not checked) */
-	.checkmark:after {
-	  content: "";
-	  position: absolute;
-	  transform: rotate(0deg);
-	  border: 0.1em solid black;
-	  left: 0;
-	  right: 0;
-	  top: 0;
-	  width: 1.05em;
-	  height: 1.05em;
-	  border-radius: 0.25em;
-	  transition: all 0.25s, border-width 0.1s;
-	}
-	
-	/* Show the checkmark when checked */
-	.container input:checked ~ .checkmark:after {
-	  left: 0.45em;
-	  top: 0.25em;
-	  width: 0.25em;
-	  height: 0.5em;
-	  border-color: #fff0 white white #fff0;
-	  border-width: 0 0.15em 0.15em 0;
-	  border-radius: 0em;
-	  transform: rotate(45deg);
-	}
-	
-	
-	
+	  .hr1 { 
+		border: 0;
+		height: 2px;
+		background:  #d3d3d3;
+	   }
+	   
+	  .grey { 
+	     color: #727272;
+	   }
+	   
+	   #strong { 
+	     font-weight: 900;
+	   }
 
-</style>
-</head>
-<body>
-    <jsp:include page="../common/header.jsp" />
- 	<div class="container">
-           
-    <hr>
-    <br>
-    <div style="display: flex;">
+       #table {
+       padding-left : 100px;
+       width: 100%;
+       border-top: 1px solid #d3d3d3;
+       border-collapse: collapse;
+       }
+       
+       th { 
+       background-color: #d3d3d3 ; 
+       border-top: 3px solid #727272;
+       }
+     
+	  .greylist {
+	  width: 50px;
+	  height: 30px;
+	  font-weight: 900;
+	  color: white;
+	  text-align: center;
+	  background: grey;
+	  border: solid 2px white;
+	  border-radius: 5px;
+	  }
+	  
+	  .gradient {
+	  width: 80px;
+	  height: 30px;
+	  font-weight: 900;
+	  color: white;
+	  text-align: center;
+	  background: linear-gradient( to bottom, grey, black );
+	  border: solid 2px white;
+	  border-radius: 5px;
+	  }
+	
+      .left {
+      text-align: left;
+      }
+      .right { 
+       float: right;
+       }
+      .center {
+       text-align: left;
+       }
+	
+	   a {
+	   color:black;
+	   text-decoration-line : none;
+	   }
+	   
+	   .modal-body {
+	   width : 400px;
+	   }
+	   
+	   #menubar {
+	   	width : 100%;
+	   	border: 1px solid red;
+	   	height : 50px;
+	 	display: table;
+	   }
+	   
+	   .menubar {
+	   	float : left;
+	   	display : flex;
+	   }
+	   
+	  .wrap {
+	  width : 100%;
+      min-width: 500px;
+    }
+    
+    .menu2 {
+      display: table;
+      table-layout: fixed;
+      width: 100%;  /* 부모 요소의 너비 상속받음 */
+      background-color: yellow;
+      height : 50px;
+      padding-top : 15px;
+      text-align: center;
+    }
+
+    .menu_item {
+      display: table-cell;
+      width: 25%;
+      height: 100%;
+    }
+    
+    .menu_item a { 
+    display:block; 
+    width:100%;
+    height : 100%;
+    }
+     
+   #pagingArea{
+   width:fit-content; 
+   margin:auto;
+  	}
+  
+  	
+    </style>
+  </head>
+  <body>
+    <jsp:include page="../common/header.jsp" />	
+
+
+      <div class="innerOuter">
+        <h2>작성한 댓글</h2>
+        <br><hr><br>
+        <div style="display: flex;">
+          <ul class="menu" style="padding-left:0px; width : 230px;"><br>
+            <li><a href="myPage.se">마이페이지</a>
+              <ul style="width : 210px;">
+                <li><a href="pwdChange.me">- 비밀번호 변경</a></li>
+                <li><a href="delete.me">- 회원 탈퇴</a></li>
+              </ul>
+            </li>
+            <hr>
+            <li><a href="#">참여한 프로젝트</a></li>
+            <li><a href="#">찜한 프로젝트</a></li>
+            <li><a href="likedRecruit.me">찜한 채용공고</a></li>
+            <hr>
+            <li><a href="written.ro">작성한 게시글</a></li>
+            <li><a href="wroteReply.me">작성한 댓글</a></li>
+          </ul>
+              
+          <div class="modal-body">
+
+
+				<div class="wrap">
+				      
+		<form>
+		 
+		<span> ▷ 총 ${requestScope.listCount}개의 게시물이 있습니다. </span>
+		<!--
+		<span class="right";> 
+		            <span class="grey"; id="strong";>SELECT</span>
+		    <select>
+		    <option value="제목"; name="제목"; >제목</option>
+		    <option value="글쓴이";name="글쓴이";>글쓴이</option>
+		    </select>
+		<input type="text";> <input type="button" name="검색" class="gradient" value="검색" >
+		</span>
+		 -->
+		
+		
+
+
+	
+		<br>
+		<table id="table">
+			<thead>
+			    <tr>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">번호</th>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">제목</th>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">글쓴이</th>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">일시</th>
+			        <th style="border-bottom: 1px solid #d3d3d3; padding: 10px;">조회수</th>
+			    </tr>
+			</thead>
+			<tbody>
+		      <c:forEach var="i" items="${ requestScope.list }">
+		    <tr>
+		        <td class="center, cno" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardNo}</td>
+		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardTitle}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardWriter}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardInsert}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.cboardViews}</td>   
+		    </tr>
+			  </c:forEach>
+			</tbody>
+		</table>
+		</br>
+		
+		<script>
+			
+			$(function(){
+				
+				$("#table>tbody>tr").click(function(){
 					
-      <ul class="menu" style="padding-left:0px;">
-      <br>
-        <li><a href="#">마이페이지</a></li>
-        <hr>
-        <li><a href="#">나의 평가</a></li>
-        <hr>
-        <li><a href="#">참여한 프로젝트</a></li>
-        <li><a href="#">찜한 프로젝트</a></li>
-        <li><a href="#">찜한 채용공고</a></li>
-        <hr>
-        <li><a href="#">작성한 게시글</a></li>
-        <li><a href="#">작성한 댓글</a></li>
-      </ul>
+					let cno = $(this).children(".cno").text();
+					
+					location.href = "detail.co?cno=" + cno;
+				
+				});
+				
+				
+			});
+			
+		</script>
+		
+  <div id="pagingArea">
+            <ul class="pagination" style="margin: auto;">
+            
+              <c:choose>
+                <c:when test="${ requestScope.pi.currentPage eq 1 }">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#">Previous</a>
+                    </li>
+                </c:when>
+                  <c:otherwise>
+                    <li class="page-item">
+                      <a class="page-link" href="written.co?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                    </li>
+                  </c:otherwise>
+              </c:choose>
+                
+              <c:forEach var="p" begin="${ requestScope.pi.startPage }" 
+                          end="${ requestScope.pi.endPage }"
+                          step="1">
+                  <li class="page-item">
+                    <a class="page-link" href="written.co?cpage=${ p }">${ p }</a>
+                  </li>
+              </c:forEach>
+                
+                <c:choose>
+                  <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
+                    <li class="page-item disabled">
+                      <a class="page-link">Next</a>
+                    </li>
+                  </c:when>
+                  <c:otherwise>
+                    <li class="page-item">
+                      <a class="page-link" href="written.co?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                    </li>
+                  </c:otherwise>
+                </c:choose>
+            
+            </ul>
+          </div>
+		</div>
 
-      <div style="height:800px;
-                  width:1000px;
-                  padding:15px;">
-        
-	      <div style="height:600px;
-	                  width:900px;
-	                  border: 1px solid lightgray;
-	                  border-radius: 15px;
-	                  margin-top:20px;
-	                  padding:45px;">
-	                  
-	              
-	       <div id="board-list">
-          	<br><br><br>
-              <div class="container">
-                  <table class="board-table">
-                      <!-- 
-                      <tbody th:if="${list.isEmpty()}">
-					    <tr>
-					        <td colspan="4">
-					            조회된 리스트가 없습니다.
-					        </td>
-					    </tr>
-					  </tbody>
-					   -->
-					  <tbody th:if="${not list.isEmpty()}">
-					  	 <tr>
-						    <td>${ requestScope.c.cboardContent }프로젝트 시작 3일 후에 참여해도 될까요?</td>
-						  </tr>
-						  <tr>
-						    <td style="color: gray;">${ requestScope.c.cboardTitle }중국어 학습 웹사이트 팀원 모집합니다•</td>
-						    <td style="color: gray;">${ requestScope.c.cboardInsert }23-11-29</td>
-						  </tr>
-					  </tbody>
-					  </table>
-					  <hr>
-					  
-					  <table>
-					    <tbody>
-					        <tr>
-					            <td>
-					                <label class="container">
-					                    <input checked="checked" type="checkbox">
-					                    <div class="checkmark"></div>
-					                </label>
-					            </td>
-					            <td>
-					                <span>c언어 사용 가능한가요?</span>
-					            </td>
-					        </tr>
-					        <tr>
-					            <td style="color: gray;">${requestScope.c.cboardTitle}[OurNeighborhood]아파트입주민 커뮤니티•</td>
-					            <td style="color: gray;">${requestScope.c.cboardInsert}23-11-28</td>
-					        </tr>
-					    </tbody>
-					  </table>
-					  <hr>
-					  
-					  <table>
-					   <tbody>
-					  	 <tr>
-						    <td>${ requestScope.c.cboardContent }채팅확인 부탁드립니다.</td>
-						  </tr>
-						  <tr>
-						    <td style="color: gray;">${ requestScope.c.cboardTitle }음악에 맞는 제목 찾아주는 기능•</td>
-						    <td style="color: gray;">${ requestScope.c.cboardInsert }23-11-29</td>
-						  </tr>
-					  </tbody>
-					  </table>
-					  <hr>
-                  
-                  
-                  
-                  
-	      
-	      <br><br>            
-		  <div id="pagingArea">
-   			 <ul class="pagination">
-				<c:choose>
-			       <c:when test="${ requestScope.pi.currentPage eq 1 }">
-			          <li class="page-item disabled">
-			             <a class="page-link" href="#">Previous</a>
-			          </li>
-			       </c:when>
-				   <c:otherwise>
-			          <li class="page-item">
-			             <a class="page-link" href="myRank.me?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
-			          </li>
-			       </c:otherwise>
-			    </c:choose>
-				<c:forEach var="p" begin="${ requestScope.pi.startPage }"
-			               end="${ requestScope.pi.endPage }" step="1">
-			          <li class="page-item">
-			              <a class="page-link" href="myRank.me?cpage=${ p }">${ p }</a>
-			          </li>
-			    </c:forEach>
-				<c:choose>
-			       <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
-			          <li class="page-item disabled">
-			            <a class="page-link" href="#">Next</a>
-			          </li>
-			       </c:when>
-			       <c:otherwise>
-			          <li class="page-item">
-			            <a class="page-link" href="list.co?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
-			          </li>
-			       </c:otherwise>
-			    </c:choose>
-			  </ul>
-			</div>	                            
-	      </div>
-	  </div>
-	  </div>
-	  </div>
-	  
-	  <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            // 클릭한 메뉴에 대한 상태를 세션 스토리지에서 가져와서 active 클래스를 추가
-            var activeMenu = sessionStorage.getItem("activeMenu");
-            if (activeMenu) {
-                document.getElementById(activeMenu).classList.add("active");
-            }
-
-            // 메뉴 클릭 시 상태를 세션 스토리지에 저장
-            document.querySelectorAll('.menu li a').forEach(function (menuLink) {
-                menuLink.addEventListener('click', function () {
-                    var menuId = this.id;
-                    sessionStorage.setItem("activeMenu", menuId);
-
-                    // 모든 메뉴에서 active 클래스 제거
-                    document.querySelectorAll('.menu li a').forEach(function (menuLink) {
-                        menuLink.classList.remove("active");
-                    });
-
-                    // 클릭한 메뉴에 active 클래스 추가
-                    this.classList.add("active");
-                });
-            });
-        });
-    </script>
-	  
-</body>
+           
+          </div>
+        </div>
+     
+    <jsp:include page="../common/footer.jsp" />	
+  </body>
 </html>

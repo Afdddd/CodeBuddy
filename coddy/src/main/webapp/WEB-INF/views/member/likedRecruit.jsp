@@ -8,36 +8,48 @@
 <title>Insert title here</title>
 <style>
 
-	.menu {
-	  list-style-type: none;
-	  margin-right: 10px;
-	  margin-left: 0px;
-	  padding-left: 0px;
-	  width: 15%;
-	  height: 100%;
-	  overflow: auto;
-	}
+
+  .innerOuter {
+            width:80%;
+            margin:auto;
+            padding:5% 10%;
+            background-color:white;
+        }
+          .menu {
+            list-style-type: none;
+            margin-right: 10px;
+            margin-left: 0px;
+            padding-left: 0px;
+            width: 15%;
+            height: 100%;
+            overflow: auto;
+	    }
 	
-	.menu li a {
-	  display: block;
-	  color: #000;
-	  padding: 8px 16px;
-	  text-decoration: none;
-	}
+        .menu li a {
+            display: block;
+            color: #000;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
 	
-	.menu li a.active {
-	  background-color: #5271FF;
-	  color: white;
-	}
+        .menu li a.active {
+            background-color: #5271FF;
+            color: white;
+        }
 	
-	.menu li a:hover:not(.active) {
-	  background-color: #5271FF;
-	  color: white;
-	}
+        .menu li a:hover:not(.active) {
+            background-color: #5271FF;
+            color: white;
+        }
+        
+           ul {
+            list-style:none;
+        }   
+	
 	
 	.board-table {
 	  font-size: 13px;
-	  width: 100%;
+	  width: 600px;
 	  border-top: 1px solid #ccc;
 	  border-bottom: 1px solid #ccc;
 	}
@@ -141,38 +153,31 @@
 </head>
 <body>
     <jsp:include page="../common/header.jsp" />
- 	<div class="container">
-           
-    <hr>
-    <br>
-    <div style="display: flex;">
+ 	       <div class="innerOuter">
+            <h2>찜한 채용공고</h2>
+            <br>
+            <hr>
+            <br>
+            <div style="display: flex;">
 					
-      <ul class="menu" style="padding-left:0px;">
-      <br>
-        <li><a href="#">마이페이지</a></li>
-        <hr>
-        <li><a href="#">나의 평가</a></li>
-        <hr>
-        <li><a href="#">참여한 프로젝트</a></li>
-        <li><a href="#">찜한 프로젝트</a></li>
-        <li><a href="#">찜한 채용공고</a></li>
-        <hr>
-        <li><a href="written.ro">작성한 게시글</a></li>
-        <li><a href="#">작성한 댓글</a></li>
+                <ul class="menu" style="padding-left:0px; width : 230px;">
+                    <br>
+                    <li><a href="myPage.se">마이페이지</a>
+                        <ul style="width : 210px;">
+                        	<li><a href="pwdChange.me">- 비밀번호 변경</a></li>
+                        	<li><a href="delete.me">- 회원 탈퇴</a></li>
+                        </ul>
+                    </li>
+                    <hr>
+                    <li><a href="#">참여한 프로젝트</a></li>
+                    <li><a href="#">찜한 프로젝트</a></li>
+                    <li><a href="likedRecruit.me">찜한 채용공고</a></li>
+                    <hr>
+                    <li><a href="written.ro">작성한 게시글</a></li>
+                    <li><a href="wroteReply.me">작성한 댓글</a></li>
+                </ul>
       </ul>
 
-      <div style="height:800px;
-                  width:1000px;
-                  padding:15px;">
-        
-	      <div style="height:600px;
-	                  width:900px;
-	                  border: 1px solid lightgray;
-	                  border-radius: 15px;
-	                  margin-top:20px;
-	                  padding:45px;">
-	                  
-	              
 	       <div id="board-list">
           	<br><br><br>
               <div class="container">

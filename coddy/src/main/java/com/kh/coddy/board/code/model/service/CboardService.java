@@ -1,6 +1,7 @@
 package com.kh.coddy.board.code.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.coddy.board.code.model.vo.Cboard;
@@ -47,6 +48,14 @@ public interface CboardService {
 
 	// 태그 추가하기
 	int insertTag(String tag);
+
+	int selectSearchCount(HashMap<String, String> map);
+
+	ArrayList<Cboard> selectSearchList(HashMap<String, String> map, PageInfo pi);
+	
+	
+	
+	
 	
 
 	
