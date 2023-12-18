@@ -92,7 +92,6 @@ public class RecruitmentController {
 		// 게시글 insert
 		int result = rService.insertRecruitment(r);
 
-		log.info("img = {}",img);
 		// 첨부파일 insert
 		if(result>0) {
 			String path = request.getRealPath("resources\\file_upload\\recruitment\\");			

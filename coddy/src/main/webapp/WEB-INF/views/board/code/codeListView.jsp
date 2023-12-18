@@ -22,6 +22,12 @@
     .select {width:20%;}
     .text {width:53%;}
     .searchBtn {width:20%;}
+    
+    .tags {
+    	background-color : lightgray;
+    	border-radius : 5px;
+    	display : inline-block;
+    }
 </style>
 </head>
 <body>
@@ -50,7 +56,7 @@
             <table id="cboardList" class="table table-hover" align="center">
                 <thead>
                     <tr>
-                        <th></th>
+                        <th>글번호</th>
                         <th>제목</th>
                         <th>작성자</th>
                         <th>조회수</th>
@@ -61,7 +67,11 @@
                 	<c:forEach var="c" items="${ requestScope.list }">
 	                    <tr>
 	                        <td class="cno">${ c.cboardNo }</td>
-	                        <td>${ c.cboardTitle }</td>
+	                        <td>${ c.cboardTitle } &nbsp;&nbsp;&nbsp;&nbsp;
+           						<c:forEach var="t" items="${ c.tags }">
+           							<span class="tags">&nbsp;#${ t }&nbsp;</span>
+           						</c:forEach>
+	                        </td>
 	                        <td>${ c.cboardWriter }</td>
 	                        <td>${ c.cboardViews }</td>
 	                        <td>${ c.cboardInsert }</td>
