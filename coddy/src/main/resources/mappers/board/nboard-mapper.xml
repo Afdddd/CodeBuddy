@@ -13,7 +13,7 @@
 	</resultMap>
 
 	<!-- NATTACHMENT resultMap -->
-	<resultMap id="nattachmentResultMap" type="nattachment">
+	<resultMap id="nattachmentResultSet" type="nattachment">
 	    <result column="NATTACHMENT_NO" property="nattachmentNo"/>
 	    <result column="NBOARD_NO" property="nboardNo"/>
 	    <result column="NATTACHMENT_ORIGIN" property="nattachmentOrigin"/>
@@ -61,13 +61,11 @@
 	<select id="selectList" resultMap="nboardResultSet">
 		SELECT NBOARD_NO
 		     , NBOARD_TITLE
-		     , M.MEMBER_NAME AS "NBOARD_WRITER"
 		     , NBOARD_VIEWS
 		     , TO_CHAR(NBOARD_INSERT, 'YYYY-MM-DD') AS "NBOARD_INSERT"
 		     , NBOARD_ORIGIN
-		  FROM NBOARD F, MEMBER M
-		 WHERE F.NBOARD_DELETE IS NULL
-		   AND M.MEMBER_NO = F.NBOARD_WRITER
+		  FROM NBOARD 
+		 WHERE NBOARD_DELETE IS NULL
 		 ORDER BY NBOARD_NO DESC
 	</select>
 	
