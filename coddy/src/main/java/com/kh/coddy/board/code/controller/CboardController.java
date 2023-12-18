@@ -28,6 +28,9 @@ import com.google.gson.Gson;
 import com.kh.coddy.board.code.model.service.CboardService;
 import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Creply;
+import com.kh.coddy.board.code.model.vo.CreplyImage;
+import com.kh.coddy.board.intro.model.vo.Ireply;
+import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.common.Pagination;
@@ -311,25 +314,50 @@ public class CboardController {
 		
 		@ResponseBody
 		@RequestMapping(value = "rlist.co", produces = "application/json; charset=UTF-8")
-		public String ajaxSelectReplyList(int cno) {
+		public String ajaxSelectReplyList(String cno) {
 			
-			ArrayList<Creply> list = cboardService.selectReplyList(cno);
-			
-			// Gson gson = new Gson();
-			// return gson.toJson(list);
+			ArrayList<CreplyImage> list = cboardService.selectReplyList(Integer.parseInt(cno));
+			for(CreplyImage cr: list) {
+				cr.setMemberNo(String.format("%08d" ,Integer.parseInt(cr.getMemberNo())));
+			}
 			
 			return new Gson().toJson(list);
 		}
 		
 		@ResponseBody
 		@RequestMapping(value = "rinsert.co", produces = "text/html; charset=UTF-8")
-		public String ajaxInsertReply(Creply r) {
+		public String ajaxInsertReply(Creply cr, String cboardNo) {
+			cr.setCboardNo(Integer.parseInt(cboardNo));
+			int result = cboardService.insertReply(cr);
 			
-			// System.out.println(r);
+			return (result > 0)? "success" : "fail";
 			
-			int result = cboardService.insertReply(r);
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "rdelete.co", produces = "text/html; charset=UTF-8")
+		public String ajaxDeleteReply(int creplyNo)	{
 			
-			return (result > 0) ? "success" : "fail";
+			
+			int result = cboardService.deletereply(creplyNo);
+			
+			return (result > 0)? "success" : "error";
+		}
+		
+		
+		@RequestMapping(value = "rupdate.co")
+		@ResponseBody
+		public String ajaxUpdateReply(int creplyNo, String creplyContent) {
+
+			Creply cr = new Creply();
+			cr.setCreplyNo(creplyNo);
+			cr.setCreplyContent(creplyContent);
+			
+			int result = cboardService.updatereply(cr);
+
+			
+			return (result > 0)? "success" : "error";
+			
 		}
 		
 		

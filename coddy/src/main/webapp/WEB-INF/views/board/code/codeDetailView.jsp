@@ -107,7 +107,7 @@
             </div>
             <br><br>
 
-            <!-- 댓글 기능은 나중에 ajax 배우고 나서 구현할 예정! 우선은 화면구현만 해놓음 -->
+            
             <table id="replyArea" class="table" align="center">
                 <thead>
                     <tr>
@@ -139,91 +139,206 @@
 
     </div>
     
-  <!-- 
+  
     <script>
-    	$(function() {
-    		
-    		selectReplyList();
-    		
-    		// 만약, 댓글이 실시간으로 달리는걸 보고싶다면?
-    		setInterval(selectReplyList, 1000);
-    		
-    	});
-    	
-    	function addReply() {
-    		
-    		// 댓글 작성 요청용 ajax 요청
-    		
-    		// 댓글내용이 있는지 먼저 검사 후
-    		// 댓글 내용 중 공백 제거 후 길이가 0 이 아닌 경우
-    		// => textarea 가 form 태그 내부에 있지 않음
-    		//    (required 속성으로 필수 입력값임을 나타낼 수 없음)
-    		if($("#content").val().trim().length != 0) {
-    			
-    			$.ajax({
-    				url : "rinsert.co",
-    				type : "get",
-    				data : { // Ajax 요청 또한 Spring 에서 커맨드 객체 방식 사용 가능
-    					refBoardNo : ${ requestScope.c.cboardNo }, 
-    					creplyWriter : "${ sessionScope.loginMember.memberId }", 
-    					creplyContent : $("#content").val()
-    				},
-    				success : function(result) { 
-    					
-    					if(result == "success") {
-    						
-    						// 댓글 작성 성공 시
-    						selectReplyList();
-    						$("#content").val("");
-    						
-    					}
-    					
-    				},
-    				error : function() {
-    					console.log("댓글 작성용 ajax 통신 실패!");
-    				}
-    			});
-    			
-    		} else {
-    			
-    			alertify.alert("Alert", "댓글 작성 후 등록을 요청해주세요.", function(){ alertify.success('Ok'); });	
-    		}
-    	}
-    	
-    	function selectReplyList() {
-    		
-    		// 해당 게시글에 딸린 댓글 조회 요청용 ajax 요청
-    		$.ajax({
-    			url : "rlist.co",
-    			type : "get",
-    			data : {cno : ${ requestScope.c.cboardNo }},
-    			success : function(result) {
-    				
-    				// console.log(result);
-    				
-    				let resultStr = "";
-    				
-    				for(let i = 0; i < result.length; i++) {
-    					
-    					resultStr += "<tr>"
-    							   + 	"<th>" + result[i].creplyWriter + "</th>"
-    							   + 	"<td>" + result[i].creplyContent + "</td>"
-    							   +	"<td>" + result[i].cboardInsert + "</td>"
-    							   + "</tr>";
-    				}
-    				
-    				$("#creplyArea>tbody").html(resultStr);
-    				$("#rcount").text(result.length);
-    				
-    			},
-    			error : function() {
-    				console.log("댓글리스트 조회용 ajax 통신 실패!");
-    			}
-    		});
-    	}
-    </script>
-
-   -->
+		    $(function(){
+				
+				// 댓글리스트 조회용 선언적 함수 호출
+				selectReplyList();
+				// 댓글 실시간
+				// setInterval(selectReplyList, 10000);
+				
+			});
+		
+			// 댓글 작성 요청용 ajax 요청
+			function addReply(){
+				if($("#content").val().trim().length != 0){
+					
+					$.ajax({
+						url : "rinsert.co",
+						type : "get",
+						data : {
+							cboardNo : "${c.cboardNo}",
+							memberNo : "${sessionScope.loginMember.memberNo}",
+							creplyContent : $("#content").val()
+						},
+						success : function(result){
+							
+							if(result == "success"){
+								
+								selectReplyList();
+								$("#content").val("");
+							}
+						},
+						error : function(){
+							console.log("댓글 작성용 ajax 통신 실패");
+						}
+					});
+				} else {
+					
+					alertify.alert("Alert", "댓글 작성 후 등록을 요청해주세요.", function(){ alertify.success('Ok'); });
+				}
+			};
+				
+			function selectReplyList(){
+			// 댓글 조회 요청용 ajax 요청
+			$.ajax({
+				url : "rlist.co",
+				type : "get",
+				data : { cno : "${c.cboardNo}"},
+				success : function(result){
+					
+					let resultStr = "";
+					
+					for(let i = 0; i < result.length; i++){
+						resultStr += "<div class='comment'>"
+									+ "<div class='author'>"
+									+ "<div class='author-info'>"
+									+ "<img src='resources/image/profile/" + result[i].memberNo + ".jpg' onerror=\"this.src='resources/image/company/signup-bg.jpg'\">"
+									+ "<span>" + result[i].memberName + "</span>"
+									+ "</div>"
+									+ "<div class='actions'>";
+						if("${sessionScope.loginMember.memberNo}" ==  parseInt(result[i].memberNo)){
+						resultStr += "<a href='#' class='edit-link' onclick='openModal2()'>수정하기</a>"
+							+ "<a href='#' class='delete-link' onclick='openModal()'>삭제하기</a>"
+							+ "<input type='hidden' value='" + result[i].ireplyNo + "'>"
+							
+						} 		
+									
+						resultStr += "</div>"
+									+ "</div>"
+									+ "<div class='content'>" + result[i].ireplyContent + "</div>"
+									+ "<div class='timestamp'>" + result[i].ireplyInsert + "</div>"
+									+ "</div>"
+		
+						}
+					
+					$("#replyArea>tbody").html(resultStr);
+					$("#rcount").text(result.length);
+					},
+					error : function(){
+						console.log("댓글리스트 조회용 ajax 통신 실패!");
+					}
+				});
+			}
+			
+			function openModal() {
+			    document.getElementById('deleteModal').style.display = 'flex';
+			    
+			    // console.log(window.event.target)
+			    
+			    let target = window.event.target; // 방금 클릭된 삭제하기 a태그
+				let creplyNo = $(target).next().val(); // 댓글번호
+				
+			
+				
+				
+				$("#creplyNo").val(ireplyNo); 
+			    
+			}
+			
+			function closeModal() {
+				    document.getElementById('deleteModal').style.display = 'none';
+			}
+			
+		
+			
+			function replydelete(){
+				
+				$.ajax({
+					url : "rdelete.co",
+					type : "get",
+					data : {creplyNo:$("#creplyNo").val()},
+					success : function(result){
+						
+						
+						alert("댓글이 삭제되었습니다.");
+						selectReplyList();
+						closeModal();
+					},
+				 	error : function(error){
+				 		console.log("ajax 댓글 삭제 실패");
+				 	}
+				});
+			}
+			  
+			function openModal2(){
+				 document.getElementById('updateModal').style.display = 'flex';
+				    
+				    // console.log(window.event.target)
+				    
+				    let target = window.event.target; // 방금 클릭된 삭제하기 a태그
+			
+					let creplyNo = $(target).siblings("input").val(); // 댓글번호
+					
+					
+					$("#creplyNo").val(creplyNo); 
+				
+			}
+		
+		
+			function closeModal2() {
+			    document.getElementById('updateModal').style.display = 'none';
+		}
+		
+			
+			function updateBtn() {
+				console.log( $("#updateContent").val());
+				$.ajax({
+					url : "rupdate.co",
+					type : "get",
+					data :  {creplyNo : $("#creplyNo").val(),
+							creplyContent : $("#updateContent").val()},
+					success : function(result){
+							
+							console.log(result);
+							
+							alert("댓글이 수정되었습니다.");
+							$("#updateContent").val(result);
+							
+							  var none = document.getElementById('updateModal');
+							  none.style.display = 'none';
+						
+							 selectReplyList();
+		
+					},
+					error : function(error){
+						console.log("ajax 수정 실패");
+						alert("댓글 수정 실패");
+					}	
+					
+				});
+			};
+			
+		
+			
+			
+		</script>
+		
+		
+			 <div id="deleteModal" class="modal">
+			  <div class="modal-content">
+			    <span class="close-btn" onclick="closeModal()">&times;</span>
+			    <p>삭제하시겠습니까?</p>
+			    <input type="hidden" id="creplyNo" value="">
+			    <div id="delete">
+			    <button class="btn btn-danger" onclick="replydelete()" style=" width : 100px;">확인</button>
+			    </div>
+			  </div>
+			</div>
+			
+			<div id="updateModal" class="modal">
+			  <div class="modal-content1">
+			    <span class="close-btn2" onclick="closeModal2()">&times;</span>
+			    <textarea  id="updateContent" style="width : 95%; height : 80%;">${Scope.r.content}</textarea>
+			    <input type="hidden" id="creplyNo" value="">
+			    <div id="delete">
+		
+			    <button class="btn btn-danger" onclick="updateBtn()" style=" width : 100px;">확인</button>
+			    </div>
+			  </div>
+			</div>
+			<jsp:include page="../../common/footer.jsp" />
     
 </body>
 </html>
