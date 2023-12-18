@@ -60,9 +60,7 @@
 			</div>
 		</div>
 		<script>
-			$(document).ready(function() {
-				onLoad();
-			});
+			$(document).ready(function() { onLoad(); });
 			function onLoad() {
 				$.ajax({
 					type : "get",
@@ -81,10 +79,7 @@
 					data: { "tagsName": tagsName, "tagsType": tagsType },
 					type : "get",
 					url : "adminAdd.tg",
-					success : function(result) {
-						alert(result);
-						if(result=="추가에 성공함") { onLoad(); }
-					},
+					success : function(result) { alert(result); if(result=="추가에 성공함") onLoad(); },
 					error: function() { alert("추가에 실패함"); }
 				});
 			};
@@ -93,10 +88,7 @@
 					data: { "tagsNo": $(col).parent().parent().children().eq(0).text() },
 					type : "post",
 					url : "adminDelete.tg",
-					success : function(result) {
-						alert(result);
-						if(result=="삭제에 성공함") { onLoad(); }
-					},
+					success : function(result) { alert(result); if(result=="삭제에 성공함") onLoad(); },
 					error: function() { alert("삭제에 실패함"); }
 				});
 			};
@@ -105,10 +97,7 @@
 					data: { "tagsNo": $(col).parent().parent().children().eq(0).text() },
 					type : "post",
 					url : "adminRestore.tg",
-					success : function(result) {
-						alert(result);
-						if(result=="복원에 성공함") { onLoad(); }
-					},
+					success : function(result) { alert(result); if(result=="복원에 성공함") onLoad(); },
 					error: function() { alert("복원에 실패함"); }
 				});
 			};

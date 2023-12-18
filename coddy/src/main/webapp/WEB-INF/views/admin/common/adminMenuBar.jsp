@@ -182,8 +182,8 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseHire" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="">Read</a>
-                                            <a class="nav-link" href="">Delete</a>
+                                            <a class="nav-link" href="adminList.hb">Read</a>
+                                            <a class="nav-link" href="adminList.hb">Delete</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseFree" aria-expanded="false" aria-controls="pagesCollapseFree">

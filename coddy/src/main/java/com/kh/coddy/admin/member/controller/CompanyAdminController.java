@@ -64,10 +64,6 @@ public class CompanyAdminController {
 			return str_return;
 		}
 	}
-	@PostMapping(value="adminDelete.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminDelete(String companyNo) {
-		if(companyService.forceDelete(Integer.parseInt(companyNo)) > 0) return "success"; else return "fail";
-	}
-	@PostMapping(value="adminRestore.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminRestore(String companyNo) {
-		if(companyService.forceRestore(Integer.parseInt(companyNo)) > 0) return "success"; else return "fail";
-	}
+	@PostMapping(value="adminDelete.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminDelete(String companyNo) { if(companyService.forceDelete(Integer.parseInt(companyNo)) > 0) return "success"; else return "fail"; }
+	@PostMapping(value="adminRestore.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminRestore(String companyNo) { if(companyService.forceRestore(Integer.parseInt(companyNo)) > 0) return "success"; else return "fail"; }
 }

@@ -78,4 +78,9 @@
 	<select id="selectListCountForMyBoard" parameterType="_int" resultType="_int">SELECT COUNT(*) FROM HBOARD WHERE HBOARD_DELETE IS NULL AND COMPANY_NO=#{companyNo}</select>
 	<select id="selectListForMyBoard" parameterType="_int" resultMap="hboardResultSet">SELECT * FROM HBOARD WHERE HBOARD_DELETE IS NULL AND COMPANY_NO=#{companyNo}</select>
 	<select id="getAllWish" parameterType="_int" resultType="_int">SELECT COUNT(*) FROM HWISHLIST WHERE HBOARD_NO=#{hboardNo}</select>
+	<select id="selectListCountAdmin" resultType="_int">SELECT COUNT(*) FROM HBOARD</select>
+	<select id="selectListAdmin" resultMap="hboardResultSet">SELECT H.HBOARD_NO AS "HBOARD_NO", H.HBOARD_TITLE AS "HBOARD_TITLE", H.HBOARD_CONTENT AS "HBOARD_CONTENT", H.HBOARD_INSERT AS "HBOARD_INSERT", H.HBOARD_DELETE AS "HBOARD_DELETE", H.HBOARD_VIEWS AS "HBOARD_VIEWS", CO.COMPANY_NAME AS "COMPANY_NO", H.HBOARD_LOCATION AS "HBOARD_LOCATION" FROM HBOARD H, COMPANY CO WHERE H.COMPANY_NO=CO.COMPANY_NO</select>
+	<update id="forceDelete" parameterType="_int">UPDATE HBOARD SET HBOARD_DELETE=SYSDATE WHERE HBOARD_NO=#{hboardNo} AND HBOARD_DELETE IS NULL</update>
+	<update id="forceRestore" parameterType="_int">UPDATE HBOARD SET HBOARD_DELETE=NULL WHERE HBOARD_NO=#{hboardNo} AND HBOARD_DELETE IS NOT NULL</update>
+	<select id="getTag" parameterType="_int" resultMap="hrelationResultSet">SELECT HR.HBOARD_NO AS "HBOARD_NO", TG.TAGS_NAME AS "TAGS_NO" FROM HRELATION HR, TAGS TG WHERE HR.TAGS_NO=TG.TAGS_NO AND HR.HBOARD_NO=#{hboardNo} AND TG.TAGS_ACTIVE=1</select>
 </mapper>
