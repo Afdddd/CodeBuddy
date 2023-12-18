@@ -221,7 +221,7 @@
 					e.preventDefault();
 				});
 			});
-			function addAttach() { $("#attachmentArea").html("<input type='file' name='files' required>" + $("#attachmentArea").html()); }
+			function addAttach() { $("#attachmentArea").html("<input type='file' name='files' required><br><br>" + $("#attachmentArea").html()); }
 			function uploadSummernoteImageFile(file, editor) {
 				data = new FormData();
 				data.append("file", file);
