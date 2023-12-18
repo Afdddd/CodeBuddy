@@ -7,8 +7,8 @@
 	<title>기업 정보 리스트 보기 페이지</title>
 	<style>
 		.card-body>table { border-top: 1px solid #5271FF; border-collapse: collapse; text-align: center; }
-		.card-body>table>tr>th { border-top: 1px solid #5271FF; }
-		.card-body>table>tr>td { border-top: 1px solid #5271FF; }
+		.card-body>table>thead>tr>th { border-top: 1px solid #5271FF; }
+		.card-body>table>thead>tr>td { border-top: 1px solid #5271FF; }
 	</style>
 	</head>
 	<body class="sb-nav-fixed">
@@ -53,15 +53,15 @@
 											<th colspan="4" style="border-right: 1px solid #5271FF;">계정정보</th>
 										</tr>
 										<tr>
-											<th style="border-top: 1px solid #5271FF; border-left: 1px solid #5271FF;">번호</th>
-											<th style="border-top: 1px solid #5271FF;">상호명</th>
-											<th style="border-top: 1px solid #5271FF;">대표</th>
-											<th style="border-top: 1px solid #5271FF;">사업자 등록번호</th>
-											<th style="border-top: 1px solid #5271FF; border-right: 1px solid #5271FF;">설명</th>
-											<th style="border-top: 1px solid #5271FF;">회사 ID</th>
-											<th style="border-top: 1px solid #5271FF;">email</th>
-											<th style="border-top: 1px solid #5271FF;">가입일</th>
-											<th style="border-top: 1px solid #5271FF; border-right: 1px solid #5271FF;">탈퇴일</th>
+											<th style="border-left: 1px solid #5271FF;">번호</th>
+											<th>상호명</th>
+											<th>대표</th>
+											<th>사업자 등록번호</th>
+											<th style="border-right: 1px solid #5271FF;">설명</th>
+											<th>회사 ID</th>
+											<th>email</th>
+											<th>가입일</th>
+											<th style="border-right: 1px solid #5271FF;">탈퇴일</th>
 										</tr>
 									</thead>
 									<tbody id="tb">
@@ -69,7 +69,7 @@
 									</tbody>
 								</table>
 								<br>
-								<div style="text-align: center;"><button type="button" class="btn btn-primary" id="moreLoad" onclick="onLoad(page++);" style="background-color: #5271FF; color: yellow; width: 20%;"><span class="spinner-border spinner-border-sm"></span>&nbsp;더 불러오기</button></div>
+								<div style="text-align: center;"><button type="button" class="btn btn-primary" id="moreLoad" onclick="onLoad(page++);" style="background-color: #5271FF; color: moccasin; width: 20%;"><span class="spinner-border spinner-border-sm"></span>&nbsp;더 불러오기</button></div>
 							</div>
 						</div>
 					</div>

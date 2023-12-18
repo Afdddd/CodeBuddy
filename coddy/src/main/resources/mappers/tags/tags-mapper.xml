@@ -10,4 +10,8 @@
 	<select id="selectTagsAll" resultMap="tagsResultSet">SELECT * FROM TAGS WHERE TAGS_ACTIVE=1 ORDER BY TAGS_NO ASC</select>
 	<select id="selectTagsTag" resultMap="tagsResultSet">SELECT * FROM TAGS WHERE TAGS_ACTIVE=1 AND TAGS_TYPE=0 ORDER BY TAGS_NO ASC</select>
 	<select id="selectTagsCareer" resultMap="tagsResultSet">SELECT * FROM TAGS WHERE TAGS_ACTIVE=1 AND TAGS_TYPE=1 ORDER BY TAGS_NO ASC</select>
+	<select id="getTagsListAll" resultMap="tagsResultSet">SELECT * FROM TAGS ORDER BY TAGS_NO ASC</select>
+	<update id="adminRemoveTags" parameterType="_int">UPDATE TAGS SET TAGS_ACTIVE=0 WHERE TAGS_NO=${tagsNo} AND TAGS_ACTIVE=1</update>
+	<update id="adminRestoreTags" parameterType="_int">UPDATE TAGS SET TAGS_ACTIVE=1 WHERE TAGS_NO=${tagsNo} AND TAGS_ACTIVE=0</update>
+	<insert id="adminAddTags" parameterType="tags">INSERT INTO TAGS VALUES(SEQ_TAGS.NEXTVAL, #{tagsName}, #{tagsType}, #{tagsActive})</insert>
 </mapper>

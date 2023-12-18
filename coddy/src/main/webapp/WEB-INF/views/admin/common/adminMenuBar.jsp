@@ -124,7 +124,7 @@
                                     </div>  
                                     <a class="nav-link" href="">Project</a>
                                     <a class="nav-link" href="">Chat</a>
-                                    <a class="nav-link" href="">Tag</a>
+                                    <a class="nav-link" href="adminList.tg">Tag</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
