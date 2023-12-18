@@ -20,6 +20,11 @@
 		<result column="CHANGE_NAME" property="changeName" />
 		<result column="CBOARD_VIEWS" property="cboardViews" />
 	</resultMap>
+	
+	<resultMap id="crelationResultSet" type="crelation">
+		<result column="CBOARD_NO" property="cboardNo"/>
+		<result column="TAGS_NO" property="tagsNo"/>
+	</resultMap>
 
     <insert id="insertBoard" parameterType="cboard">
         INSERT INTO CBOARD (CBOARD_NO, 
@@ -39,8 +44,21 @@
 	<select id="selectListCount" resultType="int">
 		SELECT COUNT(*)
 		  FROM CBOARD
-	</select>    
-	
+	</select>  
+	 <!-- 
+	<select id="selectListCount" parameterType="csearch" resultType="_int">
+				SELECT COUNT (DISTINCT(C.CBOARD_NO)) 
+				  FROM CBOARD C, CRELATION CR, TAGS TG
+				 WHERE C.CBOARD_NO = CR.CBOARD_NO  
+				   AND CR.TAGS_NO = TG.TAGS_NO 
+				   AND TG.TAGS_NAME IN 
+		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+				   AND C.CBOARD_DELETE IS NULL
+				   AND (C.CBOARD_TITLE LIKE '%'||#{keyword}||'%') 
+				 ORDER BY ${sort} DESC
+	</select> 
+	  -->
+	 
 	<select id="selectList" resultMap="cboardResultSet">
 		SELECT CBOARD_NO
 		     , CBOARD_TITLE
@@ -51,7 +69,42 @@
 		  FROM CBOARD
 		 ORDER BY CBOARD_NO DESC
 	</select>	
-    
+	
+	<select id="selectTagList" parameterType="_int" resultType="string">
+		select tags_name
+		  from cboard
+		  join crelation using (cboard_no)
+		  join tags using (tags_no)
+		  where cboard_no = #{cboardNo}
+	</select>
+	
+	<insert id="insertTag" parameterType="string">
+		insert into crelation values(seq_cboard.currval, (select tags_no
+												   		    from tags t
+												   		   where t.tags_name=#{tag}))
+	</insert>
+     
+     <!-- 
+    <select id="selectList" parameterType="csearch" resultMap="cboardResultSet">
+		SELECT DISTINCT C.CBOARD_NO AS "CBOARD_NO",
+		 	   C.CBOARD_TITLE AS "CBOARD_TITLE",
+		 	   C.CBOARD_VIEWS AS "CBOARD_VIEWS",
+		 	   C.CBOARD_CONTENT AS "CBOARD_CONTENT",
+		 	   M.MEMBER_NAME AS "CBOARD_WRITER",
+		 	   TO_CHAR(C.CBOARD_INSERT, 'YYYY-MM-DD') AS "CBOARD_INSERT",
+		 	   FROM CBOARD C, PRELATION CR, TAGS TG, MEMBER M
+		WHERE C.CBOARD_NO = CR.CBOARD_NO  
+		AND CR.TAGS_NO = TG.TAGS_NO
+		AND M.MEMBER_NO = C.CBOARD_WRITER
+		AND TG.TAGS_NAME IN
+		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
+		AND C.CBOARD_DELETE IS NULL 
+		AND (C.CBOARD_TITLE LIKE '%'||#{keyword}||'%' 
+		OR C.CBOARD_CONTENT LIKE '%'||#{keyword}||'%')
+		ORDER BY ${sort} DESC
+	</select> 
+	 -->
+     
 	<update id="increaseCount" parameterType="int">
 		UPDATE CBOARD
 		   SET CBOARD_VIEWS = CBOARD_VIEWS + 1
@@ -119,5 +172,55 @@
 		 WHERE ROWNUM BETWEEN 1 AND 5
 	</select>    
  
+    <select id="getTagInfo" parameterType="cboard" resultMap="cboardResultSet">
+    	SELECT C.CBOARD_NO, T.TAGS_NAME AS "TAGS_NO" 
+    	FROM CBOARD C, TAGS T 
+    	WHERE C.TAGS_NO = T.TAGS_NO 
+    	AND C.CBOARD_NO=#{cboardNo}
+    </select>
+    
+    <resultMap id="CLikesSet" type="likes">
+		<result column="LIKES_MEMBER" property="likesMember"/>
+		<result column="CBOARD_NO" property="cboardNo"/>
+	</resultMap>
+	
+
+    <select id="selectSearchCount" parameterType="java.util.HashMap" resultType="int">
+	    SELECT COUNT(*) FROM CBOARD
+	    WHERE 
+	    <if test="condition == 'title'">
+	        cboard_title LIKE '%' || #{keyword} || '%'
+	    </if>
+	    <if test="condition == 'writer'">
+	        cboard_writer LIKE '%' || #{keyword} || '%'
+	    </if>
+	    <if test="condition == 'content'">
+	        cboard_content LIKE '%' || #{keyword} || '%'
+	    </if>
+	</select>
+	
+	<select id="selectSearchList" parameterType="java.util.HashMap" resultType="com.kh.coddy.board.code.model.vo.Cboard">
+	    SELECT *
+	    FROM (
+	        SELECT ROWNUM RNUM, C.*
+	        FROM (
+	            SELECT * FROM CBOARD
+	            WHERE 
+	            <if test="condition == 'title'">
+	                cboard_title LIKE '%' || #{keyword} || '%'
+	            </if>
+	            <if test="condition == 'writer'">
+	                cboard_writer LIKE '%' || #{keyword} || '%'
+	            </if>
+	            <if test="condition == 'content'">
+	                cboard_content LIKE '%' || #{keyword} || '%'
+	            </if>
+	            ORDER BY CBOARD DESC
+	        ) CB
+	        WHERE ROWNUM <![CDATA[<=]]> #{pi.endRow}
+	    ) 
+	    WHERE RNUM <![CDATA[>]]> #{pi.startRow}
+	</select>
+	
     
 </mapper>

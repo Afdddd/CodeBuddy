@@ -8,17 +8,17 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-
-import org.apache.commons.io.FilenameUtils;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.apache.commons.io.FilenameUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +28,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.coddy.board.free.model.service.FboardService;
+import com.kh.coddy.board.free.model.vo.Fattachment; 
 import com.kh.coddy.board.free.model.vo.Fboard;
 import com.kh.coddy.board.free.model.vo.Freply;
 import com.kh.coddy.common.Pagination;
@@ -36,6 +38,7 @@ import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.vo.Member;
 
 @Controller
+@RequestMapping
 public class FboardController {
 
 		@Autowired
@@ -90,45 +93,42 @@ public class FboardController {
 	
 		@GetMapping("enrollForm.fr")
 		public String enrollForm() {
-			
+
 			return "board/free/freeEnrollForm";
 		}
 		
-		@PostMapping(value = "/resources/file_upload/fboard/upload")
-		public ModelAndView image(MultipartHttpServletRequest request) throws Exception {
-		    ModelAndView mav = new ModelAndView("jsonView");
+		public String saveFile(MultipartFile upfile, HttpSession session, HttpServletRequest request) {
 
-		    try {
-		        MultipartFile uploadFile = request.getFile("uploadFile");
-
-		        if (uploadFile != null && !uploadFile.isEmpty()) {
-		            String originalFileName = uploadFile.getOriginalFilename();
-		            String ext = originalFileName.substring(originalFileName.indexOf("."));
-		            String newFileName = UUID.randomUUID() + ext;
-
-		            String savePath = System.getProperty("user.dir") + "/src/main/webapp/resources/file_upload/fboard/" + newFileName;
-
-		            String uploadPath = "./fboard/" + newFileName;
-
-		            File file = new File(savePath);
-
-		            uploadFile.transferTo(file);
-
-		            mav.addObject("uploaded", true);
-		            mav.addObject("url", uploadPath);
-		        } else {
-		            mav.addObject("uploaded", false);
-		            mav.addObject("message", "업로드된 파일이 없습니다.");
-		        }
-		    } catch (Exception e) {
-		        mav.addObject("uploaded", false);
-		        mav.addObject("message", "파일 업로드 중 오류가 발생했습니다.");
-		        e.printStackTrace();
+			String fboardOrigin = upfile.getOriginalFilename();
+			
+		    if (fboardOrigin == null || fboardOrigin.isEmpty()) {
+		        // 업로드된 파일이 없으면 빈 문자열 반환
+		        return "";
 		    }
-
-		    return mav;
+			
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+			
+			int ranNum = (int)(Math.random() * 90000 + 10000);
+			
+			String ext = FilenameUtils.getExtension(fboardOrigin);
+			
+			String fboardChange = currentTime + ranNum + "." + ext;
+			String savePath = request.getRealPath("resources\\file_upload\\fboard\\");
+			
+			try {
+				
+		        File uploadDir = new File(savePath);
+		        if (!uploadDir.exists()) {
+		            uploadDir.mkdirs();
+		        }
+				
+				upfile.transferTo(new File(savePath + "\\" + fboardChange));
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			return fboardChange;
 		}
-
 		
 		@PostMapping("insert.fr")
 		public String insertBoard(Fboard f,
@@ -153,7 +153,7 @@ public class FboardController {
 		    }
 		}
 		    
-		@PostMapping("update.fr")
+		@PostMapping("updateForm.fr")
 		public String updateForm(int fno, Model model) {
 				
 			Fboard f = fboardService.selectBoard(fno);
@@ -162,36 +162,45 @@ public class FboardController {
 				
 			return "board/free/freeUpdateForm";
 			}   
-		   
-
-		public String saveFile(MultipartFile upfile,
-				   HttpSession session) {
-
-			String originName = upfile.getOriginalFilename();
-			
-			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss")
-													.format(new Date());
-			
-			int ranNum = (int)(Math.random() * 90000 + 10000);
-			
-			String ext = originName.substring(originName.lastIndexOf("."));
-			
-			String changeName = currentTime + ranNum + ext;
-			
-			String savePath = session.getServletContext()
-					.getRealPath("/src/main/webapp/resources/file_upload/fboard/");
-			
-			try {
-				
-				upfile.transferTo(new File(savePath + changeName));
-			
-			} catch (IllegalStateException | IOException e) {
-				e.printStackTrace();
-			}
-			
-			return changeName;
-			}
 		
+		@PostMapping("update.fr")
+		public String updateBoard(@ModelAttribute("f") Fboard f, 
+								  @RequestParam(name = "reupfile", required = false) MultipartFile reupfile,
+		                          HttpSession session,
+		                          Model model) throws IOException {
+		    
+		    // System.out.println(f);
+		    
+		    // 기존 게시글 내용을 세션에서 가져와서 설정
+		    f.setFboardContent(String.valueOf(session.getAttribute("fboardContent")));
+
+		    if (reupfile != null && !reupfile.getOriginalFilename().equals("")) {
+
+			    // 첨부 파일이 존재하고 변경된 파일명이 있을 경우 기존 파일 삭제
+			    if (f.getFboardChange() != null) {
+			        String realPath = session.getServletContext().getRealPath(f.getFboardChange());
+			        new File(realPath).delete();
+			    }
+
+			    // 새로운 파일 저장 및 정보 설정
+			    String fboardChange = saveFile(reupfile, session, null);
+			    f.setFboardOrigin(reupfile.getOriginalFilename());
+			    f.setFboardChange("/resources/file_upload/fboard/upload/" + fboardChange);
+			}
+		   
+		    // 게시글 업데이트 수행
+		    int result = fboardService.updateBoard(f);
+		    
+		    if (result > 0) { 
+		        // 성공적으로 업데이트된 경우 상세 페이지로 리다이렉트
+		        session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+		        return "redirect:/detail.fr?fno=" + f.getFboardNo();
+		    } else {
+		        // 업데이트 실패 시 에러 페이지로 이동
+		        model.addAttribute("errorMsg", "게시글 수정 실패");
+		        return "common/errorPage";
+		    }   
+		}	
 		
 		@RequestMapping("delete.fr")
 		public String deleteBoard(int fno,

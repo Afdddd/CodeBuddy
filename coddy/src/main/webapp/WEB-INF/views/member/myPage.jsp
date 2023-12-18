@@ -74,11 +74,12 @@
                     <li><a href="#">나의 평가</a></li>
                     <hr>
                     <li><a href="written.io">참여한 프로젝트</a></li>
+
                     <li><a href="#">찜한 프로젝트</a></li>
-                    <li><a href="#">찜한 채용공고</a></li>
+                    <li><a href="likedRecruit.me">찜한 채용공고</a></li>
                     <hr>
                     <li><a href="written.ro">작성한 게시글</a></li>
-                    <li><a href="#">작성한 댓글</a></li>
+                    <li><a href="wroteReply.me">작성한 댓글</a></li>
                 </ul>
                     
                 <form action="update.me" method="post" enctype="multipart/form-data">

@@ -1,13 +1,12 @@
 package com.kh.coddy.board.code.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import com.kh.coddy.board.code.model.vo.Cboard;
+import com.kh.coddy.board.code.model.vo.Crelation;
 import com.kh.coddy.board.code.model.vo.Creply;
-import com.kh.coddy.board.intro.model.vo.IBoard;
-import com.kh.coddy.board.intro.model.vo.Iattachment;
-import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.common.vo.PageInfo;
 
 
@@ -45,7 +44,18 @@ public interface CboardService {
 	ArrayList<Cboard> selectTopBoardList();
 	
 	// 태그 가져오기
-	ArrayList<Prelation> getTagInfo(Cboard c);
+	ArrayList<Crelation> getTagInfo(Cboard c);
+
+	// 태그 추가하기
+	int insertTag(String tag);
+
+	int selectSearchCount(HashMap<String, String> map);
+
+	ArrayList<Cboard> selectSearchList(HashMap<String, String> map, PageInfo pi);
+	
+	
+	
+	
 	
 
 	

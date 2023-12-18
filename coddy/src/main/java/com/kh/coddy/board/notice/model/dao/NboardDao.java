@@ -15,9 +15,6 @@ import com.kh.coddy.board.notice.model.vo.Nattachment;
 @Repository
 public class NboardDao {
 	
-	@Autowired
-	private SqlSessionTemplate sqlSession;
-	
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 
 		return sqlSession.selectOne("nboardMapper.selectListCount");
@@ -63,6 +60,7 @@ public class NboardDao {
 		return (ArrayList)sqlSession.selectList("nboardMapper.selectTopBoardList");
 	}
 
+	// 첨부파일 목록 조회
 	public ArrayList<Nattachment> selectAttachmentList(SqlSessionTemplate sqlSession, int nboardNo) {
 		
 	    return (ArrayList)sqlSession.selectList("nboardMapper.selectAttachmentList", nboardNo);
@@ -78,21 +76,7 @@ public class NboardDao {
 	    return sqlSession.delete("nboardMapper.deleteAttachment", nattachmentNo);
 	}
 
-	// 첨부파일 목록 조회
-	public List<Nattachment> selectAttachmentList(int nboardNo) {
-		return sqlSession.selectList("nboardMapper.selectNattachmentList", nboardNo);
-	}
-	
-	// 첨부파일 상세 조회
-	public Nattachment selectOneNattachment(int nattachmentNo) {
-	    return sqlSession.selectOne("nboardMapper.selectOneNattachment", nattachmentNo);
-	}
-	
-	// 첨부파일 목록 조회
-	public List<Nattachment> selectNattachmentList(int nboardNo) {
-	    return sqlSession.selectList("nboardMapper.selectNattachmentList", nboardNo);
-	}
-	
+
 	// 첨부파일 추가
 	public int insertAttachment(SqlSessionTemplate sqlSession, Nattachment nattachment) {
 	    return sqlSession.insert("nboardMapper.insertAttachment", nattachment);

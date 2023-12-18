@@ -36,7 +36,7 @@
                     </tr>
                     <tr>
                         <th><label for="writer">작성자</label></th>
-                        <td><input type="text" id="fboardWriter" class="form-control" value="${ sessionScope.loginUser.userId }" name="fboardWriter" readonly></td>
+                        <td><input type="text" id="fboardWriter" class="form-control" value="${ sessionScope.loginMember.memberId }" name="fboardWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="upfile">첨부파일</label></th>

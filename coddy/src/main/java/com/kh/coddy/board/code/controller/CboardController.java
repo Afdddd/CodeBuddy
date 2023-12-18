@@ -5,10 +5,11 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,7 +28,11 @@ import com.google.gson.Gson;
 import com.kh.coddy.board.code.model.service.CboardService;
 import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Creply;
+import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
+import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.common.Pagination;
+import com.kh.coddy.common.tag.ReadTag;
+import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.vo.Member;
 
@@ -36,10 +42,44 @@ public class CboardController {
 		@Autowired
 		private CboardService cboardService;
 		
+		@Autowired 
+		private TagsController tagsController;
+		
+		 @GetMapping("search.co")
+		    public String selectSearchList(
+		            @RequestParam("condition") String condition,
+		            @RequestParam("keyword") String keyword,
+		            @RequestParam(value = "cpage", defaultValue = "1") int currentPage,
+		            Model model) {
+
+		        // 검색용 요청
+		        HashMap<String, String> map = new HashMap<>();
+		        map.put("condition", condition);
+		        map.put("keyword", keyword);
+
+		        int searchCount = cboardService.selectSearchCount(map);
+		        int pageLimit = 10;
+		        int boardLimit = 5;
+
+		        PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, pageLimit, boardLimit);
+
+		        ArrayList<Cboard> list = cboardService.selectSearchList(map, pi);
+
+		        model.addAttribute("list", list);
+		        model.addAttribute("pi", pi);
+		        model.addAttribute("condition", condition);
+		        model.addAttribute("keyword", keyword);
+
+		        return "board/code/codeListView";
+		    }
+			
+		
+		
 		@GetMapping("list.co")
 		public ModelAndView selectList(
 				@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
 				ModelAndView mv) {
+			
 			
 			int listCount = cboardService.selectListCount();
 			
@@ -50,6 +90,7 @@ public class CboardController {
 							currentPage, pageLimit, boardLimit);
 			
 			ArrayList<Cboard> list = cboardService.selectList(pi);
+			
 			
 			mv.addObject("list", list)
 			  .addObject("pi", pi)
@@ -81,7 +122,7 @@ public class CboardController {
 		}
 	
 		@GetMapping("enrollForm.co")
-		public String enrollForm(HttpSession session) {
+		public String enrollForm(HttpSession session, Model model) {
 			if(session.getAttribute("loginMember") == null) {
 				session.setAttribute("alertMsg", "로그인부터 해주세요.");
 				return "redirect:/";
@@ -90,6 +131,7 @@ public class CboardController {
 				session.setAttribute("alertMsg", "기업회원은 이용 불가능합니다.");
 				return "redirect:/";
 			}
+			model.addAttribute("tagTech", tagsController.getTagsNameList(0));
 			return "board/code/codeEnrollForm";
 		}
 		
@@ -109,11 +151,15 @@ public class CboardController {
 		
 		@PostMapping("insert.co")
 		public String insertBoard(Cboard c,
-								  MultipartFile upfile,
+								  MultipartFile upfile, String tagTechName,
 								  HttpSession session,
 								  Model model) {
 			
 			System.out.println(c.getCboardContent());
+			
+
+			System.out.println(tagTechName);
+
 		   
 			if(!upfile.getOriginalFilename().equals("")) {
 				
@@ -131,6 +177,16 @@ public class CboardController {
 		    int result = cboardService.insertBoard(c);
 
 		    if(result > 0) { // 게시글 작성 성공
+		    	
+		    	// 태그 insert
+				if(!tagTechName.equals("")) {
+					String[] tags = ReadTag.read(tagTechName);
+					
+					int result2 = 1;
+					for(String tag : tags) {
+						result2 *= cboardService.insertTag(tag);
+					}				
+				}
 				
 				session.setAttribute("alertMsg", "게시글이 등록되었습니다.");
 				

@@ -1,6 +1,4 @@
-package com.kh.coddy.common.calendar.model.vo;
-
-
+package com.kh.coddy.board.code.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +7,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
-public class Schedule {
-	private String eventTitle;
-	private String startDate;
-	private String endDate;
-	private int projectNo;
+public class CLikes {
+
+	
+	private int likesMember;		//	LIKES_MEMBER	NUMBER
+	private int cboardNo;			//	CBOARD_NO	NUMBER
 }
