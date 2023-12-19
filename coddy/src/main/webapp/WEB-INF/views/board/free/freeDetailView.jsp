@@ -329,7 +329,6 @@
 						resultStr += "</div>"
 									+ "</div>"
 									+ "<div class='content'>" + result[i].freplyContent + "</div>"
-									+ "<div class='timestamp'>" + result[i].freplyInsert + "</div>"
 									+ "</div>"
 		
 						}
