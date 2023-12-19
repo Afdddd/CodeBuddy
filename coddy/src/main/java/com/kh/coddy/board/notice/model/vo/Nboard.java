@@ -15,4 +15,6 @@ public class Nboard {
 	private String nboardUpdate;
 	private String nboardDelete;
 	private int nboardViews;
+	private String nboardOrigin;		
+	private String nboardChange;
 }

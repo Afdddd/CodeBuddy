@@ -38,10 +38,8 @@
             <br>
             <thead>
             <div class="freeList" align="left">
-			    <a href="list.fr?cpage=${requestScope.pi.currentPage}&sort=createdAtDesc">• 최신순</a>
-			    <a href="list.fr?cpage=${requestScope.pi.currentPage}&sort=mostAnswers">• 답변많은순</a>
-			    <a href="list.fr?cpage=${requestScope.pi.currentPage}&sort=mostLikes">• 좋아요순</a>
-			     <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+
+			<!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
             <c:if test="${ not empty sessionScope.loginMember }"> 
 	            <a class="btn" style="float:right; color:white; background:#5271FF; padding:6px;" 
 	            							href="enrollForm.fr">
@@ -130,19 +128,7 @@
 
             <br clear="both"><br>
 
-            <form id="searchForm" action="" method="get" align="center">
-                <div class="select">
-                    <select class="custom-select" name="condition">
-                        <option value="writer">작성자</option>
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                    </select>
-                </div>
-                <div class="text">
-                    <input type="text" class="form-control" name="keyword">
-                </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
-            </form>
+
             <br><br>
         </div>
         <br><br>

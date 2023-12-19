@@ -32,14 +32,17 @@ public interface FboardService {
 	// 게시글 수정 서비스
 	int updateBoard(Fboard f);
 	
-	// 댓글 리스트 조회 서비스 (ajax)
+	// 댓글 조회용
 	ArrayList<Freply> selectReplyList(int fboardNo);
-	
-	// 댓글 작성 서비스 (ajax)
-	int insertReply(Freply f);
-	
-	// 조회수 top5 리스트 조회용 서비스 (ajax)
-	ArrayList<Fboard> selectTopBoardList();
+
+	// 댓글 작성용
+	int insertReply(Freply fr);
+
+	// 댓글 삭제용
+	int deleteReply(int freplyNo);
+		
+	// 댓글 수정용
+	int updateReply(Freply fr);
 	
 	// 첨부파일 리스트 조회 서비스 (ajax)
 	ArrayList<Fattachment> selectAttachmentList(int fboardNo);

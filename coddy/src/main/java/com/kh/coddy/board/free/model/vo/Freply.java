@@ -12,7 +12,7 @@ import lombok.ToString;
 public class Freply {
 
 	private int freplyNo; 		 	//	REPLY_NO	NUMBER
-	private int memberNo;			//	MEMBER_NO  NUMBER
+	private String memberNo;			//	MEMBER_NO  NUMBER
 	private int fboardNo;			//	FBOARD_NO  NUMBER
 	private int freplyParent;		//	FREPLY_PARENT  NUMBER
 	private String freplyContent;	//	FREPLY_CONTENT  VARCHAR2(2000)

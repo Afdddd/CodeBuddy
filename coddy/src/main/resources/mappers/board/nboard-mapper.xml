@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="nboardMapper">
+
 	<!-- NBOARD resultMap -->
 	<resultMap id="nboardResultSet" type="nboard">
 	    <result column="NBOARD_NO" property="nboardNo"/>
@@ -9,6 +10,8 @@
 	    <result column="NBOARD_INSERT" property="nboardInsert"/>
 	    <result column="NBOARD_UPDATE" property="nboardUpdate"/>
 	    <result column="NBOARD_DELETE" property="nboardDelete"/>
+	    <result column="NBOARD_ORIGIN" property="nboardOrigin" />
+	    <result column="NBOARD_CHANGE" property="nboardChange" />
 	    <result column="NBOARD_VIEWS" property="nboardViews"/>
 	</resultMap>
 
@@ -28,26 +31,29 @@
 	    INSERT INTO NBOARD (NBOARD_NO, 
 	    					NBOARD_TITLE, 
 	    					NBOARD_CONTENT, 
-	    					NBOARD_WRITER, 
-	    					NBOARD_INSERT)
+	    					NBOARD_INSERT,
+	    					NBOARD_ORIGIN,
+	    					NBOARD_CHANGE)
 	    VALUES (SEQ_NBOARD.NEXTVAL, 
 	    		#{nboardTitle}, 
 	    		#{nboardContent}, 
-	    		#{nboardWriter}, 
-	    		SYSDATE)
+	    		SYSDATE,
+	    		#{nboardOrigin},
+	    		#{nboardChange})
 	</insert>
 	
 	<!-- NBOARD select -->
 	<select id="selectBoard" parameterType="_int" resultMap="nboardResultSet">
-	    SELECT F.NBOARD_NO, 
-	           F.NBOARD_TITLE,
-	           F.NBOARD_CONTENT,
-	    	   M.MEMBER_NAME AS "NBOARD_WRITER",
-	    	   F.NBOARD_INSERT AS "NBOARD_INSERT"
-	    	FROM NBOARD N, MEMBER M 
-	       WHERE F.NBOARD_WRITER = M.MEMBER_NO 
-	         AND F.NBOARD_NO = #{nboardNo} 
-	         AND F.NBOARD_DELETE IS NULL
+	    SELECT NBOARD_NO, 
+	           NBOARD_TITLE,
+	           NBOARD_CONTENT,
+	    	   NBOARD_INSERT AS "NBOARD_INSERT",
+		       NBOARD_VIEWS,
+		       NBOARD_ORIGIN,
+		       NBOARD_CHANGE
+	    	FROM NBOARD
+	       WHERE NBOARD_NO = #{nboardNo} 
+	         AND NBOARD_DELETE IS NULL
 	</select>
 			
 	<!-- NBOARD selectListCount -->	
@@ -64,15 +70,15 @@
 		     , NBOARD_VIEWS
 		     , TO_CHAR(NBOARD_INSERT, 'YYYY-MM-DD') AS "NBOARD_INSERT"
 		     , NBOARD_ORIGIN
-		  FROM NBOARD 
-		 WHERE NBOARD_DELETE IS NULL
+		  FROM NBOARD
+		 WHERE NBOARD_DELETE IS NULL 
 		 ORDER BY NBOARD_NO DESC
 	</select>
 	
 	<update id="increaseCount" parameterType="_int">
 		UPDATE NBOARD
 		   SET NBOARD_VIEWS = NBOARD_VIEWS + 1
-		 WHERE NBOARD_NO = #{NBOARDNo} AND NBOARD_DELETE IS NULL
+		 WHERE NBOARD_NO = #{nboardNo} AND NBOARD_DELETE IS NULL
 	</update> 
 	
 	<!-- NBOARD update -->
@@ -80,11 +86,9 @@
 	    UPDATE NBOARD
 	    SET NBOARD_TITLE = #{nboardTitle},
 	        NBOARD_CONTENT = #{nboardContent},
-	        NBOARD_WRITER = #{nboardWriter},
 	        NBOARD_UPDATE = SYSDATE,
-	        NBOARD_INSERT = #{nboardInsert},
-	        NBOARD_DELETE = #{nboardDelete},
-	        NBOARD_VIEWS = #{nboardViews}
+	        NBOARD_ORIGIN = #{nboardOrigin},
+	        NBOARD_CHANGE= #{nboardChange}
 	    WHERE NBOARD_NO = #{nboardNo} AND NBOARD_DELETE IS NULL
 	</update>
 
@@ -96,43 +100,24 @@
 	       AND NBOARD_DELETE IS NULL
 	</update>
 	
-	<insert id="insertBoardImg" parameterType="nattachment">
-		INSERT INTO FATTACHMENT(
-			NATTACHMENT_NO,
-			NBOARD_NO,
-			NATTACHMENT_ORIGIN,
-			NATTACHMENT_PATH,
-			NATTACHMENT_CHANGE,
-			NATTACHMENT_LEVEL
-		) VALUES (
-			SEQ_IATTACHMENT.NEXTVAL,
-			SEQ_NBOARD.CURRVAL,
-			#{nAttachmentOrigin},
-			#{nAttachmentPath},
-			#{nAttachmentChange},
-			#{nAttachmentLevel}
-		)
-		
-	</insert>	
-	
 	<select id="selectAttachment" parameterType="nattachment" resultMap="nattachmentResultSet">
-     SELECT NATTACHMENT_NO,
+     SELECT NATACHMENT_NO,
             NBOARD_NO, 
-            NATTACHMENT_ORIGIN, 
-            NATTACHMENT_CHANGE, 
-            NATTACHMENT_PATH,
-            NATTACHMENT_INSERT, 
-            NATTACHMENT_LEVEL 
-      FROM NATTACHMENT 
+            NATACHMENT_ORIGIN, 
+            NATACHMENT_CHANGE, 
+            NATACHMENT_PATH,
+            NATACHMENT_INSERT, 
+            NATACHMENT_LEVEL 
+      FROM NATACHMENT 
      WHERE NBOARD_NO = #{nboardNo} 
-       AND NATTACHMENT_LEVEL = 1
+       AND NATACHMENT_LEVEL = 1
 	</select>
 	
     <select id="getAttachmentList" parameterType="nattachment" resultMap="nattachmentResultSet">
     SELECT * 
-      FROM NATTACHMENT 
+      FROM NATACHMENT 
      WHERE NBOARD_NO = #{nboardNo} 
-       AND NATTACHMENT_LEVEL = 0
+       AND NATACHMENT_LEVEL = 0
     </select>		
 		
 </mapper>

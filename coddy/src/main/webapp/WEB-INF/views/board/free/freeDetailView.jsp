@@ -199,17 +199,20 @@
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-			
-	                <button class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-	                <button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
-	                
+					<c:if test="${not empty sessionScope.loginMember and sessionScope.loginMember.memberName eq requestScope.f.fboardWriter}">
+    				<!-- 현재 로그인한 사용자와 게시글 작성자가 동일한 경우에만 수정 버튼 표시 -->
+	                <button class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</button>
+	                <button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</button>
+
 	                <form id="postForm" action="update.fr" method="post">
 	                	<input type="hidden" name="fno" 
 	                				value="${ requestScope.f.fboardNo }">
 	                	<input type="hidden" name="filePath" 
 	                				value="${ requestScope.f.fboardChange }">			
 	                </form>
-           
+	                
+	                </c:if>
+
 					<script>				    
 					    function postFormSubmit(num) {
         					if(num == 1) { 
@@ -228,55 +231,55 @@
             </div>
             <br><br>
 
-			<table id="freeReplyArea" class="table" align="center">
-			    <thead>
-			        <tr>
-			            <c:choose>
-			                <c:when test="${ empty sessionScope.loginMember }">
-			                    <!-- 로그인 전: 댓글창 막기 -->
-			                    <th colspan="2">
-			                        <textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>
-			                            로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용 바랍니다.
-			                        </textarea>
-			                    </th>
-			                    <th style="vertical-align:middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
-			                </c:when>
-			                <c:otherwise>
-			                    <th colspan="2">
-			                        <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
-			                    </th>
-			                    <th style="vertical-align:middle"><button class="btn btn-secondary" onclick="addReply();">등록하기</button></th>
-			                </c:otherwise>
-			            </c:choose>
-			        </tr>
-			        <tr>
-			            <td colspan="3">댓글(<span id="rcount">0</span>)</td>
-			        </tr>
-			    </thead>
-			    <tbody>
-			       
-			    </tbody>
-			</table>
+            <table id="replyArea" class="table" align="center">
+                <thead>
+                    <tr>
+                    	<c:choose>
+                    		<c:when test="${ empty sessionScope.loginMember }">
+                    			<!-- 로그인 전 : 댓글창 막기 -->
+                    			<th colspan="2">
+		                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용 바랍니다.</textarea>
+		                        </th>
+		                        <th style="vertical-align:middle" ><button class="btn" style="color:white; background:#5271FF; padding:6px;" disabled>등록하기</button></th>
+                    		</c:when>
+                    		<c:otherwise>
+		                        <th colspan="2">
+		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+		                        </th>
+		                        <th style="vertical-align:middle"><button class="btn" style="color:white; background:#5271FF; padding:6px;" onclick="addReply();">등록하기</button></th>
+		                        
+                    		</c:otherwise>
+                    	</c:choose>
+                    </tr>
+                    <tr>
+                        <td colspan="3">댓글(<span id="rcount">0</span>)</td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            
 			<br><br>
-			<script>
-			$(function(){
+			
+		    <script>
+		    $(function(){
 				
 				// 댓글리스트 조회용 선언적 함수 호출
 				selectReplyList();
 				// 댓글 실시간
-				setInterval(selectReplyList, 10000);
+				// setInterval(selectReplyList, 10000);
 				
 			});
-
+		
 			// 댓글 작성 요청용 ajax 요청
-			function addreply(){
+			function addReply(){
 				if($("#content").val().trim().length != 0){
 					
 					$.ajax({
-						url : "insert.fr",
+						url : "rinsert.fr",
 						type : "get",
 						data : {
-							fboardNo : "${sessionScope.f.fboardNo}",
+							fboardNo : "${f.fboardNo}",
 							memberNo : "${sessionScope.loginMember.memberNo}",
 							freplyContent : $("#content").val()
 						},
@@ -301,9 +304,9 @@
 			function selectReplyList(){
 			// 댓글 조회 요청용 ajax 요청
 			$.ajax({
-				url : "list.fr",
+				url : "rlist.fr",
 				type : "get",
-				data : { fno : "${ sessionScope.f.fboardNo}"},
+				data : { fno : "${f.fboardNo}"},
 				success : function(result){
 					
 					let resultStr = "";
@@ -313,12 +316,12 @@
 									+ "<div class='author'>"
 									+ "<div class='author-info'>"
 									+ "<img src='resources/image/profile/" + result[i].memberNo + ".jpg' onerror=\"this.src='resources/image/company/signup-bg.jpg'\">"
-									+ "<span>" + result[i].memberName + "</span>"
+									+ "<span>" + result[i].memberNo + "</span>"
 									+ "</div>"
 									+ "<div class='actions'>";
-						if("${sessionScope.loginMember.memberNo}" ==  parseInt(result[i].memberNo)){
+						if("${sessionScope.loginMember.memberName}" ==  result[i].memberNo){
 						resultStr += "<a href='#' class='edit-link' onclick='openModal2()'>수정하기</a>"
-							+ "<a href='#' class='delete-link' onclick='openModal()'>삭제하기</a>"
+							+ "<a href='#' class='delete-link' onclick='openModal(" + result[i].freplyNo + ")'>삭제하기</a>"
 							+ "<input type='hidden' value='" + result[i].freplyNo + "'>"
 							
 						} 		
@@ -328,7 +331,7 @@
 									+ "<div class='content'>" + result[i].freplyContent + "</div>"
 									+ "<div class='timestamp'>" + result[i].freplyInsert + "</div>"
 									+ "</div>"
-
+		
 						}
 					
 					$("#replyArea>tbody").html(resultStr);
@@ -346,25 +349,21 @@
 			    // console.log(window.event.target)
 			    
 			    let target = window.event.target; // 방금 클릭된 삭제하기 a태그
-				let ireplyNo = $(target).next().val(); // 댓글번호
+				let freplyNo = $(target).next().val(); // 댓글번호
+	
 				
-			
-				
-				
-				$("#ireplyNo").val(ireplyNo); // 삭제하기 모달창의 input type="hidden" id="ireplyNo" 의 밸류로 넣어버린것
+				$("#freplyNo").val(freplyNo); 
 			    
 			}
 			
 			function closeModal() {
 				    document.getElementById('deleteModal').style.display = 'none';
 			}
-			
 
-			
-			function replydelete(){
+			function replyDelete(){
 				
 				$.ajax({
-					url : "delete.fr",
+					url : "rdelete.fr",
 					type : "get",
 					data : {freplyNo:$("#freplyNo").val()},
 					success : function(result){
@@ -387,13 +386,13 @@
 				    
 				    let target = window.event.target; // 방금 클릭된 삭제하기 a태그
 			
-					let ireplyNo = $(target).siblings("input").val(); // 댓글번호
+					let freplyNo = $(target).siblings("input").val(); // 댓글번호
 					
 					
-					$("#ireplyNo").val(ireplyNo); // 모달창의 input type="hidden" id="ireplyNo" 의 밸류로 넣어버린것
+					$("#freplyNo").val(freplyNo); 
 				
 			}
-
+		
 		
 			function closeModal2() {
 			    document.getElementById('updateModal').style.display = 'none';
@@ -403,7 +402,7 @@
 			function updateBtn() {
 				console.log( $("#updateContent").val());
 				$.ajax({
-					url : "update.fr",
+					url : "rupdate.fr",
 					type : "get",
 					data :  {freplyNo : $("#freplyNo").val(),
 							freplyContent : $("#updateContent").val()},
@@ -418,7 +417,7 @@
 							  none.style.display = 'none';
 						
 							 selectReplyList();
-
+		
 					},
 					error : function(error){
 						console.log("ajax 수정 실패");
@@ -426,21 +425,17 @@
 					}	
 					
 				});
-			};
+			};		
 			
-		
-			
-			
-	    </script>
-	    
-	    
+		</script>
+
 			 <div id="deleteModal" class="modal">
 			  <div class="modal-content">
 			    <span class="close-btn" onclick="closeModal()">&times;</span>
 			    <p>삭제하시겠습니까?</p>
 			    <input type="hidden" id="freplyNo" value="">
 			    <div id="delete">
-			    <button class="btn btn-danger" onclick="replydelete()" style=" width : 100px;">확인</button>
+			    <button class="btn" onclick="replyDelete()" style="color:white; background:#5271FF; padding:6px; width : 100px;">확인</button>
 			    </div>
 			  </div>
 			</div>
@@ -448,15 +443,16 @@
 			<div id="updateModal" class="modal">
 			  <div class="modal-content1">
 			    <span class="close-btn2" onclick="closeModal2()">&times;</span>
-			    <textarea  id="updateContent" style="width : 95%; height : 80%;">${Scope.r.content}</textarea>
+			    <textarea  id="updateContent" style="width : 95%; height : 80%;">${Scope.fr.content}</textarea>
 			    <input type="hidden" id="freplyNo" value="">
 			    <div id="delete">
-
-			    <button class="btn btn-danger" onclick="updateBtn()" style=" width : 100px;">확인</button>
+		
+			    <button class="btn" onclick="updateBtn()" style="color:white; background:#5271FF; padding:6px; width : 100px;">확인</button>
 			    </div>
 			  </div>
 			</div>
-    
+			
+			<jsp:include page="../../common/footer.jsp" />
     
 </body>
 </html>

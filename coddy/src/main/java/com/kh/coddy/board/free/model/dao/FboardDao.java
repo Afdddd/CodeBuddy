@@ -51,25 +51,34 @@ public class FboardDao {
 	}
 	
 	public int updateBoard(SqlSessionTemplate sqlSession, Fboard f) {
-
+		
 		return sqlSession.update("fboardMapper.updateBoard", f);
 	}
 	
 	public ArrayList<Freply> selectReplyList(SqlSessionTemplate sqlSession, int fboardNo) {
 
-		return (ArrayList)sqlSession.selectList("fboardMapper.selectReplyList", fboardNo);
+		return (ArrayList) sqlSession.selectList("fboardMapper.selectReplyList", fboardNo);
 	}
-	
+
 	public int insertReply(SqlSessionTemplate sqlSession, Freply fr) {
 
 		return sqlSession.insert("fboardMapper.insertReply", fr);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int freplyNo) {
+
+		return sqlSession.update("fboardMapper.deleteReply", freplyNo);
+	}
+
+	public int updateReply(SqlSessionTemplate sqlSession, Freply fr) {
+
+		return sqlSession.update("fboardMapper.updateReply", fr);
 	}
 	
 	public ArrayList<Fboard> selectTopBoardList(SqlSessionTemplate sqlSession) {
 
 		return (ArrayList)sqlSession.selectList("fboardMapper.selectTopBoardList");
 	}
-
 	public ArrayList<Fattachment> selectAttachmentList(SqlSessionTemplate sqlSession, int fboardNo) {
 		
 	    return (ArrayList)sqlSession.selectList("fboardMapper.selectAttachmentList", fboardNo);

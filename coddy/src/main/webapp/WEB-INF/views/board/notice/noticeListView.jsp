@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Coddy 공지사항</title>
+<title>공지</title>
 <style>
 	#nboardList {margin: 0 auto;}
 
@@ -38,10 +38,8 @@
             <br>
             <thead>
             <div class="noticeList" align="left">
-			    <a href="list.no?cpage=${requestScope.pi.currentPage}&sort=createdAtDesc">• 최신순</a>
-			    <a href="list.no?cpage=${requestScope.pi.currentPage}&sort=mostAnswers">• 답변많은순</a>
-			    <a href="list.no?cpage=${requestScope.pi.currentPage}&sort=mostLikes">• 좋아요순</a>
-			     <!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
+
+			<!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
             <c:if test="${ not empty sessionScope.loginMember }"> 
 	            <a class="btn" style="float:right; color:white; background:#5271FF; padding:6px;" 
 	            							href="enrollForm.no">
@@ -56,7 +54,7 @@
                     <tr>
                         <th></th>
                         <th>제목</th>
-                        <th>조회수</th>
+                        <th>작성자</th>
                         <th>조회수</th>
                         <th>작성일</th>
                     </tr>
@@ -64,11 +62,11 @@
                 <tbody>
                 	<c:forEach var="f" items="${ requestScope.list }">
 	                    <tr>
-	                        <td class="nno">${ n.nboardNo }</td>
-	                        <td>${ n.nboardTitle }</td>
-	                        <td>${ n.nboardWriter}</td>
-	                        <td>${ n.nboardViews }</td>
-	                        <td>${ n.nboardInsert }</td>
+	                        <td class="nno">${ f.nboardNo }</td>
+	                        <td>${ f.nboardTitle }</td>
+	                        <td> admin </td>
+	                        <td>${ f.nboardViews }</td>
+	                        <td>${ f.nboardInsert }</td>
 	                    </tr>
 	            	</c:forEach>
                 </tbody>
@@ -81,7 +79,7 @@
             		
             		$("#nboardList>tbody>tr").click(function() {
             			
-            			let fno = $(this).children(".nno").text();
+            			let nno = $(this).children(".nno").text();
             			
             			location.href = "detail.no?nno=" + nno;
             		});
@@ -130,19 +128,6 @@
 
             <br clear="both"><br>
 
-            <form id="searchForm" action="" method="get" align="center">
-                <div class="select">
-                    <select class="custom-select" name="condition">
-                        <option value="writer">작성자</option>
-                        <option value="title">제목</option>
-                        <option value="content">내용</option>
-                    </select>
-                </div>
-                <div class="text">
-                    <input type="text" class="form-control" name="keyword">
-                </div>
-                <button type="submit" class="searchBtn btn btn-secondary">검색</button>
-            </form>
             <br><br>
         </div>
         <br><br>

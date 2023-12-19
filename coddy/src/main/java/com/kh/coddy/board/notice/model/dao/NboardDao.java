@@ -29,17 +29,17 @@ public class NboardDao {
 
 		return (ArrayList)sqlSession.selectList("nboardMapper.selectList", null, rowBounds);
 	}
-
+	
 	public int insertBoard(SqlSessionTemplate sqlSession, Nboard n) {
 
 		return sqlSession.insert("nboardMapper.insertBoard", n);
 	}
 	
 	public int increaseCount(SqlSessionTemplate sqlSession, int nboardNo) {
-		
+	
 		return sqlSession.update("nboardMapper.increaseCount", nboardNo);
 	}
-
+	
 	public Nboard selectBoard(SqlSessionTemplate sqlSession, int nboardNo) {
 
 		return sqlSession.selectOne("nboardMapper.selectBoard", nboardNo);
@@ -51,16 +51,10 @@ public class NboardDao {
 	}
 	
 	public int updateBoard(SqlSessionTemplate sqlSession, Nboard n) {
-
+		
 		return sqlSession.update("nboardMapper.updateBoard", n);
 	}
-	
-	public ArrayList<Nboard> selectTopBoardList(SqlSessionTemplate sqlSession) {
 
-		return (ArrayList)sqlSession.selectList("nboardMapper.selectTopBoardList");
-	}
-
-	// 첨부파일 목록 조회
 	public ArrayList<Nattachment> selectAttachmentList(SqlSessionTemplate sqlSession, int nboardNo) {
 		
 	    return (ArrayList)sqlSession.selectList("nboardMapper.selectAttachmentList", nboardNo);
@@ -75,17 +69,4 @@ public class NboardDao {
 		
 	    return sqlSession.delete("nboardMapper.deleteAttachment", nattachmentNo);
 	}
-
-
-	// 첨부파일 추가
-	public int insertAttachment(SqlSessionTemplate sqlSession, Nattachment nattachment) {
-	    return sqlSession.insert("nboardMapper.insertAttachment", nattachment);
-	}
-	
-	// 첨부파일 수정
-	public int updateAttachment(SqlSessionTemplate sqlSession, Nattachment nattachment) {
-	    return sqlSession.update("nboardMapper.updateAttachment", nattachment);
-	}
-
-
 }
