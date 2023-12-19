@@ -247,6 +247,7 @@
 		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
 		                        </th>
 		                        <th style="vertical-align:middle"><button class="btn" style="color:white; background:#5271FF; padding:6px;" onclick="addReply();">등록하기</button></th>
+		                        
                     		</c:otherwise>
                     	</c:choose>
                     </tr>
@@ -318,9 +319,9 @@
 									+ "<span>" + result[i].memberNo + "</span>"
 									+ "</div>"
 									+ "<div class='actions'>";
-						if("${sessionScope.loginMember.memberNo}" ==  parseInt(result[i].memberNo)){
+						if("${sessionScope.loginMember.memberName}" ==  result[i].memberNo){
 						resultStr += "<a href='#' class='edit-link' onclick='openModal2()'>수정하기</a>"
-							+ "<a href='#' class='delete-link' onclick='openModal()'>삭제하기</a>"
+							+ "<a href='#' class='delete-link' onclick='openModal(" + result[i].freplyNo + ")'>삭제하기</a>"
 							+ "<input type='hidden' value='" + result[i].freplyNo + "'>"
 							
 						} 		

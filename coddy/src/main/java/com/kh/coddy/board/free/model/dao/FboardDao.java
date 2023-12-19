@@ -67,12 +67,12 @@ public class FboardDao {
 
 	public int deleteReply(SqlSessionTemplate sqlSession, int freplyNo) {
 
-		return sqlSession.update("fboardMapper.deletereply", freplyNo);
+		return sqlSession.update("fboardMapper.deleteReply", freplyNo);
 	}
 
 	public int updateReply(SqlSessionTemplate sqlSession, Freply fr) {
 
-		return sqlSession.update("fboardMapper.updatereply", fr);
+		return sqlSession.update("fboardMapper.updateReply", fr);
 	}
 	
 	public ArrayList<Fboard> selectTopBoardList(SqlSessionTemplate sqlSession) {
