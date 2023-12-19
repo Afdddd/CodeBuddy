@@ -341,28 +341,29 @@
 	
 	<select id="selectSearchCount" parameterType="rSearch" resultType="_int">
 		SELECT COUNT(DISTINCT(R.RECRUITMENT_NO)) 
-		FROM RECRUITMENT R, PRELATION PR, TAGS TG, PROJECT P
+		FROM RECRUITMENT R, PRELATION PR, TAGS TG, PROJECT P,RECRUITMENT_STATE RS
 		WHERE R.RECRUITMENT_NO = PR.RECRUITMENT_NO
 		AND PR.TAGS_NO = TG.TAGS_NO 
 		AND R.RECRUITMENT_NO = P.RECRUITMENT_NO
+		AND R.RECRUITMENT_NO = RS.RECRUITMENT_NO
+		AND RS.ROLE IN
+		    <foreach collection="careers" item="item" index="index" open="(" close=")" separator=",">
+		        #{item}
+		    </foreach>
 		AND TG.TAGS_NAME IN
-		<foreach collection="careers" item="item" index="index" open="(" close=")" separator=",">
-		#{item}
-		</foreach>
-		AND TG.TAGS_NAME IN
-		<foreach collection="techs" item="item" index="index" open="(" close=")" separator=",">
-		#{item}
-		</foreach>
+		    <foreach collection="techs" item="item" index="index" open="(" close=")" separator=",">
+		        #{item}
+		    </foreach>
 		AND RECRUITMENT_DELETE IS NULL
-		<if test=recruit>
-		AND P.PROJECT_READY == 0
+		<if test="recruit">
+		    AND P.PROJECT_READY = 0
 		</if>
 		AND (R.RECRUITMENT_TITLE LIKE '%'||#{keyword}||'%' OR R.RECRUITMENT_CONTENT LIKE '%'||#{keyword}||'%')
 	</select>
 	
 	
 	
-	<select id="selectList" resultMap="recruitmentResultSet" parameterType="rSearch">
+	<select id="selectSearchList" resultMap="recruitmentResultSet" parameterType="rSearch">
 		SELECT DISTINCT 
 			   R.RECRUITMENT_NO,
 			   R.RECRUITMENT_TITLE,
@@ -374,20 +375,21 @@
 			   R.RECRUITMENT_VIEWS,			 
 			   R.RECRUITMENT_LOCATION,
 			   R.RECRUITMENT_INTRO
-		FROM RECRUITMENT R, PRELATION PR, TAGS TG, PROJECT P, MEMBER M
+		FROM RECRUITMENT R, PRELATION PR, TAGS TG, PROJECT P, MEMBER M, RECRUITMENT_STATE RS
 		WHERE R.RECRUITMENT_NO = PR.RECRUITMENT_NO
 		AND PR.TAGS_NO = TG.TAGS_NO
 		AND R.RECRUITMENT_NO = P.RECRUITMENT_NO 
 		AND M.MEMBER_NO = R.RECRUITMENT_WRITER
-		AND TG.TAGS_NAME IN
+		AND R.RECRUITMENT_NO = RS.RECRUITMENT_NO
+		AND RS.ROLE IN
 		<foreach collection="careers" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND TG.TAGS_NAME IN
 		<foreach collection="techs" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
 		AND R.RECRUITMENT_DELETE IS NULL
 		<if test="recruit">
-		AND P.PROJECT_READY == 0
+		AND P.PROJECT_READY = 0
 		</if>
-		AND (R.RECRUITMENT_TITLE LIKE '%'||#{keyword}||'%' OR M.MEMBER_NAME LIKE '%'||#{keyword}||'%') ORDER BY R.RECRUITMENT_INSERT DESC
+		AND (R.RECRUITMENT_TITLE LIKE '%'||#{keyword}||'%' OR M.MEMBER_NAME LIKE '%'||#{keyword}||'%')
 	</select> 
 	
 	

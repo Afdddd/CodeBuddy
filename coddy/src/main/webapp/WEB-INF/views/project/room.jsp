@@ -612,7 +612,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
     function countDown(){ 
         
         var currentDate = new Date().getTime();
-        if(startTime > currentDate){
+        if(startTime >= currentDate){
           var timeDiff = (startTime - currentDate) / 1000;
           var days = Math.floor(timeDiff / (24 * 60 * 60));
           countdownEl.innerHTML = days+"일 후에 프로젝트가 시작됩니다!"
@@ -634,18 +634,24 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
      
     // 시작버튼 클릭
     $("#start_button").click(function(){
-      if(confirm("프로젝트를 시작하시겠습니까?")){
-        console.log(memberList);
-        $.ajax({
-          url:"startProject.rec",
-          type:"get",
-          data:{
-            memberList : JSON.stringify(memberList)
-          },
-          success : function(result){
-            console.log("성공");
-          }
-        })
+      if(${sessionScope.loginMember.memberNo} == ${requestScope.p.projectOwner}){
+
+      
+        if(confirm("프로젝트를 시작하시겠습니까?")){
+          console.log(memberList);
+          $.ajax({
+            url:"startProject.rec",
+            type:"get",
+            data:{
+              memberList : JSON.stringify(memberList)
+            },
+            success : function(result){
+              console.log("성공");
+            }
+          })
+        }
+      }else{
+        alert("방장만 시작할 수 있습니다.")
       }
     });
 

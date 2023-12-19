@@ -183,15 +183,34 @@
                     <h3>모집인원</h3>
                         <select id="skills" name="position">
                             <option>PM</option>                                            
-                            <option>FrontEnd</option>                             
-                            <option>BackEnd</option>                             
+                            <option>Project Planner</option>                             
+                            <option>FE</option>                             
+                            <option>BE</option>                             
+                            <option>DB Manager</option>                             
                             <option>CDN</option>                             
-                            <option>Designer</option>                             
-                            <option>Network/Server</option>                             
-                            <option>IOS</option>                             
-                            <option>AOS</option>                             
-                            <option>AI</option>                             
-                            <option>Game</option>                             
+                            <option>Design</option>                             
+                            <option>3D Model</option>                             
+                            <option>UI/UX Planner</option>                             
+                            <option>UI/UX Designer</option>  
+                            <option>Web Publisher</option>   
+                            <option>Web Server Developer</option>   
+                            <option>Network and Server</option>   
+                            <option>IOS Developer</option>   
+                            <option>AOS Developer</option>   
+                            <option>Data Scientist</option>   
+                            <option>ML/AI</option>   
+                            <option>Game Designer</option>   
+                            <option>Game Developer</option>   
+                            <option>System Manager</option>   
+                            <option>Translation</option>   
+                            <option>Embeded/IOT</option>
+                            <option>Secure Coding</option>
+                            <option>Block Chain</option>
+                            <option>QA</option>
+                            <option>R/D</option>
+                            <option>Marketing/Sale</option>
+                            <option>DX Design</option>
+                            <option>Algorithm Developer</option>
                         </select>
                     <input type='number' name="personnelMax" required>
                         <div class="member_list">
@@ -310,16 +329,35 @@ function loadImg(inputFile, num){
         $("#personnel_add").on("click",function(){
             let $list = $(  "<div class='project_member'>"+
                                 "<select id='skills' name='position'"+
-                                    "<option>PM</option>"+                                 
-                                    "<option>FrontEnd</option>"+
-                                    "<option>BackEnd</option>"+
-                                    "<option>CDN</option>"+
-                                    "<option>Designer</option>"+
-                                    "<option>Network/Server</option>"+
-                                    "<option>IOS</option>"+
-                                    "<option>AOS</option>"+
-                                    "<option>AI</option>"+
-                                    "<option>Game</option>"+
+                                "<option>PM</option>"+                                           
+                            "<option>Project Planner</option>"+                             
+                            "<option>FE</option>"+                             
+                            "<option>BE</option>"+                             
+                            "<option>DB Manager</option>"+                             
+                            "<option>CDN</option>"+                             
+                            "<option>Design</option>"+                             
+                            "<option>3D Model</option>"+                             
+                            "<option>UI/UX Planner</option>"+                             
+                            "<option>UI/UX Designer</option>"+  
+                            "<option>Web Publisher</option>"+   
+                            "<option>Web Server Developer</option>"+   
+                            "<option>Network and Server</option>"+   
+                            "<option>IOS Developer</option>"+   
+                            "<option>AOS Developer</option>"+   
+                            "<option>Data Scientist</option>"+   
+                            "<option>ML/AI</option>"+   
+                            "<option>Game Designer</option>"+   
+                            "<option>Game Developer</option>"+   
+                            "<option>System Manager</option> "+  
+                            "<option>Translation</option>"+   
+                            "<option>Embeded/IOT</option>"+
+                            "<option>Secure Coding</option>"+
+                            "<option>Block Chain</option>"+
+                            "<option>QA</option>"+
+                            "<option>R/D</option>"+
+                            "<option>Marketing/Sale</option>"+
+                            "<option>DX Design</option>"+
+                            "<option>Algorithm Developer</option>"+
                                 "</select>"+
                                 "<input type='number' name='personnelMax'>"+
                             "</div>");           

@@ -113,7 +113,7 @@
       padding: .4em;
       border-radius: 6px;
       margin: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 20px;     
     }
 
     .card-image {
@@ -409,8 +409,7 @@
         </div>
         <div class="content_1">
             <div class="new-project">
-                <h1>신규 프로젝트</h1>
-
+              <h1>신규 프로젝트</h1>
                 <div class="new-project-list">
                     <div class="swiper">
                         <!-- Additional required wrapper -->
@@ -419,7 +418,6 @@
                           <div class='swiper-slide' id="slide1"></div>                 
                           <div class='swiper-slide' id="slide2"></div>                 
                         </div>
-                    
                         <!-- If we need pagination -->
                         <div class="swiper-pagination"></div>
                         <!-- If we need navigation buttons -->
@@ -428,21 +426,15 @@
                     </div>
                 </div>             
             </div>
-            
-            
-
             <div class="popular-project">
                 <h1>인기 프로젝트</h1>
-                
                 <div class="popular-project-list">
                     <ul>
                       <!--ajax 실시간 조회-->  
                     </ul>
                 </div>
             </div>
-
         </div>
-
         <div class="search-bar">
             <jsp:include page="../../common/tagCareer.jsp" />
             <jsp:include page="../../common/tagTech.jsp" />
@@ -458,9 +450,9 @@
          <button class="write_button" onclick="location.href='enrollForm.rec'">작성하기</button>
         </c:if>
         <div class="content_2">
-          <div class="card-list">
+          <div class="card-list" id="card-list">
             <c:forEach var="rl" items="${requestScope.list}" varStatus="status">
-              <div class="card" >
+              <div class="card" style='display:inline-block;' >
                 <div class="card-image" onclick="location.href='detail.rec?rno=${rl.recruitmentNo}'">
                   <img src="${requestScope.at_list[status.index].getRAttachmentPath()}/${requestScope.at_list[status.index].getRAttachmentChange()}" width="100%" height="100%" style="vertical-align:middle;" onerror="this.src='resources/image/003.png'">
                 </div>
@@ -496,12 +488,11 @@
                         </c:otherwise>
                     </c:choose> 
                   </c:if>
-
                   <div class="tooltip-container ">
                     <span class="text">#기술</span>
                     <span class="tooltip">
                       <c:forEach var="t" items="${requestScope.tg_list[status.index]}" varStatus="tagStatus">                    
-                          ${t.getTagsNo()}                     
+                        ${t.getTagsNo()}                     
                       </c:forEach> 
                     </span>
                   </div>
@@ -509,9 +500,9 @@
                     <span class="text">#포지션</span>                 
                     <span class="tooltip">              
                       <c:forEach var="p" items="${requestScope.pos_list[status.index]}" varStatus="poStatus">
-                          ${p.getPosition()}
+                        ${p.getPosition()}
                       </c:forEach> 
-                  </span>
+                    </span>
                   </div>
                   <div style="float: right;">
                     <i class="fas fa-eye" style="line-height: 18px; margin-left: 3px;"></i>
@@ -525,20 +516,18 @@
         <br><br>
           <div id="pagingArea">
             <ul class="pagination" style="margin: auto;">
-            
               <c:choose>
                 <c:when test="${ requestScope.pi.currentPage eq 1 }">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#">Previous</a>
-                    </li>
-                  </c:when>
-                  <c:otherwise>
-                    <li class="page-item">
-                      <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
-                    </li>
-                  </c:otherwise>
-                </c:choose>
-                
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#">Previous</a>
+                  </li>
+                </c:when>
+                <c:otherwise>
+                  <li class="page-item">
+                    <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                  </li>
+                </c:otherwise>
+              </c:choose>
                 <c:forEach var="p" begin="${ requestScope.pi.startPage }" 
                           end="${ requestScope.pi.endPage }"
                           step="1">
@@ -546,7 +535,6 @@
                     <a class="page-link" href="list.rec?rpage=${ p }">${ p }</a>
                   </li>
                 </c:forEach>
-                
                 <c:choose>
                   <c:when test="${ requestScope.pi.currentPage eq requestScope.pi.maxPage }">
                     <li class="page-item disabled">
@@ -554,15 +542,13 @@
                     </li>
                 </c:when>
                 <c:otherwise>
-                    <li class="page-item">
-                      <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage + 1 }">Next</a>
-                    </li>
+                  <li class="page-item">
+                    <a class="page-link" href="list.rec?rpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                  </li>
                 </c:otherwise>
               </c:choose>
-            
             </ul>
           </div>
-      
     </div>
     <jsp:include page="../../common/footer.jsp" />	
 </body>
@@ -570,22 +556,10 @@
 
  
 
-  function onSearch() {
-    let rpage = 1;
-    let search = $("#projectSearch").val();
-    let tagCareer = $("#tagCareerName").val();
-    let tagTech = $("#tagTechName").val();
-    let recruiting = 'f';
-    if($("#recruiting").is(":checked") == true) { recruiting = 't'; }
-    tagCareer = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tagCareer, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
-    tagTech = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tagTech, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
-    location.href='list.rec?rpage='+rpage+'&search='+search+'&tagCareer='+tagCareer+'&tagTech='+tagTech+'&recruiting='+recruiting;
-    }
-    function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
+  function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
 
   $(document).ready(function(){
-
-    $(".card").css("display", "inline-block");
+    
     $(".container").css("width","0%");  
 
     // 인기
@@ -630,23 +604,22 @@
     });
     // 슬라이더 동작 정의
     const swiper = new Swiper('.swiper', {
-                  autoplay : {
-                      delay : 3000 // 3초마다 이미지 변경
-                  },
-                  loop : true, //반복 재생 여부
-                  slidesPerView : 1, // 이전, 이후 사진 미리보기 갯수
-                  pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
-                      el: '.swiper-pagination',
-                      clickable: true
-                  },
-                  navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
-                      prevEl: '.swiper-button-prev',
-                      nextEl: '.swiper-button-next'
-                  }
-              });
-              
-      
+        autoplay : {
+            delay : 3000 // 3초마다 이미지 변경
+        },
+        loop : true, //반복 재생 여부
+        slidesPerView : 1, // 이전, 이후 사진 미리보기 갯수
+        pagination: { // 페이징 버튼 클릭 시 이미지 이동 가능
+            el: '.swiper-pagination',
+            clickable: true
+        },
+        navigation: { // 화살표 버튼 클릭 시 이미지 이동 가능
+            prevEl: '.swiper-button-prev',
+            nextEl: '.swiper-button-next'
+        }
     });
+      
+  });
  
   // 찜하기
   function onWish(e) {
@@ -659,54 +632,168 @@
     });
   }
 
-
-   
-
-  // 검색
-  $("#tagCareerName").change(function(){
   
+
+
+
+  function search(career, tech, keyword, recruit){
+
+    $.ajax({
+      url: "search.rec",
+      type: "get",
+      data: {
+        career: career,
+        tech: tech,
+        keyword: keyword,
+        recruit: recruit
+      },
+      success: function (result) {
+        console.log(result);
+        let div = "";
+        $(".card-list").html("");
+        for (let i = 0; i < result.list.length; i++) {
+          div = "<div class='card' style='display:inline-block;'>" +
+            "<div class='card-image' onclick=\"location.href='detail.rec?rno=" + result.list[i].recruitmentNo + "'\">" +
+            "<img src='" + result.at_list[i].rattachmentPath + "/" + result.at_list[i].rattachmentChange + "' width='100%' height='100%' style='vertical-align:middle;' onerror=\"this.src='resources/image/003.png'\">" +
+            "</div>" +
+            "<div class='category'></div>" +
+            "<div class='heading'>" +
+              "<h5 onclick=\"location.href='detail.rec?rno=" + result.list[i].recruitmentNo + "'\">" + result.list[i].recruitmentTitle + "</h5>"+
+            "<div class='explain'>" + truncateText(result.list[i].recruitmentIntro,18) + "</div>" +
+            "<div class='author'> By <span class='name'>" + result.list[i].recruitmentWriter + " </span> " + result.list[i].recruitmentInsert + "</div>";
+
+          if (loginMemberNo != null) {
+            if (result.ws_list[i]) {
+              div += "<label class='container'>" +
+                "<input checked='checked' type='checkbox' name='like' onclick='onWish(\"" + result.list[i].recruitmentNo + "\");'>" +
+                "<div class='checkmark'>" +
+                "<svg viewBox='0 0 256 256'>" +
+                "<rect fill='none' height='512' width='512'></rect>" +
+                "<path d='M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z' stroke-width='20px' stroke='#d0d0d0' fill='none'></path></svg>" +
+                "</div>" +
+                "</label>";
+            } else {
+              div += "<label class='container'>" +
+                "<input type='checkbox' name='like' onclick='onWish(\"" + result.list[i].recruitmentNo + "\");'>" +
+                "<div class='checkmark'>" +
+                "<svg viewBox='0 0 256 256'>" +
+                "<rect fill='none' height='512' width='512'></rect>" +
+                "<path d='M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z' stroke-width='20px' stroke='#d0d0d0' fill='none'></path></svg>" +
+                "</div>" +
+                "</label>";
+            }
+          }
+
+          div += "<div class='tooltip-container'>" +
+            "<span class='text'>#기술</span>" +
+            "<span class='tooltip'>";
+          for (let j = 0; j < result.tg_list[i].length; j++) {
+            div += "<div>" + result.tg_list[i][j].tagsNo + "</div>";
+          }
+          div += "</span>" +
+            "</div>";
+
+          div += "<div class='tooltip-container'>" +
+            "<span class='text'>#포지션</span>" +
+            "<span class='tooltip'>";
+          for (let j = 0; j < result.pos_list[i].length; j++) {
+            div += "<div>" + result.pos_list[i][j].position + "</div>";
+          }
+          div += "</span>" +
+            "</div>";
+
+          div += "<div style='float: right;'>" +
+            "<i class='fas fa-eye' style='line-height: 18px; margin-left: 3px;'></i>" +
+            "<p style='color: lightgray; font-weight: bold; font-size: 12px; display: inline-block;'>" + result.list[i].recruitmentView + "</p>" +
+            "</div>" +
+            "</div>" +
+            "</div>";
+
+          $(".card-list").append(div);
+        }
+      }
+    });
+  }
+
+
+  let loginMemberNo = '${sessionScope.loginMember.memberNo}';
+   // career검색
+   $(function() {
+    $("#tagCareerName").change(function(){
+
+      let career = $("#tagCareerName").val();
+      career = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(career, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+
+      let tech = $("#tagTechName").val();
+      tech = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tech, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+      
+      let keyword = $("#keywordSearch").val();
+
+      let recruit = $('#recruitCheck').is(':checked');
+
+      search(career, tech, keyword, recruit);
+
+    });
+
+
+   // tech 검색
+    $("#tagTechName").change(function(){
+      let career = $("#tagCareerName").val();
+      career = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(career, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+
+      let tech = $("#tagTechName").val();
+      tech = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tech, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+      
+      let keyword = $("#keywordSearch").val();
+
+      let recruit = $('#recruitCheck').is(':checked');
+
+      search(career, tech, keyword, recruit);
+
+    });
+ 
+
+   // 키워드 검색
+    $(".search-input").change(function(){
+      let career = $("#tagCareerName").val();
+      career = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(career, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+
+      let tech = $("#tagTechName").val();
+      tech = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tech, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+      
+      let keyword = $("#keywordSearch").val();
+
+      let recruit = $('#recruitCheck').is(':checked');
+
+      search(career, tech, keyword, recruit);
+  })
+
+  // 모집중
+  $("#recruitCheck").change(function(){
     let career = $("#tagCareerName").val();
     career = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(career, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
-    console.log(career);
+
     let tech = $("#tagTechName").val();
     tech = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tech, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
-
+    
     let keyword = $("#keywordSearch").val();
 
     let recruit = $('#recruitCheck').is(':checked');
 
-    $.ajax({
-      url:"search.rec",
-      type : "get",
-      data : {
-        career : career,
-        tech : tech,
-        keyword : keyword,
-        recruit : recruit
-      },
-      success :function(result){
-
-      }
-
-    })
-
-  });
-
-  $("#tagTechName").change(function(){
-   
-    console.log(tech);
-  });
-
-  $(".search-input").change(function(){
-    console.log($("#keywordSearch").val());
+    search(career, tech, keyword, recruit);
   })
+ 
 
-  $("#recruitCheck").change(function(){
-    console.log($('#recruitCheck').is(':checked'));
+});
+function truncateText(text, maxLength) {
+  if (text.length > maxLength) {
+    return text.substring(0, maxLength) + "...";
+  }
+  return text;
+}
 
-  })
 
-  
+
 
   
 </script>

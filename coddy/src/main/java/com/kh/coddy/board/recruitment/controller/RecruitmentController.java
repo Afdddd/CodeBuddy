@@ -73,11 +73,16 @@ public class RecruitmentController {
 		ArrayList<Rattachment> thumList = rService.getAttachmentList(r); // 이미지 목록
 		int wish = rService.getWish(new RecruitmentWishList(memberNo,rno)); // 좋아요 여부
 		Project p = rService.getProject(r); // 프로젝트 정보
-		ArrayList<Profile> fList = rService.getJoinMember(p.getProjectNo()); // 참여한 프로필
+		
 		int likeCount = rService.getLikeCount(rno); // 좋아요 조회
 		int viewCount = rService.getViewCount(rno); // 조회수 조회
 		log.info("viewCount={}",viewCount);
 		
+		
+		if(p.getProjectReady() > 0) {
+			ArrayList<Profile> fList = rService.getJoinMember(p.getProjectNo()); // 참여한 프로필
+			model.addAttribute("fList",fList);
+		}
 		
 		model.addAttribute("r",r);
 		model.addAttribute("tags",tags);
@@ -87,7 +92,7 @@ public class RecruitmentController {
 		model.addAttribute("wish",wish);
 		model.addAttribute("p",p);
 		log.info("p={}",p);
-		model.addAttribute("fList",fList);
+		
 		model.addAttribute("likeCount",likeCount);
 		model.addAttribute("viewCount",viewCount);
 		}else {
@@ -170,6 +175,7 @@ public class RecruitmentController {
 			}
 			// 모집인원 insert
 			if(position != null && personnelMax !=null && position.length == personnelMax.length) {		
+				
 				for(int i=0; i<position.length; i++) {
 					RecruitmentState state = new RecruitmentState(r.getRecruitmentNo(),position[i],personnelMax[i]);
 					rService.insertState(state);
@@ -302,54 +308,59 @@ public class RecruitmentController {
 	
 	
 	@GetMapping(value="search.rec")
-	
+	@ResponseBody
 	public RecruitmentSearchDto searchList(@RequestParam(value="rpage", defaultValue="1") int currentPage, String keyword, String career, String tech, boolean recruit, HttpSession session) {
+		
+		System.out.println("호출되나?");
 		
 		String careers = "";
 		if(career.equals("")) {
-			careers = tagsController.getTagsNameString(0); 
+			careers = tagsController.getTagsNameString(1); 
 		}else {
 			careers = career;
 		}
 	
 		String techs = "";
 		if(tech.equals("")) { 
-			techs = tagsController.getTagsNameString(1); 
+			techs = tagsController.getTagsNameString(0); 
 		}else {
 			techs = tech;
 		}
+		log.info("techs={}",techs);
+		log.info("careers={}",careers);
+		RecruitSearch rSearch = new RecruitSearch(keyword, Arrays.stream(techs.split(",")).distinct().toArray(String[]::new),Arrays.stream(careers.split(",")).distinct().toArray(String[]::new), recruit);
 		
-		RecruitSearch rSearch = new RecruitSearch(keyword, Arrays.stream(careers.split(",")).distinct().toArray(String[]::new),Arrays.stream(techs.split(",")).distinct().toArray(String[]::new), recruit);
-		
+		log.info("rSearch = {}",rSearch);
 		int listCount = rService.selectSearchCount(rSearch);
+		log.info("listCount={}",listCount);
 		int pageLimit = 5;
 		int boardLimit = 20;
 		Map<String,Integer> wishMap = new HashMap<>(); 	
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
-		if(pi.getMaxPage() == 0) { 
-			ArrayList<Recruitment>list = rService.selectSearchList(pi, rSearch);
-			ArrayList<Rattachment>at_list = new ArrayList<Rattachment>();	
-			ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
-			ArrayList<ArrayList<RecruitmentState>>pos_list = new ArrayList<>();
-			ArrayList<Boolean>ws_list = new ArrayList<Boolean>();			
+		
+		ArrayList<Recruitment>list = rService.selectSearchList(pi, rSearch);
+		ArrayList<Rattachment>at_list = new ArrayList<Rattachment>();	
+		ArrayList<ArrayList<Prelation>>tg_list = new ArrayList<ArrayList<Prelation>>();
+		ArrayList<ArrayList<RecruitmentState>>pos_list = new ArrayList<>();
+		ArrayList<Boolean>ws_list = new ArrayList<Boolean>();			
+		
+		for(Recruitment r:list) {
 			
-			for(Recruitment r:list) {
-				
-				Rattachment ra = rService.getThumbOne(r);
-				at_list.add(ra);				
-				ArrayList<Prelation> pr = rService.getTagInfo(r);
-				tg_list.add(pr);
-				ArrayList<RecruitmentState> rs = rService.getState(r);
-				pos_list.add(rs);
-				
-				if(session.getAttribute("loginMember")!=null) {					
-					wishMap.put("mno",((Member)session.getAttribute("loginMember")).getMemberNo());
-					wishMap.put("rno",r.getRecruitmentNo());
-					ws_list.add(rService.getWishList(wishMap));
-					wishMap.clear();					
-				}				
-			}	
-			return  new RecruitmentSearchDto(pi,list,at_list,tg_list,pos_list,ws_list);
-		}
+			Rattachment ra = rService.getThumbOne(r);
+			at_list.add(ra);				
+			ArrayList<Prelation> pr = rService.getTagInfo(r);
+			tg_list.add(pr);
+			ArrayList<RecruitmentState> rs = rService.getState(r);
+			pos_list.add(rs);
+			
+			if(session.getAttribute("loginMember")!=null) {					
+				wishMap.put("mno",((Member)session.getAttribute("loginMember")).getMemberNo());
+				wishMap.put("rno",r.getRecruitmentNo());
+				ws_list.add(rService.getWishList(wishMap));
+				wishMap.clear();					
+			}				
+		}	
+		return new RecruitmentSearchDto(pi,list,at_list,tg_list,pos_list,ws_list);
+		
 	}
 }
