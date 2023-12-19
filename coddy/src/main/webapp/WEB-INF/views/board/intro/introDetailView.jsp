@@ -412,7 +412,7 @@
 					url : "iinsert.bo",
 					type : "get",
 					data : {
-						iboardNo : "${sessionScope.ib.iboardNo}",
+						iboardNo : "${ib.iboardNo}",
 						memberNo : "${sessionScope.loginMember.memberNo}",
 						ireplyContent : $("#content").val()
 					},
@@ -439,7 +439,7 @@
 		$.ajax({
 			url : "ilist.bo",
 			type : "get",
-			data : { ino : "${ sessionScope.ib.iboardNo}"},
+			data : { ino : "${ib.iboardNo}"},
 			success : function(result){
 				
 				let resultStr = "";

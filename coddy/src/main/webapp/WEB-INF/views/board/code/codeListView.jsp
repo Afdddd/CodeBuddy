@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>코드리뷰</title>
 <style>
 	#cboardList {margin: 0 auto;}
 
@@ -149,7 +149,7 @@
                     </select>
                 </div>
                 <div class="text">
-                    <input type="text" class="form-control" name="keyword">
+                    <input type="search" class="form-control" name="keyword">
                 </div>
                 <button type="submit" class style="color:white; background:#5271FF; padding:6px; width:100px; border-radius:5px; border:none;">검색</button>
             </form>
@@ -171,7 +171,14 @@
 	        tagifyAll.addTags(getParameter("tag"));
 	    })
 	   
+	    function onSearch(cp) {
+                let cpage = cp;
+                let search = $("#cboardSearch").val();
+                let sort = $("#cboardSort").val();
+                location.href='listView.cb?cpage='+cpage+'&search='+search+'&sort='+sort;
+            }
 	    
+	   /* 
 	   function onSearch() {
 	        let cpage = 1;
 	        let search = $("#cboardSearch").val();
@@ -180,11 +187,12 @@
 	        tag = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tag, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
 	        location.href='list.co?cpage='+cpage+'&search='+search+'&sort='+sort+'&tag='+tag;
 	   }
-	   function getParameter(name) {
-	       name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-	       var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
-	       return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-	   }
+	    */
+	    function getParameter(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"), results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
 	   
 	   function replaceAll(str, searchStr, replaceStr) { return str.split(searchStr).join(replaceStr); }
 	   

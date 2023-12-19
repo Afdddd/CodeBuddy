@@ -11,6 +11,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -22,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,6 +44,7 @@ import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.free.model.vo.Fboard;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.job.model.vo.Hboard;
+import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
@@ -406,6 +410,26 @@ public class MemberController {
 	}
 	
 	
+	@GetMapping(value="likedJob.me")
+	public ModelAndView getLikedJobs(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+	        ModelAndView mv) {
+	    Member m = (Member) session.getAttribute("loginMember");
+
+	    int likedJobCount = memberService.selectListCounth(m.getMemberNo());
+
+	    int pageLimit = 5;
+	    int boardLimit = 15;
+
+	    PageInfo pi = Pagination.getPageInfo(likedJobCount, currentPage, pageLimit, boardLimit);
+
+	    ArrayList<Hboard> likedJobs = memberService.selectListh(pi, m.getMemberNo());
+	    System.out.println("ㅇㅅㅇ : " + likedJobs);
+	    mv.addObject("list", likedJobs).addObject("pi", pi).addObject("likedJobCount", likedJobCount)
+	            .setViewName("member/likedJob");
+
+	    return mv;
+	}
+	
 	
 	@GetMapping(value="signup.me") public String signup(HttpSession session) {
 		if((session.getAttribute("loginMember") != null) || (session.getAttribute("loginCompany") != null)) { session.setAttribute("alertMsg", "로그아웃후 이용해주세요."); return "redirect:/"; }
@@ -575,20 +599,7 @@ public class MemberController {
 		return "member/myRank";
 	}
 	
-	@RequestMapping("likedRecruit.me")
-	public String likedRecruit(HttpSession session) {
-		if(session.getAttribute("loginMember") == null) {
-			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
-			return "redirect:/";
-		}
-		if(session.getAttribute("loginCompany") != null) {
-			session.setAttribute("alertMsg", "기업회원은 이용이 불가능합니다.");
-			return "redirect:/";
-		}
-		
-		return "member/likedRecruit";
-		
-	}
+	
 	
 	@RequestMapping("wroteReply.me")
 	public String wroteReply(HttpSession session) {

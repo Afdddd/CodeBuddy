@@ -13,6 +13,11 @@ import com.kh.coddy.board.code.model.dao.CboardDao;
 import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Crelation;
 import com.kh.coddy.board.code.model.vo.Creply;
+import com.kh.coddy.board.code.model.vo.CreplyImage;
+import com.kh.coddy.board.code.model.vo.Csearch;
+import com.kh.coddy.board.intro.model.vo.Ireply;
+import com.kh.coddy.board.intro.model.vo.IreplyImage;
+import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.common.vo.PageInfo;
 @Service
 public class CboardServiceImpl implements CboardService {
@@ -63,13 +68,27 @@ public class CboardServiceImpl implements CboardService {
 	}
 
 	@Override
-	public ArrayList<Creply> selectReplyList(int cboardNo) {
+	public ArrayList<CreplyImage> selectReplyList(int cboardNo) {
+		
 		return boardDao.selectReplyList(sqlSession, cboardNo);
+	}
+	
+	@Override
+	public int insertReply(Creply cr) {
+
+		return boardDao.insertReply(sqlSession, cr);
 	}
 
 	@Override
-	public int insertReply(Creply r) {
-		return boardDao.insertReply(sqlSession, r);
+	public int deletereply(int creplyNo) {
+		
+		return boardDao.deletereply(sqlSession, creplyNo);
+	}
+
+	@Override
+	public int updatereply(Creply cr) {
+		
+		return boardDao.updatereply(sqlSession, cr);
 	}
 
 	@Override

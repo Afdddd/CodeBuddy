@@ -1,6 +1,7 @@
 package com.kh.coddy.member.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.coddy.board.free.model.vo.Fboard;
 import com.kh.coddy.board.intro.model.vo.IBoard;
+import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
@@ -74,6 +76,7 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectListr", memberNo, rowBounds);
 	}
 	
+	
 	public int selectListCountc(SqlSessionTemplate sqlSession, int memberNo) {
 		
 		return sqlSession.selectOne("memberMapper.selectListCountc" ,memberNo);
@@ -104,8 +107,18 @@ public class MemberDao {
 		
 	}
 
+	 public int selectListCounth(SqlSessionTemplate sqlSession, int memberNo) {
+	        return sqlSession.selectOne("memberMapper.selectListCounth", memberNo);
+	    }
 	
-	
+	 public ArrayList<Hboard> selectListh(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+	        int limit = pi.getBoardLimit();
+	        int offset = (pi.getCurrentPage() - 1) * limit;
+
+	        RowBounds rowBounds = new RowBounds(offset, limit);
+
+	        return (ArrayList) sqlSession.selectList("memberMapper.selectListh", memberNo, rowBounds);
+	    }
 	
 
 	

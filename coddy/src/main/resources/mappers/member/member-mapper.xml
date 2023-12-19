@@ -66,6 +66,23 @@
 	    <result column="CHANGE_NAME" property="changeName"/>
 	</resultMap>
 	
+	<resultMap id="hboardResultSet" type="hboard">
+		<result column="HBOARD_NO" property="hboardNo"/>
+		<result column="HBOARD_TITLE" property="hboardTitle"/>
+		<result column="HBOARD_CONTENT" property="hboardContent"/>
+		<result column="HBOARD_INSERT" property="hboardInsert"/>
+		<result column="HBOARD_UPDATE" property="hboardUpdate"/>
+		<result column="HBOARD_DELETE" property="hboardDelete"/>
+		<result column="HBOARD_VIEWS" property="hboardViews"/>
+		<result column="COMPANY_NO" property="companyNo"/>
+		<result column="HBOARD_START" property="hboardStart"/>
+		<result column="HBOARD_END" property="hboardEnd"/>
+		<result column="HBOARD_SALARY" property="hboardSalary"/>
+		<result column="HBOARD_EDUCATION" property="hboardEducation"/>
+		<result column="HBOARD_CAREER" property="hboardCareer"/>
+		<result column="HBOARD_LOCATION" property="hboardLocation"/>
+	</resultMap>
+	
 	<select id="loginMember" parameterType="member" resultMap="memberResultSet"> SELECT * FROM MEMBER WHERE MEMBER_ID = #{memberId} AND MEMBER_DELETE IS NULL </select>
 	<select id="memberCheck" parameterType="string" resultType="_int">SELECT COUNT(*) FROM MEMBER WHERE MEMBER_ID=#{checkId}</select>
 
@@ -116,6 +133,35 @@
 		    AND IBOARD_DELETE IS NULL
 		    AND IBOARD_WRITER = #{memberNo}
 	</select>
+	
+	<select id="selectListCounth" resultType="int">
+        SELECT COUNT(*) 
+          FROM HWISHLIST HW, HBOARD H
+         WHERE H.HBOARD_DELETE IS NULL
+         	AND HW.HBOARD_NO = H.HBOARD_NO
+		   AND HW.HWISHLIST_MEMBER = #{memberNo}
+    </select>
+
+    <select id="selectListh" parameterType="map" resultType="com.kh.coddy.board.job.model.vo.Hboard">
+	        SELECT 
+	        H.HBOARD_NO as hboardNo, 
+	        H.HBOARD_TITLE as hboardTitle, 
+	        H.HBOARD_CONTENT as hboardContent, 
+	        H.HBOARD_INSERT as hboardInsert,
+                H.HBOARD_DELETE as hboardDelete, 
+                H.HBOARD_VIEWS as hboardViews, 
+                H.HBOARD_START as hboardStart, 
+                H.HBOARD_END AS hboardEnd,
+                CO.COMPANY_NAME AS companyNo
+	        FROM HBOARD H
+	        JOIN COMPANY CO ON CO.COMPANY_NO = H.COMPANY_NO
+            JOIN HWISHLIST HW ON HW.HBOARD_NO = H.HBOARD_NO
+	        WHERE H.HBOARD_DELETE IS NULL
+	        	AND HW.HWISHLIST_MEMBER = #{memberNo}
+	        ORDER BY H.HBOARD_NO DESC
+	</select>
+	
+	
 	
 	<select id="selectListCountr" resultType="_int">
 		  SELECT COUNT(*)

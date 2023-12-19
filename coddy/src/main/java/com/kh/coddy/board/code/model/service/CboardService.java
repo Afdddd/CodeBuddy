@@ -7,6 +7,11 @@ import java.util.List;
 import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Crelation;
 import com.kh.coddy.board.code.model.vo.Creply;
+import com.kh.coddy.board.code.model.vo.CreplyImage;
+import com.kh.coddy.board.code.model.vo.Csearch;
+import com.kh.coddy.board.intro.model.vo.Ireply;
+import com.kh.coddy.board.intro.model.vo.IreplyImage;
+import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.common.vo.PageInfo;
 
 
@@ -34,11 +39,19 @@ public interface CboardService {
 	// 게시글 수정 서비스
 	int updateBoard(Cboard c);
 	
-	// 댓글 리스트 조회 서비스 (ajax)
-	ArrayList<Creply> selectReplyList(int cboardNo);
 	
-	// 댓글 작성 서비스 (ajax)
-	int insertReply(Creply r);
+	// 댓글 조회용
+	ArrayList<CreplyImage> selectReplyList(int cboardNo);
+
+	// 댓글 작성용
+	int insertReply(Creply cr);
+
+	// 댓글 삭제용
+	int deletereply(int creplyNo);
+		
+	// 댓글 수정용
+	int updatereply(Creply cr);
+	
 	
 	// 조회수 top5 리스트 조회용 서비스 (ajax)
 	ArrayList<Cboard> selectTopBoardList();

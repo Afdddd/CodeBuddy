@@ -10,6 +10,6 @@ import lombok.ToString;
 public class Likes {
 
 	
-	private int likesMember;			//	LIKES_MEMBER	NUMBER
-	private int iboardNo;			//	IBOARD_NO	NUMBER
+	private int likesMember;	//	LIKES_MEMBER	NUMBER
+	private int iboardNo;		//	IBOARD_NO	NUMBER
 }
