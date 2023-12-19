@@ -25,7 +25,7 @@
 		/* 태그 스타일 */
 		.tagList { border: 1px solid grey; border-radius: 8px; margin: 3px; padding: 3px; display: inline-flex; }
         .tagList:before { content: '#'; }
-        .tagList:hover { cursor: pointer; transform: scale(1.24); background-color: black; color: white; }
+        .tagList:hover { transform: scale(1.24); background-color: black; color: white; }
 
 		/* 인엽이 페이지 네이션 맞추기 */
 		.pageForm { width: fit-content; margin: auto; padding-top: 40px; }
