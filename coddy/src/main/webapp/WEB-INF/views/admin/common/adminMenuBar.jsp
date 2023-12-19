@@ -109,7 +109,7 @@
                                     <div class="collapse" id="pagesCollapseMember" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="adminRegistForm.me">Create(임시)</a>
-                                            <a class="nav-link" href="">Read</a>
+                                            <a class="nav-link" href="adminList.me">Read</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseCompany" aria-expanded="false" aria-controls="pagesCollapseCompany">

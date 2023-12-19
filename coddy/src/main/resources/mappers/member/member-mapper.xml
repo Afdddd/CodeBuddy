@@ -179,5 +179,8 @@
 	<select id="findPwd" parameterType="member" resultType="_int">SELECT COUNT(*) FROM MEMBER WHERE MEMBER_EMAIL=#{memberEmail} AND MEMBER_NAME=#{memberName} AND MEMBER_DELETE IS NULL</select>
 	<update id="setNewPassword" parameterType="member">UPDATE MEMBER SET MEMBER_PWD=#{memberPwd} WHERE MEMBER_EMAIL=#{memberEmail} AND MEMBER_DELETE IS NULL</update>
 	<select id="findEmail" parameterType="member" resultType="string">SELECT MEMBER_EMAIL FROM MEMBER WHERE MEMBER_NAME=#{memberName} AND MEMBER_DELETE IS NULL</select>
+	<select id="selectListCountAdmin" resultType="_int">SELECT COUNT(*) FROM MEMBER</select>
+	<select id="selectListAdmin" resultMap="memberResultSet">SELECT * FROM MEMBER</select>
+	<update id="deleteMemberAdmin" parameterType="_int">UPDATE MEMBER SET MEMBER_DELETE=SYSDATE WHERE MEMBER_DELETE IS NULL AND MEMBER_NO=#{memberNo}</update>
+	<update id="restoreMemberAdmin" parameterType="_int">UPDATE MEMBER SET MEMBER_DELETE=NULL WHERE MEMBER_DELETE IS NOT NULL AND MEMBER_NO=#{memberNo}</update>
 </mapper>
-

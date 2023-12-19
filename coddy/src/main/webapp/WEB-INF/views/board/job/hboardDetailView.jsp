@@ -21,8 +21,8 @@
 		.boardContentBar { width: 100%; height: 95%; display: flex; }
 		.boardContentArea { width: 75%; height: 100%; }
 		.boardMiniArea { width: 25%; height: 600px; top: 20%; position: sticky; overflow: auto; }
-		.boardMiniCard { width: 100%; height: 550px; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #92d7f1; margin:0 auto; overflow: auto; }
-		.boardMiniAttach { width: 100%; border: 2px solid rgb(138, 125, 114); border-radius: 20px; padding: 10px; background-color: #92d7f1; }
+		.boardMiniCard { width: 100%; height: 550px; border: 2px solid #5271FF; border-radius: 20px; padding: 10px; background-color: whitesmoke; margin:0 auto; overflow: auto; }
+		.boardMiniAttach { width: 100%; border: 2px solid #5271FF; border-radius: 20px; padding: 10px; background-color: whitesmoke; }
 		.boardContentThumb { width: 100%; height: 420px; padding: 4%; }
 		.boardContentTag { width: 100%; height: 120px; }
 		.boardContentContent { width: 100%; height: 630px; padding: 10px; }
@@ -34,7 +34,10 @@
         .tagListNo { border: 1px solid grey; border-radius: 8px; margin: 3px; padding: 3px; display: inline-flex; }
         .tagListNo:before { content: '#'; }
 
-		.boardMiniCardTable { width: 100%; text-align: center; }
+		.boardMiniCardTable { width: 100%; text-align: center; margin: 0px; padding: 0px; }
+		.boardMiniCardTable th, .boardMiniCardTable td { border: 1px solid salmon; }
+		.boardMiniCardTable th { border-left: 0px; }
+		.boardMiniCardTable td { border-right: 0px; }
 
 		.hattachmentList { text-decoration: none; color: olive; }
 		.hattachmentList:hover { cursor: default; color: olive; text-decoration: none; }
@@ -80,69 +83,71 @@
 						<div class="boardMiniCard">
 							<h6>${sessionScope.hb.hboardTitle}</h6>
 							<p style="float: right;">${sessionScope.co.companyName}</p><br>
-							<table class="boardMiniCardTable" border="1">
-								<thead></thead>
-								<tbody>
-									<tr>
-										<th width="20">기간</th>
-										<td width="80">${sessionScope.hb.hboardStart}<br>${sessionScope.hb.hboardEnd}</td>
-									</tr>
-									<tr>
-										<th>경력</th>
-										<td>
-											<c:if test="${sessionScope.hb.hboardCareer eq 'none'}">경력무관</c:if>
-											<c:if test="${sessionScope.hb.hboardCareer eq 'intern'}">인턴</c:if>
-											<c:if test="${sessionScope.hb.hboardCareer eq 'newcomer'}">신입</c:if>
-											<c:if test="${sessionScope.hb.hboardCareer eq 'junior'}">주니어</c:if>
-											<c:if test="${sessionScope.hb.hboardCareer eq 'middle'}">미들</c:if>
-											<c:if test="${sessionScope.hb.hboardCareer eq 'senior'}">시니어</c:if>
-										</td>
-									</tr>
-									<tr>
-										<th>학력</th>
-										<td>
-											<c:if test="${sessionScope.hb.hboardEducation eq 'none'}">학력무관</c:if>
-											<c:if test="${sessionScope.hb.hboardEducation eq 'highSchool'}">고등학교 졸업</c:if>
-											<c:if test="${sessionScope.hb.hboardEducation eq 'juniorCollege'}">전문대학 졸업</c:if>
-											<c:if test="${sessionScope.hb.hboardEducation eq 'university'}">대학 졸업</c:if>
-											<c:if test="${sessionScope.hb.hboardEducation eq 'master'}">석사 이상</c:if>
-											<c:if test="${sessionScope.hb.hboardEducation eq 'doctor'}">박사 이상</c:if>
-											<c:if test="${sessionScope.hb.hboardEducation eq 'professor'}">교수 및 연구원</c:if>
-										</td>
-									</tr>
-									<tr>
-										<th>연봉</th>
-										<td>${sessionScope.hb.hboardSalary}</td>
-									</tr>
-									<tr>
-										<th>대표</th>
-										<td>${sessionScope.co.companyOwner}</td>
-									</tr>
-									<tr>
-										<th>EMAIL</th>
-										<td>${sessionScope.co.companyEmail}</td>
-									</tr>
-									<tr>
-										<th>직원수</th>
-										<td>${sessionScope.co.companyWorker}</td>
-									</tr>
-									<tr>
-										<th>조회수</th>
-										<td>${sessionScope.hb.hboardViews}</td>
-									</tr>
-									<tr>
-										<th>찜수</th>
-										<td>${sessionScope.wish}명</td>
-									</tr>
-									<tr>
-										<th>개요</th>
-										<td>${sessionScope.co.companyInfo}</td>
-									</tr>
-								</tbody>
-							</table>
+							<div style="border: 1px solid salmon; border-radius: 12px; box-sizing: border-box; padding: 0px; margin: 0px;">
+								<table class="boardMiniCardTable">
+									<thead></thead>
+									<tbody>
+										<tr>
+											<th width="20" style="border-top: 0px;">기간</th>
+											<td width="80" style="border-top: 0px;">${sessionScope.hb.hboardStart}<br>${sessionScope.hb.hboardEnd}</td>
+										</tr>
+										<tr>
+											<th>경력</th>
+											<td>
+												<c:if test="${sessionScope.hb.hboardCareer eq 'none'}">경력무관</c:if>
+												<c:if test="${sessionScope.hb.hboardCareer eq 'intern'}">인턴</c:if>
+												<c:if test="${sessionScope.hb.hboardCareer eq 'newcomer'}">신입</c:if>
+												<c:if test="${sessionScope.hb.hboardCareer eq 'junior'}">주니어</c:if>
+												<c:if test="${sessionScope.hb.hboardCareer eq 'middle'}">미들</c:if>
+												<c:if test="${sessionScope.hb.hboardCareer eq 'senior'}">시니어</c:if>
+											</td>
+										</tr>
+										<tr>
+											<th>학력</th>
+											<td>
+												<c:if test="${sessionScope.hb.hboardEducation eq 'none'}">학력무관</c:if>
+												<c:if test="${sessionScope.hb.hboardEducation eq 'highSchool'}">고등학교 졸업</c:if>
+												<c:if test="${sessionScope.hb.hboardEducation eq 'juniorCollege'}">전문대학 졸업</c:if>
+												<c:if test="${sessionScope.hb.hboardEducation eq 'university'}">대학 졸업</c:if>
+												<c:if test="${sessionScope.hb.hboardEducation eq 'master'}">석사 이상</c:if>
+												<c:if test="${sessionScope.hb.hboardEducation eq 'doctor'}">박사 이상</c:if>
+												<c:if test="${sessionScope.hb.hboardEducation eq 'professor'}">교수 및 연구원</c:if>
+											</td>
+										</tr>
+										<tr>
+											<th>연봉</th>
+											<td>${sessionScope.hb.hboardSalary}</td>
+										</tr>
+										<tr>
+											<th>대표</th>
+											<td>${sessionScope.co.companyOwner}</td>
+										</tr>
+										<tr>
+											<th>EMAIL</th>
+											<td>${sessionScope.co.companyEmail}</td>
+										</tr>
+										<tr>
+											<th>직원수</th>
+											<td>${sessionScope.co.companyWorker}</td>
+										</tr>
+										<tr>
+											<th>조회수</th>
+											<td>${sessionScope.hb.hboardViews}</td>
+										</tr>
+										<tr>
+											<th>찜수</th>
+											<td>${sessionScope.wish}명</td>
+										</tr>
+										<tr>
+											<th style="border-bottom: 0px;">개요</th>
+											<td style="border-bottom: 0px;">${sessionScope.co.companyInfo}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div class="boardMiniAttach">
-							<h4 style="color: khaki;">첨부파일</h4>
+							<h4 style="color: plum;">첨부파일</h4>
 							<c:if test="${sessionScope.hb.companyNo eq sessionScope.loginCompany.companyNo}">
 								<div class="pmArea"><i class="fa fa-plus" aria-hidden="true" onclick="$('#addFile').click();;"></i></div>
 								<input type="file" style="visibility: hidden;" id="addFile" name="addFile" onchange="addAttachment(this);">

@@ -78,12 +78,10 @@
 		</div>
 		<script>
 			let page = 1;
-			$(document).ready(function() {
-				onLoad(page++);
-			});
+			$(document).ready(function() { onLoad(page++); });
 			function onLoad(page) {
 				$.ajax({
-					data : {"page": page},
+					data : { "page": page },
 					type : "get",
 					url : "adminListLoad.cp",
 					success : function(col) {
@@ -95,12 +93,10 @@
 			};
 			function onDelete(e, companyNo) {
 				$.ajax({
-					data : {"companyNo": companyNo},
+					data : { "companyNo": companyNo },
 					type : "post",
 					url : "adminDelete.cp",
-					success : function(result) {
-						$(e).parent().html("<button type='button' class='btn btn-info' onclick='onRestore(this, " + companyNo + ");'>복원시키기</button>");
-					},
+					success : function(result) { $(e).parent().html("<button type='button' class='btn btn-info' onclick='onRestore(this, " + companyNo + ");'>복원시키기</button>"); },
 					error: function() { alert("삭제에 실패함"); }
 				});
 			};
@@ -109,9 +105,7 @@
 					data : {"companyNo": companyNo},
 					type : "post",
 					url : "adminRestore.cp",
-					success : function(result) {
-						$(e).parent().html("<button type='button' class='btn btn-danger' onclick='onDelete(this, " + companyNo + ");'>탈퇴시키기</button>");
-					},
+					success : function(result) { $(e).parent().html("<button type='button' class='btn btn-danger' onclick='onDelete(this, " + companyNo + ");'>탈퇴시키기</button>"); },
 					error: function() { alert("복원에 실패함"); }
 				});
 			};
