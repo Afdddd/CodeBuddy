@@ -181,6 +181,7 @@ public class CompanyController {
 		else { model.addAttribute("errorMsg", "인증 실패"); return "common/errorPage"; }
 	}
 	@GetMapping(value="myPage.hb") public String myBoard(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpSession session, Model model) { 
+		/*
 		if(session.getAttribute("loginMember") != null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/"; } 
 		if(session.getAttribute("loginCompany") == null) { session.setAttribute("alertMsg", "허용되지않는 접근"); return "redirect:/loginPage.cp"; } 
 		int listCount = hboardService.selectListCount(((Company)session.getAttribute("loginCompany")).getCompanyNo());
@@ -201,6 +202,8 @@ public class CompanyController {
 			
 			return "company/myBoard";
 		}
+		*/
+		return "common/working";
 	}
 	@PostMapping(value="/uploadSummernoteImageFile.cp", produces="text/html; charset=UTF-8") @ResponseBody
 	public String uploadSummernoteImageFile(@RequestParam("file") MultipartFile multipartFile, HttpServletRequest req) {
