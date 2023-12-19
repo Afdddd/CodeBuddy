@@ -1,6 +1,7 @@
 package com.kh.coddy.common.tag.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -59,6 +60,16 @@ public class TagsController {
 		if(mode==0) { for(Tags t:this.getTagsList("0")) { result.add(t.getTagsName()); } }
 		else if(mode==1) { for(Tags t:this.getTagsList("1")) { result.add(t.getTagsName()); } }
 		else { return this.getTagsNameList(); }
+		return result;
+	}
+
+	public ArrayList<String> getTagsNameListOnFilter(int mode, String[] filter) {
+		ArrayList<String> result = new ArrayList<>();
+		if(mode==0) { result = getTagsNameList(0); }
+		else if(mode==1) { result = getTagsNameList(1); }
+		else { result = getTagsNameList(); }
+		ArrayList<String> resultCopy = (ArrayList<String>)result.clone();
+		for(String check: resultCopy) { if(Arrays.asList(filter).contains(check)) { result.remove(check); } }
 		return result;
 	}
 }
