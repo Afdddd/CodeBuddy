@@ -53,21 +53,17 @@ public class CompanyAdminController {
 	}
 	@GetMapping(value="adminListLoad.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminListLoad(String page) {
 		int listCount = companyService.selectListCount();
-		int pageLimit = 20; int boardLimit = 3;
+		int pageLimit = 20; int boardLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, Integer.parseInt(page), pageLimit, boardLimit);
 		if(pi.getMaxPage() == 0) { return "none"; }
 		else if((Integer.parseInt(page) > pi.getMaxPage()) || (Integer.parseInt(page) <= 0)) { return "none"; }
 		else {
 			String str_return = "";
 			ArrayList<Company> co = companyService.selectList(pi);
-			for (Company c: co) { if(c.getCompanyDelete() != null) c.setCompanyDelete("<button type='button' class='btn btn-info' onclick='onRestore(" + c.getCompanyNo() + ");'>복원시키기</button>"); else c.setCompanyDelete("<button type='button' class='btn btn-danger' onclick='onDelete(" + c.getCompanyNo() + ");'>탈퇴시키기</button>"); str_return += "<tr><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyNo() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyName() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyOwner() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyBno() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyInfo() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyId() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyEmail() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyInsert() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyDelete() + "</td></tr>"; }
+			for (Company c: co) { if(c.getCompanyDelete() != null) c.setCompanyDelete("<button type='button' class='btn btn-info' onclick='onRestore(this, " + c.getCompanyNo() + ");'>복원시키기</button>"); else c.setCompanyDelete("<button type='button' class='btn btn-danger' onclick='onDelete(this, " + c.getCompanyNo() + ");'>탈퇴시키기</button>"); str_return += "<tr><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyNo() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyName() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyOwner() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyBno() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyInfo() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyId() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyEmail() + "</td><td style='border-top: 1px solid #5271FF;'>" + c.getCompanyInsert() + "</td><td style='border-top: 1px solid #5271FF; padding: 4px;'>" + c.getCompanyDelete() + "</td></tr>"; }
 			return str_return;
 		}
 	}
-	@PostMapping(value="adminDelete.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminDelete(String companyNo) {
-		if(companyService.forceDelete(Integer.parseInt(companyNo)) > 0) return "success"; else return "fail";
-	}
-	@PostMapping(value="adminRestore.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminRestore(String companyNo) {
-		if(companyService.forceRestore(Integer.parseInt(companyNo)) > 0) return "success"; else return "fail";
-	}
+	@PostMapping(value="adminDelete.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminDelete(String companyNo) { if(companyService.forceDelete(Integer.parseInt(companyNo)) > 0) return "success"; else return "fail"; }
+	@PostMapping(value="adminRestore.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminRestore(String companyNo) { if(companyService.forceRestore(Integer.parseInt(companyNo)) > 0) return "success"; else return "fail"; }
 }

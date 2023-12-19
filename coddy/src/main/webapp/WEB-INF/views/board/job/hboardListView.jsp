@@ -63,7 +63,7 @@
             @keyframes dislike_effect { 0% { transform: scale(0); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
             /* 인엽이 페이지 네이션 맞추기 */
-            .pageForm { width: fit-content; margin: auto; }
+            .pageForm { width: fit-content; margin: auto; padding-top: 40px; }
             .page-link:hover { cursor: pointer; }
 
             /* 인엽이 툴팁 */

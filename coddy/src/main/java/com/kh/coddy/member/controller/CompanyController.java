@@ -34,6 +34,7 @@ import com.kh.coddy.board.job.model.vo.Hrelation;
 import com.kh.coddy.common.Keys;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.auth.model.vo.Auth;
+import com.kh.coddy.common.vo.Geo;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.service.CompanyService;
 import com.kh.coddy.member.model.service.MemberService;
@@ -190,10 +191,15 @@ public class CompanyController {
 		if(pi.getMaxPage() == 0) { model.addAttribute("errorMsg", "아직 작성한 게시판이 없습니다."); return "common/errorPage"; }
 		else {
 			ArrayList<Hboard>list = hboardService.selectList(pi, ((Company)session.getAttribute("loginCompany")).getCompanyNo());
-			ArrayList<ArrayList<Hrelation>>tg_list = new ArrayList<ArrayList<Hrelation>>();
+			ArrayList<String> tg_list = new ArrayList<String>();
 			for(Hboard h:list) { 
-				h.setHboardLocation(new HboardController().getLocationByAddr(Integer.parseInt(h.getHboardLocation())));
-				tg_list.add(hboardService.getTagInfo(h));
+				String temp = "";
+				h.setHboardInsert(h.getHboardInsert().split(" ")[0]);
+				h.setHboardStart(h.getHboardStart().split(" ")[0]);
+				h.setHboardEnd(h.getHboardEnd().split(" ")[0]);
+				h.setHboardLocation(new Geo().getGeo(h.getHboardLocation()).getAddr());
+				for(Hrelation hr: hboardService.getTagInfo(h)) { temp += hr.getTagsNo() + ","; }
+				tg_list.add(getSpan(temp.substring(0, temp.length() - 1)));
 			}
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", list);
@@ -212,4 +218,5 @@ public class CompanyController {
 		catch (IOException e) { FileUtils.deleteQuietly(file); e.printStackTrace(); }
 		return null;
 	}
+	public String getSpan(String str) { String ret = ""; for(String s: str.split(",")) { ret+="<span class='tagList'>"+s+"</span>"; } return ret; }
 }

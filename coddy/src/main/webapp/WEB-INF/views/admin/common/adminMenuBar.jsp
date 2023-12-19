@@ -67,7 +67,7 @@
             <!-- Navbar Search-->
             <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
                 <div class="input-group">
-                    <input class="form-control" type="text" placeholder="검색 안됨 ㅅㄱ" aria-label="Search for..." aria-describedby="btnNavbarSearch" readonly />
+                    <input class="form-control" type="text" placeholder="추후 지원될 기능입니다." aria-label="Search for..." aria-describedby="btnNavbarSearch" readonly />
                     <button class="btn btn-primary" id="btnNavbarSearch" type="button"><i class="fas fa-search"></i></button>
                 </div>
             </form>
@@ -109,7 +109,7 @@
                                     <div class="collapse" id="pagesCollapseMember" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
                                             <a class="nav-link" href="adminRegistForm.me">Create(임시)</a>
-                                            <a class="nav-link" href="">Read</a>
+                                            <a class="nav-link" href="adminList.me">Read</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseCompany" aria-expanded="false" aria-controls="pagesCollapseCompany">
@@ -124,7 +124,7 @@
                                     </div>  
                                     <a class="nav-link" href="">Project</a>
                                     <a class="nav-link" href="">Chat</a>
-                                    <a class="nav-link" href="">Tag</a>
+                                    <a class="nav-link" href="adminList.tg">Tag</a>
                                 </nav>
                             </div>
                             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
@@ -172,8 +172,8 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseCode" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="">Read</a>
-                                            <a class="nav-link" href="">Delete</a>
+                                            <a class="nav-link" href="adminList.co">Read</a>
+                                            <a class="nav-link" href="adminList.co">Delete</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseHire" aria-expanded="false" aria-controls="pagesCollapseHire">
@@ -182,8 +182,8 @@
                                     </a>
                                     <div class="collapse" id="pagesCollapseHire" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                         <nav class="sb-sidenav-menu-nested nav">
-                                            <a class="nav-link" href="">Read</a>
-                                            <a class="nav-link" href="">Delete</a>
+                                            <a class="nav-link" href="adminList.hb">Read</a>
+                                            <a class="nav-link" href="adminList.hb">Delete</a>
                                         </nav>
                                     </div>
                                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseFree" aria-expanded="false" aria-controls="pagesCollapseFree">
