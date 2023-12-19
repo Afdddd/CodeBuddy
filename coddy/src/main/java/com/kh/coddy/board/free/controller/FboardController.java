@@ -62,9 +62,6 @@ public class FboardController {
 			mv.addObject("list", list)
 			  .addObject("pi", pi)
 			  .setViewName("board/free/freeListView");
-			
-			System.out.println(list);
-			System.out.println(pi);
 			  
 			return mv;
 		}
@@ -79,7 +76,7 @@ public class FboardController {
 			if(result > 0) { // 성공
 				
 				Fboard f = fboardService.selectBoard(fno);
-				
+
 				mv.addObject("f", f)
 				  .setViewName("board/free/freeDetailView"); 
 				
@@ -133,10 +130,24 @@ public class FboardController {
 		@PostMapping("insert.fr")
 		public String insertBoard(Fboard f,
 								  HttpSession session,
-								  Model model) {
+								  Model model,
+								  MultipartFile upfile) {
 		  
 		    f.setFboardWriter(String.valueOf(((Member)(session.getAttribute("loginMember"))).getMemberNo()));
-		    System.out.println(f);
+		    if (upfile != null && !upfile.getOriginalFilename().equals("")) {
+				
+				if(f.getFboardChange() != null) {
+					
+					String realPath = session.getServletContext()
+										.getRealPath(f.getFboardChange());
+					
+					new File(realPath).delete();
+				}
+				String fboardChange = saveFile(upfile, session);
+				
+				f.setFboardOrigin(upfile.getOriginalFilename());
+				f.setFboardChange("/resources/file_upload/fboard/upload/" + fboardChange);
+			}
 		    int result = fboardService.insertBoard(f);
 
 		    if(result > 0) { // 게시글 작성 성공
@@ -164,43 +175,73 @@ public class FboardController {
 			}   
 		
 		@PostMapping("update.fr")
-		public String updateBoard(@ModelAttribute("f") Fboard f, 
-								  @RequestParam(name = "reupfile", required = false) MultipartFile reupfile,
-		                          HttpSession session,
-		                          Model model) throws IOException {
-		    
-		    // System.out.println(f);
-		    
-		    // 기존 게시글 내용을 세션에서 가져와서 설정
-		    f.setFboardContent(String.valueOf(session.getAttribute("fboardContent")));
-
-		    if (reupfile != null && !reupfile.getOriginalFilename().equals("")) {
-
-			    // 첨부 파일이 존재하고 변경된 파일명이 있을 경우 기존 파일 삭제
-			    if (f.getFboardChange() != null) {
-			        String realPath = session.getServletContext().getRealPath(f.getFboardChange());
-			        new File(realPath).delete();
-			    }
-
-			    // 새로운 파일 저장 및 정보 설정
-			    String fboardChange = saveFile(reupfile, session, null);
-			    f.setFboardOrigin(reupfile.getOriginalFilename());
-			    f.setFboardChange("/resources/file_upload/fboard/upload/" + fboardChange);
+		public String updateBoard(Fboard f, 
+								  MultipartFile reupfile,
+								  HttpSession session,
+								  Model model) {
+			f.setFboardWriter(String.valueOf(((Member)(session.getAttribute("loginMember"))).getMemberNo()));
+			System.out.println(f);
+			
+			// f.setFboardContent(String.valueOf(session.getAttribute("fboardContent")));
+			
+			if (reupfile != null && !reupfile.getOriginalFilename().equals("")) {
+				
+				if(f.getFboardChange() != null) {
+					
+					String realPath = session.getServletContext()
+										.getRealPath(f.getFboardChange());
+					
+					new File(realPath).delete();
+				}
+				String fboardChange = saveFile(reupfile, session);
+				
+				f.setFboardOrigin(reupfile.getOriginalFilename());
+				f.setFboardChange("/resources/file_upload/fboard/upload/" + fboardChange);
 			}
-		   
-		    // 게시글 업데이트 수행
-		    int result = fboardService.updateBoard(f);
+			
+			int result = fboardService.updateBoard(f);
+			
+			if(result > 0) { 
+				session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+				
+				return "redirect:/detail.fr?fno=" + f.getFboardNo();
+				
+			} else {
+				
+				model.addAttribute("errorMsg", "게시글 수정 실패");
+				
+				return "common/errorPage";
+			}   
 		    
-		    if (result > 0) { 
-		        // 성공적으로 업데이트된 경우 상세 페이지로 리다이렉트
-		        session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
-		        return "redirect:/detail.fr?fno=" + f.getFboardNo();
-		    } else {
-		        // 업데이트 실패 시 에러 페이지로 이동
-		        model.addAttribute("errorMsg", "게시글 수정 실패");
-		        return "common/errorPage";
-		    }   
-		}	
+		}
+		
+		public String saveFile(MultipartFile upfile,
+				   HttpSession session) {
+
+			String originName = upfile.getOriginalFilename();
+			
+			String currentTime = new SimpleDateFormat("yyyyMMddHHmmss")
+													.format(new Date());
+			
+			int ranNum = (int)(Math.random() * 90000 + 10000);
+			
+			String ext = originName.substring(originName.lastIndexOf("."));
+			
+			String fboardChange = currentTime + ranNum + ext;
+			
+			String savePath = session.getServletContext().getRealPath(File.separator + "resources" + File.separator + "file_upload" + File.separator + "fboard" + File.separator + "upload" + File.separator);
+			
+			try {
+				
+				upfile.transferTo(new File(savePath + fboardChange));
+			
+			} catch (IllegalStateException | IOException e) {
+				e.printStackTrace();
+			}
+			
+			return fboardChange;
+		}
+
 		
 		@RequestMapping("delete.fr")
 		public String deleteBoard(int fno,
@@ -231,12 +272,52 @@ public class FboardController {
 			}
 		}
 
-		@GetMapping("rlist.fr")
 		@ResponseBody
-		public ArrayList<Freply> getReplyList(int fno) {
-		    // fno에 해당하는 게시글의 댓글 목록 조회
-			ArrayList<Freply> replyList = fboardService.selectReplyList(fno);
-		    return replyList;
+		@RequestMapping(value = "rlist.fr", produces = "application/json; charset=UTF-8")
+		public String ajaxSelectReplyList(String fno) {
+			
+			ArrayList<Freply> list = fboardService.selectReplyList(Integer.parseInt(fno));
+			for(Freply fr: list) {
+				fr.setMemberNo(fr.getMemberNo());
+			}
+			
+			return new Gson().toJson(list);
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "rinsert.fr", produces = "text/html; charset=UTF-8")
+		public String ajaxInsertReply(Freply fr, String fboardNo) {
+			fr.setFboardNo(Integer.parseInt(fboardNo));
+			int result = fboardService.insertReply(fr);
+			
+			return (result > 0)? "success" : "fail";
+			
+		}
+		
+		@ResponseBody
+		@RequestMapping(value = "rdelete.fr", produces = "text/html; charset=UTF-8")
+		public String ajaxDeleteReply(int freplyNo)	{
+			
+			
+			int result = fboardService.deleteReply(freplyNo);
+			
+			return (result > 0)? "success" : "error";
+		}
+		
+		
+		@RequestMapping(value = "rupdate.fr")
+		@ResponseBody
+		public String ajaxUpdateReply(int freplyNo, String freplyContent) {
+
+			Freply fr = new Freply();
+			fr.setFreplyNo(freplyNo);
+			fr.setFreplyContent(freplyContent);
+			
+			int result = fboardService.updateReply(fr);
+
+			
+			return (result > 0)? "success" : "error";
+			
 		}
 		
 }

@@ -63,26 +63,27 @@ public class FboardServiceImpl implements FboardService{
 	}
 
 	@Override
-	public ArrayList<Fboard> selectTopBoardList() {
-		return fboardDao.selectTopBoardList(sqlSession);
-	}
-
-	@Override
 	public ArrayList<Freply> selectReplyList(int fboardNo) {
 		
 		return fboardDao.selectReplyList(sqlSession, fboardNo);
 	}
-
+	
 	@Override
 	public int insertReply(Freply fr) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		return fboardDao.insertReply(sqlSession, fr);
 	}
 
 	@Override
-	public ArrayList<Fattachment> selectAttachmentList(int fboardNo) {
-		// TODO Auto-generated method stub
-		return null;
+	public int deleteReply(int freplyNo) {
+		
+		return fboardDao.deleteReply(sqlSession, freplyNo);
+	}
+
+	@Override
+	public int updateReply(Freply fr) {
+		
+		return fboardDao.updateReply(sqlSession, fr);
 	}
 
 	@Override
@@ -101,6 +102,12 @@ public class FboardServiceImpl implements FboardService{
 	public int deleteAttachment(int fattachmentNo) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ArrayList<Fattachment> selectAttachmentList(int fboardNo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

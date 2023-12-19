@@ -22,9 +22,8 @@
         <div class="innerOuter">
             <h3 style="color:#5271FF;">수정</h3>
             <br>
-
             <form id="freeUpdateForm" method="post" action="update.fr" enctype="multipart/form-data">
-                <input type="hidden" name="fBoardNo" value="${ requestScope.f.fboardNo }">
+                <input type="hidden" name="fboardNo" value="${ requestScope.f.fboardNo }">
                 <table align="center">
                     <tr>
                         <th><label for="title">제목</label></th>

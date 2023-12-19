@@ -163,14 +163,14 @@
                     <th>제목 ${ requestScope.n.nboardTitle }</th>
                 </tr>
                 <tr>
-                    <th>작성자 ${ requestScope.n.nboardWriter }</th>
+                    <th>작성자 ADMIN </th>
                     <th>조회수 ${ requestScope.n.nboardViews }</th>
                 </tr>
                 <tr>
                     <th>첨부파일</th>
                     <td colspan="3">
                     	<c:choose>
-                    		<c:when test="${ empty requestScope.n.fboardOrigin }">
+                    		<c:when test="${ empty requestScope.n.nboardOrigin }">
                     			첨부파일이 없습니다.
                     		</c:when>
                     		<c:otherwise>
@@ -199,17 +199,22 @@
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-			
-	                <button class="btn btn-primary" onclick="postFormSubmit(1);">수정하기</a>
-	                <button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</a>
-	                
-	                <form id="postForm" action="update.fr" method="post">
-	                	<input type="hidden" name="fno" 
+					<c:if test="${not empty sessionScope.loginMember}">
+    				 <c:if test="${sessionScope.loginMember.memberId eq 'admin'}">
+		                <!-- 관리자 역할을 가진 사용자에게만 글 작성 권한 부여 -->
+
+		                <button class="btn btn-danger" onclick="postFormSubmit(2);">삭제하기</button>
+		             </c:if>
+
+	                <form id="postForm" action="update.no" method="post">
+	                	<input type="hidden" name="nno" 
 	                				value="${ requestScope.n.nboardNo }">
 	                	<input type="hidden" name="filePath" 
 	                				value="${ requestScope.n.nboardChange }">			
 	                </form>
-           
+	                
+	                </c:if>
+
 					<script>				    
 					    function postFormSubmit(num) {
         					if(num == 1) { 
@@ -228,6 +233,9 @@
             </div>
             <br><br>
 
+			<br><br>
+
+			<jsp:include page="../../common/footer.jsp" />
     
 </body>
 </html>
