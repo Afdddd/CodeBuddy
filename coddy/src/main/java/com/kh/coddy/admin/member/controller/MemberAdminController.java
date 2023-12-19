@@ -53,7 +53,7 @@ public class MemberAdminController {
 	}
 	@GetMapping(value="adminListLoad.me", produces="text/html; charset=UTF-8") @ResponseBody public String adminListLoad(String page) {
 		int listCount = memberService.selectListCount();
-		int pageLimit = 20; int boardLimit = 5;
+		int pageLimit = 20; int boardLimit = 20;
 		PageInfo pi = Pagination.getPageInfo(listCount, Integer.parseInt(page), pageLimit, boardLimit);
 		if(pi.getMaxPage() == 0) { return "none"; }
 		else if((Integer.parseInt(page) > pi.getMaxPage()) || (Integer.parseInt(page) <= 0)) { return "none"; }

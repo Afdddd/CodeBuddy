@@ -53,7 +53,7 @@ public class CompanyAdminController {
 	}
 	@GetMapping(value="adminListLoad.cp", produces="text/html; charset=UTF-8") @ResponseBody public String adminListLoad(String page) {
 		int listCount = companyService.selectListCount();
-		int pageLimit = 20; int boardLimit = 3;
+		int pageLimit = 20; int boardLimit = 10;
 		PageInfo pi = Pagination.getPageInfo(listCount, Integer.parseInt(page), pageLimit, boardLimit);
 		if(pi.getMaxPage() == 0) { return "none"; }
 		else if((Integer.parseInt(page) > pi.getMaxPage()) || (Integer.parseInt(page) <= 0)) { return "none"; }
