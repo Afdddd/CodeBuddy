@@ -264,6 +264,103 @@ public class MemberController {
 		}
 	}
 	
+public int boardSum(HttpSession session) {
+		
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		
+		// recruitment
+		int count1 = memberService.count1(m.getMemberNo());
+		
+		// cboard
+		int count2 = memberService.count2(m.getMemberNo());
+		
+		// fboard
+		int count3 = memberService.count3(m.getMemberNo());
+		
+		// iboard
+		int count4 = memberService.count4(m.getMemberNo());
+		
+		int countSum = count1 + count2 + count3 + count4; 
+		
+		
+		return countSum;
+	}
+	
+	@RequestMapping("projecting.bo")
+	public ModelAndView Projecting(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv) {
+		
+		Member m = ((Member)(session.getAttribute("loginMember")));
+		
+		int listCount = memberService.projecting(m.getMemberNo());
+		
+		
+		int pageLimit = 5;
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Recruitment> list = memberService.selectListing(pi, m.getMemberNo());
+		
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/projecting");
+		
+		return mv;
+	}
+	
+	// 상대방 프로필 뜨게하는 Form
+	@RequestMapping("profile.me")
+	public String yourPage(HttpSession session, @RequestParam(value="mno") int memberNo, Model model) {
+		
+		if(session.getAttribute("loginMember") == null) {
+			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			return "redirect:/";
+		}
+		
+		ArrayList<Member> list = new ArrayList<Member>();
+		
+		list = memberService.selectMember(memberNo);
+		
+				// recruitment
+				int count1 = memberService.count1(memberNo);
+				
+				// cboard
+				int count2 = memberService.count2(memberNo);
+				
+				// fboard
+				int count3 = memberService.count3(memberNo);
+				
+				// iboard
+				int count4 = memberService.count4(memberNo);
+				
+				int countSum = count1 + count2 + count3 + count4;
+				
+				
+				model.addAttribute("countSum", countSum);
+				model.addAttribute("list", list);
+		
+		
+		return "member/yourPage";
+	}
+	
+	
+	@GetMapping("yourProjectIng.bo")
+	public ModelAndView yourprojecting(HttpSession session, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			ModelAndView mv, @RequestParam(value="mno") int memberNo) {
+		
+		int listCount = memberService.selectListyourCount(memberNo);
+		
+		int pageLimit = 5;
+		int boardLimit = 15;
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, pageLimit, boardLimit);
+		
+		ArrayList<Recruitment> list = memberService.selectListyour(pi, memberNo);
+	
+		mv.addObject("list", list).addObject("pi", pi).addObject("listCount", listCount).setViewName("member/yourProjectIng");
+		
+		return mv;
+	}
+	
 	@RequestMapping("delete.me")
 	public String deleteId(HttpSession session) {
 		if(session.getAttribute("loginMember") == null) {

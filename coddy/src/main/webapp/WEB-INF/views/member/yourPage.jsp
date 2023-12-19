@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap" rel="stylesheet">
-<title>My페이지-프로필</title>
+<title>상대방 페이지</title>
 <style>
 
   .innerOuter {
@@ -137,36 +137,11 @@ h2.widget-heading {
 <jsp:include page="../common/header.jsp" />	
 
         <div class="innerOuter">
-            <h2>마이페이지</h2>
-            <br>
-            <hr>
-            <br>
-            <div style="display: flex;">
-					
-                <ul class="menu" style="padding-left:0px; width : 230px;">
-                    <br>
-                    <li><a href="myPage.se">마이페이지</a>
-                        <ul style="width : 210px;">
-                        	<li><a href="pwdChange.me">- 비밀번호 변경</a></li>
-                        	<li><a href="delete.me">- 회원 탈퇴</a></li>
-                        </ul>
-                    </li>
-                    <hr>
-                    <li><a href="#">나의 평가</a></li>
-                    <hr>
-                    <li><a href="written.io">참여한 프로젝트</a></li>
-                    <li><a href="#">찜한 프로젝트</a></li>
-                    <li><a href="#">찜한 채용공고</a></li>
-                    <hr>
-                    <li><a href="written.ro">작성한 게시글</a></li>
-                    <li><a href="#">작성한 댓글</a></li>
-                </ul>
-                
-                
+                   
 				<div class="profile-widget">
 				    <h2 class="widget-heading">프로필</h2>
-				    <div class="cover-img">
-				       <label for="chooseFileBg"><img src="resources/image/background/<fmt:formatNumber value='${sessionScope.loginMember.memberNo}' pattern='00000000' />.jpg" onerror="this.src='resources/image/company/signup-bg.jpg'" onclick="" id="uploadFilesBg">
+				    <div class="cover-img">				  
+				       <label for="chooseFileBg"><img src="resources/image/background/<fmt:formatNumber value='${list[0].memberNo}' pattern='00000000' />.jpg" onerror="this.src='resources/image/company/signup-bg.jpg'">
 				       </label>
 				    </div>     
 				    <div class="user-details">
@@ -175,74 +150,36 @@ h2.widget-heading {
 		                        <label for="chooseFile">
 		                            <div id="canvas">
 		                                <c:choose>
-		                                    <c:when test="${sessionScope.loginMember.memberPhotoExtend eq jpg}">
+		                                    <c:when test="${list[0].memberPhotoExtend eq jpg}">
 		                                        <img src="resources/image/company/signup-bg.jpg" id="uploadFiles">
 		                                    </c:when>
 		                                    <c:otherwise>
-		                                        <img src="resources/image/profile/<fmt:formatNumber value='${sessionScope.loginMember.memberNo}' pattern ='00000000' />.${sessionScope.loginMember.memberPhotoExtend}" alt="User photo2" id="uploadFiles">
+		                                        <img src="resources/image/profile/<fmt:formatNumber value='${list[0].memberNo}' pattern ='00000000' />.${list[0].memberPhotoExtend}" alt="User photo2" id="uploadFiles">
 		                                    </c:otherwise>
 		                                </c:choose>
 		                            </div>
 		                        </label>
-		                        <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this);" style="visibility: hidden;">
-								<input type="file" id="chooseFileBg" name="chooseFileBg" accept="image/*" onchange="loadFileBg(this);" style="visibility: hidden;">
                     		</form>
 				        </div>
 				         <div id="fileName"></div>
-				        <h3>${sessionScope.loginMember.memberName}</h3>
+				        <h3>${list[0].memberName}</h3>
 				        <p>자신이 보유하고 있는 기술 태그들 쓰기</p>
 				        <div class="followers">
-				            <h3>아이디<br><span>${sessionScope.loginMember.memberId}</span></h3>
-				            <h3>내가 작성한 게시글 개수<br><span>${sessionScope.countSum}</span></h3>
+				            <h3>아이디<br><span>${list[0].memberId}</span></h3>
+				            <h3>프로젝트 개수<br><span>${requestScope.countSum}</span></h3>
 				        </div>
-				        <button class="follow-btn" onclick="location.href='myPage.me'">수정하기</button> <br>
-				        <button class="follow-btn" onclick="location.href='projecting.bo'">참여중인 프로젝트</button>
+				        <button class="follow-btn" onclick="location.href='yourProjectIng.bo?mno=${list[0].memberNo}'">참여중인 프로젝트</button>
 				    </div>
 						Image by <a href="https://www.freepik.com/free-photo/empty-room-with-chairs-desks_15501155.htm#query=office&position=4&from_view=search&track=sph&uuid=bc5b64e6-870d-4c59-a1d8-d8ba1d700a20">Freepik</a>
 		            <c:choose>
-		                <c:when test="${sessionScope.loginMember.memberPhotoExtend}">
+		                <c:when test="${list[0].memberPhotoExtend}">
 		                    <a href="https://www.freepik.com/free-vector/illustration-uploading-icon_2609994.htm#page=3&query=upload%20file&position=34&from_view=search&track=ais&uuid=9266a4ed-f875-4e8e-a066-016287752433">Image by rawpixel.com</a> on Freepik
 		                </c:when>	
 		            </c:choose>
 		        </div>
 			</div>
 		</div>
-		<script>
-		function loadFile(input) {
-			var files = input.files;
-			$("#uploadFiles").attr("src", URL.createObjectURL(files[0]));
-
-			var formData = new FormData();
-			formData.append("uploadFiles", files[0])
-
-			$.ajax({
-				type : "POST",
-				url : "member.co",
-				processData: false,
-				contentType: false,
-				data : formData,
-				success : function(result) { alert(result); },
-				error : function(xhr, status, error) { alert(error); }
-			});
-		};
-		function loadFileBg(input) {
-			var files = input.files;
-			$("#uploadFilesBg").attr("src", URL.createObjectURL(files[0]));
-
-			var formData = new FormData();
-			formData.append("uploadFiles", files[0])
-
-			$.ajax({
-				type : "POST",
-				url : "member.mo",
-				processData: false,
-				contentType: false,
-				data : formData,
-				success : function(result) { alert(result); },
-				error : function(xhr, status, error) { alert(error); }
-			});
-		};
-	</script>
+	
 	<jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

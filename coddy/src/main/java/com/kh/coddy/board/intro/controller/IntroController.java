@@ -28,11 +28,12 @@ import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.board.intro.model.vo.Likes;
+import com.kh.coddy.board.recruitment.model.vo.Joins;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
-import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.controller.TagsController;
 import com.kh.coddy.common.vo.PageInfo;
@@ -68,15 +69,24 @@ public class IntroController {
 		
 		Recruitment r = introService.selectRecruitment3(Integer.parseInt(iboardNo));
 		
+		
 		ArrayList<Prelation> tags = introService.getTagInfo2(r); // 태그정보
-		ArrayList<RecruitmentState> state = introService.getState(r); // 지원 현황
 		Rattachment thumOne = introService.getThumbOne(r); // 대표이미지
 		ArrayList<Rattachment> thumList = introService.getAttachmentList2(r); // 이미지 목록
 		Project p = introService.getProject(r);
+		ArrayList<Profile> fList = introService.getJoinMember(p.getProjectNo());
+		ArrayList<Joins> joins = introService.getJoinInfo(p.getProjectNo());
+
 		
+		ib.setIboardInsert(ib.getIboardInsert().split(" ")[0]);
+		p.setProjectEnd(p.getProjectEnd().split(" ")[0]);
+		p.setProjectStart(p.getProjectStart().split(" ")[0]);
+		
+		System.out.println(ib);
+		
+		model.addAttribute("joins", joins);
 		model.addAttribute("r", r);
 		model.addAttribute("tags",tags);
-		model.addAttribute("state",state);
 		model.addAttribute("thumOne",thumOne);
 		model.addAttribute("thumList",thumList);
 		model.addAttribute("p",p);
@@ -85,7 +95,7 @@ public class IntroController {
 		model.addAttribute("it", it); // 대표 이미지
 		model.addAttribute("like", like);
 		model.addAttribute("thumList2", thumList2); // 이미지 목록
-		
+		model.addAttribute("fList", fList);
 		
 		return "board/intro/introDetailView"; 
 	}
@@ -94,7 +104,7 @@ public class IntroController {
 	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage,
 		@RequestParam(value="search", defaultValue="") String search,
 		@RequestParam(value="tag", defaultValue="") String tag,
-		@RequestParam(value="sort", defaultValue="new") String sort,
+		@RequestParam(value="condition", defaultValue="new") String sort,
 		Model model, HttpSession session) {
 		
 		
@@ -105,9 +115,11 @@ public class IntroController {
 		projectlist = introService.selectProject(m.getMemberNo());
 		rlist = introService.selectRecruitment(projectlist);
 		
+		
 		model.addAttribute("projectlist", projectlist);
 		model.addAttribute("rlist", rlist);
 		
+		String tags = "";
 		
 		
 		
@@ -161,22 +173,28 @@ public class IntroController {
 		
 		
 	@GetMapping("introForm.bo")
-	public String selectEnrollForm(HttpSession session,  @RequestParam(value="projectno") int projectNo, Model model) {
+	public String selectEnrollForm(HttpSession session,  @RequestParam(value="projectno") int projectNo, Model model
+			) {
 		
 		Recruitment r = introService.selectRecruitment2(projectNo);
 		
+	
 		ArrayList<Prelation> tags = introService.getTagInfo2(r); // 태그정보
-		ArrayList<RecruitmentState> state = introService.getState(r); // 지원 현황
 		Rattachment thumOne = introService.getThumbOne(r); // 대표이미지
 		ArrayList<Rattachment> thumList = introService.getAttachmentList2(r); // 이미지 목록
 		Project p = introService.getProject(r);
 		
+		p.setProjectEnd(p.getProjectEnd().split(" ")[0]);
+		p.setProjectStart(p.getProjectStart().split(" ")[0]);
+		
+
+		
+		
 		model.addAttribute("tags",tags);
-		model.addAttribute("state",state);
 		model.addAttribute("thumOne",thumOne);
 		model.addAttribute("thumList",thumList);
-		model.addAttribute("p",p);
-		
+		model.addAttribute("p", p);
+
 		model.addAttribute("projectNo", projectNo);
 		
 		if(session.getAttribute("loginMember") == null) {
@@ -196,19 +214,26 @@ public class IntroController {
 		
 		Recruitment r = introService.selectRecruitment2(projectNo);
 		IBoard i = introService.iBoardUpdate(projectNo);
-		
+		ArrayList<Iattachment> ia = new ArrayList<Iattachment>();
+		ia = introService.iAttachmentUpdate(i.getIboardNo());
+		ArrayList<Iattachment> thumList2 = introService.getAttachmentList3(i); // 이미지 목록
 		
 		ArrayList<Prelation> tags = introService.getTagInfo2(r); // 태그정보
-		ArrayList<RecruitmentState> state = introService.getState(r); // 지원 현황
 		Rattachment thumOne = introService.getThumbOne(r); // 대표이미지
 		ArrayList<Rattachment> thumList = introService.getAttachmentList2(r); // 이미지 목록
 		Project p = introService.getProject(r);
 		
+		i.setIboardInsert(i.getIboardInsert().split(" ")[0]);
+		p.setProjectEnd(p.getProjectEnd().split(" ")[0]);
+		p.setProjectStart(p.getProjectStart().split(" ")[0]);
+		
+		
+		model.addAttribute("thumList2", thumList2);
+		model.addAttribute("ia", ia);
 		model.addAttribute("tags",tags);
-		model.addAttribute("state",state);
 		model.addAttribute("thumOne",thumOne);
 		model.addAttribute("thumList",thumList);
-		model.addAttribute("p",p);
+		model.addAttribute("p", p);
 		model.addAttribute("i", i);
 		
 		int result = introService.updateBoard(i);
@@ -224,6 +249,22 @@ public class IntroController {
 		return "board/intro/introUpdate";
 		
 	}
+	
+	/*
+	@PostMapping("update.io")
+	public String updateBoard(IBoard i,MultipartFile titleImg , ArrayList<MultipartFile> img, HttpSession session, Model model, HttpServletRequest request) {
+		
+		if(!titleImg.getOriginalFilename().equals("")) {
+			
+			if(i.get)
+		}
+		
+			
+			
+			return null;
+	}
+	
+	*/
 	
 	@RequestMapping(value="introinsert.bo")
 	public String insertBoard(IBoard i, MultipartFile titleImg , ArrayList<MultipartFile> img, HttpSession session, Model model, HttpServletRequest request
@@ -334,7 +375,7 @@ public class IntroController {
 			session.setAttribute("alertMsg", "로그인을 먼저해주세요."); 
 			return "redirect:/"; 
 		}
-		
+		System.out.println(ino);
 		int result = introService.deleteForm(ino);
 		
 		if(result > 0) {
@@ -375,7 +416,7 @@ public class IntroController {
 	public String ajaxInsertReply(Ireply r) {
 		
 		int result = introService.insertReply(r);
-		
+
 		return (result > 0)? "success" : "fail";
 		
 	}
@@ -421,10 +462,61 @@ public class IntroController {
 		ArrayList<Iattachment> list = introService.selectRecent();
 		return new Gson().toJson(list);
 	}
-	
-	
-	
-	
-	
-	
+	/*
+	@GetMapping(value="search.bo")
+	public String Search(@RequestParam(value="condition") String condition, @RequestParam(value="keyword") String keyword, @RequestParam(value="cpage", defaultValue="1") int currentPage,
+			HttpSession session, Model model) {
+		
+		ISearch is = new ISearch(condition, keyword);  
+		
+		int searchCount = introService.selectSearchCount(is);
+		
+		int pageLimit = 5;
+		int boardLimit = 9;
+		
+		
+		
+		PageInfo pi = Pagination.getPageInfo(searchCount,  currentPage,  pageLimit,  boardLimit);
+		
+
+			if(pi.getMaxPage() == 0) {
+				return "board/intro/introListView";
+
+			}
+			
+			else if((currentPage > pi.getMaxPage()) || (currentPage <= 0)) {
+				model.addAttribute("errorMsg", "잘못된 페이지입니다.");
+				return "common/errorPage"; 
+			}
+		
+			else {
+			ArrayList<IBoard> list = introService.selectSearchList(is,pi);
+			ArrayList<Iattachment> listi = new ArrayList<Iattachment>();
+			ArrayList<Project> listp = new ArrayList<Project>();
+			ArrayList<Boolean>ws_list = new ArrayList<Boolean>();
+			
+			System.out.println(list);
+			
+			for(IBoard ib : list) { 
+				listi.add(introService.selectattachment(ib));
+				listp.add(introService.selectPro(ib));
+				int like = introService.countLike(ib);
+				if(session.getAttribute("loginMember") != null) { 
+					ws_list.add(introService.getWishList(ib, ((Member)(session.getAttribute("loginMember"))).getMemberNo()));
+				}
+				
+			model.addAttribute("like", like);	
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", list);
+			model.addAttribute("listi", listi);
+			model.addAttribute("listp", listp);
+			model.addAttribute("ws_list", ws_list);
+			
+			}
+
+
+			return "board/intro/introListView";
+			}	
+		}
+		*/
 }

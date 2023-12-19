@@ -5,13 +5,14 @@
 <html>
   <head> 
     <meta charset="UTF-8">
-    <title>마이페이지-소집게시판</title>
+    <title>상대방이 참여하고 있는 프로젝트</title>
     <style>
       .innerOuter { 
-        width:80%; 
+        width:70%; 
         margin:auto; 
         padding:5% 10%; 
         background-color:white; 
+
       }
           
       .menu { 
@@ -113,7 +114,7 @@
 	   }
 	   
 	   .modal-body {
-	   width : 400px;
+	   width : 800px;
 	   }
 	   
 	   #menubar {
@@ -169,65 +170,23 @@
   #color2 {
   	background-color: #f3f7fe;
   }
+  
+  
     </style>
   </head>
   <body>
     <jsp:include page="../common/header.jsp" />	
 
-
-      <div class="innerOuter">
-        <h2>작성한 게시글</h2>
-        <br><hr><br>
-        <div style="display: flex;">
-          <ul class="menu" style="padding-left:0px; width : 230px;"><br>
-            <li><a href="myPage.se">마이페이지</a>
-              <ul style="width : 210px;">
-                <li><a href="pwdChange.me">- 비밀번호 변경</a></li>
-                <li><a href="delete.me">- 회원 탈퇴</a></li>
-              </ul>
-            </li>
-            <hr>
-            <li><a href="#">나의 평가</a></li>
-            <hr>
-            <li><a href="written.io">참여한 프로젝트</a></li>
-            <li><a href="#">찜한 프로젝트</a></li>
-            <li><a href="#">찜한 채용공고</a></li>
-            <hr>
-            <li><a href="written.ro">작성한 게시글</a></li>
-            <li><a href="#">작성한 댓글</a></li>
-          </ul>
+		<div class="innerOuter">
               
           <div class="modal-body">
 
-
-				<div class="wrap">
-				      <div class="menu2">
-				         <div class="menu_item" id="color"><a href="written.ro">모집게시판</a></div>
-				        <div class="menu_item" id="color1"><a href="written.co">코드리뷰게시판</a></div>
-				        <div class="menu_item" id="color2"><a href="written.fo">자유게시판</a></div>
-				      </div>
-				    </div>
-				    <br><br>
 				    
 		
 
-		 <h3>모집게시판</h3><br>
+		 <h3>참여하고 있는 프로젝트</h3><br>
 		<span> ▷ 총 ${requestScope.listCount}개의 게시물이 있습니다. </span>
-		<!--
-		<span class="right";> 
-		            <span class="grey"; id="strong";>SELECT</span>
-		    <select>
-		    <option value="제목"; name="제목"; >제목</option>
-		    <option value="글쓴이";name="글쓴이";>글쓴이</option>
-		    </select>
-		<input type="text";> <input type="button" name="검색" class="gradient" value="검색" >
-		</span>
-		 -->
-		
-		
 
-
-	
 		<br>
 		<table id="table">
 			<thead>
@@ -280,7 +239,7 @@
                 </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.ro?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                      <a class="page-link" href="yourProjectIng.bo?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
                     </li>
                   </c:otherwise>
               </c:choose>
@@ -289,7 +248,7 @@
                           end="${ requestScope.pi.endPage }"
                           step="1">
                   <li class="page-item">
-                    <a class="page-link" href="written.ro?cpage=${ p }">${ p }</a>
+                    <a class="page-link" href="yourProjectIng.bo?cpage=${ p }">${ p }</a>
                   </li>
               </c:forEach>
                 
@@ -301,7 +260,7 @@
                   </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.ro?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                      <a class="page-link" href="yourProjectIng.bo?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
                     </li>
                   </c:otherwise>
                 </c:choose>

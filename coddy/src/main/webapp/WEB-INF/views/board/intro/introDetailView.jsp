@@ -34,6 +34,11 @@
   margin-right: 10px;
 }
 
+.imgprofile {
+	width :100px;
+	height : 100px;
+}
+
 .comment .author span {
   font-weight: bold;
   color: #333;
@@ -250,6 +255,35 @@
     .btn-container .btn {
          margin-right: 5px;
     }
+    
+    /* 멤버 프로필 */
+    .content_5{
+  margin-top: 80px;
+	}
+
+	.swiper{
+      width: 100%;
+    }
+	.swiper-wrapper{
+	  float: left;
+	}
+	
+	.imgprofile {
+	width :100px;
+	height : 100px;
+}
+
+ /* 멤버 프로필 */
+    .content_5{
+  margin-top: 80px;
+	}
+
+	.swiper{
+      width: 100%;
+    }
+	.swiper-wrapper{
+	  float: left;
+	}
 </style>
 </head>
 <body>
@@ -268,11 +302,11 @@
             <table id="contentArea" align="center" class="table" style="width:100%; margin:5px;">
                 <tr>
                     <th>제목 : ${ib.iboardTitle}</th>
-                    <td></td>
+                    <th>조회수 : ${ib.iboardViews}</th>
                 </tr>
                 <tr>
                     <th>작성자 : ${ib.iboardWriter}</th>
-                     <td></td>
+                     <th>좋아요 :  ${requestScope.like}</th>
                 </tr>
                 <tr>
                     <th>작성일 : ${ib.iboardInsert}</th>
@@ -336,21 +370,78 @@
           </div>
           <br>
       </div>
-      		<div style="width : 100%; text-align : right;">
-            <a class="btn btn-secondary"href="list.bo">목록으로</a>
+      
+      <c:choose>
+        <c:when test="${requestScope.p.projectReady ne 2}">
+        <div class="content_5">  
+          <h2>멤버</h2>
+          <hr>
+          
+         <div class="swiper">
+                <div class="swiper-wrapper">
+                  <c:forEach var="f" items="${requestScope.fList}" varStatus="Status">
+                    <div class="card swiper-slide">
+                      <div class="card-border-top">
+                      </div>
+                      <div class="imgprofile">
+                      	<img src='resources/image/profile/<fmt:formatNumber value='${joins[Status.index].memberNo}' pattern='00000000' />.jpg' style="width : 160px; height: 100px;" onerror="this.src='resources/image/company/signup-bg.jpg'">
+                      </div>
+                      <span style="text-align : center">${f.memberName}</span>
+                      <p class="job" style="text-align : center">${f.role}</p>
+                      <button onclick='location.href="profile.me?mno=" + ${f.memberNo}'>프로필</button>
+                    </div>  
+ 
+                  </c:forEach>    
+                </div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+            </div>
+          </div>
+       </c:when>
+      </c:choose>
+            <script>
+            const swiper = new Swiper('.swiper', {
+                //기본 셋팅
+                //방향 셋팅 vertical 수직, horizontal 수평 설정이 없으면 수평
+                direction: 'horizontal',
+                //한번에 보여지는 페이지 숫자
+                slidesPerView: 7,
+                //페이지와 페이지 사이의 간격
+                spaceBetween: 10,
+                //드레그 기능 true 사용가능 false 사용불가
+                debugger: true,
+                //마우스 휠기능 true 사용가능 false 사용불가
+                mousewheel: true,                
+                // 마지막 여백
+                slidesOffsetAfter: 120,
+                //방향표
+                navigation: {
+                  //다음페이지 설정
+                  nextEl: '.swiper-button-next',
+                  //이전페이지 설정
+                  prevEl: '.swiper-button-prev',
+                },
+            });
+          </script>
+          
+      		<br><br><br>
+      		<div style="width : 100%; text-align : center;">
+            <a class="btn btn-secondary"href="introlist.bo">목록으로</a>
             </div>
             <br>
 
-            <div align="right" class="btn1" ">
+            <div align="right" class="btn1">
             	<div class="btn-group">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-	        	
-	        	
-	                
+	        
+					<!-- 
+	                <a class="btn btn-primary" onclick="location.href='updateboard.io?projectno=${p.projectNo}&&ino=${ib.iboardNo}'">수정</a>
+	            	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	            	 -->
 	                <form action="deleteForm.ib" method="post">
 	                
-	                		<input type="hidden" name="ino" value="${sessionScope.ib.iboardNo}">
-							<input type="hidden" name="iboardWriter" value="${sessionScope.ib.iboardWriter}">	                	
+	                		<input type="hidden" name="ino" value="${ib.iboardNo}">
+							<input type="hidden" name="iboardWriter" value="${ib.iboardWriter}">	                	
 	                	<button type="submit" class="btn btn-danger">삭제</button>
             		</form>
             	</div>	
@@ -365,15 +456,15 @@
                     		<c:when test="${ empty sessionScope.loginMember }">
                     			<!-- 로그인 전 : 댓글창 막기 -->
                     			<th colspan="2">
-		                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용 바랍니다.</textarea>
+		                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:95%;" readonly>로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용 바랍니다.</textarea>
 		                        </th>
-		                        <th style="vertical-align:middle"><button class="btn btn-secondary" disabled>등록하기</button></th>
+		                        <th style="vertical-align:middle"><button class="btn btn-secondary" style="width: 80px;" disabled>등록</button></th>
                     		</c:when>
                     		<c:otherwise>
 		                        <th colspan="2">
-		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:95%;"></textarea>
 		                        </th>
-		                        <th style="vertical-align:middle"><button type="button" class="btn btn-secondary" onclick="addreply();">등록하기</button></th>
+		                        <th style="vertical-align:middle"><button type="button" class="btn btn-secondary" style="width: 80px;"onclick="addreply();">등록</button></th>
                     		</c:otherwise>
                     	</c:choose>
                     </tr>
@@ -393,7 +484,7 @@
     </div>
     
     <script>
-    
+   
     	
 		$(function(){
 			
@@ -433,13 +524,45 @@
 				alertify.alert("Alert", "댓글 작성 후 등록을 요청해주세요.", function(){ alertify.success('Ok'); });
 			}
 		};
+		
+		// 대댓글 작성 요청용 ajax 요청
+/*
+		function addreply(){
+			if($("#content").val().trim().length != 0){
+				
+				$.ajax({
+					url : "childreninsert.bo",
+					type : "get",
+					data : {
+						iboardNo : "${ib.iboardNo}",
+						memberNo : "${sessionScope.loginMember.memberNo}",
+						ireplyContent : $("#content").val()
+					},
+					success : function(result){
+						
+						if(result == "success"){
+							
+							selectReplyList();
+							$("#content").val("");
+						}
+					},
+					error : function(){
+						console.log("댓글 작성용 ajax 통신 실패");
+					}
+				});
+			} else {
+				
+				alertify.alert("Alert", "댓글 작성 후 등록을 요청해주세요.", function(){ alertify.success('Ok'); });
+			}
+		};
+		*/	
 			
 		function selectReplyList(){
 		// 댓글 조회 요청용 ajax 요청
 		$.ajax({
 			url : "ilist.bo",
 			type : "get",
-			data : { ino : "${ib.iboardNo}"},
+			data : { ino : "${ ib.iboardNo}"},
 			success : function(result){
 				
 				let resultStr = "";

@@ -296,7 +296,7 @@
          </div>
      </div>
 		<br><br><br><br><br><br><br>
-		<h3>프로젝트 기간 : ${requestScope.p.projectStart} ~ ${requestScope.p.projectEnd }</h3>
+		<h3>프로젝트 기간 : ${requestScope.p.projectStart} ~ ${requestScope.p.projectEnd}</h3>
 		<br><br>
       <div clas="content_3">
           <div class="photo-scroll">

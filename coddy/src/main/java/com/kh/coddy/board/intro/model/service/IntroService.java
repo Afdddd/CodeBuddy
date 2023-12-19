@@ -6,13 +6,13 @@ import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.IreplyImage;
-import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
+import com.kh.coddy.board.recruitment.model.vo.Joins;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
-import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.common.vo.PageInfo;
 
 public interface IntroService {
@@ -85,7 +85,7 @@ public interface IntroService {
 	ArrayList<Prelation> getTagInfo2(Recruitment r);
 
 	// 글작성 상태 가져오기
-	ArrayList<RecruitmentState> getState(Recruitment r);
+	ArrayList<Joins> getState(ArrayList<Project> projectlist);
 
 	// 글작성 썸네일 가져오기
 	Rattachment getThumbOne(Recruitment r);
@@ -118,8 +118,27 @@ public interface IntroService {
 	// 상세조회용 Recruitment
 	Recruitment selectRecruitment3(int iboardNo);
 
-	// update하는 것
+	// iboard 불러올려고 쓰는거
+	IBoard iBoardUpdate(int projectNo);
+
+	// update 문
 	int updateBoard(IBoard i);
+
+	// 프로필 보여주기용
+	ArrayList<Profile> getJoinMember(int projectNo);
+
+	// joins 정보 가져오기
+	ArrayList<Joins> getJoinInfo(int projectNo);
+
+	// iAttachment update값 가져오기
+	ArrayList<Iattachment> iAttachmentUpdate(int iboardNo);
+
+
+
+
+	
+	
+
 
 
 	

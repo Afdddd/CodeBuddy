@@ -78,11 +78,37 @@ public interface MemberService {
 	// fboard 전체 조회
 	ArrayList<Fboard> selectListf(PageInfo pi, int memberNo);
 	
-	
+	// Recruitment 게시글 숫자 구하기
+		int count1(int memberNo);
+
+		// cboard
+		int count2(int memberNo);
+		
+		// fboard
+		int count3(int memberNo);
+
+		// iboard
+		int count4(int memberNo);
+
+		// projecting
+		int projecting(int memberNo);
+
+		// projecting 구하기
+		ArrayList<Recruitment> selectListing(PageInfo pi, int memberNo);
+
+		// your Page Member 정보들
+		ArrayList<Member> selectMember(int memberNo);
+
+		// your Page project count
+		int selectListyourCount(int memberNo);
+
+		ArrayList<Recruitment> selectListyour(PageInfo pi, int memberNo);
 
 	int selectListCounth(int memberNo);
 
 	
 	ArrayList<Hboard> selectListh(PageInfo pi, int memberNo);
+	
+	
 		
 }

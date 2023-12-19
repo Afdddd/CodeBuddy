@@ -111,6 +111,52 @@ public class MemberServiceImpl implements MemberService{
 	        return memberDao.selectListh(sqlSession, pi, memberNo);
 	    }
 	
-	
+	 @Override
+		public int count1(int memberNo) {
+			
+			return memberDao.count1(sqlSession, memberNo);
+		}
+		@Override
+		public int count2(int memberNo) {
+			
+			return memberDao.count2(sqlSession, memberNo);
+		}
+		@Override
+		public int count3(int memberNo) {
+			
+			return memberDao.count3(sqlSession, memberNo);
+		}
+		@Override
+		public int count4(int memberNo) {
+			
+			return memberDao.count4(sqlSession, memberNo);
+		}
+		@Override
+		public int projecting(int memberNo) {
+			
+			return memberDao.projecting(sqlSession, memberNo);
+		}
+		@Override
+		public ArrayList<Recruitment> selectListing(PageInfo pi, int memberNo) {
+			
+			return memberDao.selectListing(sqlSession, pi, memberNo);
+		}
+		@Override
+		public ArrayList<Member> selectMember(int memberNo) {
+			
+			return memberDao.selectMember(sqlSession, memberNo);
+		}
+		
+		@Override
+		public int selectListyourCount(int memberNo) {
+			// TODO Auto-generated method stub
+			return 0;
+		}
+		@Override
+		public ArrayList<Recruitment> selectListyour(PageInfo pi, int memberNo) {
+			
+			return memberDao.selectListyourCount(sqlSession, pi ,memberNo);
+		}
+		
 }
 

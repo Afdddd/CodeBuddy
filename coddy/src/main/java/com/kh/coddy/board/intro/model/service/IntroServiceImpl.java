@@ -11,14 +11,13 @@ import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.IreplyImage;
-import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
-import com.kh.coddy.board.job.model.vo.Hattachment;
+import com.kh.coddy.board.recruitment.model.vo.Joins;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
-import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Service
@@ -32,8 +31,6 @@ public class IntroServiceImpl implements IntroService {
 	
 	@Override
 	public int insertBoard(IBoard i) {
-		
-		System.out.println(i);
 		
 		return introDao.insertBoard(sqlSession , i);
 	}
@@ -163,9 +160,9 @@ public class IntroServiceImpl implements IntroService {
 	}
 	
 	@Override
-	public ArrayList<RecruitmentState> getState(Recruitment r) {
+	public ArrayList<Joins> getState(ArrayList<Project> projectlist) {
 		
-		return introDao.getState(sqlSession, r);
+		return introDao.getState(sqlSession, projectlist);
 	}
 
 	@Override
@@ -247,6 +244,33 @@ public class IntroServiceImpl implements IntroService {
 		
 		return introDao.updateBoard(sqlSession , i);
 	}
+
+	@Override
+	public IBoard iBoardUpdate(int projectNo) {
+		
+		return introDao.iBoardUpdate(sqlSession, projectNo);
+	}
+
+	@Override
+	public ArrayList<Profile> getJoinMember(int projectNo) {
+		
+		return introDao.getJoinMember(sqlSession, projectNo);
+	}
+
+	@Override
+	public ArrayList<Joins> getJoinInfo(int projectNo) {
+		
+		return introDao.getJoinInfo(sqlSession, projectNo);
+	}
+
+	@Override
+	public ArrayList<Iattachment> iAttachmentUpdate(int iboardNo) {
+		
+		return introDao.iAttachmentUpdate(sqlSession, iboardNo);
+	}
+
+
+
 
 
 

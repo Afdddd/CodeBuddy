@@ -55,7 +55,7 @@
   /* swiper 이미지 영역 사이즈 조절 */
   .swiper {
       width: 80%;
-      height: 200px;
+      height: 250px;
   }   
 
   /* 이미지 사이즈 조절 */
@@ -358,24 +358,29 @@
       </div>
     </div>
 
-    <div style="width: 100%; height: 60%; display: flex; border: 2px solid silver; padding: 1%;">
-      <h5 style="width: 10%; margin: auto;" align="center">#태그</h5>
       <div style="width: 90%; margin: auto;">
-          <jsp:include page="../../common/tagAll.jsp" />
       </div>
-      
-    </div>
-        <div style="float: right; display: flex; margin-top: 2%; margin-bottom: 2%;">
-          <select name="introSort" id="introSort">
-              <option value="new" selected>최신순</option>
-              <option value="old">끝난순</option>
-              <option value="view">조회순</option>
-              <option value="like">좋아요순</option>
-          </select>
-          &nbsp;
-          <input type="search" class="form-control form-control-lg" id="introSearch" name="keyword">
-          &nbsp;&nbsp;
-          <span onclick="onSearch();" style="height: 100%;"><svg xmlns="http://www.w3.org/2000/svg" height="3em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg></span>
+      <br><br>
+ 		
+       <div id="search-area" style="float: right; display: flex; margin-top: 2%; margin-bottom: 2%;">
+       <!--  
+    <form action="search.bo" method="get" style="display: flex;">
+        <select name="condition" id="condition" style="height : 45px;">
+            <option value="MEMBER_ID" selected>작성자</option>
+            <option value="IBOARD_TITLE">제목</option>
+            <option value="IBOARD_CONTENT">내용</option>
+        </select>
+        &nbsp;
+        <input type="search" style="height" value="${requestScope.keyword}" class="form-control form-control-lg" id="keyword" name="keyword">
+        &nbsp;&nbsp;
+        <button type="submit" style="width : 80px;">검색</button>
+    </form>
+      -->
+	<br><br>
+    		
+    		
+    		
+    		
     </div>
     <br><br><br><br>
 
@@ -538,6 +543,14 @@
 	    document.getElementById('listModal').style.display = 'none';
 	}
 	
+	$(function() {
+		$("#search-area option[value=${requestScope.condition}]")
+									.attr("selected", true);
+	});
+	
+	
+	
+	
 </script>
 	</div>
   <jsp:include page="../../common/footer.jsp" />	
@@ -547,7 +560,7 @@
 		    <span class="close-btn2" onclick="closeModal()">&times;</span>
 		    
 				<div class="comment-container">
-				<c:forEach var="b" items="${requestScope.projectlist}">
+				<c:forEach var="b" items="${projectlist}">
 					  <div class="comment" onclick="location.href='introForm.bo?projectno=${b.projectNo}'">
 					    <div class="comment-author">${b.projectName}</div>
 					    <div class="comment-text">${b.projectOwner}</div>

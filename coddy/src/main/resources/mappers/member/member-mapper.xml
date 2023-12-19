@@ -90,7 +90,6 @@
 		UPDATE MEMBER
 			SET MEMBER_NAME = #{memberName},
 				MEMBER_INFO = #{memberInfo},
-		MEMBER_PHOTO_EXTEND = #{memberPhotoExtend}
 			WHERE MEMBER_ID = #{memberId}
 			AND MEMBER_DELETE IS NULL
 	</update>
@@ -218,6 +217,100 @@
 		  WHERE M.MEMBER_NO = F.FBOARD_WRITER
 		    AND FBOARD_DELETE IS NULL
 		    AND FBOARD_WRITER = #{memberNo}
+	</select>
+	
+	<select id="count1" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		  FROM RECRUITMENT R, MEMBER M
+		 WHERE R.RECRUITMENT_WRITER = M.MEMBER_NO
+		   AND R.RECRUITMENT_WRITER = #{memberNo}
+		   AND R.RECRUITMENT_DELETE IS NULL
+	</select>
+	
+	<select id="count2" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		  FROM CBOARD C, MEMBER M
+		 WHERE C.CBOARD_WRITER = M.MEMBER_NO
+		   AND C.CBOARD_WRITER = #{memberNo}
+		   AND C.CBOARD_DELETE IS NULL
+	</select>
+	
+	<select id="count3" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		  FROM FBOARD F, MEMBER M
+		 WHERE F.FBOARD_WRITER = M.MEMBER_NO
+		   AND F.FBOARD_WRITER = #{memberNo}
+		   AND F.FBOARD_DELETE IS NULL
+	</select>
+	
+	<select id="count4" parameterType="_int" resultType="_int">
+		SELECT COUNT(*)
+		  FROM IBOARD I, MEMBER M
+		 WHERE I.IBOARD_WRITER = M.MEMBER_NO
+		   AND I.IBOARD_WRITER = #{memberNo}
+		   AND I.IBOARD_DELETE IS NULL
+	</select>
+	
+	<select id="projecting" parameterType="_int" resultType="_int">
+	    SELECT COUNT(*)
+		  FROM RECRUITMENT R, PROJECT P, MEMBER M, JOINS J
+         WHERE R.RECRUITMENT_NO = P.RECRUITMENT_NO
+           AND P.PROJECT_NO = J.PROJECT_NO
+           AND J.MEMBER_NO = M.MEMBER_NO
+           AND JOINS_ACTIVATE = 1
+           AND J.MEMBER_NO = #{memberNo}
+           AND R.RECRUITMENT_DELETE IS NULL
+	</select>
+	
+	<select id="selectListing" parameterType="_int" resultMap="recruitmentResultSet">
+		 SELECT
+    R.RECRUITMENT_NO AS "RECRUITMENT_NO",
+    R.RECRUITMENT_TITLE AS "RECRUITMENT_TITLE",
+    R.RECRUITMENT_WRITER AS "RECRUITMENT_WRITER",
+    R.RECRUITMENT_INSERT AS "RECRUITMENT_INSERT",
+    R.RECRUITMENT_VIEWS AS "RECRUITMENT_VIEWS"
+	FROM RECRUITMENT R
+	JOIN PROJECT P ON R.RECRUITMENT_NO = P.RECRUITMENT_NO
+	JOIN JOINS J ON P.PROJECT_NO = J.PROJECT_NO
+	JOIN MEMBER M ON J.MEMBER_NO = M.MEMBER_NO
+	WHERE J.JOINS_ACTIVATE = 1
+    AND J.MEMBER_NO = #{memberNo}
+    AND R.RECRUITMENT_DELETE IS NULL
+	</select>
+	
+	<select id="selectMember" parameterType="_int" resultMap="memberResultSet">
+		SELECT MEMBER_NO,
+			   MEMBER_ID,
+			   MEMBER_EMAIL,
+			   MEMBER_NAME,
+			   MEMBER_PHOTO_EXTEND,
+			   MEMBER_INFO,
+			   MEMBER_INSERT
+		  FROM MEMBER
+		 WHERE MEMBER_NO = #{memberNo}
+	</select>
+	
+	<select id="selectListyourCount" parameterType="_int" resultType="_int">
+		     SELECT COUNT(*)
+		    FROM RECRUITMENT R, PROJECT P
+		   WHERE R.RECRUITMENT_NO = P.RECRUITMENT_NO 
+		     AND RECRUITMENT_DELETE IS NULL
+		     AND PROJECT_READY = 1
+		     AND RECRUITMENT_WRITER = #{memberNo}
+	</select>
+	
+	<select id="selectListyour" parameterType="_int" resultMap="recruitmentResultSet">
+		 SELECT R.RECRUITMENT_NO,
+		 		R.RECRUITMENT_TITLE,
+		 		R.RECRUITMENT_VIEWS,
+		 		M.MEMBER_NAME AS "RECRUITMENT_WRITER",
+		 	    TO_CHAR(R.RECRUITMENT_INSERT, 'YYYY-MM-DD') AS "RECRUITMENT_INSERT"
+		   FROM RECRUITMENT R, MEMBER M, PROJECT P
+		  WHERE M.MEMBER_NO = R.RECRUITMENT_WRITER
+		    AND R.RECRUITMENT_NO = P.RECRUITMENT_NO
+		    AND R.RECRUITMENT_DELETE IS NULL
+		    AND P.PROJECT_READY = 1
+		    AND R.RECRUITMENT_WRITER = #{memberNo}
 	</select>
 	
 	<insert id="insertMember" parameterType="member">INSERT INTO MEMBER(MEMBER_NO, MEMBER_ID, MEMBER_PWD, MEMBER_EMAIL, MEMBER_NAME, MEMBER_INFO) VALUES(SEQ_MEMBER.NEXTVAL, #{memberId}, #{memberPwd}, #{memberEmail}, #{memberName}, #{memberInfo})</insert>

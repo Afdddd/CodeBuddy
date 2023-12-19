@@ -5,7 +5,7 @@
 <html>
   <head> 
     <meta charset="UTF-8">
-    <title>마이페이지-소집게시판</title>
+    <title>진행 중인 프로젝트</title>
     <style>
       .innerOuter { 
         width:80%; 
@@ -157,9 +157,9 @@
    #pagingArea{
    width:fit-content; 
    margin:auto;
-  }
+  	}
   
-  #color {
+    #color {
   	background-color: skyblue;
   	padding : 15px;
   }
@@ -169,6 +169,7 @@
   #color2 {
   	background-color: #f3f7fe;
   }
+  	
     </style>
   </head>
   <body>
@@ -200,18 +201,9 @@
           <div class="modal-body">
 
 
-				<div class="wrap">
-				      <div class="menu2">
-				         <div class="menu_item" id="color"><a href="written.ro">모집게시판</a></div>
-				        <div class="menu_item" id="color1"><a href="written.co">코드리뷰게시판</a></div>
-				        <div class="menu_item" id="color2"><a href="written.fo">자유게시판</a></div>
-				      </div>
-				    </div>
-				    <br><br>
-				    
-		
 
-		 <h3>모집게시판</h3><br>
+		
+		<h3>진행중인 프로젝트</h3><br>
 		<span> ▷ 총 ${requestScope.listCount}개의 게시물이 있습니다. </span>
 		<!--
 		<span class="right";> 
@@ -240,13 +232,13 @@
 			    </tr>
 			</thead>
 			<tbody>
-		      <c:forEach var="r" items="${ requestScope.list }">
+		      <c:forEach var="i" items="${ requestScope.list }">
 		    <tr>
-		        <td class="center, rno" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${r.recruitmentNo}</td>
-		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${r.recruitmentTitle}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${r.recruitmentWriter}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${r.recruitmentInsert}</td>
-		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${r.recruitmentView}</td>   
+		        <td class="center, rno" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.recruitmentNo}</td>
+		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.recruitmentTitle}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.recruitmentWriter}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.recruitmentInsert}</td>
+		        <td class="center" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${i.recruitmentView}</td>   
 		    </tr>
 			  </c:forEach>
 			</tbody>
@@ -267,6 +259,7 @@
 				
 				
 			});
+			
 		</script>
 		
   <div id="pagingArea">
@@ -280,7 +273,7 @@
                 </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.ro?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                      <a class="page-link" href="written.co?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
                     </li>
                   </c:otherwise>
               </c:choose>
@@ -289,7 +282,7 @@
                           end="${ requestScope.pi.endPage }"
                           step="1">
                   <li class="page-item">
-                    <a class="page-link" href="written.ro?cpage=${ p }">${ p }</a>
+                    <a class="page-link" href="written.co?cpage=${ p }">${ p }</a>
                   </li>
               </c:forEach>
                 
@@ -301,7 +294,7 @@
                   </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.ro?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                      <a class="page-link" href="written.co?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
                     </li>
                   </c:otherwise>
                 </c:choose>

@@ -91,7 +91,7 @@
 		<result column="MAX_PERSONNEL" property="maxPersonnel" />
 	</resultMap>
 		
-		<resultMap id="rAttachmentResultSet" type="rAttachment">
+	<resultMap id="rAttachmentResultSet" type="rAttachment">
 		<result column="RECRUITMENT_ATTACHMENT_NO" property="rAttachmentNo" />
 		<result column="RECRUITMENT_NO" property="recruitmentNo" />
 		<result column="RECRUITMENT_ATTACHMENT_ORIGIN" property="rAttachmentOrigin" />
@@ -100,6 +100,22 @@
 		<result column="RECRUITMENT_ATTACHMENT_INSERT" property="rAttachmentInsert" />		
 		<result column="RECRUITMENT_ATTACHMENT_LEVEL" property="rAttachmentLevel" />		
 	</resultMap>	
+		
+	<resultMap id="joinsResultSet" type="joins">
+		<result column="JOINS_NO" property="joinsNo" />
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="PROJECT_NO" property="projectNo" />
+		<result column="JOINS_ROLE" property="position" />
+		<result column="JOINS_REVIEW" property="joinsReview" />
+	</resultMap>
+	
+	<resultMap id="profileResultSet" type="profile">
+		<result column="MEMBER_NO" property="memberNo" />
+		<result column="MEMBER_NAME" property="memberName" />
+		<result column="JOINS_ROLE" property="role" />
+		<result column="PROJECT_NO" property="projectNo" />
+		<result column="PROFILE_IMG" property="profileImg" />
+	</resultMap>
 		
 	<insert id="insertBoard" parameterType="intro">
 		INSERT INTO IBOARD(
@@ -142,7 +158,7 @@
 				 WHERE IBOARD_DELETE IS NULL
 	</select>
 	
-	<select id="selectList" parameterType="isearch" resultMap="introResultSet">
+	<select id="selectList" resultMap="introResultSet">
 		SELECT IBOARD_NO,
 		 	   IBOARD_TITLE, 
 		 	   PROJECT_NO,
@@ -325,7 +341,7 @@
 		
 	
 		<select id="selectRecruitment2" parameterType="_int" resultMap="recruitmentResultSet">
-		SELECT  RECRUITMENT_NO,
+			SELECT  R.RECRUITMENT_NO,
 				RECRUITMENT_TITLE,
 				RECRUITMENT_CONTENT,
 				MEMBER_NAME AS "RECRUITMENT_WRITER",
@@ -335,10 +351,10 @@
         		TO_CHAR(R.RECRUITMENT_END, 'YYYY-MM-DD') AS "RECRUITMENT_END",
         		RECRUITMENT_LOCATION,
         		RECRUITMENT_INTRO
-		FROM RECRUITMENT R, MEMBER M
+		FROM RECRUITMENT R, MEMBER M, PROJECT P
 		WHERE R.RECRUITMENT_WRITER = M.MEMBER_NO
-		AND RECRUITMENT_NO = #{projectno}
-		AND RECRUITMENT_DELETE IS NULL
+          AND R.RECRUITMENT_NO = P.RECRUITMENT_NO
+          AND P.PROJECT_NO = #{projectNo}
 	</select>
 	
 		<select id="getTagInfo2" parameterType="recruitment" resultMap="pRelationResultSet">
@@ -349,10 +365,15 @@
 		AND PR.RECRUITMENT_NO=#{recruitmentNo}
 	</select>
 	
-	<select id="getState" parameterType="recruitment" resultMap="rStateResultSet">
-		SELECT * 
-		FROM RECRUITMENT_STATE
-		WHERE RECRUITMENT_NO = #{recruitmentNo}
+	<select id="getState" parameterType="recruitment" resultMap="joinsResultSet">
+		SELECT JOINS_NO,
+               J.MEMBER_NO,
+               J.PROJECT_NO,
+               J.JOINS_ROLE,
+               J.JOINS_REVIEW
+		  FROM JOINS J, PROJECT P
+         WHERE J.PROJECT_NO = P.PROJECT_NO
+           AND P.PROJECT_NO = #{projectNo}
 	</select>
 	
 	<select id="getThumbOne" parameterType="recruitment" resultMap="rAttachmentResultSet">
@@ -468,6 +489,106 @@
 		   AND IBOARD_DELETE IS NULL     
 	</update>
 	
+	<select id="iBoardUpdate" parameterType="_int" resultMap="introResultSet">
+		SELECT *
+		  FROM IBOARD
+		 WHERE PROJECT_NO = #{projectNo}  
+	</select>
+	
+	<select id="selectListCountAdmin" resultType="_int">
+		SELECT COUNT(*) 
+		  FROM IBOARD
+	</select>
+	<select id="selectListAdmin" resultMap="introResultSet">
+		SELECT IBOARD_NO,
+		 	   IBOARD_TITLE, 
+		 	   PROJECT_NO,
+		 	   IBOARD_VIEWS,
+		 	   IBOARD_CONTENT,
+		 	   M.MEMBER_NAME AS "IBOARD_WRITER",
+		 	   PROJECT_NO,
+		 	   TO_CHAR(I.IBOARD_INSERT, 'YYYY-MM-DD') AS "IBOARD_INSERT",
+		 	   IBOARD_VIEWS
+		  FROM IBOARD I, MEMBER M
+		 WHERE I.IBOARD_WRITER = M.MEMBER_NO
+		   AND IBOARD_DELETE IS NULL
+		 ORDER BY IBOARD_NO DESC
+	       </select>
+	<update id="forceDelete" parameterType="_int">
+		UPDATE IBOARD 
+		   SET IBOARD_DELETE = SYSDATE 
+		 WHERE IBOARD_NO = #{iboardNo} 
+		   AND IBOARD_DELETE IS NULL
+	</update>
+	<update id="forceRestore" parameterType="_int">
+		UPDATE IBOARD 
+		   SET IBOARD_DELETE = NULL 
+		 WHERE IBOARD_NO = #{iboardNo}
+		   AND IBOARD_DELETE IS NOT NULL
+	</update>
+	<select id="getTag" parameterType="_int" resultMap="pRelationResultSet">
+	    SELECT PR.RECRUITMENT_NO AS "RECRUITMENT_NO", 
+	      	   TG.TAGS_NAME AS "TAGS_NO" 
+		  FROM PRELATION PR, TAGS TG, PROJECT P, RECRUITMENT R 
+		 WHERE PR.TAGS_NO = TG.TAGS_NO
+		   AND PR.RECRUITMENT_NO = R.RECRUITMENT_NO
+	       AND R.RECRUITMENT_NO = P.RECRUITMENT_NO
+	       AND PROJECT_NO = #{projectNo} 
+		   AND TG.TAGS_ACTIVE=1
+	</select>
+	
+	<select id="selectSearchCount" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM IBOARD I
+		  JOIN MEMBER ON (IBOARD_WRITER = MEMBER_NO)
+		 WHERE IBOARD_DELETE IS NULL 
+		   AND ${condition} LIKE '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="selectSearchList" parameterType="string" resultMap="introResultSet">
+		SELECT *
+		  FROM IBOARD
+		  JOIN MEMBER ON (IBOARD_WRITER = MEMBER_NO)
+		 WHERE IBOARD_DELETE IS NULL
+		   AND ${condition} LIKE '%' || #{keyword} || '%'
+		 ORDER BY IBOARD_NO DESC
+	</select>
+	
+	<select id="getJoinMember" parameterType="_int" resultMap="profileResultSet">
+		SELECT J.MEMBER_NO, 
+		       M.MEMBER_NAME AS "MEMBER_NAME",
+		       J.JOINS_ROLE,
+		       J.PROJECT_NO, 
+		       M.MEMBER_PHOTO_EXTEND AS "PROFILE_IMG"
+		  FROM MEMBER M,JOINS J
+		 WHERE J.MEMBER_NO = M.MEMBER_NO
+           AND J.PROJECT_NO = #{ProjectNo}
+	</select>
+	
+	<select id="getJoinInfo" parameterType="_int" resultMap="joinsResultSet">
+			SELECT JOINS_NO,
+                   MEMBER_NO,
+                   J.PROJECT_NO,
+                   JOINS_ROLE,
+                   JOINS_ACTIVATE,
+                   JOINS_REVIEW
+              FROM JOINS J, PROJECT P
+             WHERE J.PROJECT_NO = P.PROJECT_NO
+               AND J.PROJECT_NO = #{projectNo}
+	</select>
+	
+	<select id="iAttachmentUpdate" parameterType="_int" resultMap="introAttachmentResultSet">
+		SELECT IA.IBOARD_NO,
+			   IATTACHMENT_NO,
+			   IATTACHMENT_ORIGIN,
+			   IATTACHMENT_CHANGE,
+			   IATTACHMENT_PATH,
+			   IATTACHMENT_INSERT,
+			   IATTACHMENT_LEVEL
+		  FROM IATTACHMENT IA, IBOARD I
+		 WHERE IA.IBOARD_NO = I.IBOARD_NO
+		   AND IA.IBOARD_NO = #{iboardNo}		   
+	</select>
 	
 </mapper>
 	

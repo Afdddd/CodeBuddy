@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>My페이지</title>
       <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900&display=swap" rel="stylesheet">
@@ -71,79 +71,46 @@
                         </ul>
                     </li>
                     <hr>
+                    <li><a href="#">나의 평가</a></li>
+                    <hr>
                     <li><a href="written.io">참여한 프로젝트</a></li>
-
                     <li><a href="#">찜한 프로젝트</a></li>
-                    <li><a href="likedJob.me">찜한 채용공고</a></li>
+                    <li><a href="#">찜한 채용공고</a></li>
                     <hr>
                     <li><a href="written.ro">작성한 게시글</a></li>
+                    <li><a href="#">작성한 댓글</a></li>
                 </ul>
                     
                 <form action="update.me" method="post" enctype="multipart/form-data">
                 	<input type="hidden" name="memberNo" value="${sessionScope.loginMember.memberNo}">
 	                    <div class="form-group" style="display:flex">
 	                        <div class="content1" style="width:60%; padding-left : 80px;">
-	                        <c:choose>
-	                        	<c:when test="${sessionScope.loginMember.memberPhotoExtend eq 'jpg'}">
-	                            	<img src="resources/image/profile/<fmt:formatNumber value='${sessionScope.loginMember.memberNo}' pattern='00000000' />.${sessionScope.loginMember.memberPhotoExtend}" width="300px"height="300px" id="preview">
-	                         	</c:when>
-	                         	<c:otherwise>
-	                         	<img src="https://vlee.kr/wp-content/uploads/2020/03/windows10.jpg" width="300px"height="300px" id="preview"  alt="User photo">
-	                         	</c:otherwise>
-	                         </c:choose>
+	                       
 	                         <br> <br>
-	                         <!-- 
-	                         <script>
-	                         function loadFile(input) {
-	             				var files = input.files;
-	                            console.log(files);
-	             				$("#preview").attr("src", URL.createObjectURL(files[0]));
-	
-	             				var formData = new FormData();
-	             				formData.append("uploadFiles", files[0])
-	                         };
-	             			function loadFile(input) {
-	             				var files = input.files;
-	             				$("#preview1").attr("src", URL.createObjectURL(files[1]));
-	             				
-	             				var formData = new FormData();
-	             				formData.append("uploadFiles1", files[0])
-	             				}
-	                            /*
-	             				$.ajax({
-	             					type : "POST",
-	             					url : "uploadFile.co",
-	             					processData: false,
-	             					contentType: false,
-	             					data : formData,
-	             					success : function(result) { alert(result); },
-	             					error : function(xhr, status, error) { alert(error); }
-	             				});
-	                            */
-	             			};
-	                         </script>
-	                          -->                
+	                        
+	                                       
 	                         <label for="memberId">* ID : </label>
 	                         <input type="text" class="form-control" id="memberId" value="${sessionScope.loginMember.memberId}" style="width : 300px;" name="memberId" readonly> <br>
 	
 	                         <label for="memberEmail"> * Email : </label>
 	                         <input type="text" class="form-control" id="memberEmail" value="${sessionScope.loginMember.memberEmail}" style="width : 300px;" name="memberEmail" readonly> <br>
 	                        
+	                        <label for="memberName">Name : </label>
+	                            <input type="text" class="form-control" id="memberName" value="${sessionScope.loginMember.memberName}" name="memberName" style="width : 300px;"> <br>
 	                        </div>
 	
 	                        <div class="content2" style="width:40%; padding-left : 50px;">
 	                        
-	                            <label for="memberName">Name : </label>
-	                            <input type="text" class="form-control" id="memberName" value="${sessionScope.loginMember.memberName}" name="memberName" style="width : 300px;"> <br>
+	                        <br><br>
 	                            
 	                            <label for="memberInfo"> &nbsp; 자기소개 : </label>
 	                            <!-- <input type="text" class="form-control" id="memberInfo" value="${sessionScope.loginMember.memberInfo}" name="memberInfo" style="height : 280px;"> -->
-	                            <textarea name="memberInfo" id="memberInfo" style="width : 300px; height : 430px; resize:none;">${sessionScope.loginMember.memberInfo}</textarea><br>
+	                            <textarea name="memberInfo" id="memberInfo" style="width : 300px; height : 250px; resize:none;">${sessionScope.loginMember.memberInfo}</textarea><br>
 	                        </div>
 	                     
 	                    </div> 
 	                    <br><br><br><br>	
-	                    <div class="btns" align="center" style="padding-right : 150px;">
+	                    <div class="btns" align="center" style="padding-right : 100px;">
 	                        <button type="submit" id="uploadBtn" class="btn btn-primary">수정하기</button>
 	                    </div>
                   

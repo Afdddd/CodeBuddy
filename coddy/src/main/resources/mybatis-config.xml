@@ -37,6 +37,7 @@
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.RecruitSearch" alias="rSearch"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.PlaceDto" alias="pDto" />
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Profile" alias="profile" />
+     	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Joins" alias="joins" />
      	
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Prelation" alias="pRelation"/>
      	<typeAlias type="com.kh.coddy.board.recruitment.model.vo.Project" alias="project"/>     

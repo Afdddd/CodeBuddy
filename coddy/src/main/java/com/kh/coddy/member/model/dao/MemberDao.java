@@ -120,7 +120,53 @@ public class MemberDao {
 	        return (ArrayList) sqlSession.selectList("memberMapper.selectListh", memberNo, rowBounds);
 	    }
 	
-
+	 public int count1(SqlSessionTemplate sqlSession, int memberNo) {
+			
+			return sqlSession.selectOne("memberMapper.count1", memberNo);
+		}
+		public int count2(SqlSessionTemplate sqlSession, int memberNo) {
+			
+			return sqlSession.selectOne("memberMapper.count2", memberNo);
+		}
+		public int count3(SqlSessionTemplate sqlSession, int memberNo) {
+			
+			return sqlSession.selectOne("memberMapper.count3", memberNo);
+		}
+		public int count4(SqlSessionTemplate sqlSession, int memberNo) {
+			
+			return sqlSession.selectOne("memberMapper.count4", memberNo);
+		}
+		public int projecting(SqlSessionTemplate sqlSession, int memberNo) {
+			
+			return sqlSession.selectOne("memberMapper.projecting", memberNo);
+		}
+		public ArrayList<Recruitment> selectListing(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+			
+			System.out.println(memberNo);
+			int limit = pi.getBoardLimit();
+			int offset = (pi.getCurrentPage() - 1) * limit;
+			
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			
+			return (ArrayList)sqlSession.selectList("memberMapper.selectListing", memberNo, rowBounds);
+		}
+		public ArrayList<Member> selectMember(SqlSessionTemplate sqlSession, int memberNo) {
+			
+			return (ArrayList)sqlSession.selectList("memberMapper.selectMember", memberNo);
+		}
+		public int selectListyourCount(SqlSessionTemplate sqlSession, int memberNo) {
+			
+			return sqlSession.selectOne("memberMapper.selectListyourCount", memberNo);
+		}
+		public ArrayList<Recruitment> selectListyourCount(SqlSessionTemplate sqlSession, PageInfo pi, int memberNo) {
+			
+			int limit = pi.getBoardLimit();
+			int offset = (pi.getCurrentPage() - 1) * limit;
+			
+			RowBounds rowBounds = new RowBounds(offset, limit);
+			
+			return (ArrayList)sqlSession.selectList("memberMapper.selectListyour", memberNo, rowBounds);
+		}
 	
 	
 }

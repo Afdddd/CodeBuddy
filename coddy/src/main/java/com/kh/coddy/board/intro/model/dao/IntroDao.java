@@ -10,15 +10,13 @@ import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.intro.model.vo.Iattachment;
 import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.IreplyImage;
-import com.kh.coddy.board.intro.model.vo.Isearch;
 import com.kh.coddy.board.intro.model.vo.Likes;
-import com.kh.coddy.board.job.model.vo.HSearch;
-import com.kh.coddy.board.job.model.vo.Hattachment;
+import com.kh.coddy.board.recruitment.model.vo.Joins;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
-import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Repository
@@ -153,9 +151,9 @@ public class IntroDao {
 		return (ArrayList)sqlSession.selectList("introMapper.getTagInfo2", r); 
 	}
 
-	public ArrayList<RecruitmentState> getState(SqlSessionTemplate sqlSession, Recruitment r) {
+	public ArrayList<Joins> getState(SqlSessionTemplate sqlSession, ArrayList<Project> projectlist) {
 		
-		return (ArrayList)sqlSession.selectList("introMapper.getState",r);
+		return (ArrayList)sqlSession.selectList("introMapper.getState", projectlist);
 	}
 
 	public Rattachment getThumbOne(SqlSessionTemplate sqlSession, Recruitment r) {
@@ -216,6 +214,26 @@ public class IntroDao {
 	public int updateBoard(SqlSessionTemplate sqlSession, IBoard i) {
 		
 		return sqlSession.update("introMapper.updateBoard", i);
+	}
+
+	public IBoard iBoardUpdate(SqlSessionTemplate sqlSession, int projectNo) {
+		
+		return sqlSession.selectOne("introMapper.iBoardUpdate", projectNo);
+	}
+
+	public ArrayList<Profile> getJoinMember(SqlSessionTemplate sqlSession, int projectNo) {
+		
+		return (ArrayList)sqlSession.selectList("introMapper.getJoinMember", projectNo);
+	}
+
+	public ArrayList<Joins> getJoinInfo(SqlSessionTemplate sqlSession, int projectNo) {
+		
+		return (ArrayList)sqlSession.selectList("introMapper.getJoinInfo", projectNo);
+	}
+
+	public ArrayList<Iattachment> iAttachmentUpdate(SqlSessionTemplate sqlSession, int iboardNo) {
+		
+		return (ArrayList)sqlSession.selectList("introMapper.iAttachmentUpdate", iboardNo);
 	}
 
 
