@@ -14,6 +14,7 @@
 		<result column="CBOARD_TITLE" property="cboardTitle" />
 		<result column="CBOARD_WRITER" property="cboardWriter" />
 		<result column="CBOARD_INSERT" property="cboardInsert" />
+		<result column="CBOARD_DELETE" property="cboardDelte" />
 		<result column="CREATE_DATE" property="createDate" /> 
 		<result column="ORIGIN_NAME" property="originName" />
 		<result column="CBOARD_CONTENT" property="cboardContent" />
@@ -222,5 +223,10 @@
 	    WHERE RNUM <![CDATA[>]]> #{pi.startRow}
 	</select>
 	
+	<select id="selectListCountAdmin" resultType="_int">SELECT COUNT(*) FROM CBOARD</select>
+	<select id="selectListAdmin" resultMap="cboardResultSet">SELECT C.CBOARD_NO AS "CBOARD_NO", C.CBOARD_TITLE AS "CBOARD_TITLE", C.CBOARD_CONTENT AS "CBOARD_CONTENT", C.CBOARD_INSERT AS "CBOARD_INSERT", C.CBOARD_DELETE AS "CBOARD_DELETE", C.CBOARD_VIEWS AS "CBOARD_VIEWS", M.MEMBER_NAME AS "CBOARD_WRITER" FROM CBOARD C, MEMBER M WHERE C.CBOARD_WRITER=M.MEMBER_NO</select>
+	<update id="forceDelete" parameterType="_int">UPDATE CBOARD SET CBOARD_DELETE=SYSDATE WHERE CBOARD_NO=#{cboardNo} AND CBOARD_DELETE IS NULL</update>
+	<update id="forceRestore" parameterType="_int">UPDATE CBOARD SET CBOARD_DELETE=NULL WHERE CBOARD_NO=#{cboardNo} AND CBOARD_DELETE IS NOT NULL</update>
+	<select id="getTag" parameterType="_int" resultMap="crelationResultSet">SELECT CR.CBOARD_NO AS "CBOARD_NO", TG.TAGS_NAME AS "TAGS_NO" FROM CRELATION CR, TAGS TG WHERE CR.TAGS_NO=TG.TAGS_NO AND CR.CBOARD_NO=#{cboardNo} AND TG.TAGS_ACTIVE=1</select>
     
 </mapper>

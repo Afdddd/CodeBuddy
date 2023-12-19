@@ -16,7 +16,6 @@ import com.kh.coddy.admin.board.hboard.model.service.HboardAdminService;
 import com.kh.coddy.board.job.model.service.HboardService;
 import com.kh.coddy.board.job.model.vo.Hboard;
 import com.kh.coddy.common.Pagination;
-import com.kh.coddy.common.tag.model.vo.Tags;
 import com.kh.coddy.common.vo.Geo;
 import com.kh.coddy.common.vo.PageInfo;
 import com.kh.coddy.member.model.vo.Member;
