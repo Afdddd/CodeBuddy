@@ -12,7 +12,7 @@
 <script src="https://cdn.jsdelivr.net/npm/ckeditor5-upload-adapter@1.0.3/src/uploadadapter.min.js"></script>
  -->
 <script src="resources/js/UploadAdapter.js"></script>
-<title>Insert title here</title>
+<title>코드리뷰</title>
 <style>
 
 	button[type="submit"] {

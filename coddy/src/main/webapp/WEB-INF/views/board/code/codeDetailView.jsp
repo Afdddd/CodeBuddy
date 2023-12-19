@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>코드리뷰</title>
 <style>
     table * {margin:5px;}
     
