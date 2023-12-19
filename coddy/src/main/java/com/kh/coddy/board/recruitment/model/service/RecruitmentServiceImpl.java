@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import com.kh.coddy.board.recruitment.model.dao.RecruitmentDao;
 import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
+import com.kh.coddy.board.recruitment.model.vo.RecruitSearch;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
@@ -127,17 +129,41 @@ public class RecruitmentServiceImpl implements RecruitmentService{
 		int pno = memberList.get(0).getProjectNo();
 		log.info("pno = {}",pno);
 		int result = rDao.updateProjectState(sqlSession, pno);
-		log.info("service result = {}",result);
-		if(0<result) {
-			rDao.insertJoin(sqlSession, memberList);
-			return 1;
-		}
-		return 0;		
+		log.info("service result = {}",result);		
+		int result2 = rDao.insertJoin(sqlSession, memberList);
+		log.info("service result2 = {}",result2);
+		return result * result2;
+				
 	}
 	@Override
 	public int memberExile(HashMap<String, Integer> map) {
 		return rDao.memberExile(sqlSession, map);
 	}
+	@Override
+	public ArrayList<Profile> getJoinMember(int pno) {
+		return rDao.getJoinMember(sqlSession, pno);
+	}
+	@Override
+	public int getLikeCount(int rno) {
+		return rDao.getLikeCount(sqlSession,rno);
+	}
+	@Override
+	public int getViewCount(int rno) {
+		return rDao.getLikeCount(sqlSession,rno);
+	}
+	@Override
+	public int insertViewCount(int rno) {
+		return rDao.insertViewCount(sqlSession,rno);
+	}
+	@Override
+	public int selectSearchCount(RecruitSearch rSearch) {
+		return rDao.selectSearchCount(sqlSession,rSearch);
+	}
+	@Override
+	public ArrayList<Recruitment> selectSearchList(PageInfo pi, RecruitSearch rs) {
+		return rDao.selectSearchList(sqlSession, pi, rs);
+	}
+	
 	
 	
 	

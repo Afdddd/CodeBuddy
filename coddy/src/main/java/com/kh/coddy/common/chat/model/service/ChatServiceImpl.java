@@ -93,5 +93,10 @@ public class ChatServiceImpl implements ChatService{
 	public Project getProject(int projectNo) {
 		return cDao.getProject(sqlSession, projectNo);
 	}
+
+	@Override
+	public ArrayList<Integer> getFixApply(ChatMember cm) {
+		return cDao.getFixApply(sqlSession, cm);
+	}
 	
 }

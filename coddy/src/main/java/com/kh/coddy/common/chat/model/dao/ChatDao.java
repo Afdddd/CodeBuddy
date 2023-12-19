@@ -41,5 +41,8 @@ public class ChatDao {
 	public Project getProject(SqlSessionTemplate sqlSession, int projectNo) {
 		return sqlSession.selectOne("chatMapper.getProject",projectNo);
 	}
+	public ArrayList<Integer> getFixApply(SqlSessionTemplate sqlSession, ChatMember cm) {
+		return (ArrayList)sqlSession.selectList("chatMapper.getFixApply",cm);
+	}
 		
 }

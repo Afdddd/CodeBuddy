@@ -8,12 +8,12 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.model.vo.PlaceDto;
 import com.kh.coddy.board.recruitment.model.vo.Prelation;
+import com.kh.coddy.board.recruitment.model.vo.Profile;
 import com.kh.coddy.board.recruitment.model.vo.Project;
-import com.kh.coddy.board.recruitment.model.vo.RSearch;
 import com.kh.coddy.board.recruitment.model.vo.Rattachment;
+import com.kh.coddy.board.recruitment.model.vo.RecruitSearch;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentState;
 import com.kh.coddy.board.recruitment.model.vo.RecruitmentWishList;
@@ -37,17 +37,11 @@ public class RecruitmentDao {
 	public int createProject(SqlSessionTemplate sqlSession, Project p) {
 		return sqlSession.insert("recruitmentMapper.createProject",p);
 	}
-//	public int selectListCount(SqlSessionTemplate sqlSession, RSearch rs) {
-//		return sqlSession.selectOne("recruitmentMapper.selectListCount", rs);
-//	}
+
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("recruitmentMapper.selectListCount");
 	}
-//	public ArrayList<Recruitment> selectList(SqlSessionTemplate sqlSession, PageInfo pi, RSearch rs){
-//		int limit = pi.getBoardLimit();
-//		int offset = (pi.getCurrentPage() -1) *limit;			
-//		return (ArrayList)sqlSession.selectList("recruitmentMapper.selectList", rs, new RowBounds(offset, limit)); 
-//	}
+
 	public ArrayList<Recruitment> selectList(SqlSessionTemplate sqlSession, PageInfo pi){
 		int limit = pi.getBoardLimit();
 		int offset = (pi.getCurrentPage() -1) *limit;			
@@ -96,10 +90,37 @@ public class RecruitmentDao {
 		return sqlSession.update("recruitmentMapper.updateProjectState",pno);
 	}
 	public int insertJoin(SqlSessionTemplate sqlSession, ArrayList<ChatMember> memberList) {
-		return sqlSession.insert("recruitmentMapper.insertJoin",memberList);
+		
+		int i = 0;
+		for(ChatMember c : memberList) {
+			i = sqlSession.insert("recruitmentMapper.insertJoin",c);
+		}
+		return i*=i;
+		
 	}
 	public int memberExile(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
 		return sqlSession.delete("recruitmentMapper.memberExile",map);
 	}
-		
+	public ArrayList<Profile> getJoinMember(SqlSessionTemplate sqlSession, int pno) {
+		return (ArrayList)sqlSession.selectList("recruitmentMapper.getJoinMember",pno);
+	}
+	public int getLikeCount(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.selectOne("recruitmentMapper.getLikeCount",rno);
+	}
+	public int getViewCount(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.selectOne("recruitmentMapper.getViewCount",rno);
+	}
+	public int insertViewCount(SqlSessionTemplate sqlSession, int rno) {
+		return sqlSession.update("recruitmentMapper.insertViewCount",rno);
+	}
+	
+	
+	public int selectSearchCount(SqlSessionTemplate sqlSession, RecruitSearch rs) {
+	return sqlSession.selectOne("recruitmentMapper.selectSearchCount", rs);
+	}
+	public ArrayList<Recruitment> selectSearchList(SqlSessionTemplate sqlSession, PageInfo pi, RecruitSearch rs){
+	int limit = pi.getBoardLimit();
+	int offset = (pi.getCurrentPage() -1) *limit;			
+	return (ArrayList)sqlSession.selectList("recruitmentMapper.selectSearchList", rs, new RowBounds(offset, limit)); 
+	}
 }

@@ -7,9 +7,11 @@ import lombok.Setter;
 import lombok.ToString;
 
 @NoArgsConstructor @AllArgsConstructor @Getter @Setter @ToString
-public class RSearch {
-	private String keyword;
-	private String[] tagCareers;
-	private String[] tagTechs;
-	private int recruiting; 
+public class Profile {
+	private int memberNo;
+	private String memberName;
+	private String role;
+	private int projectNo;
+	private String profileImg;
+	
 }
