@@ -554,6 +554,10 @@ INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_S
 ? 주도적으로 일을 찾아 문제를 해결하고 개선하는 분</p></section>', 10, TO_DATE('01-16-2024 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('03-14-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 28000000, 'none', 'junior', '06155');
 
 INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, 'NAVER I&S㈜/자회사 각 부문 수시 채용', '<p><a href="https://www.jobkorea.co.kr/Recruit/GI_Read/43562231?rPageCode=SL&amp;logpath=21" target="_blank">지원하러가기</a><br></p>', 11, TO_DATE('12-02-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('04-20-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 60000000, 'none', 'none', '24376');
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, '로봇 통합 관제 시스템 백엔드 개발자 (5년 이상)', '<div class="css-1dcto04" style="width: 722px; display: flex; flex-direction: row; -webkit-box-pack: start; justify-content: start; -webkit-box-align: center; align-items: center; gap: 0rem; margin: 0px 0px 8px; color: rgb(33, 37, 42); font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, sans-serif; font-size: 15px; text-align: start;"><h3 class="css-l8sxp3" style="font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, sans-serif; font-size: 16px; font-stretch: normal; line-height: 1.38; font-weight: bold; white-space-collapse: preserve-breaks; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px;">주요업무</h3></div><p class="css-19hzmb1" style="font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, &quot;Helvetica Neue&quot;, &quot;Segoe UI&quot;, &quot;Apple SD Gothic Neo&quot;, &quot;Noto Sans KR&quot;, &quot;Malgun Gothic&quot;, sans-serif; font-stretch: normal; line-height: 1.63; white-space-collapse: preserve-breaks; text-align: start; word-break: break-all; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; color: rgb(33, 37, 42);">? 전세계 로봇이 연결되어 통합 운영 관리되는 "솔링크" 시스템 백엔드 구축에 참여해요
+? 개발 효율성을 위해 프론트, CI/CD, DevOps를 함께 고려해요
+? 사용자 경험을 향상시키기 위해 고민하며 제품을 만들어요
+? 서비스 성장을 위해 다양한 사람과 함께 협업하고 기여해요</p>', 12, TO_DATE('12-28-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('01-19-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 48000000, 'university', 'middle', '06187');
 
 DROP TABLE HWISHLIST;
 
@@ -599,6 +603,7 @@ INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 7, 'rk02vp1en9--LOR39kpE
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 8, 'BbXDtD2Ifcq2krqTZiepz.png', 'f2be478c-10e0-4511-a5a9-80ea0c9371e9_BbXDtD2Ifcq2krqTZiepz.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 9, 'iHWiBK8K6mb-C3Dm7PHXh.jpg', '3b82204b-575b-48ce-aa00-c9bae0095ded_iHWiBK8K6mb-C3Dm7PHXh.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 10, 'JK_CO_u3ybwBo22062818070797.png', '68908c5c-f1c9-4354-9aab-bb503f9f1d42_JK_CO_u3ybwBo22062818070797.png', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 11, 'PRx6kHnJ7ubsNX5MjztaL.png', '6c404b3e-58b7-4d98-a977-b4febacbdda2_PRx6kHnJ7ubsNX5MjztaL.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 
 DROP TABLE HRELATION;
 
@@ -649,5 +654,12 @@ INSERT INTO HRELATION VALUES(9, 47);
 INSERT INTO HRELATION VALUES(9, 50);
 INSERT INTO HRELATION VALUES(9, 95);
 INSERT INTO HRELATION VALUES(10, 90);
+INSERT INTO HRELATION VALUES(11, 11);
+INSERT INTO HRELATION VALUES(11, 16);
+INSERT INTO HRELATION VALUES(11, 20);
+INSERT INTO HRELATION VALUES(11, 40);
+INSERT INTO HRELATION VALUES(11, 43);
+INSERT INTO HRELATION VALUES(11, 50);
+INSERT INTO HRELATION VALUES(11, 56);
 
 COMMIT;
