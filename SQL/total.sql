@@ -287,6 +287,7 @@ INSERT INTO COMPANY(COMPANY_NO, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_
 솔루션퀀트는 수 많은 데이터(정형/비정형, 퍼블릭/프라이빗)와 전문적인 퀀트 시스템을 기반으로 투자하는 회사입니다.
 솔루션퀀트의 운용엔진은 펀드매니저 역량에 의존하는 전통적인 운용 방식에서 벗어나 데이터를 통해 운용하는 방식으로 설계되어 있습니다.
 데이터를 투자자산에 맵핑(Mapping)하고 클렌징, 최적화, 테스팅을 통해 투자하는 100% Systematic Hedge Fund를 지향합니다.</p>', 5, 28000000, 'jpg');
+INSERT INTO COMPANY(COMPANY_NO, COMPANY_ID, COMPANY_PWD, COMPANY_EMAIL, COMPANY_NAME, COMPANY_OWNER, COMPANY_BNO, COMPANY_INFO, COMPANY_WORKER, COMPANY_SALARY, COMPANY_PHOTO_EXTEND) VALUES(SEQ_COMPANY.NEXTVAL, 'naveris', '$2a$10$J1rPzY5.J8mb8DhHjnv4t.ncEytRQ2Y5ejOCU2Tdcrtv3mI30YR5q', 'naveris@coddy.com', 'NAVER I&S㈜', '김인엽', 0000000008, '<h3 class="various_title" style="margin-top: 0px; margin-bottom: 0px; padding: 0px; font-size: 38px; line-height: 50px; letter-spacing: -0.76px; color: rgb(0, 0, 0); font-family: Roboto, NanumSquare, 나눔스퀘어, -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;Apple SD Gothic Neo&quot;, 돋움, dotum, arial, sans-serif; text-align: start;">중요한 것은 실력과 태도</h3><p class="various_text" style="margin: 33px 0px 0px; padding: 0px; font-size: 17px; line-height: 30px; letter-spacing: -0.34px; font-family: NanumSquare, 나눔스퀘어, 돋움, dotum, arial, sans-serif; text-align: start;">나이, 연차, 직급이 아니라 실력과 태도, 의지로 인정받습니다.<br class="pc_block">네이버아이앤에스에 과장, 차장, 부장 등의 직급 체계가 없는 이유이기도 합니다.<br class="pc_block">전문성과 영향력을 갖췄다면 누구나 일을 주도할 수 있고 더 크게 보상받습니다.</p>', 150, 60000000, 'jpg');
 
 COMMIT;
 
@@ -410,6 +411,7 @@ INSERT INTO TAGS VALUES(SEQ_TAGS.NEXTVAL, 'Selenium', 0, 1);
 INSERT INTO TAGS VALUES(SEQ_TAGS.NEXTVAL, 'Azure', 0, 1);
 INSERT INTO TAGS VALUES(SEQ_TAGS.NEXTVAL, 'Pandas', 0, 1);
 INSERT INTO TAGS VALUES(SEQ_TAGS.NEXTVAL, 'Education', 1, 1);
+INSERT INTO TAGS VALUES(SEQ_TAGS.NEXTVAL, 'Field Engineer', 1, 1);
 
 COMMIT;
 
@@ -822,6 +824,8 @@ INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_S
 ? ＜솔루션퀀트 백엔드를 구성하는 기술＞의 기술분야에 대해 3가지 이상의 항목에 대한 경험
 ? 주도적으로 일을 찾아 문제를 해결하고 개선하는 분</p></section>', 10, TO_DATE('01-16-2024 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('03-14-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 28000000, 'none', 'junior', '06155');
 
+INSERT INTO HBOARD(HBOARD_NO, HBOARD_TITLE, HBOARD_CONTENT, COMPANY_NO, HBOARD_START, HBOARD_END, HBOARD_SALARY, HBOARD_EDUCATION, HBOARD_CAREER, HBOARD_LOCATION) VALUES(SEQ_HBOARD.NEXTVAL, 'NAVER I&S㈜/자회사 각 부문 수시 채용', '<p><a href="https://www.jobkorea.co.kr/Recruit/GI_Read/43562231?rPageCode=SL&amp;logpath=21" target="_blank">지원하러가기</a><br></p>', 11, TO_DATE('12-02-2023 00:00:00', 'MM-DD-YYYY HH24:MI:SS'), TO_DATE('04-20-2024 00:00:00','MM-DD-YYYY HH24:MI:SS'), 60000000, 'none', 'none', '24376');
+
 CREATE TABLE HWISHLIST (
 	HWISHLIST_MEMBER	NUMBER		NOT NULL,
 	HBOARD_NO	NUMBER		NOT NULL,
@@ -862,6 +866,7 @@ INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 6, '6l29t_z_gjiRjF6HdsuJ
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 7, 'rk02vp1en9--LOR39kpEw.JPG', '941e639b-7349-4266-be04-8859a4292933_rk02vp1en9--LOR39kpEw.JPG', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 8, 'BbXDtD2Ifcq2krqTZiepz.png', 'f2be478c-10e0-4511-a5a9-80ea0c9371e9_BbXDtD2Ifcq2krqTZiepz.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 9, 'iHWiBK8K6mb-C3Dm7PHXh.jpg', '3b82204b-575b-48ce-aa00-c9bae0095ded_iHWiBK8K6mb-C3Dm7PHXh.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
+INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 10, 'JK_CO_u3ybwBo22062818070797.png', '68908c5c-f1c9-4354-9aab-bb503f9f1d42_JK_CO_u3ybwBo22062818070797.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 
 CREATE TABLE HRELATION (
 	HBOARD_NO	NUMBER		NOT NULL,
@@ -909,6 +914,7 @@ INSERT INTO HRELATION VALUES(9, 43);
 INSERT INTO HRELATION VALUES(9, 47);
 INSERT INTO HRELATION VALUES(9, 50);
 INSERT INTO HRELATION VALUES(9, 95);
+INSERT INTO HRELATION VALUES(10, 90);
 
 COMMIT;
 
