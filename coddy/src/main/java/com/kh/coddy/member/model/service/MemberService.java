@@ -1,11 +1,13 @@
 package com.kh.coddy.member.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.free.model.vo.Fboard;
 import com.kh.coddy.board.intro.model.vo.IBoard;
 import com.kh.coddy.board.job.model.vo.Hboard;
+import com.kh.coddy.board.job.model.vo.Hwishlist;
 import com.kh.coddy.board.recruitment.model.vo.Recruitment;
 import com.kh.coddy.common.auth.model.vo.Auth;
 import com.kh.coddy.common.vo.PageInfo;
@@ -76,12 +78,11 @@ public interface MemberService {
 	// fboard 전체 조회
 	ArrayList<Fboard> selectListf(PageInfo pi, int memberNo);
 	
-	// Hboard 카운트 조회
-	int selectListCountl(int memberNo);
-	
-	// Hboard 전체조회
-	ArrayList<Hboard> selectListl (PageInfo pi, int memberNo);
 	
 
+	int selectListCounth(int memberNo);
 
+	
+	ArrayList<Hboard> selectListh(PageInfo pi, int memberNo);
+		
 }

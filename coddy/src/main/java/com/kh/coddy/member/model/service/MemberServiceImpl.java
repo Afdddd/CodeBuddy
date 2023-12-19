@@ -1,6 +1,7 @@
 package com.kh.coddy.member.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,16 +102,14 @@ public class MemberServiceImpl implements MemberService{
 		return memberDao.selectListf(sqlSession, pi, memberNo);
 	}
 	
-	@Override
-	public int selectListCountl(int memberNo) {
-		
-		return memberDao.selectListCountl(sqlSession, memberNo);
-	}
-	@Override
-	public ArrayList<Hboard> selectListl(PageInfo pi, int memberNo) {
-		
-		return memberDao.selectListl(sqlSession, pi, memberNo);
-	}
+	 @Override
+	 public int selectListCounth(int memberNo) {
+	        return memberDao.selectListCounth(sqlSession, memberNo);
+	    }
+	 @Override
+	    public ArrayList<Hboard> selectListh(PageInfo pi, int memberNo) {
+	        return memberDao.selectListh(sqlSession, pi, memberNo);
+	    }
 	
 	
 }

@@ -8,8 +8,10 @@ import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Crelation;
 import com.kh.coddy.board.code.model.vo.Creply;
 import com.kh.coddy.board.code.model.vo.CreplyImage;
+import com.kh.coddy.board.code.model.vo.Csearch;
 import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.IreplyImage;
+import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.common.vo.PageInfo;
 
 

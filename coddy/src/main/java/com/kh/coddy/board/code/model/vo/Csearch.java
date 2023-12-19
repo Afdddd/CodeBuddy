@@ -11,7 +11,6 @@ public class Csearch {
 
 	private String keyword;
 	private String sort;
-	private String[] tags;
 	
 	
 }

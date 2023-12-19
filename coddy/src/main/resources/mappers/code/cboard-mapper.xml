@@ -66,33 +66,29 @@
         		#{changeName})
     </insert>
     
+    <select id="selectListCount" resultType="int">
+    	SELECT COUNT(*)
+	    FROM CBOARD, MEMBER
+	    WHERE MEMBER_NO = CBOARD_WRITER
+    </select>
+    
+    <!-- 
 	<select id="selectListCount" resultType="int">
 		SELECT COUNT(*)
 		  FROM CBOARD
-	</select>  
-	 <!-- 
-	<select id="selectListCount" parameterType="csearch" resultType="_int">
-				SELECT COUNT (DISTINCT(C.CBOARD_NO)) 
-				  FROM CBOARD C, CRELATION CR, TAGS TG
-				 WHERE C.CBOARD_NO = CR.CBOARD_NO  
-				   AND CR.TAGS_NO = TG.TAGS_NO 
-				   AND TG.TAGS_NAME IN 
-		<foreach collection="tags" item="item" index="index" open="(" close=")" separator=",">#{item}</foreach>
-				   AND C.CBOARD_DELETE IS NULL
-				   AND (C.CBOARD_TITLE LIKE '%'||#{keyword}||'%') 
-				 ORDER BY ${sort} DESC
-	</select> 
-	  -->
-	 
+	</select>
+	-->
+	
 	<select id="selectList" resultMap="cboardResultSet">
 	  SELECT CBOARD_NO
 	       , CBOARD_TITLE
-	       , CBOARD_WRITER
+	       , MEMBER_NAME AS "CBOARD_WRITER"
 	       , CBOARD_VIEWS
 	       , TO_CHAR(CBOARD_INSERT, 'YYYY-MM-DD') AS "CBOARD_INSERT"
 	       , ORIGIN_NAME
-	    FROM CBOARD
+	    FROM CBOARD, MEMBER
 	   WHERE CBOARD_DELETE IS NULL
+	     AND MEMBER_NO = CBOARD_WRITER 
 	   ORDER BY CBOARD_NO DESC
 	</select>
 	
@@ -139,15 +135,16 @@
     
 	<select id="selectBoard" parameterType="_int" resultMap="cboardResultSet">
 		SELECT CBOARD_NO
-		     , CBOARD_TITLE
-		     , CBOARD_CONTENT
-		     , CBOARD_WRITER
-		     , TO_CHAR(CBOARD_INSERT, 'YYYY-MM-DD') AS "CBOARD_INSERT"
-		     , CBOARD_VIEWS
-		     , ORIGIN_NAME
-		     , CHANGE_NAME
-		  FROM CBOARD
-		 WHERE CBOARD_NO = #{cboardNo}
+	         , CBOARD_TITLE
+	         , CBOARD_CONTENT
+	         , MEMBER_NAME AS "CBOARD_WRITER"
+	         , TO_CHAR(CBOARD_INSERT, 'YYYY-MM-DD') AS "CBOARD_INSERT"
+	         , CBOARD_VIEWS
+	         , ORIGIN_NAME
+	         , CHANGE_NAME
+	      FROM CBOARD, MEMBER
+	      WHERE MEMBER_NO = CBOARD_WRITER 
+	        AND CBOARD_NO = #{cboardNo}
 	</select>    
  
 	

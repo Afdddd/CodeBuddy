@@ -134,24 +134,33 @@
 		    AND IBOARD_WRITER = #{memberNo}
 	</select>
 	
-	<select id="selectListCountl" resultType="_int">
-		  SELECT COUNT(*)
-		    FROM HBOARD
-		   WHERE HBOARD_DELETE IS NULL
-		     AND HBOARD_WRITER = #{memberNo}
+	<select id="selectListCounth" resultType="int">
+        SELECT COUNT(*) 
+          FROM HWISHLIST HW, HBOARD H
+         WHERE H.HBOARD_DELETE IS NULL
+         	AND HW.HBOARD_NO = H.HBOARD_NO
+		   AND HW.HWISHLIST_MEMBER = #{memberNo}
+    </select>
+
+    <select id="selectListh" parameterType="map" resultType="com.kh.coddy.board.job.model.vo.Hboard">
+	        SELECT 
+	        H.HBOARD_NO as hboardNo, 
+	        H.HBOARD_TITLE as hboardTitle, 
+	        H.HBOARD_CONTENT as hboardContent, 
+	        H.HBOARD_INSERT as hboardInsert,
+                H.HBOARD_DELETE as hboardDelete, 
+                H.HBOARD_VIEWS as hboardViews, 
+                H.HBOARD_START as hboardStart, 
+                H.HBOARD_END AS hboardEnd,
+                CO.COMPANY_NAME AS companyNo
+	        FROM HBOARD H
+	        JOIN COMPANY CO ON CO.COMPANY_NO = H.COMPANY_NO
+            JOIN HWISHLIST HW ON HW.HBOARD_NO = H.HBOARD_NO
+	        WHERE H.HBOARD_DELETE IS NULL
+	        	AND HW.HWISHLIST_MEMBER = #{memberNo}
+	        ORDER BY H.HBOARD_NO DESC
 	</select>
 	
-	<select id="selectListl" parameterType="_int" resultMap="hboardResultSet">
-		 SELECT HBOARD_NO,
-		 		HBOARD_TITLE,
-		 		HBOARD_VIEWS,
-		 		M.MEMBER_NAME AS "COMPANY_NO",
-		 	    TO_CHAR(H.HBOARD_INSERT, 'YYYY-MM-DD') AS "HBOARD_INSERT"
-		   FROM HBOARD H, MEMBER M
-		  WHERE M.MEMBER_NO = H.COMPANY_NO
-		    AND HBOARD_DELETE IS NULL
-		    AND COMPANY_NO = #{memberNo}
-	</select>
 	
 	
 	<select id="selectListCountr" resultType="_int">

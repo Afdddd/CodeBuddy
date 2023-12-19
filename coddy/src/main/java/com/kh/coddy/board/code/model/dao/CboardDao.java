@@ -12,6 +12,7 @@ import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Crelation;
 import com.kh.coddy.board.code.model.vo.Creply;
 import com.kh.coddy.board.code.model.vo.CreplyImage;
+import com.kh.coddy.board.code.model.vo.Csearch;
 import com.kh.coddy.board.intro.model.vo.Ireply;
 import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.common.vo.PageInfo;
@@ -26,6 +27,7 @@ public class CboardDao {
 		return sqlSession.selectOne("cboardMapper.selectListCount");
 	}
 
+	
 	public ArrayList<Cboard> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 
 		int limit = pi.getBoardLimit();

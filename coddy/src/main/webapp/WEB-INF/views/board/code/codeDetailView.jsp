@@ -208,7 +208,7 @@
 
             <div align="center">
                 <!-- 수정하기, 삭제하기 버튼은 이 글이 본인이 작성한 글일 경우에만 보여져야 함 -->
-	            <c:if test="${ not empty sessionScope.loginMember and sessionScope.loginMember.memberNo eq requestScope.c.cboardWriter }"> 
+	            <c:if test="${ not empty sessionScope.loginMember and sessionScope.loginMember.memberName eq requestScope.c.cboardWriter }"> 
 	                <a class="btn btn-secondary" onclick="postFormSubmit(1);">수정하기</a>
 	                <a class="btn btn-secondary" onclick="postFormSubmit(2);">삭제하기</a>
 	                

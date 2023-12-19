@@ -198,17 +198,8 @@
 
 
 		 <h3>채용공고</h3><br>
-		<span> ▷ 총 ${requestScope.listCount}개의 게시물이 있습니다. </span>
-		<!--
-		<span class="right";> 
-		            <span class="grey"; id="strong";>SELECT</span>
-		    <select>
-		    <option value="제목"; name="제목"; >제목</option>
-		    <option value="글쓴이";name="글쓴이";>글쓴이</option>
-		    </select>
-		<input type="text";> <input type="button" name="검색" class="gradient" value="검색" >
-		</span>
-		 -->
+		<span> ▷ 총 ${requestScope.likedJobCount}개의 게시물이 있습니다. </span>
+	
 		
 		<br>
 		<table id="table">
@@ -222,7 +213,7 @@
 			    </tr>
 			</thead>
 			<tbody>
-		      <c:forEach var="r" items="${ requestScope.list }">
+		      <c:forEach var="h" items="${ requestScope.list }">
 		    <tr>
 		        <td class="center, hno" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${h.hboardNo}</td>
 		        <td class="left" style="border-bottom: 1px solid #d3d3d3; padding: 10px;">${h.hboardTitle}</td>
@@ -241,14 +232,19 @@
 				
 				$("#table>tbody>tr").click(function(){
 					
-					let rno = $(this).children(".rno").text();
+					let hno = $(this).children(".hno").text();
 					
-					location.href = "detail.rec?rno=" + rno;
+					location.href = "detail.hec?hno=" + hno;
 				
 				});
 				
 				
 			});
+			
+			 
+			
+			
+			
 		</script>
 		
   <div id="pagingArea">
@@ -262,7 +258,7 @@
                 </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.ro?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+                      <a class="page-link" href="likedJob.me?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
                     </li>
                   </c:otherwise>
               </c:choose>
@@ -271,7 +267,7 @@
                           end="${ requestScope.pi.endPage }"
                           step="1">
                   <li class="page-item">
-                    <a class="page-link" href="written.ro?cpage=${ p }">${ p }</a>
+                    <a class="page-link" href="likedJob.me?cpage=${ p }">${ p }</a>
                   </li>
               </c:forEach>
                 
@@ -283,7 +279,7 @@
                   </c:when>
                   <c:otherwise>
                     <li class="page-item">
-                      <a class="page-link" href="written.ro?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+                      <a class="page-link" href="likedJob.me?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
                     </li>
                   </c:otherwise>
                 </c:choose>
