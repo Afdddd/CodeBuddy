@@ -217,7 +217,7 @@
 							PROJECT_INFO,
 							PROJECT_START,
 							PROJECT_END)
-					 VALUES(SEQ_PROJECT.NEXTVAL,
+					 VALUES(SEQ_RECRUITMENT.CURRVAL,
 					 		#{projectOwner},
 					 		SEQ_RECRUITMENT.CURRVAL,
 					 		#{projectName},
