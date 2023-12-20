@@ -113,9 +113,10 @@ public class MemberController {
 	public String myPageSe(HttpSession session) {
 		if(session.getAttribute("loginMember") == null) {
 			session.setAttribute("alertMsg", "로그인 후 이용해 주세요.");
+			
 			return "redirect:/";
 		}
-		
+		session.setAttribute("countSum", this.boardSum(session));
 		return "member/myPage1";
 	}
 	

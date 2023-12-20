@@ -400,9 +400,9 @@
                       </div>
                       <div class="img">
                       </div>
-                      <span>${f.memberName}</span>
-                      <p class="job">${f.role}</p>
-                      <button onclick='location.href="profile.me?mno=" + ${f.memberNo}'>프로필</button>
+                      <span style="margin: auto;">${f.memberName}</span>
+                      <p class="job" style="margin: auto;">${f.role}</p>
+                      <button style="margin: auto;" class="position_button" onclick='location.href="profile.me?mno=" + ${f.memberNo}'>프로필</button>
                     </div>  
                   </c:forEach>    
                 </div>

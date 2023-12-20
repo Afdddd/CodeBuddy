@@ -182,7 +182,7 @@
                 <div class="question">                  
                     <h3>모집인원</h3>
                         <select id="skills" name="position">
-                            <option>PM</option>                                            
+                            <option>Project Manager</option>                                            
                             <option>Project Planner</option>                             
                             <option>FE</option>                             
                             <option>BE</option>                             
@@ -327,9 +327,10 @@ function loadImg(inputFile, num){
    
         // 모집인원 추가
         $("#personnel_add").on("click",function(){
-            let $list = $(  "<div class='project_member'>"+
-                                "<select id='skills' name='position'"+
-                                "<option>PM</option>"+                                           
+            let $list = $(  
+                            "<div class='project_member'>"+
+                            "<select id='skills' name='position'"+
+                            "<option>PM</option>"+                                           
                             "<option>Project Planner</option>"+                             
                             "<option>FE</option>"+                             
                             "<option>BE</option>"+                             
