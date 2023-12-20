@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="resources/js/UploadAdapter.js"></script>
-    <title>글 수정</title>
+    <title>자유게시판 수정</title>
     <style>
         #freeUpdateForm>table {width:100%;}
         #freeUpdateForm>table * {margin:5px;}

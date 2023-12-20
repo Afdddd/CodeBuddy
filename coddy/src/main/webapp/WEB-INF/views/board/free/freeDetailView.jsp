@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<title>Insert title here</title>
+<title>${ requestScope.f.fboardTitle }</title>
 <style>
     table * {margin:5px;}
     table {width:100%;}
@@ -329,7 +329,6 @@
 						resultStr += "</div>"
 									+ "</div>"
 									+ "<div class='content'>" + result[i].freplyContent + "</div>"
-									+ "<div class='timestamp'>" + result[i].freplyInsert + "</div>"
 									+ "</div>"
 		
 						}
