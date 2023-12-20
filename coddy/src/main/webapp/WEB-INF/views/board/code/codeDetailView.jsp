@@ -12,7 +12,6 @@
     
     .innerOuter {
     	width:1000px;
-    	margin-left:100px;
     }
     
 	pre { background-color: rgb(225, 225, 225);
@@ -138,7 +137,7 @@
 	}
 	
 	textarea {
-	  width: 80px;
+	  width: 950px;
 	  height: 100px; /* 조절 가능한 높이 */
 	  margin-bottom: 10px;
 	  resize: none; /* 크기 조절 비활성화 */
@@ -154,6 +153,10 @@
 	  cursor: pointer;
 	}				
     
+    .content {
+    width: 900px!important;
+    margin: auto;
+}
 </style>
 </head>
 <body>
@@ -247,13 +250,13 @@
                     		<c:when test="${ empty sessionScope.loginMember }">
                     			<!-- 로그인 전 : 댓글창 막기 -->
                     			<th colspan="2">
-		                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:100%;" readonly>로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용 바랍니다.</textarea>
+		                            <textarea class="form-control" cols="55" rows="2" style="resize:none; width:900px;" readonly>로그인한 사용자만 이용 가능한 서비스입니다. 로그인 후 이용 바랍니다.</textarea>
 		                        </th>
-		                        <th style="vertical-align:middle" ><button class="btn" style="color:white; background:#5271FF; padding:6px;" disabled>등록하기</button></th>
+		                        <th style="vertical-align:middle" ><button class="btn" style="color:white; background:#5271FF;width:100px;" disabled>등록하기</button></th>
                     		</c:when>
                     		<c:otherwise>
 		                        <th colspan="2">
-		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:100%;"></textarea>
+		                            <textarea class="form-control" id="content" cols="55" rows="2" style="resize:none; width:900px;"></textarea>
 		                        </th>
 		                        <th style="vertical-align:middle"><button class="btn" style="color:white; background:#5271FF; padding:6px; width:80px;" onclick="addReply();">등록하기</button></th>
                     		</c:otherwise>
