@@ -40,7 +40,7 @@
             <div class="noticeList" align="left">
 
 			<!-- 로그인 후 상태일 경우만 보여지는 글쓰기 버튼 -->
-            <c:if test="${ not empty sessionScope.loginMember }"> 
+            <c:if test="${ not empty sessionScope.loginMember && sessionScope.loginMember.memberId eq 'admin' }"> 
 	            <a class="btn" style="float:right; color:white; background:#5271FF; padding:6px;" 
 	            							href="enrollForm.no">
 	            	글쓰기

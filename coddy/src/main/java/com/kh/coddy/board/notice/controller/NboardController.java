@@ -87,8 +87,9 @@ public class NboardController {
 		return mv;
 	}
 	@GetMapping(value="enrollForm.no")
-	public String enrollForm() {
-		
+	public String enrollForm(HttpSession session) {
+		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "어드민만 접근가능합니다!"); return "redirect:/"; }
+		if(!((Member)session.getAttribute("loginMember")).getMemberId().equals("admin")) { session.setAttribute("alertMsg", "어드민만 접근가능합니다!"); return "redirect:/"; }
 		return "board/notice/noticeEnrollForm";
 	}
 	
