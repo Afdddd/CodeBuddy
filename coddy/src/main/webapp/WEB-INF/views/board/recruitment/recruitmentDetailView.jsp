@@ -393,7 +393,7 @@
           <hr>
           
           <div class="swiper">
-                <div class="swiper-wrapper">
+                <div class="swiper-wrapper">     
                   <c:forEach var="f" items="${requestScope.fList}" varStatus="tagStatus">           
                     <div class="card swiper-slide">
                       <div class="card-border-top">

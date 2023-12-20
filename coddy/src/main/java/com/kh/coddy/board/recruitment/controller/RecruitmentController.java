@@ -188,7 +188,7 @@ public class RecruitmentController {
 			// 프로젝트 대기방 생성
 			Project p = new Project();
 			p.setProjectOwner(r.getRecruitmentWriter()); 
-			p.setProjectName(r.getRecruitmentContent());
+			p.setProjectName(r.getRecruitmentTitle());
 			p.setProjectInfo(r.getRecruitmentContent());
 			p.setProjectStart(r.getRecruitmentStart());
 			p.setProjectEnd(r.getRecruitmentEnd());
