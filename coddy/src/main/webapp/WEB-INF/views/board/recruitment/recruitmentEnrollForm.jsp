@@ -142,9 +142,12 @@
                 <div class="project_name">
                     <h3>프로젝트명</h3>
                     <div class="input-wrapper">
-                        <input type="text" name="recruitmentTitle" class="input" required>
+                        <input type="text" name="recruitmentTitle" class="input" required id="title" maxlength="20">
                     </div>
                 </div>
+                <script>
+                    $("#title").val().length
+                    </script>
 
                 <div class="question">
                     <h3>간단소개</h3>
@@ -160,14 +163,13 @@
                     <img style="cursor: pointer; border: 3px dotted lightgray;" id="contentImg2" width="150" height="120" src="resources/image/white.jpg">
                     <img style="cursor: pointer; border: 3px dotted lightgray;" id="contentImg3" width="150" height="120" src="resources/image/white.jpg">
                     <div id="img_list">
-                        <input type="file" id="file1" name="titleImg" accept="image/*" onchange="loadImg(this,1);"> 
+                        <input type="file" id="file1" name="titleImg" accept="image/*" onchange="loadImg(this,1);" required> 
                         <input type="file" id="file2" name="img" accept="image/*" onchange="loadImg(this,2);">
                         <input type="file" id="file3" name="img" accept="image/*" onchange="loadImg(this,3);">
                         <input type="file" id="file4" name="img" accept="image/*" onchange="loadImg(this,4);">
                     </div>
                     <br>
-                    <span>없다면 기본 이미지가 채워집니다.</span><br>
-                    <span>같은사진을 연속으로 배치할 수 없습니다.</span>
+                    <span>대표사진은 필수 입니다.</span><br>
                 </div>
                
                 <div class="question">
@@ -212,7 +214,7 @@
                             <option>DX Design</option>
                             <option>Algorithm Developer</option>
                         </select>
-                    <input type='number' name="personnelMax" required>
+                    <input id="project_member" type='number' name="personnelMax" required>
                         <div class="member_list">
                             <div class="project_member">                               
                             </div>
@@ -318,8 +320,21 @@ function loadImg(inputFile, num){
         obj.parent().remove();
     }
     
+    $(document).on("change", "#project_member", function() {
+    // Get the value and convert it to a number
+    let memberIndex = parseInt($("#project_member").val(), 10);
+
+        if (memberIndex < 1) {
+            $("#project_member").val(1); 
+        }
+        if(memberIndex > 5){
+            $("#project_member").val(5); 
+        }
+    
+    });
 
     $(document).ready(function() {
+        
         $("a[name='file-delete']").on("click", function(e) {
             e.preventDefault();
             deleteFile($(this));
@@ -360,7 +375,7 @@ function loadImg(inputFile, num){
                             "<option>DX Design</option>"+
                             "<option>Algorithm Developer</option>"+
                                 "</select>"+
-                                "<input type='number' name='personnelMax'>"+
+                                "<input type='number' id='project_member' name='personnelMax'>"+
                             "</div>");           
             $(".member_list").append($list);
         });
@@ -368,6 +383,8 @@ function loadImg(inputFile, num){
         $("#personnel_remove").on("click",function(){
             $(".project_member").eq($(".member_list").children().length-1).remove();
         });
+
+
         // 모집인원수 감소
         $(document).on("click", ".minus", function() {
             let i = parseInt($(this).siblings(".countNumber").text());
@@ -383,6 +400,8 @@ function loadImg(inputFile, num){
             let i = parseInt($(this).siblings(".countNumber").text());
             i = i+1;
            $(this).siblings(".countNumber").text(i);
+           
+           
            console.log(i);
         });
 

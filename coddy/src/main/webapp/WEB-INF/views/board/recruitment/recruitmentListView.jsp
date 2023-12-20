@@ -573,13 +573,13 @@
         
         for(let i = 0; i < result.length; i++) {
           
-          resultStr += "<li>"+
-                          "<div>"+ 
-                          "<h2>"+ result[i].recruitmentTitle + "</h2>"+
-                          "<span class='popular_list_insert'>" + result[i].recruitmentInsert + "</span>"+
-                          "</div>" +
-                          "<h3>" + result[i].recruitmentIntro + "</h3>" +
-                        "</li>";
+          resultStr += "<li onclick=\"location.href='detail.rec?rno=" + result[i].recruitmentNo + "';\">" +
+                    "<div>" +
+                    "<h2>" + result[i].recruitmentTitle + "</h2>" +
+                    "<span class='popular_list_insert'>" + result[i].recruitmentInsert + "</span>" +
+                    "</div>" +
+                    "<h3>" + result[i].recruitmentIntro + "</h3>" +
+                    "</li>";
         }
         $(".popular-project-list>ul").html(resultStr);
         }
@@ -592,13 +592,20 @@
       data:{},
       success:function(result){
 
+        // let resultStr = "";
+        // for(let i = 0; i < result.length; i++) {
+        //   let path = result[i].rAttachmentPath+ "/"+ result[i].rAttachmentChange;
+        //   let el = "#slide"+i;
+        //   resultStr="<img src='"+path+"' onclick='location.href='>";
+        //   $(".swiper-wrapper>"+el).html(resultStr);
+        // } 
         let resultStr = "";
-        for(let i = 0; i < result.length; i++) {
-          let path = result[i].rAttachmentPath+ "/"+ result[i].rAttachmentChange;
-          let el = "#slide"+i;
-          resultStr="<img src='"+path+"'>";
-          $(".swiper-wrapper>"+el).html(resultStr);
-        } 
+for (let i = 0; i < result.length; i++) {
+    let path = result[i].rAttachmentPath + "/" + result[i].rAttachmentChange;
+    let el = "#slide" + i;
+    resultStr += "<img src='" + path + "' onclick=\"location.href='detail.rec?rno=" + result[i].recruitmentNo + "';\">";
+    $(".swiper-wrapper>" + el).html(resultStr);
+}
        
       }
     });

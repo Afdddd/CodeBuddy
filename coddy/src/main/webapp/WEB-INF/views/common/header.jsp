@@ -96,7 +96,7 @@
         #header_1_right>a:hover {cursor:pointer;}
         #header_1_center>ul {width:100%; height:100%; list-style-type:none; margin:auto; padding:0;}
         #header_1_center>ul>li {float:left; width:15%; height:100%; line-height:55px; text-align:center;}
-        #header_1_center>ul>li a {text-decoration:none; color:black; font-size:18px; font-weight:900;}
+        #header_1_center>ul>li a {text-decoration:none; color:black; font-size:18px; font-weight:900; margin-left: 20px;}
         #header a {text-decoration:none; color:black;}
 
         /* 세부페이지마다 공통적으로 유지할 style */
@@ -113,11 +113,11 @@
             margin-top: 20px;
         }
         #header_1_left>img{
-            width:150px;
-            height:100px;
+            width:200px;
+            height:80px;
             float: left;
             position:absolute;
-            top: 0px;
+            
             object-fit : cover; 
         }
         

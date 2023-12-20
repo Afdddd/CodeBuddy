@@ -116,6 +116,7 @@ public class MemberController {
 			
 			return "redirect:/";
 		}
+		
 		session.setAttribute("countSum", this.boardSum(session));
 		return "member/myPage1";
 	}
