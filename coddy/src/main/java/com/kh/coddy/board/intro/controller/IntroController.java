@@ -106,6 +106,7 @@ public class IntroController {
 		@RequestParam(value="tag", defaultValue="") String tag,
 		@RequestParam(value="condition", defaultValue="new") String sort,
 		Model model, HttpSession session) {
+		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인이 필요한 서비스입니다."); return "redirect:/"; }
 		
 		
 		ArrayList<Project> projectlist = new ArrayList<Project>();

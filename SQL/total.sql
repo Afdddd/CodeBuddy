@@ -100,9 +100,164 @@ CREATE TABLE RECRUITMENT (
     FOREIGN KEY (RECRUITMENT_WRITER) REFERENCES MEMBER(MEMBER_NO)
 );
 
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'맛집 큐레이팅 서비스','여러분 맛집어플 많이 사용하시나요?<br>
+<br>
+사용해보신 분들은 느끼실 수 있을텐데요<br>
+<br>
+정보성 어플이기에 전부 비슷한 UI를 가지고, 차별성을 드러내기 힘든 분야입니다.<br>
+<br>
+얼마 전 MAU가 200만 명이 넘던 맛집 어플인 망고 플레이트가 서비스 종료를 했습니다.<br>
+<br>
+10년 이상 운영되었고, 많은 전문가들이 운영했을텐데 왜 망했을까요?<br>
+<br>
+제가 감히 판단할 수는 없지만, 비즈니스 모델 구축이 힘들었기 때문이라 생각합니다.<br>
+<br>
+맛집어플의 주 BM은 주로 매장 사장님들의 마케팅 비용으로 B2B 모델에 해당합니다.<br>
+<br>
+매장 사장님들의 입장에서 적은 돈이라도 하나의 플랫폼에 국한된 구독 서비스를 과연 지속적으로 유지하시지 못했으리라 생각합니다.<br>
+<br>
+이에 대한 문제를 기점으로<br>
+<br>
+1. 어떻게 하면 맛집어플이 차별점을 낼 수 있을까?<br>
+<br>
+2. 비즈니스 모델을 다각화하거나 기존의 B2B 모델의 유저 리텐션을 어떻게 가져갈 수 있을까?<br>
+<br>
+에 대한 답을 고민하는 시간을 가졌고, 현재의 개발까지 오게 되었습니다.<br>
+<br>
+현재는 와이어프레임, 기능명세, 디자인까지 완료된 상태이며 리엑트 네이티브를 통해 프론트 작업을 진행 중이며, 백엔드 DB 설계에 들어간 초기 상태입니다.<br>
+<br>
+최대한 기능을 덜어내 개발 시간을 줄여, 내년 2월까지 베타 서비스 출시를 예정하고 있습니다.<br>
+<br>
+기존의 맛집 큐레이팅 서비스와 다른 방식으로 1개의 음식점에 집중할 수 있는 방식의 서비스를 만들고 있습니다.<br>
+<br>
+쉽게 말하면 맛집 소개팅 어플이라고 생각하시면 쉽습니다.<br>
+<br>
+ 
+<br>
+<br>
+사용자: 쇼츠, 릴스, 인스타가 편한 10~20대 여성분<br>
+<br>
+고객: (신규 개업한) 음식점, 카페를 운영하는 사장님',11,to_date('23/12/20','RR/MM/DD'),null,null,10,to_date('23/12/20','RR/MM/DD'),to_date('24/01/26','RR/MM/DD'),'서울특별시','모든 곳에 빛이 들게하는 맛집 큐레이팅 서비스');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'내가보는나,남이보는나','당신은 얼마나 당신을 잘 알고 계신가요?내가 보는 나, 남이 보는 나는 설문을 통해 내가 보는 나의 모습과 타인이 보는 나의 모습을 아래와 같이 비교할 수 있는 서비스입니다.',2,to_date('23/12/20','RR/MM/DD'),null,null,6,to_date('23/12/13','RR/MM/DD'),to_date('23/12/22','RR/MM/DD'),'전라북도','당신은 얼마나 당신을 잘 알고 계신가요?');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'방탈출 MBTI 테스트','취미로 방탈출을 다니는 멤버들과 함께 기존에 방탈출 MBTI 테스트가 없는듯 하여 만들게 되었고, 테스트 끝에 설문조사를 받으면서 참여자들에게 NFT를 에어드랍하고자 합니다.',3,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/12','RR/MM/DD'),to_date('23/12/21','RR/MM/DD'),'경상남도','방탈출 MBTI 테스트를 만드고자 합니다!');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'추카헤','코로나로 인해 우리가 알던 소통이 단절된지 벌써 2년이 넘었습니다. 단절된 세상 속에서 우리는 거리두기를 지속해야 했고, 사람들과의 연결고리들은 느슨해졌습니다.',3,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/12','RR/MM/DD'),to_date('23/12/29','RR/MM/DD'),'전라북도','코로나로 인해 우리가 알던 소통이 단절된지 벌써 2년이 넘었습니다. ');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'헬스케어 앱테크','1. 프로젝트의 시작 동기<br>
+ <br>
+
+한시도 빼놓지 않고 스마트폰을 사용하는 현대인들의 고질적인 문제점, 바로 거북목입니다.<br>
+<br>
+이를 해결하기 위해 실시간으로 스마트폰 사용 자세를 체크하여 좋은 자세로 스마트폰을 사용하면 유저에게 보상을 제공하여 올바른 자세를 유도합니다.<br>
+
+ 
+
+천편일률적인 만보기/미션수행 형태의 앱테크 서비스와 다른 신개념 헬스케어 앱테크 서비스<br>
+<br>
+유저의 스마트폰 사용 자세 데이터를 저장하여 정형외과 등에 공유하여 실제 의료 서비스에 도움이 될 수 있는 지표로 활용합니다.<br>
+<br>
+(현재 지속적으로 유저 자세데이터 빅데이터화)
+
+스마트폰을 사용하는 현대인을 대상으로 합니다.<br>
+
+ <br>
+
+2. 회의 진행/모임 방식 <br>
+ <br>
+
+- 1주일에 1번 온라인 회의 진행 (단 이슈가 없으면 패스) , 분기별 1회 오프라인 미팅 진행 (자율)<br>
+<br>
+- 온라인은 디스코드를 주로 활용하고 , 오프라인은 주로 강남역 근처에서 진행합니다.<br>
+
+ <br>
+
+ <br>
+
+3. 그외<br>
+안녕하세요.<br>
+
+현재 헬스케어 앱테크를 서비스중인 제이에스티입니다.<br>
+
+구성원으로는 기획 1 / 앱개발 1 / 서버 1 총 3명으로 구성되어 있고<br>
+
+현재 서비스중인 안드로이드 마켓 주소는 아래와 같습니다.<br>',12,to_date('23/12/20','RR/MM/DD'),null,null,1,to_date('23/12/20','RR/MM/DD'),to_date('24/02/26','RR/MM/DD'),'서울특별시','헬스케어 앱테크 UI/UX 고도화');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'스모큇','항상 금연을 도전하지만 실패하는 우리들을 위해 만든 서비스입니다. 내가 금연을 통해 얼마나 큰 긍정적인 효과를 얻었는지 확인하며 목표를 달성하세요!',3,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/27','RR/MM/DD'),to_date('24/01/17','RR/MM/DD'),'강원도','항상 금연을 도전하지만 실패하는 우리들을 위해 만든 서비스입니다.');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'Zzz','매년 불면증으로 고생하는 사람들이 증가하고 있고, 특히 코로나로 인해 더욱 더 심리적인 긴장과 불안으로 많은 사람들이 수면 장애를 겪고 있습니다. 저희는 이런 어려움을 겪는 사람들을 위해 안정을 줄 수 있는 ASMR을 제공하고그날의 수면 기록을 남길 수 있는 서비스입니다.',3,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/06','RR/MM/DD'),to_date('23/12/15','RR/MM/DD'),'강원도',' ASMR을 제공하고그날의 수면 기록을 남길 수 있는 서비스입니다.');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'대동빵지도 [모든 직군 경력 모집!]','우리는 500만 빵순이 빵돌이들이 사랑하는 대한민국 1등 빵전문 서비스를 만드는 팀이에요!<br>
+<br>
+사이드 프로젝트로 진행하고 있으며, 2021 12월 2일 1차 출시 후 앱을 재정비하여 2023.4월 말 Ios, 5월 초 안드로이드 앱을 출시했어요.<br>
+<br>
+대동빵지도와 함께 사용자를 모으고, 빵순이들과 사장님께 대체불가능한 서비스를 만들며 수익화를 이끌 예정입니다.<br>
+<br>
+1개의 운영&마케팅팀과 2개의 제품팀을 운영하고있어요! 다른 사이트 프로젝트에서는 경험할 수 없는 다양한 직군의 사람들과, 사업화를 목표로 재미있는 운영경험을 하실 수 있습니다.<br>
+<br>
+함께 성장하실분!! 많관부입니당~~~!!<br>
+<br>
+?현재 세번째 업데이트를 준비중입니다.<br>
+함께 사용자를 늘릴 새로운 기능들을 개발하고, 대동빵지도 웹을 함께 만들 팀원들을 모집합니다!<br>
+?모든 직군 자격 요건<br>
+1. 경력 2년 이상 (혹은 그에 준하는 실력)<br>
+<br>
+- 현재 취준생 분들이나 경력이 없으신 분들이 오시면 저희도, 지원자분도 모두 힘든 상황이 됩니다.<br>
+<br>
+2. 미래에 사업화와 수익창출을 위해 해적처럼 PMF를 찾아가실분<br>
+<br>
+- 본인의 실력향상이 아닌, 프로덕트의 성장을 위해 함께 다양한 아이디어를 내고 실행할 수 있어야해요<br>
+<br>
+- 초기 프로덕트이기에 다양한 가설을 세우고, 결과를 만들고 검증하는 많은 실행이 요구되는 상황입니다.<br>
+<br>
+3.사이드 프로젝트이지만, 오너쉽을 가지고 함께 할 맴버<br>
+<br>
+- 참여자가 아닌, 프로덕트에 오너쉽을 가질 수 있는 분들이 필요해요.<br>
+<br>
+- 커뮤니케이션(슬랙 등)이 원활하지 않은 분들은 참여가 어렵습니다. (팀의 사기를 꺽습니다.)<br>',12,to_date('23/12/20','RR/MM/DD'),null,null,2,to_date('23/12/20','RR/MM/DD'),to_date('24/01/23','RR/MM/DD'),'서울특별시','대한민국 1등 빵전문 서비스를 만드는 팀이에요!');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'렉쳐랭킹','제가 이용하는 사이트들의 신규, 인기 강좌들을 모아서 보여주는 사이트입니다. 랭킹이 변화하는 걸 애니메이션으로 보여주는걸 목표로 삼았습니다.',3,to_date('23/12/20','RR/MM/DD'),null,null,1,to_date('23/12/05','RR/MM/DD'),to_date('23/12/15','RR/MM/DD'),'충청북도','제가 이용하는 사이트들의 신규, 인기 강좌들을 모아서 보여주는 사이트입니다.');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'글로벌 AI 커뮤니티 & 마켓플레이스','? 안녕하세요, 열정적인 도전자 여러분!<br>
+저희는 새로운 미래를 여는 글로벌 AI 커뮤니티 + 마켓플레이스, Nova AI(가칭) 플랫폼을 함께 만들어 갈 동료를 찾고 있습니다.<br>
+<br>
+‘? AI가 미래에 우리 삶에 얼마나 많은 변화를 가져다 줄까?’ ‘? 앞으로의 헤게모니 변화는 어떻게 될까?’ 라는 질문에서 출반한 저희 프로젝트는,
+<br>
+AI 기술이 다가오는 미래에 사람들의 삶에 긍정적이고 혁신적인 변화를 가져다 줄 수 있다는 믿음에서 비록되었습니다.<br>
+<br>
+저희가 구상하는 플랫폼은 단순한 플랫폼을 넘어, 혁신적인 AI 제품/서비스/솔루션들을 소개하고 유통하는 글로벌 스테이지가 될 것입니다.<br>
+<br>
+마치, AI계의 App Store 또는 Steam 처럼요!<br>
+<br>
+지금의 앱과 게임 시장 처럼 앞으로 점점 많은 이들이 독창적이고 창의적인 AI 제품/서비스/솔루션 등을 만들어낼 시대가 올 것이라 예측하고,<br>
+<br>
+그들을 전세계 많은 사람들에게 소개하고, 사람들이 본인의 입맛에 맞는 AI 제품/서비스/솔루션 등을 직접 이용해 볼 수 있는 플랫폼을 만들고자 합니다.
+<br>
+현재 MVP 개발 중이며, MVP는 ‘AI 커뮤니티’를 기반으로 AI 관련 뉴스/칼럼/블로그 등을 전문가/개발자 및 사용자들이 작성하여 교류할 수 있는 공간을 빠르게 개발하여 런칭하고자 하며, 이후 마켓플레이스 형태로 업그레이드 해나가는 로드맵을 갖고 개발 중에 있습니다.
+<br>
+저희의 타겟 사용자는 AI의 무한한 가능성을 일상에서 실현하고자 하는 모든 이들입니다.
+<br>',12,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('24/01/03','RR/MM/DD'),to_date('24/03/20','RR/MM/DD'),'서울특별시','새로운 미래를 여는 글로벌 AI 커뮤니티 + 마켓플레이스, Nova AI(가칭) 플랫폼');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'시그널','네이버앱을 통해 확인 가능한 실시간 검색어 및 실시간 급상승 검색어, 검색어 순위, 인기뉴스 등 놓칠 수 없는 실시간 트렌드. 지금 무료로 실시간 검색어와 인기뉴스를 확인해보세요.',3,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/12','RR/MM/DD'),to_date('23/12/28','RR/MM/DD'),'경상남도','지금 무료로 실시간 검색어와 인기뉴스를 확인해보세요.');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'눈누','상업용 무료한글폰트 사이트.',3,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/19','RR/MM/DD'),to_date('23/12/31','RR/MM/DD'),'부산광역시','상업용 무료한글폰트 사이트.');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'왓워즈잇','한국의 UI/UX 모바일 패턴을 수집합니다.',3,to_date('23/12/20','RR/MM/DD'),null,null,6,to_date('23/12/05','RR/MM/DD'),to_date('23/12/11','RR/MM/DD'),'경상남도','한국의 UI/UX 모바일 패턴을 수집합니다.');
+SELECT SEQ_RECRUITMENT.NEXTVAL FROM DUAL;
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'크레페','콜리는 누구나 편리하게 신청할 수 있는 부담없는 커미션 플랫폼이에요.',2,to_date('23/12/20','RR/MM/DD'),null,null,7,to_date('23/12/26','RR/MM/DD'),to_date('24/02/20','RR/MM/DD'),'경기도','콜리는 누구나 편리하게 신청할 수 있는 부담없는 커미션 플랫폼이에요.');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'연픽','간단한 설문으로 여러분의 연을 찾아보세요!',2,to_date('23/12/20','RR/MM/DD'),null,null,14,to_date('24/01/22','RR/MM/DD'),to_date('24/01/30','RR/MM/DD'),'강원도','간단한 설문으로 여러분의 연을 찾아보세요!');
+SELECT SEQ_RECRUITMENT.NEXTVAL FROM DUAL;
+SELECT SEQ_RECRUITMENT.NEXTVAL FROM DUAL;
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'언노운나이츠(게임) ','당신은 왕조차 버리고 도망친 나라에서 마왕의 탑을 무너뜨리기 위한 원정을 떠납니다. 사건을 해결하고, 기사를 고용하고, 민병을 소집해 최종전을 위한 강력한 기사단을 만들어야 합니다.',5,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/12','RR/MM/DD'),to_date('23/12/21','RR/MM/DD'),'경상남도','‘언노운 나이츠’는 액션성 높은 독특한 ''부대 전투''와 로그라이크가 결합된 게임입니다.');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'붕세권','추운 겨울 붕어빵 (잉어 빵, 풀빵, 호두 과자)이 먹고 싶을 때
+
+요즘 정말 찾기 힘듭니다.
+
+여러분의 제보로 붕어빵지도가 태어날 날 ~!',5,to_date('23/12/20','RR/MM/DD'),null,null,1,to_date('23/12/01','RR/MM/DD'),to_date('23/12/13','RR/MM/DD'),'전라남도','여러분의 제보로 붕어빵지도가 태어날 날 ~!');
+
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'내 트리를 꾸며줘','산타파이브는 2021. 11. 21일 출발한 사이드 프로젝트 팀으로, 2명의 백엔드 개발자, 2명의 프론트엔드 개발자, 2명의 디자이너가 함께 프로젝트를 만들어가고 있어요.',5,to_date('23/12/20','RR/MM/DD'),null,null,2,to_date('23/12/06','RR/MM/DD'),to_date('23/12/14','RR/MM/DD'),'경상북도','산타파이브는 2021. 11. 21일 출발한 사이드 프로젝트 팀으로');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'훌라','스터디&네트워킹, 사이드 프로젝트 팀원을 구하는 가장 쉬운 방법 혼자 만드는 게시판과 투두리스트가 지겨우신가요? 함께 사이드 프로젝트를 진행할 팀원을 구하느라 지치셨나요?',5,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/01','RR/MM/DD'),to_date('24/01/05','RR/MM/DD'),'전라남도','스터디&네트워킹, 사이드 프로젝트 팀원을 구하는 가장 쉬운 방법 혼자 만드는 게시판과 투두리스트가 지겨우신가요? 함께 사이드 프로젝트를 진행할 팀원을 구하느라 지치셨나요?');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'매일웨일','매일웨일은 사용자가 목표를 성취해가며 캐릭터와 함께 성장해 나가는 ''할 일 관리 앱''입니다',5,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/07','RR/MM/DD'),to_date('23/12/21','RR/MM/DD'),'전라남도','매일웨일은 사용자가 목표를 성취해나감');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'체리시','인연을 이어가는 가장 쉬운 방법, 연락! 점점 쌓여가는 메신저 말풍선들, 바쁘다는 이유로 자꾸 미루고 있지는 않나요?',5,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/18','RR/MM/DD'),to_date('23/12/30','RR/MM/DD'),'대전광역시','인연을 이어가는 가장 쉬운 방법, 연락!');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'롤링페이퍼','오프라인에 존재했던 롤링페이퍼 서비스를 온라인으로 옮겨왔습니다.',5,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/22','RR/MM/DD'),to_date('24/01/11','RR/MM/DD'),'경상남도','오프라인에 존재했던 롤링페이퍼 서비스를 온라인으로 옮겨왔습니다.');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'블렉스','예쁘고 유니크한 블로그 없을까요?" ? ♂? 여기 있습니다! 블렉스는 가입형 블로그로 회원이라면 누구나 글을 자유롭게 작성할 수 있습니다. 무엇보다 쓰는 사람이 없어서 매우 유니크합니다! 블렉스는 미니멀한 디자인과 신기술을 응용한 빠른 웹사이트를 지향하며 AD-Free, 3세대 블로그를 과감히 꿈꿉니다.
+
+',5,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/13','RR/MM/DD'),to_date('23/12/22','RR/MM/DD'),'광주광역시','예쁘고 유니크한 블로그 없을까요?" ? ♂? 여기 있습니다!');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'눈바디','숫자로 하는 다이어트, 이제 더 이상 하고 싶지 않으신가요? 눈바디를 통해 신체 변화를 보다 직관적으로 파악해 보세요!
+
+',5,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/04','RR/MM/DD'),to_date('23/12/29','RR/MM/DD'),'전라북도','숫자로 하는 다이어트, 이제 더 이상 하고 싶지 않으신가요?');
+Insert into CODDY.RECRUITMENT (RECRUITMENT_NO,RECRUITMENT_TITLE,RECRUITMENT_CONTENT,RECRUITMENT_WRITER,RECRUITMENT_INSERT,RECRUITMENT_UPDATE,RECRUITMENT_DELETE,RECRUITMENT_VIEWS,RECRUITMENT_START,RECRUITMENT_END,RECRUITMENT_LOCATION,RECRUITMENT_INTRO) values (SEQ_RECRUITMENT.NEXTVAL,'나나공','우리 인강 정말 지지리도 안 듣죠? 우리는 인강을 돈을 주고도 왜 이렇게 끝까지 듣기 어려운 걸까',5,to_date('23/12/20','RR/MM/DD'),null,null,0,to_date('23/12/14','RR/MM/DD'),to_date('24/01/05','RR/MM/DD'),'경상북도','우리 인강 정말 지지리도 안 듣죠?');
+
 COMMENT ON COLUMN RECRUITMENT.RECRUITMENT_INSERT IS '작성된 날짜';
-
-
 
 CREATE TABLE RECRUITMENT_WISHLIST (
 	RECRUITMENT_WISHLIST_MEMBER	NUMBER		NOT NULL,
@@ -144,6 +299,39 @@ CREATE TABLE RECRUITMENT_ATTACHMENT (
     FOREIGN KEY (RECRUITMENT_NO) REFERENCES RECRUITMENT(RECRUITMENT_NO)
 );
 
+SELECT SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL FROM DUAL;
+SELECT SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL FROM DUAL;
+SELECT SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL FROM DUAL;
+SELECT SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL FROM DUAL;
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,1,'스크린샷 2023-12-20 114752.png','bd40f2e5-10e6-40c7-8c92-12a491daa242_스크린샷 2023-12-20 114752.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,2,'nae2.JPG','5027cdaa-2942-422d-a196-f1e740b9d501_nae2.JPG','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,2,'nae4.JPG','184c1dc3-e483-4379-aa4c-2b2e076d07fa_nae4.JPG','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),1);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,3,'ESTP.5360b94205e272a7afc9 (1).png','25390e89-e5e3-4fa1-b0c2-d145a4c41499_ESTP.5360b94205e272a7afc9 (1).png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,4,'meta_img.png','50eeec20-a81f-44e2-ac43-08212dc6f506_meta_img.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,5,'스크린샷 2023-12-20 123707.png','ab0358b4-5ebd-4123-b98b-cff63fdb2eb8_스크린샷 2023-12-20 123707.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,6,'apple-icon-180x180.png','ff1d1c5a-fa10-4d11-80b1-e8f8e43267a8_apple-icon-180x180.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,7,'logo512.png','d256c349-ba4f-450f-adf2-da9259eff0cd_logo512.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,8,'스크린샷 2023-12-20 124139.png','ebca94d0-05c3-4213-b7a1-8f9312707be6_스크린샷 2023-12-20 124139.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+SELECT SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL FROM DUAL;
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,10,'스크린샷 2023-12-20 124313.png','cdb3d2e2-9077-43a0-8873-d4874bca6b56_스크린샷 2023-12-20 124313.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,11,'infmation-5.png','36a74f92-ff4e-40c8-a8c7-bcdecb42018a_infmation-5.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,12,'noonnu_og.png','7852f5da-c4e9-425b-9832-f87971c10e81_noonnu_og.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,13,'logo.png','051bff67-e19a-4d41-8f30-fb9c2f522f57_logo.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+SELECT SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL FROM DUAL;
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,15,'180x180.png','361ce084-7704-42b6-8fe7-6ff8572817a0_180x180.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,16,'home_logo3.png','275089cc-7549-4b50-953d-63d206748112_home_logo3.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+SELECT SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL FROM DUAL;
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,19,'unknownNights.jpeg','c104987f-a775-4e3d-8680-fd08fe4f8ad3_unknownNights.jpeg','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,20,'460x0w.png','be0d6246-99b5-4ce3-8d54-a02140ff208f_460x0w.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,21,'20211223503073283%29.webp','a4fefadd-1856-4400-a43b-820ee1f432c2_20211223503073283%29.webp','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,22,'129372671-f012a90f-56a1-4c6e-bf33-8eb268fbc8eb.png','913e75e5-5b9b-4e14-b50d-4f117262ba5a_129372671-f012a90f-56a1-4c6e-bf33-8eb268fbc8eb.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,23,'ic_big.png','bc6de58f-18e7-49e5-8189-63387853d111_ic_big.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,24,'104716209-f1cfa800-576a-11eb-8275-3d2e69cce546.png','0c0ffbfd-0b15-42f5-80c4-a6962fb64b58_104716209-f1cfa800-576a-11eb-8275-3d2e69cce546.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,25,'90950455-85d36700-e48c-11ea-9b79-72b5dcb6c6d6.png','9f0e506f-85b1-4c74-b85e-1b42536b4292_90950455-85d36700-e48c-11ea-9b79-72b5dcb6c6d6.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,26,'76856570-de2b8a80-6896-11ea-8827-fc2f1966fa23.png','d25bb1b3-4a36-4c17-9547-673c558d45ea_76856570-de2b8a80-6896-11ea-8827-fc2f1966fa23.png','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,27,'unnamed.webp','a245b9e6-64fa-48c8-99c3-d8d3ad8142b8_unnamed.webp','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.RECRUITMENT_ATTACHMENT (RECRUITMENT_ATTACHMENT_NO,RECRUITMENT_NO,RECRUITMENT_ATTACHMENT_ORIGIN,RECRUITMENT_ATTACHMENT_CHANGE,RECRUITMENT_ATTACHMENT_PATH,RECRUITMENT_ATTACHMENT_INSERT,RECRUITMENT_ATTACHMENT_LEVEL) values (SEQ_RECRUITMENT_ATTACHMENT.NEXTVAL,28,'unnamed (1).webp','ab3737a3-e3ab-4cec-940d-c37f1e47165e_unnamed (1).webp','resources\file_upload\recruitment\',to_date('23/12/20','RR/MM/DD'),0);
+
 COMMIT;
 
 DROP SEQUENCE SEQ_PROJECT;
@@ -165,6 +353,162 @@ CREATE TABLE PROJECT (
     FOREIGN KEY (PROJECT_OWNER) REFERENCES MEMBER(MEMBER_NO)
 );
 
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (1,11,1,'맛집 큐레이팅 서비스','여러분 맛집어플 많이 사용하시나요?<br>
+<br>
+사용해보신 분들은 느끼실 수 있을텐데요<br>
+<br>
+정보성 어플이기에 전부 비슷한 UI를 가지고, 차별성을 드러내기 힘든 분야입니다.<br>
+<br>
+얼마 전 MAU가 200만 명이 넘던 맛집 어플인 망고 플레이트가 서비스 종료를 했습니다.<br>
+<br>
+10년 이상 운영되었고, 많은 전문가들이 운영했을텐데 왜 망했을까요?<br>
+<br>
+제가 감히 판단할 수는 없지만, 비즈니스 모델 구축이 힘들었기 때문이라 생각합니다.<br>
+<br>
+맛집어플의 주 BM은 주로 매장 사장님들의 마케팅 비용으로 B2B 모델에 해당합니다.<br>
+<br>
+매장 사장님들의 입장에서 적은 돈이라도 하나의 플랫폼에 국한된 구독 서비스를 과연 지속적으로 유지하시지 못했으리라 생각합니다.<br>
+<br>
+이에 대한 문제를 기점으로<br>
+<br>
+1. 어떻게 하면 맛집어플이 차별점을 낼 수 있을까?<br>
+<br>
+2. 비즈니스 모델을 다각화하거나 기존의 B2B 모델의 유저 리텐션을 어떻게 가져갈 수 있을까?<br>
+<br>
+에 대한 답을 고민하는 시간을 가졌고, 현재의 개발까지 오게 되었습니다.<br>
+<br>
+현재는 와이어프레임, 기능명세, 디자인까지 완료된 상태이며 리엑트 네이티브를 통해 프론트 작업을 진행 중이며, 백엔드 DB 설계에 들어간 초기 상태입니다.<br>
+<br>
+최대한 기능을 덜어내 개발 시간을 줄여, 내년 2월까지 베타 서비스 출시를 예정하고 있습니다.<br>
+<br>
+기존의 맛집 큐레이팅 서비스와 다른 방식으로 1개의 음식점에 집중할 수 있는 방식의 서비스를 만들고 있습니다.<br>
+<br>
+쉽게 말하면 맛집 소개팅 어플이라고 생각하시면 쉽습니다.<br>
+<br>
+ 
+<br>
+<br>
+사용자: 쇼츠, 릴스, 인스타가 편한 10~20대 여성분<br>
+<br>
+고객: (신규 개업한) 음식점, 카페를 운영하는 사장님',to_date('23/12/20','RR/MM/DD'),to_date('23/12/20','RR/MM/DD'),to_date('24/01/26','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (2,2,2,'내가보는나,남이보는나','당신은 얼마나 당신을 잘 알고 계신가요?내가 보는 나, 남이 보는 나는 설문을 통해 내가 보는 나의 모습과 타인이 보는 나의 모습을 아래와 같이 비교할 수 있는 서비스입니다.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/13','RR/MM/DD'),to_date('23/12/22','RR/MM/DD'),null,3);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (3,3,3,'방탈출 MBTI 테스트','취미로 방탈출을 다니는 멤버들과 함께 기존에 방탈출 MBTI 테스트가 없는듯 하여 만들게 되었고, 테스트 끝에 설문조사를 받으면서 참여자들에게 NFT를 에어드랍하고자 합니다.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/12','RR/MM/DD'),to_date('23/12/21','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (4,3,4,'추카헤','코로나로 인해 우리가 알던 소통이 단절된지 벌써 2년이 넘었습니다. 단절된 세상 속에서 우리는 거리두기를 지속해야 했고, 사람들과의 연결고리들은 느슨해졌습니다.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/12','RR/MM/DD'),to_date('23/12/29','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (5,12,5,'헬스케어 앱테크','1. 프로젝트의 시작 동기<br>
+ <br>
+
+한시도 빼놓지 않고 스마트폰을 사용하는 현대인들의 고질적인 문제점, 바로 거북목입니다.<br>
+<br>
+이를 해결하기 위해 실시간으로 스마트폰 사용 자세를 체크하여 좋은 자세로 스마트폰을 사용하면 유저에게 보상을 제공하여 올바른 자세를 유도합니다.<br>
+
+ 
+
+천편일률적인 만보기/미션수행 형태의 앱테크 서비스와 다른 신개념 헬스케어 앱테크 서비스<br>
+<br>
+유저의 스마트폰 사용 자세 데이터를 저장하여 정형외과 등에 공유하여 실제 의료 서비스에 도움이 될 수 있는 지표로 활용합니다.<br>
+<br>
+(현재 지속적으로 유저 자세데이터 빅데이터화)
+
+스마트폰을 사용하는 현대인을 대상으로 합니다.<br>
+
+ <br>
+
+2. 회의 진행/모임 방식 <br>
+ <br>
+
+- 1주일에 1번 온라인 회의 진행 (단 이슈가 없으면 패스) , 분기별 1회 오프라인 미팅 진행 (자율)<br>
+<br>
+- 온라인은 디스코드를 주로 활용하고 , 오프라인은 주로 강남역 근처에서 진행합니다.<br>
+
+ <br>
+
+ <br>
+
+3. 그외<br>
+안녕하세요.<br>
+
+현재 헬스케어 앱테크를 서비스중인 제이에스티입니다.<br>
+
+구성원으로는 기획 1 / 앱개발 1 / 서버 1 총 3명으로 구성되어 있고<br>
+
+현재 서비스중인 안드로이드 마켓 주소는 아래와 같습니다.<br>',to_date('23/12/20','RR/MM/DD'),to_date('23/12/20','RR/MM/DD'),to_date('24/02/26','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (6,3,6,'스모큇','항상 금연을 도전하지만 실패하는 우리들을 위해 만든 서비스입니다. 내가 금연을 통해 얼마나 큰 긍정적인 효과를 얻었는지 확인하며 목표를 달성하세요!',to_date('23/12/20','RR/MM/DD'),to_date('23/12/27','RR/MM/DD'),to_date('24/01/17','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (7,3,7,'Zzz','매년 불면증으로 고생하는 사람들이 증가하고 있고, 특히 코로나로 인해 더욱 더 심리적인 긴장과 불안으로 많은 사람들이 수면 장애를 겪고 있습니다. 저희는 이런 어려움을 겪는 사람들을 위해 안정을 줄 수 있는 ASMR을 제공하고그날의 수면 기록을 남길 수 있는 서비스입니다.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/06','RR/MM/DD'),to_date('23/12/15','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (8,12,8,'대동빵지도 [모든 직군 경력 모집!]','우리는 500만 빵순이 빵돌이들이 사랑하는 대한민국 1등 빵전문 서비스를 만드는 팀이에요!<br>
+<br>
+사이드 프로젝트로 진행하고 있으며, 2021 12월 2일 1차 출시 후 앱을 재정비하여 2023.4월 말 Ios, 5월 초 안드로이드 앱을 출시했어요.<br>
+<br>
+대동빵지도와 함께 사용자를 모으고, 빵순이들과 사장님께 대체불가능한 서비스를 만들며 수익화를 이끌 예정입니다.<br>
+<br>
+1개의 운영&마케팅팀과 2개의 제품팀을 운영하고있어요! 다른 사이트 프로젝트에서는 경험할 수 없는 다양한 직군의 사람들과, 사업화를 목표로 재미있는 운영경험을 하실 수 있습니다.<br>
+<br>
+함께 성장하실분!! 많관부입니당~~~!!<br>
+<br>
+?현재 세번째 업데이트를 준비중입니다.<br>
+함께 사용자를 늘릴 새로운 기능들을 개발하고, 대동빵지도 웹을 함께 만들 팀원들을 모집합니다!<br>
+?모든 직군 자격 요건<br>
+1. 경력 2년 이상 (혹은 그에 준하는 실력)<br>
+<br>
+- 현재 취준생 분들이나 경력이 없으신 분들이 오시면 저희도, 지원자분도 모두 힘든 상황이 됩니다.<br>
+<br>
+2. 미래에 사업화와 수익창출을 위해 해적처럼 PMF를 찾아가실분<br>
+<br>
+- 본인의 실력향상이 아닌, 프로덕트의 성장을 위해 함께 다양한 아이디어를 내고 실행할 수 있어야해요<br>
+<br>
+- 초기 프로덕트이기에 다양한 가설을 세우고, 결과를 만들고 검증하는 많은 실행이 요구되는 상황입니다.<br>
+<br>
+3.사이드 프로젝트이지만, 오너쉽을 가지고 함께 할 맴버<br>
+<br>
+- 참여자가 아닌, 프로덕트에 오너쉽을 가질 수 있는 분들이 필요해요.<br>
+<br>
+- 커뮤니케이션(슬랙 등)이 원활하지 않은 분들은 참여가 어렵습니다. (팀의 사기를 꺽습니다.)<br>',to_date('23/12/20','RR/MM/DD'),to_date('23/12/20','RR/MM/DD'),to_date('24/01/23','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (9,3,9,'렉쳐랭킹','제가 이용하는 사이트들의 신규, 인기 강좌들을 모아서 보여주는 사이트입니다. 랭킹이 변화하는 걸 애니메이션으로 보여주는걸 목표로 삼았습니다.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/05','RR/MM/DD'),to_date('23/12/15','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (10,12,10,'글로벌 AI 커뮤니티 & 마켓플레이스','? 안녕하세요, 열정적인 도전자 여러분!<br>
+저희는 새로운 미래를 여는 글로벌 AI 커뮤니티 + 마켓플레이스, Nova AI(가칭) 플랫폼을 함께 만들어 갈 동료를 찾고 있습니다.<br>
+<br>
+‘? AI가 미래에 우리 삶에 얼마나 많은 변화를 가져다 줄까?’ ‘? 앞으로의 헤게모니 변화는 어떻게 될까?’ 라는 질문에서 출반한 저희 프로젝트는,
+<br>
+AI 기술이 다가오는 미래에 사람들의 삶에 긍정적이고 혁신적인 변화를 가져다 줄 수 있다는 믿음에서 비록되었습니다.<br>
+<br>
+저희가 구상하는 플랫폼은 단순한 플랫폼을 넘어, 혁신적인 AI 제품/서비스/솔루션들을 소개하고 유통하는 글로벌 스테이지가 될 것입니다.<br>
+<br>
+마치, AI계의 App Store 또는 Steam 처럼요!<br>
+<br>
+지금의 앱과 게임 시장 처럼 앞으로 점점 많은 이들이 독창적이고 창의적인 AI 제품/서비스/솔루션 등을 만들어낼 시대가 올 것이라 예측하고,<br>
+<br>
+그들을 전세계 많은 사람들에게 소개하고, 사람들이 본인의 입맛에 맞는 AI 제품/서비스/솔루션 등을 직접 이용해 볼 수 있는 플랫폼을 만들고자 합니다.
+<br>
+현재 MVP 개발 중이며, MVP는 ‘AI 커뮤니티’를 기반으로 AI 관련 뉴스/칼럼/블로그 등을 전문가/개발자 및 사용자들이 작성하여 교류할 수 있는 공간을 빠르게 개발하여 런칭하고자 하며, 이후 마켓플레이스 형태로 업그레이드 해나가는 로드맵을 갖고 개발 중에 있습니다.
+<br>
+저희의 타겟 사용자는 AI의 무한한 가능성을 일상에서 실현하고자 하는 모든 이들입니다.
+<br>',to_date('23/12/20','RR/MM/DD'),to_date('24/01/03','RR/MM/DD'),to_date('24/03/20','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (11,3,11,'시그널','네이버앱을 통해 확인 가능한 실시간 검색어 및 실시간 급상승 검색어, 검색어 순위, 인기뉴스 등 놓칠 수 없는 실시간 트렌드. 지금 무료로 실시간 검색어와 인기뉴스를 확인해보세요.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/12','RR/MM/DD'),to_date('23/12/28','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (12,3,12,'눈누','상업용 무료한글폰트 사이트.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/19','RR/MM/DD'),to_date('23/12/31','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (13,3,13,'왓워즈잇','한국의 UI/UX 모바일 패턴을 수집합니다.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/05','RR/MM/DD'),to_date('23/12/11','RR/MM/DD'),null,0);
+SELECT SEQ_PROJECT.NEXTVAL FROM DUAL;
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (15,2,15,'크레페','콜리는 누구나 편리하게 신청할 수 있는 부담없는 커미션 플랫폼이에요.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/26','RR/MM/DD'),to_date('24/02/20','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (16,2,16,'연픽','간단한 설문으로 여러분의 연을 찾아보세요!',to_date('23/12/20','RR/MM/DD'),to_date('24/01/22','RR/MM/DD'),to_date('24/01/30','RR/MM/DD'),null,1);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (19,5,19,'언노운나이츠(게임) ','당신은 왕조차 버리고 도망친 나라에서 마왕의 탑을 무너뜨리기 위한 원정을 떠납니다. 사건을 해결하고, 기사를 고용하고, 민병을 소집해 최종전을 위한 강력한 기사단을 만들어야 합니다.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/12','RR/MM/DD'),to_date('23/12/21','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (20,5,20,'붕세권','추운 겨울 붕어빵 (잉어 빵, 풀빵, 호두 과자)이 먹고 싶을 때
+
+요즘 정말 찾기 힘듭니다.
+
+여러분의 제보로 붕어빵지도가 태어날 날 ~!',to_date('23/12/20','RR/MM/DD'),to_date('23/12/01','RR/MM/DD'),to_date('23/12/13','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (21,5,21,'내 트리를 꾸며줘','산타파이브는 2021. 11. 21일 출발한 사이드 프로젝트 팀으로, 2명의 백엔드 개발자, 2명의 프론트엔드 개발자, 2명의 디자이너가 함께 프로젝트를 만들어가고 있어요.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/06','RR/MM/DD'),to_date('23/12/14','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (22,5,22,'훌라','스터디&네트워킹, 사이드 프로젝트 팀원을 구하는 가장 쉬운 방법 혼자 만드는 게시판과 투두리스트가 지겨우신가요? 함께 사이드 프로젝트를 진행할 팀원을 구하느라 지치셨나요?',to_date('23/12/20','RR/MM/DD'),to_date('23/12/01','RR/MM/DD'),to_date('24/01/05','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (23,5,23,'매일웨일','매일웨일은 사용자가 목표를 성취해가며 캐릭터와 함께 성장해 나가는 ''할 일 관리 앱''입니다',to_date('23/12/20','RR/MM/DD'),to_date('23/12/07','RR/MM/DD'),to_date('23/12/21','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (24,5,24,'체리시','인연을 이어가는 가장 쉬운 방법, 연락! 점점 쌓여가는 메신저 말풍선들, 바쁘다는 이유로 자꾸 미루고 있지는 않나요?',to_date('23/12/20','RR/MM/DD'),to_date('23/12/18','RR/MM/DD'),to_date('23/12/30','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (25,5,25,'롤링페이퍼','오프라인에 존재했던 롤링페이퍼 서비스를 온라인으로 옮겨왔습니다.',to_date('23/12/20','RR/MM/DD'),to_date('23/12/22','RR/MM/DD'),to_date('24/01/11','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (26,5,26,'블렉스','예쁘고 유니크한 블로그 없을까요?" ? ♂? 여기 있습니다! 블렉스는 가입형 블로그로 회원이라면 누구나 글을 자유롭게 작성할 수 있습니다. 무엇보다 쓰는 사람이 없어서 매우 유니크합니다! 블렉스는 미니멀한 디자인과 신기술을 응용한 빠른 웹사이트를 지향하며 AD-Free, 3세대 블로그를 과감히 꿈꿉니다.
+
+',to_date('23/12/20','RR/MM/DD'),to_date('23/12/13','RR/MM/DD'),to_date('23/12/22','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (27,5,27,'눈바디','숫자로 하는 다이어트, 이제 더 이상 하고 싶지 않으신가요? 눈바디를 통해 신체 변화를 보다 직관적으로 파악해 보세요!
+
+',to_date('23/12/20','RR/MM/DD'),to_date('23/12/04','RR/MM/DD'),to_date('23/12/29','RR/MM/DD'),null,0);
+Insert into CODDY.PROJECT (PROJECT_NO,PROJECT_OWNER,RECRUITMENT_NO,PROJECT_NAME,PROJECT_INFO,PROJECT_INSERT,PROJECT_START,PROJECT_END,PROJECT_LOCATION,PROJECT_READY) values (28,5,28,'나나공','우리 인강 정말 지지리도 안 듣죠? 우리는 인강을 돈을 주고도 왜 이렇게 끝까지 듣기 어려운 걸까',to_date('23/12/20','RR/MM/DD'),to_date('23/12/14','RR/MM/DD'),to_date('24/01/05','RR/MM/DD'),null,0);
+
+UPDATE PROJECT SET PROJECT_READY=2 WHERE PROJECT_READY=1;
+
 COMMIT;
 
 DROP SEQUENCE SEQ_JOINS;
@@ -185,6 +529,8 @@ CREATE TABLE JOINS (
 
 COMMENT ON COLUMN JOINS.JOINS_IS_PUBLIC IS '0=PRIVATE, 1=PUBLIC';
 COMMENT ON COLUMN JOINS.JOINS_ACTIVATE IS '0: 강제퇴장 / 1: 정상 / 2: 본인퇴장 / 3: 대기실폭발';
+
+Insert into CODDY.JOINS (JOINS_NO,MEMBER_NO,PROJECT_NO,JOINS_ROLE,JOINS_IS_PUBLIC,JOINS_ACTIVATE,JOINS_REVIEW) values (SEQ_JOINS.NEXTVAL,2,16,'Project Manager',0,1,null);
 
 COMMIT;
 
@@ -213,6 +559,14 @@ CREATE TABLE CHAT (
 	FOREIGN KEY (PROJECT_NO) REFERENCES PROJECT(PROJECT_NO)
 );
 
+Insert into CODDY.CHAT (PROJECT_NO,CHAT_MASTER,CHAT_INSERT) values (1,11,to_date('23/12/20','RR/MM/DD'));
+Insert into CODDY.CHAT (PROJECT_NO,CHAT_MASTER,CHAT_INSERT) values (8,12,to_date('23/12/20','RR/MM/DD'));
+Insert into CODDY.CHAT (PROJECT_NO,CHAT_MASTER,CHAT_INSERT) values (16,2,to_date('23/12/20','RR/MM/DD'));
+Insert into CODDY.CHAT (PROJECT_NO,CHAT_MASTER,CHAT_INSERT) values (18,2,to_date('23/12/20','RR/MM/DD'));
+Insert into CODDY.CHAT (PROJECT_NO,CHAT_MASTER,CHAT_INSERT) values (13,2,to_date('23/12/20','RR/MM/DD'));
+Insert into CODDY.CHAT (PROJECT_NO,CHAT_MASTER,CHAT_INSERT) values (15,2,to_date('23/12/20','RR/MM/DD'));
+Insert into CODDY.CHAT (PROJECT_NO,CHAT_MASTER,CHAT_INSERT) values (19,2,to_date('23/12/20','RR/MM/DD'));
+
 DROP SEQUENCE SEQ_CHAT_RECORD;
 
 CREATE SEQUENCE SEQ_CHAT_RECORD NOCYCLE;
@@ -230,6 +584,11 @@ CREATE TABLE CHAT_RECORD (
     FOREIGN KEY (PROJECT_NO) REFERENCES PROJECT(PROJECT_NO)
 );
 
+Insert into CODDY.CHAT_RECORD (CHATR_NO,PROJECT_NO,CHATR_SENDER,CHATR_MSG,CHATR_TYPE,CHATR_INSERT,CHATR_UPDATE,CHATR_DELETE) values (1,1,11,'dd',1,to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CHAT_RECORD (CHATR_NO,PROJECT_NO,CHATR_SENDER,CHATR_MSG,CHATR_TYPE,CHATR_INSERT,CHATR_UPDATE,CHATR_DELETE) values (2,1,3,'깜빡이는',1,to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CHAT_RECORD (CHATR_NO,PROJECT_NO,CHATR_SENDER,CHATR_MSG,CHATR_TYPE,CHATR_INSERT,CHATR_UPDATE,CHATR_DELETE) values (3,1,3,'키고 들어와라',1,to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CHAT_RECORD (CHATR_NO,PROJECT_NO,CHATR_SENDER,CHATR_MSG,CHATR_TYPE,CHATR_INSERT,CHATR_UPDATE,CHATR_DELETE) values (4,1,3,'상처받잖아',1,to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CHAT_RECORD (CHATR_NO,PROJECT_NO,CHATR_SENDER,CHATR_MSG,CHATR_TYPE,CHATR_INSERT,CHATR_UPDATE,CHATR_DELETE) values (5,15,2,'안녕하세요',1,to_date('23/12/20','RR/MM/DD'),null,null);
 
 COMMIT;
 
@@ -431,6 +790,140 @@ CREATE TABLE PRELATION (
     FOREIGN KEY (TAGS_NO) REFERENCES TAGS(TAGS_NO)
 );
 
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (1,86);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (1,44);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (2,4);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (2,6);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (2,8);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (1,11);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (1,40);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (2,10);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (2,5);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (2,2);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (3,5);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (3,20);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (3,29);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (3,31);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (3,40);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (3,42);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (4,4);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (4,9);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (4,21);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (4,35);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (4,34);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (4,39);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (5,2);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (5,3);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (5,5);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (6,6);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (6,7);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (6,5);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (6,10);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (6,12);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (6,8);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (7,4);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (7,24);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (7,22);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (7,21);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (7,27);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (7,30);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (8,6);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (8,9);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (8,11);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (8,21);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (9,3);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (9,5);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (9,7);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (9,10);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (9,80);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (9,48);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (9,49);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (9,93);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (10,1);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (10,3);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (10,28);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (10,47);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (12,6);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (12,13);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (12,11);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (12,29);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (12,32);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (12,37);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (13,18);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (13,34);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (13,47);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (13,50);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (13,93);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (13,91);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (13,88);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (16,81);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (15,43);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (15,40);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (15,38);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (15,42);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (15,84);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (15,87);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (16,31);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (16,82);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (16,50);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (16,85);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (16,87);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (19,34);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (19,40);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (19,42);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (19,80);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (20,16);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (20,34);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (19,19);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (19,37);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (20,37);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (20,35);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (20,31);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (20,30);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (21,4);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (21,20);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (21,18);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (22,4);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (22,22);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (22,18);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (22,21);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (22,24);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (22,17);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (23,6);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (23,24);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (23,20);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (23,25);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (23,27);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (23,22);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (24,16);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (24,17);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (24,18);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (24,21);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (24,22);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (24,15);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (25,3);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (25,6);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (25,9);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (25,5);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (25,11);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (25,13);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (26,5);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (26,8);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (26,9);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (26,4);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (26,7);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (26,11);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (26,6);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (27,38);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (27,40);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (27,41);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (27,33);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (28,12);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (28,15);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (28,18);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (28,14);
+Insert into CODDY.PRELATION (RECRUITMENT_NO,TAGS_NO) values (28,19);
+
 COMMIT;
 
 -- 효중씨
@@ -452,6 +945,25 @@ CREATE TABLE FBOARD (
     FOREIGN KEY (FBOARD_WRITER) REFERENCES MEMBER(MEMBER_NO)
 );
 
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'한','삼태기, 두삼태기, 석삼태기, 열삼태기, 언제나 즐거운 삼태기 메들리~',3,to_date('23/12/20','RR/MM/DD'),null,null,3,'KakaoTalk_20230930_113028340-1.png','/resources/file_upload/fboard/upload/2023122011415479937.png');
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'눈이 옵니다.','빙판길 미끄러지지 않게 조심하세요.',2,to_date('23/12/20','RR/MM/DD'),null,null,2,null,null);
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'보드게임 소개','오늘 소개해드릴 보드게임은 화이트채플에서 온 편지라는 게임입니다.
+필요인원은 2~6명 정도인데, 카드나 주사위를 일절 사용하지 않아서 운적인 요소가 없고, 룰이 비교적 간단해 인기가 많은 게임이다. 다만 게임의 주요 메커니즘이 두 플레이어 간의 심리전에 상당부분 기대는 편이기 때문에 거부감을 심하게 느끼는 유저들도 있을겁니다. 반대로 말씀드리자면 심리전을 좋아하시는 분들에게는 강추드릴 수 있겠네요.',4,to_date('23/12/20','RR/MM/DD'),null,null,3,null,null);
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'노래추천','장혜매의 12집인 STAR 앨범의 9번트랙 如果?也聽說 추천드려요.
+주걸륜이 작곡했는데, 가사가 아주 그냥....
+한번 들어보셔요',5,to_date('23/12/20','RR/MM/DD'),to_date('23/12/20','RR/MM/DD'),null,3,null,null);
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'춥다','추워요.
+왜 이렇게 춥나요.
+그래도 저도 그렇지만 여러분들도 마음만은 따뜻하게 겨울을 납시다.
+퇴근길에 귤 사서 자기 전에 까먹는 것도 좋을 것 같아요.',6,to_date('23/12/20','RR/MM/DD'),null,null,2,null,null);
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'가족들과의 진지한 일기','오늘은 부모님께 닭볶음탕을 요리해드렸더니 맛있게 드셨네요.',3,to_date('23/12/20','RR/MM/DD'),null,null,5,null,null);
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'다시 ','다시 시작일 것만 같아서 여전히 그 미소여서
+세월은 묻어있지만 날 부르는 그 모습은
+아직도 설레어 찬 바람에 실려온 그대...',6,to_date('23/12/20','RR/MM/DD'),null,null,2,null,null);
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'저메추 부탁드립니다.','일단은 다이어트 식단중이기 때문에 이를 고려해서 메뉴 부탁드릴게요. 라면 베이스 요리는 사절입니다. ',2,to_date('23/12/20','RR/MM/DD'),null,null,3,null,null);
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'보드타러가요','연말에 보드타러 가실 분 있으시면? 같이 가시죠. 회원권은... ',4,to_date('23/12/20','RR/MM/DD'),null,null,3,null,null);
+Insert into CODDY.FBOARD (FBOARD_NO,FBOARD_TITLE,FBOARD_CONTENT,FBOARD_WRITER,FBOARD_INSERT,FBOARD_UPDATE,FBOARD_DELETE,FBOARD_VIEWS,FBOARD_ORIGIN,FBOARD_CHANGE) values (SEQ_FBOARD.NEXTVAL,'밸런스 게임','난로 VS 온풍기',5,to_date('23/12/20','RR/MM/DD'),null,null,7,null,null);
+
 COMMENT ON COLUMN FBOARD.FBOARD_INSERT IS '작성된 날짜';
 
 DROP SEQUENCE SEQ_FREPLY;
@@ -471,6 +983,13 @@ CREATE TABLE FREPLY (
     FOREIGN KEY (FBOARD_NO) REFERENCES FBOARD(FBOARD_NO),
     FOREIGN KEY (FREPLY_PARENT) REFERENCES FREPLY(FREPLY_NO)
 );
+
+Insert into CODDY.FREPLY (FREPLY_NO,MEMBER_NO,FBOARD_NO,FREPLY_PARENT,FREPLY_CONTENT,FREPLY_INSERT,FREPLY_UPDATE,FREPLY_DELETE) values (SEQ_FREPLY.NEXTVAL,3,8,null,'ㅠㅠ',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.FREPLY (FREPLY_NO,MEMBER_NO,FBOARD_NO,FREPLY_PARENT,FREPLY_CONTENT,FREPLY_INSERT,FREPLY_UPDATE,FREPLY_DELETE) values (SEQ_FREPLY.NEXTVAL,3,10,null,'깐풍기는 왜 없죠?',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.FREPLY (FREPLY_NO,MEMBER_NO,FBOARD_NO,FREPLY_PARENT,FREPLY_CONTENT,FREPLY_INSERT,FREPLY_UPDATE,FREPLY_DELETE) values (SEQ_FREPLY.NEXTVAL,4,10,null,'깐풍기 고소',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.FREPLY (FREPLY_NO,MEMBER_NO,FBOARD_NO,FREPLY_PARENT,FREPLY_CONTENT,FREPLY_INSERT,FREPLY_UPDATE,FREPLY_DELETE) values (SEQ_FREPLY.NEXTVAL,6,10,null,'고소하시죠',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.FREPLY (FREPLY_NO,MEMBER_NO,FBOARD_NO,FREPLY_PARENT,FREPLY_CONTENT,FREPLY_INSERT,FREPLY_UPDATE,FREPLY_DELETE) values (SEQ_FREPLY.NEXTVAL,1,6,null,'????',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.FREPLY (FREPLY_NO,MEMBER_NO,FBOARD_NO,FREPLY_PARENT,FREPLY_CONTENT,FREPLY_INSERT,FREPLY_UPDATE,FREPLY_DELETE) values (SEQ_FREPLY.NEXTVAL,1,10,null,'고소해야겠다....',to_date('23/12/20','RR/MM/DD'),null,null);
 
 DROP SEQUENCE SEQ_FATTACHMENT;
 
@@ -502,6 +1021,55 @@ CREATE TABLE NBOARD (
     NBOARD_ORIGIN   VARCHAR2(200) NULL,
     NBOARD_CHANGE   VARCHAR2(200) NULL
 );
+
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'안녕하세요','안녕하세요. CODDY에 오신 여러분들을 환영합니다. 
+
+CODDY는 새로 진행되거나 인기 프로젝트를 소개하고 이와 함께할 프로그래머를  모시는 분야의 선두 주자입니다. 
+
+항상 최고의 서비스와 혁신적인 솔루션을 제공하기 위해 노력하고 있으며 고객의 만족을 최우선에 두고 있습니다.
+
+많은 기업이 경쟁하는 시장에서 CODDY를 선택해 주셔서 감사합니다. 우리는 항상 여러분을 위해 더 나은 경험을 제공하기 위해 노력할 것입니다.
+
+함께 훌륭한 순간을 만들어 나가요!
+
+감사합니다.
+
+CODDY 임직원 일동 드림',to_date('23/12/20','RR/MM/DD'),null,null,1,null,null);
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'공지 게시판 첨부파일 기능 공지','현재 첨부파일은 공지 게시판에서는 따로 제공되어 있지 않음을 알려드리며, 추후 사이트 업데이트를 통해 선보이겠습니다.',to_date('23/12/20','RR/MM/DD'),null,null,1,null,null);
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'자유 게시판 첨부파일 기능 공지','현재 자유게시판 내에서 파일 업로드만 가능하며 다운로드가 불가능한 상황이 확인되어 현재 조치중에 있습니다.
+
+조속히 해결할 수 있도록 최선을 다 하겠습니다.
+
+사이트 이용에 불편을 끼쳐드려 죄송합니다.',to_date('23/12/20','RR/MM/DD'),null,null,1,null,null);
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'악성유저 김ㅁ중 고소건','최근까지 자유게시판에서 시비와 악플 및 성별을 불문한 플러팅으로 다수의 유저분들에게 불편을 끼쳐드렸던 김ㅁ중에 관하여 사측은 이를 업무방해로 판단, 고소절차에 들어갔음을 알려드립니다. 
+
+CODDY 임직원 일동 드림',to_date('23/12/20','RR/MM/DD'),null,null,2,null,null);
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'신규서비스 관련 인원 모집','2025년 교육 서비스 런칭에 앞서 저희와 함께할 강사분들을 모집하고자 합니다. 
+자세한 내용은 2024년 3월 중에 재공지 드리겠습니다.',to_date('23/12/20','RR/MM/DD'),null,null,1,null,null);
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'CODDY 중국지사 설립','CODDY의 급격한 성장으로 인해 중국에 지사를 설립하게 되었습니다. 
+
+아울러 중국 지사장으로 저희 창립 멤버 중 한명은 정은지 전무가 중국 지사장으로 발령을 받아 저희 CODDY의 발전에 앞장서게 되었습니다.
+
+이에 자만하지 않고 끝까지 노력하여 발전하는 CODDY가 되겠습니다.
+
+CODDY 임직원 일동 드림',to_date('23/12/20','RR/MM/DD'),null,to_date('23/12/20','RR/MM/DD'),2,null,null);
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'CODDY 중견기업으로 승격','CODDY의 지난번 급격한 성장으로 인해 자산 총규모가 9천억원에 이르러 중소기업에서 중견기업으로 승격되었습니다. 
+
+이에 따라 리더 김인엽 사장이 CEO로 정식 취임할 예정이며 각 창립멤버(정은지 중국지사장 포함한 봉영훈 부장, 한영욱 부장, 김효중 차장(진))들 각각 전무 및 상무 인사로 승진할 예정입니다.
+
+계속 발전하여 대기업이 될 것임을 약속 드립니다.
+
+CODDY 임직원 일동 드림',to_date('23/12/20','RR/MM/DD'),null,to_date('23/12/20','RR/MM/DD'),1,null,null);
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'CODDY 중국','CODDY의 급격한 성장으로 인해 중국에 지사를 설립하게 되었습니다. 
+아울러 중국 지사장으로 저희 창립 멤버 중 한명은 정은지 차장이 중국 지사장으로 발령을 받아 저희 CODDY의 발전에 앞장서게 되어 여러분들의 축하를 바랍니다.',to_date('23/12/20','RR/MM/DD'),null,null,1,null,null);
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'중견기업 승','''CODDY의 지난번 급격한 성장으로 인해 자산 총규모가 9천억원에 이르러 중소기업에서 중견기업으로 승격되었습니다. 
+이에 따라 리더 김인엽 사장이 CEO로 정식 취임할 예정이며 각 창립멤버(정은지 중국지사장 포함한 봉영훈 부장, 한영욱 부장, 김효중 차장(진))들 각각 전무 및 상무 인사로 승진할 예정입니다.
+계속 발전하여 대기업이 될 것임을 약속 드립니다.
+
+CODDY 임직원 일동 드림',to_date('23/12/20','RR/MM/DD'),null,to_date('23/12/20','RR/MM/DD'),1,null,null);
+Insert into CODDY.NBOARD (NBOARD_NO,NBOARD_TITLE,NBOARD_CONTENT,NBOARD_INSERT,NBOARD_UPDATE,NBOARD_DELETE,NBOARD_VIEWS,NBOARD_ORIGIN,NBOARD_CHANGE) values (SEQ_NBOARD.NEXTVAL,'중견기업으로 승격','''CODDY의 지난번 급격한 성장으로 인해 자산 총규모가 9천억원에 이르러 중소기업에서 중견기업으로 승격되었습니다. 이에 따라 리더 김인엽 사장이 CEO로 정식 취임할 예정이며 각 창립멤버(정은지 중국지사장 포함한 봉영훈 부장, 한영욱 부장, 김효중 차장(진))들 각각 전무 및 상무 인사로 승진할 예정입니다. 계속 발전하여 대기업이 될 것임을 약속 드립니다. 
+
+CODDY 임직원 일동 드림',to_date('23/12/20','RR/MM/DD'),null,null,6,null,null);
 
 COMMENT ON COLUMN NBOARD.NBOARD_INSERT IS '작성된 날짜';
 
@@ -539,12 +1107,13 @@ CREATE TABLE IBOARD (
     FOREIGN KEY (PROJECT_NO) REFERENCES PROJECT(PROJECT_NO)
 );
 
+Insert into CODDY.IBOARD (IBOARD_NO,IBOARD_TITLE,IBOARD_CONTENT,IBOARD_WRITER,IBOARD_INSERT,IBOARD_UPDATE,IBOARD_DELETE,PROJECT_NO,IBOARD_VIEWS) values (SEQ_IBOARD.NEXTVAL,'내가 보는나, 남이 보는나','당신은 얼마나 당신을 잘 알고 계신가요?내가 보는 나, 남이 보는 나는 설문을 통해 내가 보는 나의 모습과 타인이 보는 나의 모습을 아래와 같이 비교할 수 있는 서비스입니다.',2,to_date('23/12/20','RR/MM/DD'),null,null,2,4);
+
 COMMENT ON COLUMN IBOARD.IBOARD_INSERT IS '작성된 날짜';
 
 DROP SEQUENCE SEQ_LIKES;
 
 CREATE SEQUENCE SEQ_LIKES NOCYCLE;
-
 
 CREATE TABLE LIKES (
 	LIKES_MEMBER	NUMBER		NOT NULL,
@@ -552,6 +1121,8 @@ CREATE TABLE LIKES (
     FOREIGN KEY (LIKES_MEMBER) REFERENCES MEMBER(MEMBER_NO),
     FOREIGN KEY (IBOARD_NO) REFERENCES IBOARD(IBOARD_NO)
 );
+
+Insert into CODDY.LIKES (LIKES_MEMBER,IBOARD_NO) values (2,1);
 
 DROP SEQUENCE SEQ_IREPLY;
 
@@ -571,6 +1142,8 @@ CREATE TABLE IREPLY (
     FOREIGN KEY (IREPLY_PARENT) REFERENCES IREPLY(IREPLY_NO)
 );
 
+Insert into CODDY.IREPLY (IREPLY_NO,MEMBER_NO,IBOARD_NO,IREPLY_PARENT,IREPLY_CONTENT,IREPLY_INSERT,IREPLY_UPDATE,IREPLY_DELETE) values (SEQ_IREPLY.NEXTVAL,2,1,null,'ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ',to_date('23/12/20','RR/MM/DD'),null,null);
+
 DROP SEQUENCE SEQ_IATTACHMENT;
 
 CREATE SEQUENCE SEQ_IATTACHMENT NOCYCLE;
@@ -585,6 +1158,9 @@ CREATE TABLE IATTACHMENT (
 	IATTACHMENT_LEVEL	NUMBER	DEFAULT 0	NOT NULL,
     FOREIGN KEY (IBOARD_NO) REFERENCES IBOARD(IBOARD_NO)
 );
+
+Insert into CODDY.IATTACHMENT (IATTACHMENT_NO,IBOARD_NO,IATTACHMENT_ORIGIN,IATTACHMENT_CHANGE,IATTACHMENT_PATH,IATTACHMENT_INSERT,IATTACHMENT_LEVEL) values (SEQ_IATTACHMENT.NEXTVAL,1,'nae2.JPG','42c63f95-2601-4e8e-92aa-b51ae777597c_nae2.JPG','resources\file_upload\iboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.IATTACHMENT (IATTACHMENT_NO,IBOARD_NO,IATTACHMENT_ORIGIN,IATTACHMENT_CHANGE,IATTACHMENT_PATH,IATTACHMENT_INSERT,IATTACHMENT_LEVEL) values (SEQ_IATTACHMENT.NEXTVAL,1,'nae4.JPG','ecb7de49-8ce2-4e7c-af2c-16e994c5d3ca_nae4.JPG','resources\file_upload\iboard\',to_date('23/12/20','RR/MM/DD'),1);
 
 -- 은지씨
 DROP SEQUENCE SEQ_CBOARD;
@@ -612,6 +1188,82 @@ COMMENT ON COLUMN CBOARD.CBOARD_INSERT IS '작성된 날짜';
 COMMENT ON COLUMN CBOARD.CBOARD_UPDATE IS '글작성';
 COMMENT ON COLUMN CBOARD.CBOARD_DELETE IS '글삭제';
 COMMENT ON COLUMN CBOARD.CBOARD_VIEWS IS '조회수';
+
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'스프링 시큐리티 HttpSeurity.apply() derpeciated','<p>안녕하세요! 최근 스프링 시큐리티가 패치되면서, 기존 메서드 체이닝 방식이 아닌 람다식을 통해 함수형으로 설정하도록 바뀌었는데요.</p><p>다른 설정 부분은 새롭게 바뀐 방식을 찾았으나.... 아래 사진의 마지막 apply() 는 도저히 찾을 수가 없더라고요...ㅠ 혹시 아시는 분계실까요?<br>(''apply(C)'' is deprecated since version 6.2 and marked for removal )</p><figure class="image"><img src="resources/file_upload/cboard/upload/2023122011395320880.png"></figure>',2,to_date('23/12/20','RR/MM/DD'),null,null,2,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'<property name="hibernate.hbm2ddl.auto" value="update"/>','<pre><code class="language-plaintext">&lt;property name="hibernate.hbm2ddl.auto" value="update"/&gt;</code></pre><p>&nbsp;</p><p>create / create-drop 은 잘 됩니다.</p><p>하지만 update는 이상한점을 발견을 했습니다.<br>이유를 알고 싶어서 이런 질문 드립니다.</p><p>update를 value에 작성을 한뒤에 Member class 에서</p><p>A - private int age x</p><p>B - private Integer o<br>위 와 같이 작성을 하고 나서 실행을 해보면</p><p><br>A는 오류가 발생하지만<br>B는 정상적으로 작동이 됩니다.</p><p>이유를 알려주세요.</p>',4,to_date('23/12/20','RR/MM/DD'),null,to_date('23/12/20','RR/MM/DD'),2,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'property name','<pre><code class="language-plaintext">&lt;property name="hibernate.hbm2ddl.auto" value="update"/&gt;</code></pre><p>&nbsp;</p><p>create / create-drop 은 잘 됩니다.</p><p>하지만 update는 이상한점을 발견을 했습니다.<br>이유를 알고 싶어서 이런 질문 드립니다.</p><p>update를 value에 작성을 한뒤에 Member class 에서</p><p>A - private int age x</p><p>B - private Integer o<br>위 와 같이 작성을 하고 나서 실행을 해보면</p><p><br>A는 오류가 발생하지만<br>B는 정상적으로 작동이 됩니다.</p><p>이유를 알려주세요.</p>',4,to_date('23/12/20','RR/MM/DD'),null,to_date('23/12/20','RR/MM/DD'),1,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'eee','<p>내용을 입력하세요.</p>',4,to_date('23/12/20','RR/MM/DD'),null,to_date('23/12/20','RR/MM/DD'),1,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'property name','<pre><code class="language-plaintext">&lt;property name="hibernate.hbm2ddl.auto" value="update"/&gt;</code></pre><p>&nbsp;</p><p>create / create-drop 은 잘 됩니다.</p><p>하지만 update는 이상한점을 발견을 했습니다.<br>이유를 알고 싶어서 이런 질문 드립니다.</p><p>update를 value에 작성을 한뒤에 Member class 에서</p><p>A - private int age x</p><p>B - private Integer o<br>위 와 같이 작성을 하고 나서 실행을 해보면</p><p><br>A는 오류가 발생하지만<br>B는 정상적으로 작동이 됩니다.</p><p>이유를 알려주세요.</p>',4,to_date('23/12/20','RR/MM/DD'),null,null,4,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,' for문이랑 while문 차이','<p><span style="background-color:rgb(255,255,255);color:rgb(36,41,47);">&nbsp;for문이랑 while문 언제 쓰는지 느낌은 알겠는데 정확한 차이점을 모르겠어요 ,, 정확한 정의나 비교될 만한 예시가 있을까요??</span></p>',3,to_date('23/12/20','RR/MM/DD'),null,null,3,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'인텔리제이에서 깃허브 로그인 시','<p>&nbsp;</p><p><span style="background-color:rgb(255,255,255);color:rgb(36,41,47);">유튜브에서 본 대로 인텔리제이에서 작성한 프로젝트를 깃허브에 올리려고 하는데, 깃허브 로그인 시에 저런 에러창이 뜹니다. 어떤 프로그램을 더 설치하거나 해야 할까요...?</span></p><p>&nbsp;</p><figure class="image"><img src="resources/file_upload/cboard/upload/2023122011475926659.png"></figure>',5,to_date('23/12/20','RR/MM/DD'),null,null,4,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'Querydsl SQLExpressions에 listagg','<p>Querydsl SQLExpressions에 listagg 관련하여 질문이 있습니다.</p><p>&nbsp;</p><p>현재 Projections.constructoer 방식으로 조회한 결과를 Dto로 받고있는데요,</p><p>SQLExpressions.listagg(컬럼, ",").withinGroup().orderBy(컬럼).getValue().as("listaggs")</p><p>로 select후 Dto에서 String으로 못받는데 String으로 받으려면 어떻게 해야 될까요?</p><p>&nbsp;</p><p>방법이 없는걸까요? 이미 같은 질문을 남긴 글이 있는데 미해결 상태라 다시 한번 글 올려 봅니다.</p><p>&nbsp;</p><p>이방법을 사용하는 이유는 A 테이블, B 테이블이 있는데 1:N의 관계 입니다)</p><p>A테이블 조회시 Response에는 B테이블의 컬럼 하나도 추가로 목록에 보여줘야 하는데</p><p>그럴때 B테이블의 해당 컬럼의 값이 다른 데이터가 2개 이상일시 A정보가 2건이 나오게 되서<br>(페이징 처리시에도 총 카운트와 페이징 처리가 제대로 되지 않습니다.)</p><p>한 row로 보여지게 하기 위해 사용하려 Querydsl SQLExpressions에 listagg 사용하려는데,</p><p>String으로 받을수가 없더군요...<br>혹 Querydsl SQLExpressions에 listagg 아니더라도 다른 방법이 있을까요?</p>',6,to_date('23/12/20','RR/MM/DD'),null,null,4,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'스프링 인터셉터가 동작하지 않아요 ','<p>&nbsp;</p><p>로그인 기능 구현과 관련하여 강의 예제 코드를 참고하며 구현하던 중</p><p>이해할 수 없는 현상이 발생하여 질문 드립니다.</p><p>&nbsp;</p><p><a href="http://logininterceptor.java/"><strong>LoginInterceptor.java</strong></a></p><pre><code class="language-plaintext">package Alchole_free.Cockpybara.interceptor;
+
+import Alchole_free.Cockpybara.constant.SessionLoginConst;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+
+@Slf4j
+//@Component
+public class LoginInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response,
+                             Object handler) throws Exception {
+
+        HttpSession session = request.getSession();
+        log.info("session = {}", session);
+        if(session==null || session.getAttribute(SessionLoginConst.LOGIN_MEMBER)==null){
+            log.info("로그인되지 않은 사용자");
+            response.sendRedirect("/login");
+            return false;
+        }
+
+        log.info("정상 요청");
+
+        return true;
+    }
+}</code></pre><p>&nbsp;</p><p>&nbsp;</p><p><a href="http://webconfig.java/"><strong>WebConfig.java</strong></a></p><pre><code class="language-plaintext">package Alchole_free.Cockpybara.config;
+
+import Alchole_free.Cockpybara.interceptor.LoginInterceptor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+//@Slf4j
+@Configuration
+//@RequiredArgsConstructor
+public class WebConfig implements WebMvcConfigurer {
+
+//    private final LoginInterceptor loginInterceptor;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor())
+                .order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/", "/join", "/login",
+                        "/css/**", "/*.ico", "/error");
+    }
+}</code></pre><p>&nbsp;</p><h3><strong>문제</strong></h3><p>위와 같이 코드를 구성하고 애플리케이션을 동작시켰는데, 인터셉터가 아예 로그에 남지</p><p>않는(생성되지 않는 것으로 보이는) 현상이 발생하였습니다. 관련하여 구글링을 하다보니</p><p>인터셉터 클래스를 빈으로 등록해주는 형태가 아니면 동작하지 않을 수 있다고 하여,</p><p>빈으로 등록하고 <code>WebConfig</code> 클래스에서 생성자를 통해 주입받는 형태로 구현도 해보았는데</p><p>여전히 같은 문제가 발생하더군요. 도대체 어느 부분에서 문제가 발생하는 것인지</p><p>파악하기가 힘들어 고민끝에 질문드립니다.&nbsp;</p><p>&nbsp;</p><p>&nbsp;</p>',7,to_date('23/12/20','RR/MM/DD'),null,null,6,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'Editor에 관한 질문이 있습니다!','<p>다른 질문들을 보고도 아직</p><p>Post 엔티티를 Editor를 사용해서 변경하는 것과 아래 코드가 어떠한 차이가 있는지 잘 이해가 되지 않습니다...</p><p>&nbsp;</p><pre><code class="language-plaintext">public Post toUpdate(PostUpdate req) {
+     this.title = req.getTitle() != null ? req.getTitle() : this.title;
+     this.content = req.getContent() != null ? req.getContent() : this.content;
+
+     return this;
+}</code></pre>',9,to_date('23/12/20','RR/MM/DD'),null,null,5,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'JAVA11 - javax.xml.bind.JAXBException 에러','<p>Caused by: java.lang.ClassNotFoundException: javax.xml.bind.JAXBException</p><p>JAVA11 에서 에러가 발생하네요</p><p>&nbsp;</p><pre><code class="language-plaintext">&lt;dependency&gt;
+    &lt;groupId&gt;javax.xml.bind&lt;/groupId&gt;
+     &lt;artifactId&gt;jaxb-api&lt;/artifactId&gt;
+    &lt;version&gt;2.3.0&lt;/version&gt;
+ &lt;/dependency&gt;</code></pre>',10,to_date('23/12/20','RR/MM/DD'),null,null,4,null,null);
+Insert into CODDY.CBOARD (CBOARD_NO,CBOARD_TITLE,CBOARD_CONTENT,CBOARD_WRITER,CBOARD_INSERT,CBOARD_UPDATE,CBOARD_DELETE,CBOARD_VIEWS,ORIGIN_NAME,CHANGE_NAME) values (SEQ_CBOARD.NEXTVAL,'Group By질문드립니다.','<p>querydsl을 적용중이고</p><p>A Table</p><p>year&nbsp; name&nbsp; &nbsp;value</p><p>2019&nbsp; &nbsp;a&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;10</p><p>2019&nbsp; &nbsp;b&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;11</p><p>2019&nbsp; &nbsp;c&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 11</p><p>2020&nbsp; &nbsp;d&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;9</p><p>2020&nbsp; &nbsp;e&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 20</p><p>이 있을 때 ,&nbsp; year로 그룹핑해서 value가 맥스인값을 보여주고 싶습니다.</p><p>2019&nbsp; (b,11) , (c,11)</p><p>2020&nbsp; (e, 20)</p><p>이렇게 값을 가져오게 하고 싶습니다.</p><p>최종적으로는 (b,11) (c,11)(e,20)로 출력하고 싶습니다.</p><p>List&lt;a&gt;로 받고 싶습니다. 년도순, 이름순으로 값을 저장하고 싶습니다.</p><p>a는 Qa를 a로 받은 것입니다.</p><p>JPAQueryFactory.from(a).transform(<i>groupBy</i>(a.year).as(<i>list</i>(a)));</p><p>저는 이정도에서 더이상 진도가 안나네요. ㅠㅠ&nbsp;</p>',11,to_date('23/12/20','RR/MM/DD'),null,null,5,null,null);
 
 DROP SEQUENCE SEQ_CATTACHMENT;
 
@@ -646,6 +1298,135 @@ CREATE TABLE CREPLY (
     FOREIGN KEY (CREPLY_PARENT) REFERENCES CREPLY(CREPLY_NO)
 );
 
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,4,1,null,'님께서 말씀하신 HttpSecurity.apply() 메소드는 스프링 시큐리티의 변경된 방식에 맞춰 람다식을 통한 구성으로 대체해야 할 부분입니다. 이를 대체하기 위해서는 SecurityConfigurerAdapter를 상속받는 클래스를 구현하여 SecurityFilterChain에 직접 등록해야 합니다.',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,3,5,null,'기존에 테이블이 어떻게 생성되어 있었는지에 따라 오류가 발생할 수 있습니다.
+
+age 필드가 최초에 Integer였고 ddl-auto가 create 여서 데이터베이스의 age 속성이 not null 제한되었다고 가정하겠습니다. 이후 ddl-auto를 update로 변경, age 필드를 원시타입(int)으로 바꾸고 다시 앱을 실행하면, 테이블 변경중 오류가 발생합니다.
+
+int 같은 원시타입은 null을 허용하지 않기에 데이터베이스 속성에도 not null 로 제한합니다. 그러나 이미 age 속성이 null 로 들어간 데이터가 있다면 속성을 변경할 수 없어 오류가 발생합니다.
+
+감사합니다.',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,5,6,null,'for 문과 while 문은 모두 반복 작업을 위해 사용되지만 둘의 사용처는 다음과 같이 조금 다릅니다.
+
+for 문 : 반복 횟수가 명확한 작업
+while 문 : 반복 횟수가 명확하지 않은 작업
+
+크기가 정해져 있는 배열의 요소를 순회 한다거나, 횟수가 정해진 작업을 할 때는 for 문을 사용하시면 되구요. 횟수 무관하게 특정 조건을 만족하는 동안 계속해서 작업을 할 때는 while 문을 사용하시면 됩니다.',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,6,7,null,'인텔리제이에서 깃허브 로그인 시에 발생하는 해당 에러 메세지는 “Git”을 설치해야 한다는 의미입니다.
+깃허브와의 연동을 위해서는 Git 클라이언트를 설치해야하며, 다음 링크에서 해당 프로그램을 다운로드하여 설치하시면 됩니다.
+https://git-scm.com/downloads
+설치 이후 인텔리제이 설정에서 Git 경로를 지정해주신다면 깃허브와의 연동이 가능할 것입니다. 설치가 완료된 후 다시 시도해보세요. ',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,7,8,null,'Querydsl SQLExpressions의 listagg 함수를 사용하여 결과를 String으로 받기 위해서는 Projection이 아닌 QueryResults를 사용해야 합니다. Projections.constructor 방식은 DTO를 생성하여 반환하는 방식이기 때문에 String 타입으로 직접 받을 수 없습니다.
+
+대신 QueryResults를 사용하면 List 타입으로 결과를 받아올 수 있으며, 이를 통해 원하는 필드를 String으로 변환하여 사용하실 수 있습니다.',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,8,9,null,'스프링 인터셉터가 동작하지 않는 문제입니다. 해당 코드를 봤을 때, LoginInterceptor 클래스 위에 주석 처리된 @Component 어노테이션이 있습니다. 이 어노테이션을 제거하고 @Component를 적용해보세요. 이렇게 하면 스프링이 해당 클래스를 빈으로 등록하고 인터셉터로 동작하게 됩니다.',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,9,9,null,'@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginInterceptor())
+                .addPathPatterns("/*")
+                .excludePathPatterns("/login");
+    }
+}',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,10,10,null,'제가 이해하기로는, 위 코드는 Post 엔티티의 title과 content를 PostUpdate req의 title과 content 값으로 변경하는 메서드입니다.
+
+Editor를 사용해서 변경하는 것과의 차이는, Editor는 GUI를 통해 직접 변경할 수 있는 반면, 위 코드는 코드 상에서 값 변경을 수행합니다. 따라서 입력 형식에 따라 선택하시면 됩니다.
+
+추가적으로, 위 코드는 삼항 연산자를 사용한 코드입니다. 조건문의 결과에 따라 다른 값을 반환하는데, 위 코드에선 title과 content 값 중 하나라도 null이 아닐 경우 req의 값으로, 그렇지 않은 경우 현재 값으로 설정하는 것입니다.
+
+이해에 도움이 되었길 바랍니다. 감사합니다!',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,11,11,null,'자바 9 이후 부턴 기본 클래스에서 제거 되었다고 합니다. 그래서 수동등록',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,12,12,null,'네 kim님 or 연산이 들어가기 때문에 데이터베이스와 데이터 상황에 따라서 더 느려질 수 있습니다. 이 부분은 DB마다 최적화 여부가 다르기 때문에 본인의 데이터베이스에 맞는 선택이 필요합니다. 기본적으로 데이터베이스 쿼리 플랜을 보고, 선택하면 될 것 같습니다.
+
+쿼리는 2번으로 분리하면 복잡한 문제가 쉽게 풀리는 경우가 많다는 것은 일반적인 상황을 말씀드린 거에요.
+
+이번 케이스는 성능이 중요하다면 처음 해결하셨던 것 처럼 조인으로 푸는 것이, 저도 좋은 방법이라 생각합니다. 그런면에서 네이티브 쿼리를 쓰는게 더 나은 선택이라 생각합니다.
+
+참고로 하이버네이트를 개발한 게빈킹도 JPQL(HQL)로 모든 문제를 해결하기 위해서 만든 것이 아니라고 했습니다. 저도 실무에서 5% 정도는 네이티브 쿼리를 사용하고 있습니다.',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,13,12,null,'QueryDSL은 결국 JPQL로 실행되기 때문에, JPQL의 제약에 묶이게 됩니다.
+
+현재 하이버네이트 구현체는 FROM이나 JOIN 절에서 서브쿼리를 만들 수 없습니다.(SELECT, WHERE 절은 가능합니다.)
+
+그래서 아쉽게도 작성해주신 SQL은 JOIN 절에 서브쿼리가 들어가기 때문에 JPQL이나 QueryDSL로 작성하는 것이 불가능합니다.
+
+해결방안은 다음과 같습니다.
+
+1. 쿼리를 2번 나누어 실행한다. (서브쿼리 부분을 별도의 JPQL이나 QueryDSL로 실행하고 결과를 받아서, 그 결과를 파라미터로 넘기는 JPQL이나 QueryDSL을 다시 실행합니다. 예를 들어서 처음 쿼리로 [2019, 11], [2020,20]이라는 결과를 받고, 그 다음에 이 값을 파라미터로 넘기는 쿼리를 실행해서 최종 결과를 받습니다.)
+
+2. 네이티브 쿼리를 사용한다.
+
+3. 다음과 같이 다른 방법으로 푼다. (WHERE 절에서는 서브쿼리가 가능하므로)
+
+select name, value from test_entity
+
+where concat(year, value) in (
+
+  select concat(year, max(value))
+
+  from test_entity
+
+  group by year
+
+);',to_date('23/12/20','RR/MM/DD'),null,null);
+Insert into CODDY.CREPLY (CREPLY_NO,MEMBER_NO,CBOARD_NO,CREPLY_PARENT,CREPLY_CONTENT,CREPLY_INSERT,CREPLY_UPDATE,CREPLY_DELETE) values (SEQ_CREPLY.NEXTVAL,13,12,null,'CREATE TABLE TEST(ID INT PRIMARY KEY,
+
+   YEAR VARCHAR(4),
+
+   NAME VARCHAR(255),
+
+   VALUE DOUBLE);
+
+COMMIT;
+
+INSERT INTO TEST VALUES(1, ''2019'',''A'', 10);
+
+INSERT INTO TEST VALUES(2, ''2019'',''B'', 11);
+
+INSERT INTO TEST VALUES(3, ''2019'',''C'', 11);
+
+INSERT INTO TEST VALUES(4, ''2020'',''D'', 9);
+
+INSERT INTO TEST VALUES(5, ''2020'',''E'', 20);
+
+COMMIT;
+
+SELECT * FROM TEST;
+
+SELECT TEST1.NAME, TEST1.VALUE
+
+FROM TEST TEST1
+
+INNER JOIN
+
+(SELECT YEAR, MAX(VALUE) VALUE
+
+FROM TEST
+
+GROUP BY YEAR) TEST2
+
+ON TEST1.YEAR = TEST2.YEAR
+
+AND TEST1.VALUE=TEST2.VALUE;
+
+쿼리가 이게 맞는지 모르겠는데. 일단 결과값은 나오고 H2에서 방금 작성했습니다.
+
+이 결과값을 
+
+CLASS TestDto{
+
+ private name;
+
+ private value;
+
+ private year;
+
+}
+
+에 @QueryProjection을 사용해서 매핑하려 합니다.
+',to_date('23/12/20','RR/MM/DD'),null,null);
+
 DROP SEQUENCE SEQ_RCATTACHMENT;
 
 CREATE SEQUENCE SEQ_RCATTACHMENT NOCYCLE;
@@ -674,6 +1455,22 @@ CREATE TABLE CRELATION (
     FOREIGN KEY (CBOARD_NO) REFERENCES CBOARD(CBOARD_NO),
     FOREIGN KEY (TAGS_NO) REFERENCES TAGS(TAGS_NO)
 );
+
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (1,8);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (1,6);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (2,6);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (4,1);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (5,6);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (6,6);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (7,43);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (7,6);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (8,6);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (9,9);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (10,8);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (10,9);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (11,6);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (12,6);
+Insert into CODDY.CRELATION (CBOARD_NO,TAGS_NO) values (3,24);
 
 -- 영훈씨
 DROP SEQUENCE SEQ_HBOARD;
@@ -883,6 +1680,19 @@ INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 8, 'BbXDtD2Ifcq2krqTZiep
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 9, 'iHWiBK8K6mb-C3Dm7PHXh.jpg', '3b82204b-575b-48ce-aa00-c9bae0095ded_iHWiBK8K6mb-C3Dm7PHXh.jpg', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 10, 'JK_CO_u3ybwBo22062818070797.png', '68908c5c-f1c9-4354-9aab-bb503f9f1d42_JK_CO_u3ybwBo22062818070797.png', 'resources\file_upload\hboard\', SYSDATE, 1);
 INSERT INTO HATTACHMENT VALUES(SEQ_HATTACHMENT.NEXTVAL, 11, 'PRx6kHnJ7ubsNX5MjztaL.png', '6c404b3e-58b7-4d98-a977-b4febacbdda2_PRx6kHnJ7ubsNX5MjztaL.png', 'resources\file_upload\hboard\', SYSDATE, 1);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,2,'엔셀_회사소개서.pdf','cae2f8d1-f474-41e1-bda9-cade5349a923_엔셀_회사소개서.pdf','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,1,'big-ben-houses-parliament-london-uk.jpg','15585fcc-bb2b-4f91-84c6-14aeb88cca3e_big-ben-houses-parliament-london-uk.jpg','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,3,'API참고자료(프로젝트용).zip','2e8403bb-abb5-4ee0-8e4c-96b3b7dff5ff_API참고자료(프로젝트용).zip','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,3,'spring-webmvc-5.3.18.jar','c20c7fb6-7b50-42ae-9b23-1d63687b54d1_spring-webmvc-5.3.18.jar','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,4,'ERD_개판오분전.png','5d0332af-5fc0-471e-8ca2-f95978de4a06_ERD_개판오분전.png','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,5,'4조_개판4분전_애견호텔 예약사이트.pdf','dc89bcfa-7e87-4798-8646-76d8f70111fd_4조_개판4분전_애견호텔 예약사이트.pdf','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,6,'putty.exe','e08c8536-93dc-43e6-802a-46f3d2ced02b_putty.exe','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,7,'knn.joblib','4464fc8f-06ba-4f56-873a-0c1e20804294_knn.joblib','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,8,'SlackSetup.exe','c461a8a3-4f5f-454c-8213-22a5318600a4_SlackSetup.exe','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,9,'cuda_10.0.130_win10_network.exe','7d21c490-8ac0-4708-bfad-7bf606336bed_cuda_10.0.130_win10_network.exe','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,10,'KakaoTalk_Setup.exe','c07f5279-5a6c-422b-a8b3-130b8b6739a3_KakaoTalk_Setup.exe','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,11,'2020학년도 장애학생 실태조사.pdf','f863f0ae-36c0-49ff-8590-c2e8b00fb1c9_2020학년도 장애학생 실태조사.pdf','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
+Insert into CODDY.HATTACHMENT (HATTACHMENT_NO,HBOARD_NO,HATTACHMENT_ORIGIN,HATTACHMENT_CHANGE,HATTACHMENT_PATH,HATTACHMENT_INSERT,HATTACHMENT_LEVEL) values (SEQ_HATTACHMENT.NEXTVAL,11,'[참고] 정부 규제 및 소프트웨어  개발 가이드.zip','1cc687f5-cecd-4940-a61f-fbb161aa3c71_[참고] 정부 규제 및 소프트웨어  개발 가이드.zip','resources\file_upload\hboard\',to_date('23/12/20','RR/MM/DD'),0);
 
 CREATE TABLE HRELATION (
 	HBOARD_NO	NUMBER		NOT NULL,
@@ -956,14 +1766,95 @@ CREATE TABLE CALENDAR (
 
 COMMIT;
 
-
-
 CREATE TABLE RECRUITMENT_STATE (
 	RECRUITMENT_NO		NUMBER		NOT NULL,
 	ROLE			VARCHAR2(60)	NOT NULL,
 	MAX_PERSONNEL		NUMBER		DEFAULT 1 	NOT NULL,
 	FOREIGN KEY (RECRUITMENT_NO) REFERENCES RECRUITMENT (RECRUITMENT_NO)
 );
+
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (1,'BE',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (1,'Design',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (2,'ML/AI',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (2,'Project Planner',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (1,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (1,'FE',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (2,'System Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (2,'Translation',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (3,'DB Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (3,'CDN',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (3,'AOS Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (3,'Game Designer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (4,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (4,'Game Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (4,'Project Planner',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (4,'UI/UX Planner',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (5,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (5,'Network and Server',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (5,'UI/UX Designer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (5,'QA',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (6,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (6,'Game Designer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (6,'Web Publisher',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (7,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (7,'Game Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (7,'UI/UX Designer',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (8,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (8,'FE',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (8,'BE',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (8,'UI/UX Planner',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (9,'ML/AI',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (9,'Game Designer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (9,'UI/UX Designer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (10,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (10,'FE',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (10,'BE',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (10,'ML/AI',3);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (11,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (12,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (12,'Data Scientist',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (12,'ML/AI',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (13,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (13,'Game Designer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (13,'Web Server Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (15,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (15,'CDN',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (15,'3D Model',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (15,'UI/UX Planner',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (16,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (16,'ML/AI',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (16,'3D Model',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (16,'Web Server Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (19,'Design',2);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (20,'DB Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (20,'CDN',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (19,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (19,'Design',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (20,'3D Model',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (21,'3D Model',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (21,'ML/AI',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (21,'Project Planner',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (21,'UI/UX Designer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (22,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (22,'Network and Server',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (22,'Web Server Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (23,'IOS Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (23,'AOS Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (23,'Project Planner',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (24,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (24,'CDN',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (24,'AOS Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (25,'3D Model',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (25,'Project Planner',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (25,'Game Designer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (26,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (26,'Data Scientist',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (26,'Project Planner',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (27,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (27,'UI/UX Planner',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (28,'Project Manager',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (28,'AOS Developer',1);
+Insert into CODDY.RECRUITMENT_STATE (RECRUITMENT_NO,ROLE,MAX_PERSONNEL) values (28,'Project Planner',1);
 
 COMMIT;
 

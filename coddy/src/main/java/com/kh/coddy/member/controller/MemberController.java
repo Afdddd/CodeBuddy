@@ -628,7 +628,7 @@ public int boardSum(HttpSession session) {
 			sb.append("grant_type=authorization_code");
             
 			sb.append("&client_id=" + kkey); //본인이 발급받은 key
-			sb.append("&redirect_uri=http://192.168.40.21:8006/coddy/kakaoLogin.me"); // 본인이 설정한 주소
+			sb.append("&redirect_uri=http://192.168.40.6:8082/coddy/kakaoLogin.me"); // 본인이 설정한 주소
             
 			sb.append("&code=" + code);
 			bw.write(sb.toString());
