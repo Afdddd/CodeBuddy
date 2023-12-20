@@ -108,7 +108,7 @@ public class IntroController {
 		Model model, HttpSession session) {
 		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인이 필요한 서비스입니다."); return "redirect:/"; }
 		
-		
+		if(session.getAttribute("loginMember") != null) {
 		ArrayList<Project> projectlist = new ArrayList<Project>();
 		ArrayList<Recruitment> rlist = new ArrayList<Recruitment>();
 		Member m = ((Member)(session.getAttribute("loginMember")));
@@ -119,7 +119,7 @@ public class IntroController {
 		
 		model.addAttribute("projectlist", projectlist);
 		model.addAttribute("rlist", rlist);
-		
+		}
 		String tags = "";
 		
 		

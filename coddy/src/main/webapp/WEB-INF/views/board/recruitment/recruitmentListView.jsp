@@ -599,13 +599,14 @@
         //   resultStr="<img src='"+path+"' onclick='location.href='>";
         //   $(".swiper-wrapper>"+el).html(resultStr);
         // } 
-        let resultStr = "";
-for (let i = 0; i < result.length; i++) {
-    let path = result[i].rAttachmentPath + "/" + result[i].rAttachmentChange;
-    let el = "#slide" + i;
-    resultStr += "<img src='" + path + "' onclick=\"location.href='detail.rec?rno=" + result[i].recruitmentNo + "';\">";
-    $(".swiper-wrapper>" + el).html(resultStr);
-}
+       
+		for (let i = 0; i < result.length; i++) {
+			 let resultStr = "";
+		    let path = result[i].rAttachmentPath + "/" + result[i].rAttachmentChange;
+		    let el = "#slide" + i;
+		    resultStr = "<img src='" + path + "' onclick=\"location.href='detail.rec?rno=" + result[i].recruitmentNo + "';\">";
+		    $(".swiper-wrapper>" + el).html(resultStr);
+		}
        
       }
     });
