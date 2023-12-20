@@ -118,6 +118,7 @@
             float: left;
             position:absolute;
             top: 0px;
+            object-fit : cover; 
         }
         
         /* 기업전용 로그인 버튼 공간 스타일링 */

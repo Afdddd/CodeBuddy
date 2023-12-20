@@ -57,6 +57,10 @@
         font-family: 'Noto Sans KR', sans-serif;
 		font-family: 'Noto Serif KR', serif;
         }
+        
+        img{
+        	object-fit : cover;
+        }
      
         
     </style>

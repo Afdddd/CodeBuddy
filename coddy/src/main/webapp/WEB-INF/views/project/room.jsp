@@ -34,7 +34,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
 <body>
     <header>
         <div>
-            <button onclick="onClose();">나가기</button>
+           <i id="exit" style="margin-top: 20px; margin-left: 20px; cursor: pointer; " onclick="onClose();" class="fa fa-door-open"></i>
         </div>
     </header>
     <div class="sidebar_left">
@@ -63,7 +63,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
             </button>            
         </div>
         <div id="meeting_place"></div>
-        <button id="map_button" class="button"><i class="fa fa-map"></i> 장소정하기</button>         
+        <button id="map_button" class="button"><i class="fa fa-map"></i> 장소정하기</button>    
         <button id="start_button" class="button"><i class="fa fa-play"></i> 시작하기</button>  
     </div>
 
@@ -314,8 +314,23 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
 
             for (let i = 0; i < result.length; i++) {
                 let div = "";
+                
+                if(${requestScope.p.projectOwner} == ${sessionScope.loginMember.memberNo}){
+                div = "<div class='card'>" +
+                        "<div style='float:left' class='textBox'>" +        
+                          "<div class='textContent'>" +
+                        "<p class='h1'>" + result[i].memberName + "</p>" +
+                        "<span class='span' id='exile' >추방하기</span>" +
+                        "<div id='chatMemberNo' style='display:none'>"+result[i].memberNo+"</div>"+
+                        "</div>" +
+                        "<p class='p'>" + result[i].role + "</p>" +
+                        "</div>" +
+                        
+                       
+                      "</div>";
+                
                 if (result[i].memberNo == ${requestScope.p.projectOwner}) {
-                    div = "<div class='card'>" +
+                  div = "<div class='card'>" +
                         "<div class='textBox'>" +
                         "<div class='textContent'>" +
                         "<p class='h1'>" + result[i].memberName + "</p>" +
@@ -324,8 +339,9 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
                         "<p class='p'>" + result[i].role + "</p>" +
                         "</div>" +
                         "</div>";
-                } else {
-                    div = "<div class='card'>" +
+                }
+              }else{
+                div = "<div class='card'>" +
                         "<div style='float:left' class='textBox'>" +
                         "<div class='textContent'>" +
                         "<p class='h1'>" + result[i].memberName + "</p>" +
@@ -333,10 +349,20 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
                         "</div>" +
                         "<p class='p'>" + result[i].role + "</p>" +
                         "</div>" +
-                        "<button id='exile'>추방</button>"+
-                        "<div id='chatMemberNo'>"+result[i].memberNo+"</div>"
+                        "</div>";
+                
+                if (result[i].memberNo == ${requestScope.p.projectOwner}) {
+                  div = "<div class='card'>" +
+                        "<div class='textBox'>" +
+                        "<div class='textContent'>" +
+                        "<p class='h1'>" + result[i].memberName + "</p>" +
+                        "<span class='span'>방장</span>" +
+                        "</div>" +
+                        "<p class='p'>" + result[i].role + "</p>" +                       
+                        "</div>" +
                         "</div>";
                 }
+              }
                 
                 newContent.append(div);
                 memberList = result;
@@ -348,8 +374,16 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
       }
             
 
-  // 달력 오픈
+ 
   $(function(){
+
+    if(${requestScope.p.projectReady}>0){
+        $("#start_button").text("프로젝트가 진행 중입니다.");
+        $("#start_button").css("background-color","lightgray");
+        $("#start_button").css("cursor","default")
+    }
+
+ // 달력 오픈
     $('#calendar_modal').click(function(){
       $("#calendarModal").modal();
 
@@ -447,8 +481,10 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
   function updatePlace(){
     if("${sessionScope.loginMember.memberNo}" == "${requestScope.p.projectOwner}"){
     let place = document.getElementById("search_result").innerText;
-    console.log("place = "+place);
+    
+    if(place != ""){
 
+    
       $.ajax({
         url:"updatePlace.rec",
         type:"get",
@@ -471,6 +507,10 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
     }else{
       alert("방장만 장소를 정할수있습니다.");
     }
+  }else{
+    alert("장소 확정을 눌러주세요.");
+  }
+
   }
 
 
@@ -541,9 +581,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
                     let jsonData = JSON.stringify(data);
                     webSocket.send(jsonData);
                 })
-              .fail(function (request, status, error) {
-                    alert("에러 발생" + error);
-              });
+             
               calendar.unselect();
           });
           }else{
@@ -636,19 +674,23 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
     $("#start_button").click(function(){
       if(${sessionScope.loginMember.memberNo} == ${requestScope.p.projectOwner}){
 
-      
-        if(confirm("프로젝트를 시작하시겠습니까?")){
-          console.log(memberList);
-          $.ajax({
-            url:"startProject.rec",
-            type:"get",
-            data:{
-              memberList : JSON.stringify(memberList)
-            },
-            success : function(result){
-              console.log("성공");
-            }
-          })
+        if(${requestScope.p.projectReady} == 0){
+          if(confirm("현재 팀원들로 프로젝트를 시작하시겠습니까?")){
+            console.log(memberList);
+            $.ajax({
+              url:"startProject.rec",
+              type:"get",
+              data:{
+                memberList : JSON.stringify(memberList)
+              },
+              success : function(result){
+                console.log("성공");
+              }
+            })
+          }
+        }else{
+          $("#start_button").text("프로젝트가 진행 중입니다.");
+          $("#start_button").css("background-color","lightgray");
         }
       }else{
         alert("방장만 시작할 수 있습니다.")
@@ -659,7 +701,6 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
     
     $(document).on("click","#exile",function(e){
       let memberNo = $(this).next("#chatMemberNo").text();
-     
         updateMemberList();
         const data={
                 "roomId" : roomId,
