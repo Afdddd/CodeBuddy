@@ -89,7 +89,7 @@
 	<update id="updateMember" parameterType="member">
 		UPDATE MEMBER
 			SET MEMBER_NAME = #{memberName},
-				MEMBER_INFO = #{memberInfo},
+				MEMBER_INFO = #{memberInfo}
 			WHERE MEMBER_ID = #{memberId}
 			AND MEMBER_DELETE IS NULL
 	</update>

@@ -377,7 +377,7 @@ function loadImg(inputFile, num){
                             "<option>DX Design</option>"+
                             "<option>Algorithm Developer</option>"+
                                 "</select>"+
-                                "<input type='number' id='project_member' name='personnelMax'>"+
+                                "<input type='number' id='project_member' name='personnelMax'required>"+
                             "</div>");           
             $(".member_list").append($list);
         });
