@@ -227,10 +227,12 @@
 
   .content_4{
     margin-top: 80px;
+    
   }
 
   #project_info{
     margin-top: 50px;
+    
   }
 
   .fas{
@@ -253,7 +255,7 @@
 </head>
 <body>
     <jsp:include page="../../common/header.jsp" />	
-    <div class="content" style="height: 1500px;">
+    <div class="content" >
         <div class="content_title">
             <h2 style="margin-bottom: 10px;">${requestScope.r.recruitmentTitle}<span class="project_status"></span></h2>
             <span>${requestScope.r.recruitmentWriter}</span><br>
@@ -297,7 +299,7 @@
                 <tbody>
                   <c:forEach var="state" items="${requestScope.state}" varStatus="status">
                     <tr>
-                        <td colspan="2" style="width: 100px;">${state.position}</td>
+                        <td colspan="2" style="width: 200px;">${state.position}</td>
                         <td style="width: 200px;"><span  id="applyState_${status.index}"></span> / ${state.maxPersonnel}</td>
                         <td colspan="2"><button class="position_button" id="position_button_${status.index}" data-toggle="modal" data-target="#apply_${status.index}">지원하기</button></td>
                     </tr>

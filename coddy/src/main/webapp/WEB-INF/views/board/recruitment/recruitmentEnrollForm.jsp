@@ -262,6 +262,8 @@
 </body>
 <script>  
 $(function(){
+	
+	$("tagTechName").prop("required",true);
     $("#titleImg").click(function(){
         $("#file1").click();
     });
@@ -404,7 +406,8 @@ function loadImg(inputFile, num){
            
            console.log(i);
         });
-
+	
+       
       
 
     });

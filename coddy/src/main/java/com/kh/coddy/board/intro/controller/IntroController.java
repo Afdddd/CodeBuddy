@@ -107,7 +107,7 @@ public class IntroController {
 		@RequestParam(value="condition", defaultValue="new") String sort,
 		Model model, HttpSession session) {
 		
-		
+		if(session.getAttribute("loginMember") != null) {
 		ArrayList<Project> projectlist = new ArrayList<Project>();
 		ArrayList<Recruitment> rlist = new ArrayList<Recruitment>();
 		Member m = ((Member)(session.getAttribute("loginMember")));
@@ -118,7 +118,7 @@ public class IntroController {
 		
 		model.addAttribute("projectlist", projectlist);
 		model.addAttribute("rlist", rlist);
-		
+		}
 		String tags = "";
 		
 		

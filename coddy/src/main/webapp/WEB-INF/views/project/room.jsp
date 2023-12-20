@@ -53,7 +53,7 @@ String kakaoMapKey = Keys.read(resource.getURL().getPath(), "key.kakaoMap");
     </div>
     
     <div class="sidebar_right">
-        <div id="countdown">
+        <div style="font-size: 20px" id="countdown">
           
         </div>
         <div id="calendar_area">
