@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>자유게시판 글작성</title>
 </head>
 <style>
     #freeEnrollForm>table {width:100%;}

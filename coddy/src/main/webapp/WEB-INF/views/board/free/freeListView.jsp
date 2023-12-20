@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>자유게시판 목록보기</title>
 <style>
 	#fboardList {margin: 0 auto;}
 
