@@ -89,8 +89,9 @@ public class FboardController {
 		}
 	
 		@GetMapping("enrollForm.fr")
-		public String enrollForm() {
-
+		public String enrollForm(HttpSession session) {
+			if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인부터 해주세요."); return "redirect:/"; }
+			if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "계정회원은 접근 불가능합니다."); return "redirect:/"; }
 			return "board/free/freeEnrollForm";
 		}
 		
@@ -165,8 +166,9 @@ public class FboardController {
 		}
 		    
 		@PostMapping("updateForm.fr")
-		public String updateForm(int fno, Model model) {
-				
+		public String updateForm(HttpSession session, int fno, Model model) {
+			if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "로그인부터 해주세요."); return "redirect:/"; }
+			if(session.getAttribute("loginCompany") != null) { session.setAttribute("alertMsg", "계정회원은 접근 불가능합니다."); return "redirect:/"; }
 			Fboard f = fboardService.selectBoard(fno);
 				
 			model.addAttribute("f", f);

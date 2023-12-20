@@ -83,7 +83,7 @@
 						<div class="boardMiniCard">
 							<h6>${sessionScope.hb.hboardTitle}</h6>
 							<p style="float: right;">${sessionScope.co.companyName}</p><br>
-							<div style="border: 1px solid salmon; border-radius: 12px; box-sizing: border-box; padding: 0px; margin: 0px;">
+							<div style="box-sizing: border-box; padding: 0px; margin: 0px;">
 								<table class="boardMiniCardTable">
 									<thead></thead>
 									<tbody>

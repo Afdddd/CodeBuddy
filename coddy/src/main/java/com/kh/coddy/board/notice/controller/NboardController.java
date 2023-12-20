@@ -151,8 +151,9 @@ public class NboardController {
 	}
 	
 	@PostMapping("updateForm.no")
-	public String updateForm(int nno, Model model) {
-			
+	public String updateForm(HttpSession session, int nno, Model model) {
+		if(session.getAttribute("loginMember") == null) { session.setAttribute("alertMsg", "어드민만 접근가능합니다!"); return "redirect:/"; }
+		if(!((Member)session.getAttribute("loginMember")).getMemberId().equals("admin")) { session.setAttribute("alertMsg", "어드민만 접근가능합니다!"); return "redirect:/"; }
 		Nboard n = nboardService.selectBoard(nno);
 			
 		model.addAttribute("n", n);
