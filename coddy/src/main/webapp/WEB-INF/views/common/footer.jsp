@@ -71,15 +71,15 @@
 				<tr>
 					<td id="td1" style="padding-right : 30px; padding-top : 30px;"><b>Creators</b></td>
 					<td class="td1" style="padding-top : 30px; text-align : center">|</td>
-					<td class="td1" style="padding-top : 30px; text-align : center">김인엽</td>
+					<td class="td1" style="padding-top : 30px; text-align : center" onclick="location.href='https://github.com/Afdddd'">김인엽</td>
 					<td class="td1" style="padding-top : 30px; text-align : center">| </td>
-					<td class="td1" style="padding-top : 30px; text-align : center">봉영훈</td>
+					<td class="td1" style="padding-top : 30px; text-align : center" onclick="location.href='https://github.com/ttp6418'">봉영훈</td>
 					<td class="td1" style="padding-top : 30px; text-align : center">|</td>
-					<td class="td1" style="padding-top : 30px; text-align : center">김효중</td>
+					<td class="td1" style="padding-top : 30px; text-align : center" onclick="location.href='https://github.com/backdfb'">김효중</td>
 					<td class="td1" style="padding-top : 30px; text-align : center">|</td>
-					<td class="td1" style="padding-top : 30px; text-align : center">정은지</td>
+					<td class="td1" style="padding-top : 30px; text-align : center" onclick="location.href='https://github.com/JEUNJIJ'">정은지</td>
 					<td class="td1" style="padding-top : 30px; text-align : center">|</td>
-					<td class="td1" style="padding-top : 30px; text-align : center">한영욱</td>
+					<td class="td1" style="padding-top : 30px; text-align : center" onclick="location.href='https://github.com/HanYoungUk'">한영욱</td>
 				</tr>
 				<tr>
 					<td style="padding-right : 30px; padding-top : 30px; text-align : center"><b>Reference</b></td>
@@ -89,7 +89,6 @@
 					<td class="td2" style="padding-top : 30px; text-align : center"><a href="https://holaworld.io/">HOLA</a></td>
 					<td style="padding-top : 30px; text-align : center">|</td>
 					<td class="td2" style="padding-top : 30px; text-align : center"><a href="https://www.inflearn.com/">Inflearn</a></td>
-					
 				</tr>
 				<tr>
 					<td style="padding-right : 30px; padding-top : 30px; text-align : center"><b>Compete</b></td>
@@ -102,22 +101,19 @@
         </div>
 
         <div id="footer-2">
-            <p id="p1">
-            	<br>
-            	 <div style="text-align : center;">
-            <img src="resources/image/logo.png" style="height : 50px; width:100px;"> <br><br>
-           	<div style="text-align : left;">
-            <p style="font-size : 12px;" id="p1">
-            	사업자 : 김인엽 <br>
-            	Contact : 010-1516-5162 <br>
-                Address : 서울특별시 영등포구 선유동2로 57 이레빌딩 <br>
-            </p>
-            </div>
             <br>
-    
+            <div style="text-align : center;">
+                <img src="resources/image/logo.png" style="height : 50px; width:100px;"><br><br>
+                <div style="text-align : left;">
+                    <p style="font-size : 12px;" id="p1">
+                        사업자 : 김인엽 <br>
+                        Contact : 010-1516-5162 <br>
+                        Address : 서울특별시 영등포구 선유동2로 57 이레빌딩 <br>
+                    </p>
+                </div>
+                <br>
             </div>
         </div>
     </div>
-
 </body>
 </html>

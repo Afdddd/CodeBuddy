@@ -21,8 +21,8 @@
 		.boardContentBar { width: 100%; height: 95%; display: flex; }
 		.boardContentArea { width: 75%; height: 100%; }
 		.boardMiniArea { width: 25%; height: 600px; top: 20%; position: sticky; overflow: auto; }
-		.boardMiniCard { width: 100%; height: 550px; border: 2px solid #5271FF; border-radius: 20px; padding: 10px; background-color: whitesmoke; margin:0 auto; overflow: auto; }
-		.boardMiniAttach { width: 100%; border: 2px solid #5271FF; border-radius: 20px; padding: 10px; background-color: whitesmoke; }
+		.boardMiniCard { width: 100%; height: 550px; border: 2px solid #929fd8; border-radius: 20px; padding: 10px; background-color: whitesmoke; margin:0 auto; overflow: auto; }
+		.boardMiniAttach { width: 100%; border: 2px solid #929fd8; border-radius: 20px; padding: 10px; background-color: whitesmoke; }
 		.boardContentThumb { width: 100%; height: 420px; padding: 4%; }
 		.boardContentTag { width: 100%; height: 120px; }
 		.boardContentContent { width: 100%; height: 630px; padding: 10px; }
@@ -35,7 +35,7 @@
         .tagListNo:before { content: '#'; }
 
 		.boardMiniCardTable { width: 100%; text-align: center; margin: 0px; padding: 0px; }
-		.boardMiniCardTable th, .boardMiniCardTable td { border: 1px solid salmon; }
+		.boardMiniCardTable th, .boardMiniCardTable td { border: 1px solid rgb(114, 184, 250); }
 		.boardMiniCardTable th { border-left: 0px; }
 		.boardMiniCardTable td { border-right: 0px; }
 
