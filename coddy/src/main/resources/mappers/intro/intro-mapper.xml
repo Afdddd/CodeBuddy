@@ -411,11 +411,14 @@
 	<select id="selectRecent" resultMap="introAttachmentResultSet">
 		SELECT *
 			FROM (
-			    SELECT IBOARD_NO,
+			    SELECT IA.IBOARD_NO AS "IBOARD_NO",
 	                   IATTACHMENT_PATH,
 	                   IATTACHMENT_CHANGE
-			    FROM IATTACHMENT
-			    ORDER BY IATTACHMENT_INSERT DESC
+			    FROM IATTACHMENT IA, IBOARD I
+				WHERE IA.IBOARD_NO = I.IBOARD_NO
+				AND I.IBOARD_DELETE IS NULL
+				AND IA.IATTACHMENT_LEVEL = 0
+			    ORDER BY I.IBOARD_VIEWS DESC
 			)
 			<![CDATA[WHERE ROWNUM <= 3]]>
 		</select>
