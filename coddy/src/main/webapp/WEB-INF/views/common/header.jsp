@@ -298,7 +298,7 @@
                                 <a href="logout.me">로그아웃</a>
                             </c:when>
                             <c:otherwise>
-                                <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= kakaoLoginKey %>&logout_redirect_uri=http://192.168.40.6:8082/coddy/kakaoLogout.me">로그아웃</a>
+                                <a href="https://kauth.kakao.com/oauth/logout?client_id=<%= kakaoLoginKey %>&logout_redirect_uri=http://127.0.0.1:8082/coddy/kakaoLogout.me">로그아웃</a>
                             </c:otherwise>
                         </c:choose>
                         <br>
@@ -371,7 +371,7 @@
                                 <a href="#" onclick="$('#loginForm').submit();"><span></span><span></span><span></span><span></span>로그인</a>
                                 &nbsp;&nbsp;&nbsp;
                                 <a href="findIdForm.me"><span></span><span></span><span></span><span></span>계정 찾기</a>
-                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=<%= kakaoLoginKey %>&redirect_uri=http://192.168.40.6:8082/coddy/kakaoLogin.me&response_type=code">
+                                <a href="https://kauth.kakao.com/oauth/authorize?client_id=<%= kakaoLoginKey %>&redirect_uri=http://127.0.0.1:8082/coddy/kakaoLogin.me&response_type=code">
                                     <img src="resources/image/login/kakao_login.png" style="width: 100%; height: 100%;">
                                 </a>
                                 <a href='loginPage.cp'>기업전용 로그인<span></span><span></span><span></span><span></span></a>
