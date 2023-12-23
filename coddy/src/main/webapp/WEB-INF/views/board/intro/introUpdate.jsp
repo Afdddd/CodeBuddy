@@ -416,28 +416,12 @@
 					        });
 					    });
 				    </script>
-						
-						
-						
-				 
         <br><br>
-       
- 
       </div>
-		
-     
-         <div align="center">
-	                    <button type="submit" class="btn btn-warning">등록하기</button>
-	                </div>
-      </form>
-    
-    </div>
-    <jsp:include page="../../common/footer.jsp" />	
-    
-          
-
-      
-
-
+      <div align="center">
+	      <button type="submit" class="btn btn-warning">등록하기</button>
+	    </div>
+    </form>
+  </div>
+  <jsp:include page="../../common/footer.jsp" />	
 </body>
-

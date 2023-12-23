@@ -254,7 +254,7 @@
 <body>
   <jsp:include page="../../common/header.jsp" />	
   <div class="content" style="height: 2000px;">
-  <form id="enrollForm" method="post" action="introinsert.bo" enctype="multipart/form-data">
+    <form id="enrollForm" method="post" action="introinsert.bo" enctype="multipart/form-data">
       <br><br><br><br><br>
       <div class="content_1">
         <div class="content_left">
@@ -413,4 +413,3 @@
   </div>
   <jsp:include page="../../common/footer.jsp" />	
 </body>
-
