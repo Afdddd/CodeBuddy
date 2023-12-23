@@ -58,6 +58,9 @@ public interface IntroService {
 
 	// 댓글 조회용
 	ArrayList<IreplyImage> selectReplyList(int iboardNo);
+	
+	// 대댓글 조회용
+	ArrayList<IreplyImage> selectReplyListChild(Ireply ir);
 
 	// 댓글 작성용
 	int insertReply(Ireply r);
@@ -76,7 +79,6 @@ public interface IntroService {
 
 	// 자기가 참여한 recruit게시판 list 조회
 	ArrayList<Recruitment> selectRecruitment(ArrayList<Project> projectlist);
-
 
 	// 글작성 페이지에서 R 객체
 	Recruitment selectRecruitment2(int projectNo);
@@ -132,28 +134,4 @@ public interface IntroService {
 
 	// iAttachment update값 가져오기
 	ArrayList<Iattachment> iAttachmentUpdate(int iboardNo);
-
-
-
-
-	
-	
-
-
-
-	
-
-	
-
-
-
-
-	
-
-	
-	
-
-	
-	
-	
 }

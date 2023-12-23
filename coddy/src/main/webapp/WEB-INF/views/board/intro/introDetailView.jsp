@@ -9,95 +9,108 @@
 <title>Insert title here</title>
 <style>
     
-   .comment {
-  margin-bottom: 20px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
+  .comment {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
 
-.comment .author {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+  .comment .author {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-.comment .author-info {
-  display: flex;
-  align-items: center;
-}
+  .comment .author-info {
+    display: flex;
+    align-items: center;
+  }
 
-.comment .author img {
-  width: 30px; /* 이미지 크기 조절 */
-  height: 30px;
-  border-radius: 50%; /* 이미지를 동그랗게 만들기 위한 속성 */
-  margin-right: 10px;
-}
+  .comment .author img {
+    width: 30px; /* 이미지 크기 조절 */
+    height: 30px;
+    border-radius: 50%; /* 이미지를 동그랗게 만들기 위한 속성 */
+    margin-right: 10px;
+  }
 
-.imgprofile {
-	width :100px;
-	height : 100px;
-}
+  .comment_child_tool { display: flex; margin-left: 20%; }
+  .comment_child { width: 90%; }
+  .comment_child_icon { width: 10%; }
 
-.comment .author span {
-  font-weight: bold;
-  color: #333;
-}
+  .imgprofile {
+    width :100px;
+    height : 100px;
+  }
 
-.comment .actions {
-  display: flex;
-}
+  .comment .author span {
+    font-weight: bold;
+    color: #333;
+  }
 
-.comment .actions a {
-  margin-left: 10px;
-}
+  .comment .actions {
+    display: flex;
+  }
 
-.comment .content {
-  margin-top: 5px;
-  color: #555;
-}
+  .comment .actions a {
+    margin-left: 10px;
+  }
 
-.comment .timestamp {
-  font-size: 12px;
-  color: #888;
-}
+  .comment .content {
+    margin-top: 5px;
+    color: #555;
+  }
 
- .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      justify-content: center;
-      align-items: center;
-    }
+  .comment .timestamp {
+    font-size: 12px;
+    color: #888;
+  }
 
-    .modal-content {
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 5px;
-      max-width: 400px; /* 모달 최대 너비 */
-      width: 100%;
-      box-sizing: border-box;
-    }
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+  }
 
-    /* 닫기 버튼 스타일 */
-    .close-btn {
-      cursor: pointer;
-       position: absolute;	
-      top: 10px;
-      right: 10px;
-      font-size: 18px;
-    }
-    
-    #delete {
+  .modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px; /* 모달 최대 너비 */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .modal-content2 {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px; /* 모달 최대 너비 */
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* 닫기 버튼 스타일 */
+  .close-btn {
+    cursor: pointer;
+      position: absolute;	
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+  }
+  
+  #delete {
     width : 100%;
     text-align: center
-    }
+  }
     
-	    .close-btn2 {
+	.close-btn2 {
 	  cursor: pointer;
 	  position: absolute;
 	  top: 10px;
@@ -105,6 +118,20 @@
 	  font-size: 24px; /* 조금 더 큰 크기로 변경 */
 	  color: #333; /* 닫기 버튼 색상 변경 */
 	}
+
+  .close-btn3 {
+	  cursor: pointer;
+	  position: absolute;
+	  top: 10px;
+	  right: 10px;
+	  font-size: 24px; /* 조금 더 큰 크기로 변경 */
+	  color: #333; /* 닫기 버튼 색상 변경 */
+	}
+
+  #reply {
+    width : 100%;
+    text-align: center
+  }
 	
 	/* 모달 스타일 */
 	.modal {
@@ -146,30 +173,30 @@
 	}
 
 	/* 프로젝트 사진 스크롤 */
-.photo-scroll {
-  margin-top: 80px;
-  overflow-x: scroll;
-  white-space: nowrap;
-}
+  .photo-scroll {
+    margin-top: 80px;
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
 
-.photo-scroll-image {
-  width: 300px;
-  height: 200px;
-  border-radius: 10px;
-  margin: 0 12px;
-  border: 1px solid lightgray;
-}
+  .photo-scroll-image {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    margin: 0 12px;
+    border: 1px solid lightgray;
+  }
 
-/* 포지션 현황 */
-.position_status td{
-    text-align: left;
-}
-.position_status{
-    margin-left: 30px;
-    margin-top: 30px;
-}
+  /* 포지션 현황 */
+  .position_status td{
+      text-align: left;
+  }
+  .position_status{
+      margin-left: 30px;
+      margin-top: 30px;
+  }
 
-.position_button {
+  .position_button {
     font-family: monospace;
     background-color: #f3f7fe;
     color: #3b82f6;
@@ -248,56 +275,52 @@
   }
 
   .btn-container {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-    }
-    .btn-container .btn {
-         margin-right: 5px;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+  .btn-container .btn {
+    margin-right: 5px;
+  }
     
     /* 멤버 프로필 */
-    .content_5{
-  margin-top: 80px;
+  .content_5{
+    margin-top: 80px;
 	}
 
 	.swiper{
-      width: 100%;
-    }
+    width: 100%;
+  }
 	.swiper-wrapper{
 	  float: left;
 	}
 	
 	.imgprofile {
-	width :100px;
-	height : 100px;
-}
+    width :100px;
+    height : 100px;
+  }
 
- /* 멤버 프로필 */
-    .content_5{
-  margin-top: 80px;
+  /* 멤버 프로필 */
+  .content_5{
+    margin-top: 80px;
 	}
 
 	.swiper{
-      width: 100%;
-    }
+    width: 100%;
+  }
 	.swiper-wrapper{
 	  float: left;
 	}
 </style>
 </head>
 <body>
-        
     <jsp:include page="../../common/header.jsp" />
 
     <div class="content">
         <br><br>
         <div class="innerOuter">
             <h2>게시글 상세보기</h2>
-            <br>
-
-            
-            <br><br>
+            <br><br><br>
 
             <table id="contentArea" align="center" class="table" style="width:100%; margin:5px;">
                 <tr>
@@ -333,7 +356,7 @@
       			<h4>프로젝트 기간 : ${p.projectStart} ~ ${p.projectEnd}</h4><hr>
       			<h4>위치 : ${r.recruitmentLocation}</h4><hr>
 
-			<br><br><br>
+			  <br><br><br>
             
              <div class="content_right">
             <h2>기술/언어</h2>
@@ -558,77 +581,102 @@
 		*/	
 			
 		function selectReplyList(){
-		// 댓글 조회 요청용 ajax 요청
-		$.ajax({
-			url : "ilist.bo",
-			type : "get",
-			data : { ino : "${ ib.iboardNo}"},
-			success : function(result){
-				
-				let resultStr = "";
-				
-				for(let i = 0; i < result.length; i++){
-					resultStr += "<div class='comment'>"
-								+ "<div class='author'>"
-								+ "<div class='author-info'>"
-								+ "<img src='resources/image/profile/" + result[i].memberNo + ".jpg' onerror=\"this.src='resources/image/company/signup-bg.jpg'\">"
-								+ "<span>" + result[i].memberName + "</span>"
-								+ "</div>"
-								+ "<div class='actions'>";
-					if("${sessionScope.loginMember.memberNo}" ==  parseInt(result[i].memberNo)){
-					resultStr += "<a href='#' class='edit-link' onclick='openModal2()'>수정하기</a>"
-						+ "<a href='#' class='delete-link' onclick='openModal()'>삭제하기</a>"
-						+ "<input type='hidden' value='" + result[i].ireplyNo + "'>"
-						
-					} 		
-								
-					resultStr += "</div>"
-								+ "</div>"
-								+ "<div class='content'>" + result[i].ireplyContent + "</div>"
-								+ "<div class='timestamp'>" + result[i].ireplyInsert + "</div>"
-								+ "</div>"
-
-					}
-				
-				$("#replyArea>tbody").html(resultStr);
-				$("#rcount").text(result.length);
-				},
-				error : function(){
-					console.log("댓글리스트 조회용 ajax 통신 실패!");
-				}
-			});
+      // 댓글 조회 요청용 ajax 요청
+      $.ajax({
+        url : "ilist.bo",
+        type : "get",
+        data : { ino : "${ ib.iboardNo}"},
+        success : function(result){
+          let resultStr = "";
+          for(let i = 0; i < result.length; i++){
+            resultStr += "<div class='comment'>"
+                  + "<div class='author'>"
+                  + "<div class='author-info'>"
+                  + "<img src='resources/image/profile/" + result[i].memberNo + ".jpg' onerror=\"this.src='resources/image/company/signup-bg.jpg'\">"
+                  + "<span>" + result[i].memberName + "</span>"
+                  + "</div>"
+                  + "<div class='actions'>";
+            if("${not empty sessionScope.loginMember}") resultStr += "<a href='#' class='edit-link' onclick='openModal3(" + result[i].ireplyNo + ")'>답글달기</a>"
+            if("${sessionScope.loginMember.memberNo}" ==  parseInt(result[i].memberNo)){
+              resultStr += "<a href='#' class='edit-link' onclick='openModal2()'>수정하기</a>"
+                + "<a href='#' class='delete-link' onclick='openModal()'>삭제하기</a>"
+                + "<input type='hidden' value='" + result[i].ireplyNo + "'>"
+                
+            } 		
+                  
+            resultStr += "</div>"
+                  + "</div>"
+                  + "<div class='content'>" + result[i].ireplyContent + "</div>"
+                  + "<div class='timestamp'>" + result[i].ireplyInsert + "</div>"
+                  + "</div>"
+            if(selectReplyListChild(result[i].ireplyNo) !== "") { resultStr += selectReplyListChild(result[i].ireplyNo); }
+          }
+          
+          $("#replyArea>tbody").html(resultStr);
+          $("#rcount").text(result.length);
+        },
+        error : function(){
+          console.log("댓글리스트 조회용 ajax 통신 실패!");
+        }
+      });
 		}
+
+    function selectReplyListChild(rno) {
+      let resultStr = "";
+      $.ajax({
+        url : "selectReplyListChild.bo",
+        type : "get",
+        async: false, 
+        data : { ireplyNo : rno, iboardNo : "${ ib.iboardNo}"},
+        success : function(result){
+          for(let i = 0; i < result.length; i++){
+            resultStr += "<div class='comment_child_tool'><div class='comment_child_icon'><i class='fa fa-sort-down' style='width=100%;'></i></div>"
+                  + "<div class='comment comment_child'>"
+                  + "<div class='author'>"
+                  + "<div class='author-info'>"
+                  + "<img src='resources/image/profile/" + result[i].memberNo + ".jpg' onerror=\"this.src='resources/image/company/signup-bg.jpg'\">"
+                  + "<span>" + result[i].memberName + "</span>"
+                  + "</div>"
+                  + "<div class='actions'>";
+            if("${sessionScope.loginMember.memberNo}" ==  parseInt(result[i].memberNo)){
+              resultStr += "<a href='#' class='edit-link' onclick='openModal2()'>수정하기</a>"
+                + "<a href='#' class='delete-link' onclick='openModal()'>삭제하기</a>"
+                + "<input type='hidden' value='" + result[i].ireplyNo + "'>"
+                
+            } 		
+                  
+            resultStr += "</div>"
+                  + "</div>"
+                  + "<div class='content'>" + result[i].ireplyContent + "</div>"
+                  + "<div class='timestamp'>" + result[i].ireplyInsert + "</div>"
+                  + "</div></div>"
+          }
+        },
+        error : function(){
+          console.log("댓글리스트 조회용 ajax 통신 실패!");
+        }
+      });
+      return resultStr;
+    }
 		
 		function openModal() {
-		    document.getElementById('deleteModal').style.display = 'flex';
+		  document.getElementById('deleteModal').style.display = 'flex';
 		    
-		    // console.log(window.event.target)
-		    
-		    let target = window.event.target; // 방금 클릭된 삭제하기 a태그
+		  let target = window.event.target; // 방금 클릭된 삭제하기 a태그
 			let ireplyNo = $(target).next().val(); // 댓글번호
-			
-		
-			
-			
-			$("#ireplyNo").val(ireplyNo); // 삭제하기 모달창의 input type="hidden" id="ireplyNo" 의 밸류로 넣어버린것
-		    
+			$("#ireplyNo").val(ireplyNo); // 삭제하기 모달창의 input type="hidden" id="ireplyNo" 의 밸류로 넣어버린것  
 		}
 		
 		function closeModal() {
-			    document.getElementById('deleteModal').style.display = 'none';
+			document.getElementById('deleteModal').style.display = 'none';
 		}
 		
-
-		
 		function replydelete(){
-			
 			$.ajax({
 				url : "idelete.bo",
 				type : "get",
 				data : {ireplyNo:$("#ireplyNo").val()},
 				success : function(result){
-					
-					
 					alert("댓글이 삭제되었습니다.");
 					selectReplyList();
 					closeModal();
@@ -640,69 +688,72 @@
 		}
 		  
 		function openModal2(){
-			 document.getElementById('updateModal').style.display = 'flex';
+			document.getElementById('updateModal').style.display = 'flex';
 			    
-			    // console.log(window.event.target)
-			    
-			    let target = window.event.target; // 방금 클릭된 삭제하기 a태그
-		
-				let ireplyNo = $(target).siblings("input").val(); // 댓글번호
-				
-				
-				$("#ireplyNo").val(ireplyNo); // 모달창의 input type="hidden" id="ireplyNo" 의 밸류로 넣어버린것
+      // console.log(window.event.target)
+        
+      let target = window.event.target; // 방금 클릭된 삭제하기 a태그
+  
+      let ireplyNo = $(target).siblings("input").val(); // 댓글번호
+      
+      $("#ireplyNo").val(ireplyNo); // 모달창의 input type="hidden" id="ireplyNo" 의 밸류로 넣어버린것
 			
 		}
 
-	
 		function closeModal2() {
-		    document.getElementById('updateModal').style.display = 'none';
-	}
-	
+		  document.getElementById('updateModal').style.display = 'none';
+	  }
 		
 		function updateBtn() {
-			console.log( $("#updateContent").val());
 			$.ajax({
 				url : "iupdate.bo",
 				type : "get",
 				data :  {ireplyNo : $("#ireplyNo").val(),
 						ireplyContent : $("#updateContent").val()},
 				success : function(result){
-						
-						console.log(result);
-						
-						alert("댓글이 수정되었습니다.");
-						$("#updateContent").val(result);
-						
-						  var none = document.getElementById('updateModal');
-						  none.style.display = 'none';
-					
-						 selectReplyList();
-
+          alert("댓글이 수정되었습니다.");
+          $("#updateContent").val(result);
+          
+          var none = document.getElementById('updateModal');
+          none.style.display = 'none';
+        
+          selectReplyList();
 				},
 				error : function(error){
-					console.log("ajax 수정 실패");
 					alert("댓글 수정 실패");
 				}	
-				
 			});
 		};
-		
-	
-		
-		
-    </script>
-    
-    
-		 <div id="deleteModal" class="modal">
-		  <div class="modal-content">
-		    <span class="close-btn" onclick="closeModal()">&times;</span>
-		    <p>삭제하시겠습니까?</p>
-		    <input type="hidden" id="ireplyNo" value="">
-		    <div id="delete">
-		    <button class="btn btn-danger" onclick="replydelete()" style=" width : 100px;">확인</button>
-		    </div>
-		  </div>
-		</div>
+
+    function openModal3(ireplyChild) { document.getElementById('replyModal').style.display = 'flex'; $("#ireplyNo").val(ireplyChild); }
+    function closeModal3() { document.getElementById('replyModal').style.display = 'none'; }
+    function replyBtn() {
+			$.ajax({
+				url : "ireply.bo",
+				type : "get",
+				data : { ireplyParent : $("#ireplyNo").val(), ireplyContent : $("#replyContent").val(), memberNo : "${sessionScope.loginMember.memberNo}", iboardNo : "${ib.iboardNo}" },
+				success : function(result){
+						var none = document.getElementById('replyModal');
+						none.style.display = 'none';
+
+            if(result <= 0) alert("댓글 답변 실패");
+						selectReplyList();
+				},
+				error : function() { alert("댓글 답변 실패"); }	
+			});
+		};
+
+    </script>    
+		  <div id="deleteModal" class="modal">
+        <div class="modal-content">
+          <span class="close-btn" onclick="closeModal()">&times;</span>
+          <p>삭제하시겠습니까?</p>
+          <input type="hidden" id="ireplyNo" value="">
+          <div id="delete">
+            <button class="btn btn-danger" onclick="replydelete()" style=" width : 100px;">확인</button>
+          </div>
+        </div>
+      </div>
 		
 		<div id="updateModal" class="modal">
 		  <div class="modal-content1">
@@ -710,12 +761,21 @@
 		    <textarea  id="updateContent" style="width : 95%; height : 80%;">${Scope.r.content}</textarea>
 		    <input type="hidden" id="ireplyNo" value="">
 		    <div id="delete">
-
-		    <button class="btn btn-danger" onclick="updateBtn()" style=" width : 100px;">확인</button>
+		      <button class="btn btn-danger" onclick="updateBtn()" style=" width : 100px;">확인</button>
 		    </div>
 		  </div>
 		</div>
-		
+
+    <div id="replyModal" class="modal">
+		  <div class="modal-content2">
+		    <span class="close-btn3" onclick="closeModal3()">&times;</span>
+		    <textarea  id="replyContent" style="width : 95%; height : 80%;"></textarea>
+        <input type="hidden" id="ireplyNo" value="">
+		    <div id="reply">
+		      <button class="btn btn-info" onclick="replyBtn()" style=" width : 100px;">확인</button>
+		    </div>
+		  </div>
+		</div>
 		
     <jsp:include page="../../common/footer.jsp" />
 </body>

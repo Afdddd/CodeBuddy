@@ -82,8 +82,6 @@ public class IntroController {
 		p.setProjectEnd(p.getProjectEnd().split(" ")[0]);
 		p.setProjectStart(p.getProjectStart().split(" ")[0]);
 		
-		System.out.println(ib);
-		
 		model.addAttribute("joins", joins);
 		model.addAttribute("r", r);
 		model.addAttribute("tags",tags);
@@ -328,8 +326,6 @@ public class IntroController {
 						int result3 = introService.insertImg(ia);
 						session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
 					
-						
-						
 					}
 				}
 				return "redirect:/introlist.bo";
@@ -377,18 +373,13 @@ public class IntroController {
 			session.setAttribute("alertMsg", "로그인을 먼저해주세요."); 
 			return "redirect:/"; 
 		}
-		System.out.println(ino);
 		int result = introService.deleteForm(ino);
 		
 		if(result > 0) {
-			
 			session.setAttribute("alertMsg", "글이 삭제되었습니다.");
-		
 		}
 		
 			return "redirect:/introlist.bo";
-		
-		
 		
 	}
 	
@@ -413,6 +404,13 @@ public class IntroController {
 		return new Gson().toJson(list);
 	}
 	
+	@ResponseBody @RequestMapping(value = "selectReplyListChild.bo", produces = "application/json; charset=UTF-8")
+	public String selectReplyListChild(Ireply ir) {
+		ArrayList<IreplyImage> list = introService.selectReplyListChild(ir);
+		for(IreplyImage im: list) { im.setMemberNo(String.format("%08d" ,Integer.parseInt(im.getMemberNo()))); }
+		return new Gson().toJson(list);
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "iinsert.bo", produces = "text/html; charset=UTF-8")
 	public String ajaxInsertReply(Ireply r) {
@@ -421,6 +419,14 @@ public class IntroController {
 
 		return (result > 0)? "success" : "fail";
 		
+	}
+	
+	@RequestMapping(value = "ireply.bo", produces = "text/html; charset=UTF-8") @ResponseBody
+	public String insertReplyChild(Ireply r) {
+		System.out.println(r);
+		int result = introService.insertReply(r);
+
+		return String.valueOf(result);
 	}
 	
 	@ResponseBody

@@ -117,6 +117,8 @@ public class IntroServiceImpl implements IntroService {
 		return introDao.selectReplyList(sqlSession, iboardNo);
 	}
 	
+	@Override public ArrayList<IreplyImage> selectReplyListChild(Ireply ir) { return introDao.selectReplyListChild(sqlSession, ir); }
+	
 	@Override
 	public int insertReply(Ireply r) {
 
@@ -268,15 +270,4 @@ public class IntroServiceImpl implements IntroService {
 		
 		return introDao.iAttachmentUpdate(sqlSession, iboardNo);
 	}
-
-
-
-
-
-
-	
-
-	
-	
-
 }

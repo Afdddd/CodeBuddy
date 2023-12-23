@@ -110,6 +110,8 @@ public class IntroDao {
 		return (ArrayList)sqlSession.selectList("introMapper.selectReplyList", iboardNo);
 	}
 	
+	public ArrayList<IreplyImage> selectReplyListChild(SqlSessionTemplate sqlSession, Ireply ir) { return (ArrayList)sqlSession.selectList("introMapper.selectReplyListChild", ir); }
+	
 	public int insertReply(SqlSessionTemplate sqlSession, Ireply r) {
 		
 		return sqlSession.insert("introMapper.insertReply", r);
@@ -235,13 +237,4 @@ public class IntroDao {
 		
 		return (ArrayList)sqlSession.selectList("introMapper.iAttachmentUpdate", iboardNo);
 	}
-
-
-
-
-
-
-
-
-	
 }
