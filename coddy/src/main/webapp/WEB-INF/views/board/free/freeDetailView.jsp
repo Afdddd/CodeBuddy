@@ -174,7 +174,7 @@
                     			첨부파일이 없습니다.
                     		</c:when>
                     		<c:otherwise>
-                        		<a href="${ requestScope.f.fboardChange }" 
+                        		<a href="/coddy/${ requestScope.f.fboardChange }" 
                         		   download="${ requestScope.f.fboardOrigin }">
                         			${ requestScope.f.fboardOrigin }
                         		</a>

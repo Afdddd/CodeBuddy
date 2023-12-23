@@ -235,7 +235,7 @@ public class FboardController {
 			
 			try {
 				
-				upfile.transferTo(new File(savePath + fboardChange));
+				upfile.transferTo(new File(savePath + "/" + fboardChange));
 			
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
