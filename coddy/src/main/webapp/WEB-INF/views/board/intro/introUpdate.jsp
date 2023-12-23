@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글작성</title>
+<title>글수정</title>
 <style>
 
 .content_title{

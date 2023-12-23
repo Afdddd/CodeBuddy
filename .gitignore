@@ -20,6 +20,9 @@ coddy/src/main/webapp/resources/image/background/*
 coddy/src/main/webapp/resources/image/intro/*
 coddy/src/main/webapp/resources/file_upload/company/*
 coddy/src/main/webapp/resources/file_upload/company_bg/*
+coddy/src/main/webapp/resources/file_upload/cboard/*
+coddy/src/main/webapp/resources/file_upload/fboard/*
 coddy/src/main/webapp/resources/file_upload/hboard/*
+coddy/src/main/webapp/resources/file_upload/nboard/*
 coddy/src/main/webapp/resources/file_upload/iboard/*
 coddy/src/main/webapp/resources/file_upload/recruitment/*
