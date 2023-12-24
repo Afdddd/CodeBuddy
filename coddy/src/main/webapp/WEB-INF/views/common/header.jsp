@@ -268,7 +268,7 @@
             <div id="header_1_center">
                 <ul>
                     <li><a href="list.rec">모집</a></li>
-                    <li><a href="list.co">코드리뷰</a></li>
+                    <li><a href="search.co?cpage=1&search=&sort=title&tag=">코드리뷰</a></li>
                     <li><a href="list.no">공지</a></li>
                     <li><a href="list.fr">자유</a></li>
                     <li><a href="introlist.bo">소개</a></li>

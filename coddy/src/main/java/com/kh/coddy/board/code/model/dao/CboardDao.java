@@ -2,7 +2,6 @@ package com.kh.coddy.board.code.model.dao;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -12,15 +11,10 @@ import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Crelation;
 import com.kh.coddy.board.code.model.vo.Creply;
 import com.kh.coddy.board.code.model.vo.CreplyImage;
-import com.kh.coddy.board.code.model.vo.Csearch;
-import com.kh.coddy.board.intro.model.vo.Ireply;
-import com.kh.coddy.board.intro.model.vo.IreplyImage;
 import com.kh.coddy.common.vo.PageInfo;
 
 @Repository
 public class CboardDao {
-
-	private SqlSessionTemplate sqlSession;
 
 	public int selectListCount(SqlSessionTemplate sqlSession) {
 
@@ -113,7 +107,7 @@ public class CboardDao {
 		return sqlSession.insert("cboardMapper.insertTag", tag);
 	}
 
-	public int selectSearchCount(SqlSessionTemplate sqlSession2, HashMap<String, String> map) {
+	public int selectSearchCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 
 		return sqlSession.selectOne("cboardMapper.selectSearchCount", map);
 	}

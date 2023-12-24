@@ -230,41 +230,44 @@
 	</resultMap>
 	
 
-    <select id="selectSearchCount" parameterType="java.util.HashMap" resultType="int">
-	    SELECT COUNT(*) FROM CBOARD
-	    WHERE 
-	    <if test="condition == 'title'">
-	        cboard_title LIKE '%' || #{keyword} || '%'
-	    </if>
-	    <if test="condition == 'writer'">
-	        cboard_writer LIKE '%' || #{keyword} || '%'
-	    </if>
-	    <if test="condition == 'content'">
-	        cboard_content LIKE '%' || #{keyword} || '%'
-	    </if>
+    <select id="selectSearchCount" parameterType="hashMap" resultType="int">
+	    SELECT COUNT(DISTINCT(C.CBOARD_NO)) FROM CBOARD C, MEMBER M, CRELATION CR, TAGS TG
+	    WHERE C.CBOARD_WRITER=M.MEMBER_NO
+	    	AND C.CBOARD_NO=CR.CBOARD_NO
+	    	AND CR.TAGS_NO=TG.TAGS_NO
+	    	AND
+		    <if test="condition == 'title'">
+		        C.CBOARD_TITLE LIKE '%' || '${keyword}' || '%'
+		    </if>
+		    <if test="condition == 'writer'">
+		        M.MEMBER_NAME LIKE '%' || '${keyword}' || '%'
+		    </if>
+		    <if test="condition == 'content'">
+		        C.CBOARD_CONTENT LIKE '%' || '${keyword}' || '%'
+		    </if>
+		    AND TG.TAGS_NAME IN ('${tags}')
+		    AND C.CBOARD_DELETE IS NULL
 	</select>
 	
-	<select id="selectSearchList" parameterType="java.util.HashMap" resultType="com.kh.coddy.board.code.model.vo.Cboard">
-	    SELECT *
-	    FROM (
-	        SELECT ROWNUM RNUM, C.*
-	        FROM (
-	            SELECT * FROM CBOARD
-	            WHERE 
-	            <if test="condition == 'title'">
-	                cboard_title LIKE '%' || #{keyword} || '%'
-	            </if>
-	            <if test="condition == 'writer'">
-	                cboard_writer LIKE '%' || #{keyword} || '%'
-	            </if>
-	            <if test="condition == 'content'">
-	                cboard_content LIKE '%' || #{keyword} || '%'
-	            </if>
-	            ORDER BY CBOARD DESC
-	        ) CB
-	        WHERE ROWNUM <![CDATA[<=]]> #{pi.endRow}
-	    ) 
-	    WHERE RNUM <![CDATA[>]]> #{pi.startRow}
+	<select id="selectSearchList" parameterType="hashMap" resultMap="cboardResultSet">
+        SELECT DISTINCT C.CBOARD_NO AS "CBOARD_NO", C.CBOARD_TITLE AS "CBOARD_TITLE", C.CBOARD_CONTENT AS "CBOARD_CONTENT", C.CBOARD_INSERT AS "CBOARD_INSERT", C.CBOARD_VIEWS AS "CBOARD_VIEWS", M.MEMBER_NAME AS "CBOARD_WRITER"
+        FROM CBOARD C, MEMBER M, CRELATION CR, TAGS TG
+        WHERE C.CBOARD_WRITER=M.MEMBER_NO
+	    	AND C.CBOARD_NO=CR.CBOARD_NO
+	    	AND CR.TAGS_NO=TG.TAGS_NO
+	    	AND
+        	<if test="condition == 'title'">
+	        	C.CBOARD_TITLE LIKE '%' || '${keyword}' || '%'
+	    	</if>
+		    <if test="condition == 'writer'">
+		        M.MEMBER_NAME LIKE '%' || '${keyword}' || '%'
+		    </if>
+		    <if test="condition == 'content'">
+		        C.CBOARD_CONTENT LIKE '%' || '${keyword}' || '%'
+		    </if>
+		    AND TG.TAGS_NAME IN ('${tags}')
+		    AND C.CBOARD_DELETE IS NULL
+		    ORDER BY C.CBOARD_NO DESC
 	</select>
 	
 	<select id="selectListCountAdmin" resultType="_int">SELECT COUNT(*) FROM CBOARD</select>

@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -30,13 +29,6 @@ import com.kh.coddy.board.code.model.service.CboardService;
 import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Creply;
 import com.kh.coddy.board.code.model.vo.CreplyImage;
-import com.kh.coddy.board.code.model.vo.Csearch;
-import com.kh.coddy.board.intro.model.vo.Ireply;
-import com.kh.coddy.board.intro.model.vo.IreplyImage;
-import com.kh.coddy.board.job.model.vo.HSearch;
-import com.kh.coddy.board.job.model.vo.Hboard;
-import com.kh.coddy.board.recruitment.model.service.RecruitmentService;
-import com.kh.coddy.board.recruitment.model.vo.Prelation;
 import com.kh.coddy.common.Pagination;
 import com.kh.coddy.common.tag.ReadTag;
 import com.kh.coddy.common.tag.controller.TagsController;
@@ -55,28 +47,34 @@ public class CboardController {
 		
 		 @GetMapping("search.co")
 		    public String selectSearchList(
-		            @RequestParam("condition") String condition,
-		            @RequestParam("keyword") String keyword,
+		            @RequestParam(value = "sort", defaultValue = "title") String condition,
+		            @RequestParam(value = "search", defaultValue = "") String keyword,
+		            @RequestParam(value = "tag", defaultValue="") String tag,
 		            @RequestParam(value = "cpage", defaultValue = "1") int currentPage,
 		            Model model) {
-
+			 	String tags = "";
+				if(tag.equals("")) { for(String t:tagsController.getTagsNameList()) { tags += "\'" + t + "\'" + ","; } } 
+				else { for(String t:tag.split(",")) { tags += "\'" + t + "\'" + ","; } }
+			 
 		        // 검색용 요청
 		        HashMap<String, String> map = new HashMap<>();
 		        map.put("condition", condition);
 		        map.put("keyword", keyword);
-
+		        map.put("tags", tags.substring(1, tags.length() - 2));
+		        
 		        int searchCount = cboardService.selectSearchCount(map);
 		        int pageLimit = 10;
-		        int boardLimit = 5;
+		        int boardLimit = 10;
 
 		        PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, pageLimit, boardLimit);
 
 		        ArrayList<Cboard> list = cboardService.selectSearchList(map, pi);
-
+		        
 		        model.addAttribute("list", list);
 		        model.addAttribute("pi", pi);
 		        model.addAttribute("condition", condition);
 		        model.addAttribute("keyword", keyword);
+		        model.addAttribute("tagAll", tagsController.getTagsNameList());
 
 		        return "board/code/codeListView";
 		    }
@@ -123,8 +121,9 @@ public class CboardController {
 		@GetMapping("list.co")
 		public ModelAndView selectList(
 				@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
+				@RequestParam(value = "condition") String condition,
+	            @RequestParam(value = "keyword", defaultValue = "") String keyword,
 				ModelAndView mv) {
-			
 			
 			int listCount = cboardService.selectListCount();
 			
@@ -139,6 +138,7 @@ public class CboardController {
 			
 			mv.addObject("list", list)
 			  .addObject("pi", pi)
+			  .addObject("tagAll", tagsController.getTagsNameList())
 			  .setViewName("board/code/codeListView");
 			  
 			return mv;

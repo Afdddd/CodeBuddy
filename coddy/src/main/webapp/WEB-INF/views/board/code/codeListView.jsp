@@ -21,6 +21,8 @@
     }
     .select {width:20%;}
     .text {width:53%;}
+	.tagss { width:80%; margin:auto; }
+	.tagss>* { margin:5px; width: 88%; }
     
     .tags {
     	background-color : lightgray;
@@ -109,7 +111,7 @@
                     	</c:when>
                     	<c:otherwise>
 	                    	<li class="page-item">
-	                    		<a class="page-link" href="list.co?cpage=${ requestScope.pi.currentPage - 1 }">Previous</a>
+	                    		<a class="page-link" onclick="onSearch('${ requestScope.pi.currentPage - 1 }');">Previous</a>
 	                    	</li>
                     	</c:otherwise>
                     </c:choose>
@@ -118,7 +120,7 @@
                     					 end="${ requestScope.pi.endPage }"
                     					step="1">
                     	<li class="page-item">
-                    		<a class="page-link" href="list.co?cpage=${ p }">${ p }</a>
+                    		<a class="page-link" onclick="onSearch('${p}');">${ p }</a>
                     	</li>
                     </c:forEach>
                     
@@ -130,7 +132,7 @@
 		                </c:when>
 		                <c:otherwise>
 		                    <li class="page-item">
-		                    	<a class="page-link" href="list.co?cpage=${ requestScope.pi.currentPage + 1 }">Next</a>
+		                    	<a class="page-link" onclick="onSearch('${ requestScope.pi.currentPage + 1 }');">Next</a>
 		                    </li>
 		                </c:otherwise>
                 	</c:choose>
@@ -139,19 +141,19 @@
             </div>
 
             <br clear="both"><br>
-
+			<div class="tagss"><jsp:include page="../../common/tagAll.jsp" /></div>
             <form id="searchForm" action="" method="get" align="center">
                 <div class="select">
-                    <select class="custom-select" name="condition">
+                    <select class="custom-select" name="condition" id="condition">
                     	<option value="title">제목</option>
                         <option value="writer">작성자</option>
                         <option value="content">내용</option>
                     </select>
                 </div>
                 <div class="text">
-                    <input type="search" class="form-control" name="keyword">
+                    <input type="search" class="form-control" name="keyword" id="keyword">
                 </div>
-                <button type="submit" class style="color:white; background:#5271FF; padding:6px; width:100px; border-radius:5px; border:none;">검색</button>
+                <button type="button" class style="color:white; background:#5271FF; padding:6px; width:100px; border-radius:5px; border:none;" onclick="onSearch(1);">검색</button>
             </form>
             <br><br>
         </div>
@@ -166,17 +168,19 @@
 	    });
 	    
 	    $(document).ready(function() {
-	        $("#cboardSearch").val(getParameter("search"));
-	        $("#cboardSort").val(getParameter("sort"));
+	        $("#keyword").val(getParameter("search"));
+	        $("#condition").val(getParameter("sort"));
 	        tagifyAll.addTags(getParameter("tag"));
-	    })
+	    });
 	   
 	    function onSearch(cp) {
-                let cpage = cp;
-                let search = $("#cboardSearch").val();
-                let sort = $("#cboardSort").val();
-                location.href='listView.cb?cpage='+cpage+'&search='+search+'&sort='+sort;
-            }
+			let cpage = cp;
+			let search = $("#keyword").val();
+			let sort = $("#condition").val();
+			let tag = $("#tagAllName").val();
+			tag = replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(replaceAll(tag, "[", ""), "]", ""), "{", ""), "}", ""), "\"value\":", ""), "\"", "");
+			location.href='search.co?cpage='+cpage+'&search='+search+'&sort='+sort+'&tag='+tag;
+		};
 	    
 	   /* 
 	   function onSearch() {
@@ -198,7 +202,7 @@
 	   
 	</script>
 
-<jsp:include page="../../common/footer.jsp" />
+	<jsp:include page="../../common/footer.jsp" />
 
 </body>
 </html>

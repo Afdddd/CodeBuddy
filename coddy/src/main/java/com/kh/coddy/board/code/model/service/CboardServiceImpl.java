@@ -2,7 +2,6 @@ package com.kh.coddy.board.code.model.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,11 +13,8 @@ import com.kh.coddy.board.code.model.vo.Cboard;
 import com.kh.coddy.board.code.model.vo.Crelation;
 import com.kh.coddy.board.code.model.vo.Creply;
 import com.kh.coddy.board.code.model.vo.CreplyImage;
-import com.kh.coddy.board.code.model.vo.Csearch;
-import com.kh.coddy.board.intro.model.vo.Ireply;
-import com.kh.coddy.board.intro.model.vo.IreplyImage;
-import com.kh.coddy.board.job.model.vo.HSearch;
 import com.kh.coddy.common.vo.PageInfo;
+
 @Service
 public class CboardServiceImpl implements CboardService {
 
@@ -116,7 +112,5 @@ public class CboardServiceImpl implements CboardService {
 	@Override
 	public ArrayList<Cboard> selectSearchList(HashMap<String, String> map, PageInfo pi) {
 	     return boardDao.selectSearchList(sqlSession, map, pi);
-	    }
-	
-
+	}
 }
