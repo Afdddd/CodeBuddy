@@ -567,6 +567,11 @@
 					    <div class="comment-date">${b.projectStart} ~ ${b.projectEnd}</div>
 					  </div>
 				</c:forEach>
+        <c:if test="${empty projectlist}">
+          <div class="comment">
+            제출 가능한 프로젝트가 없습니다.
+          </div>
+        </c:if>
 		    <div id="delete">
 		    </div>
 		  </div>

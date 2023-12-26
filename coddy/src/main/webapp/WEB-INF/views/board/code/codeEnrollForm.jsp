@@ -33,7 +33,7 @@
       
     .Outer {
 	  height:1600px;
-	  width:1200px
+	  width:1200px;
 	  border: 1px solid lightgray;
 	  border-radius: 15px;
 	  margin-top:20px;
@@ -76,7 +76,7 @@
                     </tr>
                     <tr>
                         <th><label for="writer"></label></th>
-                        <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginMember.memberId }" name="cboardWriter" readonly></td>
+                        <td><input type="text" id="writer" class="form-control" value="${ sessionScope.loginMember.memberName }" name="cboardWriter" readonly></td>
                     </tr>
                     <tr>
                         <th><label for="tag"></label></th>
