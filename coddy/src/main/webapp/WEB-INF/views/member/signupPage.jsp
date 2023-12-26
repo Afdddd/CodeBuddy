@@ -4,7 +4,7 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>회원가입</title>
 	<!-- 구글 recaptcha2 -->
     <script src='https://www.google.com/recaptcha/api.js'></script>
 	<style>

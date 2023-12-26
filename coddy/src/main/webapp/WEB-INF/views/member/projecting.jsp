@@ -177,7 +177,7 @@
 
 
       <div class="innerOuter">
-        <h2>작성한 게시글</h2>
+        <h2>진행중인 프로젝트</h2>
         <br><hr><br>
         <div style="display: flex;">
           <ul class="menu" style="padding-left:0px; width : 230px;"><br>

@@ -5,7 +5,7 @@
 <html>
   <head> 
     <meta charset="UTF-8">
-    <title>Insert title here</title>
+    <title>찜한 채용공고</title>
     <style>
       .innerOuter { 
         width:80%; 
