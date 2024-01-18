@@ -10,7 +10,7 @@
 
 ---
 
-![Untitled](https://github.com/Afdddd/CodeBuddy/issues/44#issue-2088981982)
+![Title](https://github.com/Afdddd/CodeBuddy/issues/44#issue-2088981982)
 
 # 📖프로젝트 소개
 
