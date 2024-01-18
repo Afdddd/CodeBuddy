@@ -10,7 +10,7 @@
 
 ---
 
-![Untitled](Code%20Buddy%202e821433c15c4e258ac89a04cd2d642c/Untitled.png)
+![Untitled](https://github.com/Afdddd/CodeBuddy/issues/44#issue-2088981982)
 
 # 📖프로젝트 소개
 
