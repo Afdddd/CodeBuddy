@@ -37,16 +37,6 @@ Java, Spring, Maven, MyBatis, Javascript, Jsp
 <br>
 
 
-# 💡 아키텍처 / ERD
-
----
-
-![coddy drawio](https://github.com/Afdddd/CodeBuddy/assets/109032883/419c8205-d2d4-4f2a-a2b2-1af37636d1fa)
-
-<br>
-
-![erd](https://github.com/Afdddd/CodeBuddy/assets/109032883/fbd6d504-1757-4cf2-8cc3-50b42d9f02a3)
-🔗Link https://www.erdcloud.com/d/xeA8PWwQkF7TvK7iD
 
 
 <br>
